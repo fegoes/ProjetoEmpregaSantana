@@ -323,7 +323,7 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 
 ## 8. Plano de Fases de Construção
 
-**Fase 1 — Navegação pública + Auth + loop Empresa↔Candidato**
+**Fase 1 — Navegação pública + Auth + loop Empresa↔Candidato** ✅ concluída
 - Migrations: `profiles`, `user_roles`, `categories`, `empresas`, `empresa_members`, `vagas`, `candidato_profiles`, `cv_variants`, `candidaturas` + RLS base.
 - `AuthContext`, cadastro/login com seletor de papel, `ProtectedRoute`.
 - Home (vagas; aba autônomo pode ficar stub), `/vagas/:id`, `/explorar` (busca só de vagas inicialmente).
@@ -331,15 +331,37 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 - CRUD de currículos (`cv_variants`) com Tiptap + DOMPurify.
 - **Este corte sozinho já entrega um marketplace funcional de dois lados** — é o corte certo se houver pressão de prazo.
 
-**Fase 2 — Autônomo + Admin**
+**Fase 2 — Autônomo + Admin** ✅ concluída
 - `autonomo_profiles` (schema/RLS/onboarding/`/autonomo/perfil`), aba de autônomos no Home/Explorar, busca combinada.
 - Suíte completa `/admin/*`: usuários, empresas (incl. Dados da empresa), Lista de Vagas (incl. vagas sem empresa), Cadastro de Planos (schema + CRUD, sem Stripe ainda).
 - Diretório `/empresas` logado.
 
-**Fase 3 — Planos/Stripe + stub de ADS**
+**Fase 3 — Planos/Stripe + stub de ADS** ⏳ pendente (próxima fase)
 - `plans`/`subscriptions` (dados já existem da Fase 2); aqui entra o dinheiro: Edge Functions `create-checkout-session` e `stripe-webhook`, páginas `/empresa/plano` e `/autonomo/plano`, enforcement (`max_active_vagas`, `featured_placement`, `cv_database_access`), `/empresa/banco-de-curriculos`.
 - Tabela `ads` + tela manual `/admin/ads`.
 - Página pública `/planos`.
+
+### 8.1 Status desta rodada (2026-08-13)
+
+**Feito nesta sessão** (além das Fases 1 e 2 completas):
+- Sistema de design próprio: paleta azul/ciano (marca/confiança) + laranja (CTAs de ação), tipografia Plus Jakarta Sans, cantos arredondados, avatares com iniciais, ícones por categoria, hero com busca e estatísticas reais, empty states ilustrados. Aplicado em Navbar, Home, cards, StatusBadge, Login/Cadastro e páginas de detalhe.
+- Dados de demonstração reais no Supabase (não mockados): migration `0003_seed_demo_data.sql` com 16 empresas, 48 vagas, 18 autônomos, 8 candidatos e 20 candidaturas, aplicada no projeto remoto já linkado (`ProjetoEmpregaSantana`).
+- Verificação visual em navegador (Playwright headless) nas páginas públicas, em claro e escuro, sem erros de console.
+
+**Pendências técnicas identificadas nesta rodada** (não bloqueiam uso, mas devem entrar no backlog):
+1. **Sem alternador de tema** — o CSS de dark mode existe e foi validado, mas não há botão/toggle nem detecção automática de `prefers-color-scheme` na UI; hoje o site sempre abre no claro.
+2. **Sem code-splitting de rotas** — o bundle de produção passou de 500 kB (aviso do Vite); vale introduzir `React.lazy`/`import()` por rota antes de ir para produção.
+3. **Truncamento de título em 1 linha** nos cards (`VagaCard`/`AutonomoCard`) — títulos longos cortam cedo; considerar `line-clamp-2`.
+4. **Sem paginação/scroll infinito** — Home e Explorar carregam a lista inteira de uma vez; ok para dezenas de vagas, não escala para centenas.
+5. **Áreas logadas não verificadas visualmente nesta rodada** — só as páginas públicas foram conferidas no navegador. `/empresa/*`, `/candidato/*`, `/autonomo/*` e `/admin/*` (incluindo os editores Tiptap) herdam o novo sistema de design mas ainda não foram abertas numa sessão logada para confirmar visualmente.
+6. **Contas de seed são contas reais no projeto Supabase de produção** — os 42 usuários fake (`rh.empresaN@empregasantana-seed.com`, `autonomoN@…`, `candidatoN@…`) têm login funcional com a senha `seed-demo-password`. Bom para testar o produto agora; deve ser limpo (ou movido para um projeto Supabase separado de staging) antes de qualquer lançamento real.
+7. **CNPJs do seed são números fake sequenciais**, sem dígito verificador válido — não usar como referência de formato/validação futura.
+
+**Sugestão de ordem para a próxima sessão:**
+1. Login com um usuário de seed (ex. `rh.empresa1@empregasantana-seed.com` / `seed-demo-password`) e revisão visual dos painéis logados + editor Tiptap.
+2. Toggle de tema claro/escuro (rápido, alto impacto percebido).
+3. `line-clamp` nos cards + paginação simples na Home/Explorar.
+4. Início da Fase 3 (Stripe): schema já pronto, falta só as Edge Functions e as telas de checkout.
 
 **Fase 4 (roadmap, fora do MVP)** — IA (Gemini) para CV, notificações (e-mail → WhatsApp), pagamento real de ADS + agendamento, upgrade de busca se o full-text do Postgres não bastar, normalização das sub-tabelas de CV se filtro estruturado virar requisito.
 
