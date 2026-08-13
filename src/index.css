@@ -4,73 +4,75 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --radius: 0.9rem;
+  --radius: 0.85rem;
 
-  /* Neutros levemente quentes — nada de cinza puro, para não parecer um painel corporativo frio */
-  --background: oklch(0.985 0.006 75);
-  --foreground: oklch(0.22 0.03 258);
+  /* Neutros: cinza levemente frio, não cinza puro nem cream — base "organizada" para o site inteiro */
+  --background: oklch(0.99 0.002 260);
+  --foreground: oklch(0.2 0.02 258);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.22 0.03 258);
+  --card-foreground: oklch(0.2 0.02 258);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.22 0.03 258);
+  --popover-foreground: oklch(0.2 0.02 258);
 
-  /* Marca: azul-ciano como cor de confiança/identidade (links, foco, badges, ações secundárias) */
-  --primary: oklch(0.585 0.146 241);
+  /* Azul: usado só em campos específicos e deliberados (links, foco, estado ativo, verificação) —
+     é um azul-marinho contido, não o ciano vibrante usado antes em todo lugar */
+  --primary: oklch(0.4 0.09 255);
   --primary-foreground: oklch(0.99 0 0);
 
-  --secondary: oklch(0.955 0.015 240);
-  --secondary-foreground: oklch(0.279 0.041 260);
-  --muted: oklch(0.96 0.012 75);
-  --muted-foreground: oklch(0.5 0.03 250);
-  --accent: oklch(0.94 0.035 220);
-  --accent-foreground: oklch(0.279 0.041 260);
+  --secondary: oklch(0.95 0.006 260);
+  --secondary-foreground: oklch(0.22 0.02 258);
+  --muted: oklch(0.955 0.006 260);
+  --muted-foreground: oklch(0.48 0.02 258);
+  --accent: oklch(0.94 0.008 258);
+  --accent-foreground: oklch(0.22 0.02 258);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
-  --success: oklch(0.6 0.14 155);
+  --success: oklch(0.58 0.13 155);
   --success-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.9 0.02 250);
-  --input: oklch(0.9 0.02 250);
-  --ring: oklch(0.585 0.146 241 / 45%);
+  --border: oklch(0.9 0.008 260);
+  --input: oklch(0.9 0.008 260);
+  --ring: oklch(0.4 0.09 255 / 40%);
 
-  /* Laranja: cor de ação/energia — reservada para CTAs de alta prioridade (candidatar-se, publicar, criar conta) */
-  --brand-blue: oklch(0.585 0.146 241);
-  --brand-cyan: oklch(0.715 0.143 215);
+  /* Marca fixa (logotipo) — preto-azulado constante, não muda entre claro/escuro */
+  --brand-ink: oklch(0.2 0.03 258);
+
+  /* Laranja: cor de ação/energia — reservada para CTAs de alta prioridade */
   --brand-orange: oklch(0.705 0.191 41.6);
   --brand-orange-strong: oklch(0.635 0.19 39);
   --brand-orange-foreground: oklch(0.24 0.055 40);
 }
 
 .dark {
-  --background: oklch(0.17 0.022 258);
-  --foreground: oklch(0.96 0.008 90);
-  --card: oklch(0.22 0.026 258);
-  --card-foreground: oklch(0.96 0.008 90);
-  --popover: oklch(0.22 0.026 258);
-  --popover-foreground: oklch(0.96 0.008 90);
+  --background: oklch(0.16 0.014 258);
+  --foreground: oklch(0.96 0.004 90);
+  --card: oklch(0.21 0.016 258);
+  --card-foreground: oklch(0.96 0.004 90);
+  --popover: oklch(0.21 0.016 258);
+  --popover-foreground: oklch(0.96 0.004 90);
 
-  --primary: oklch(0.72 0.13 220);
-  --primary-foreground: oklch(0.16 0.03 250);
+  --primary: oklch(0.72 0.1 232);
+  --primary-foreground: oklch(0.15 0.02 250);
 
-  --secondary: oklch(0.28 0.026 255);
-  --secondary-foreground: oklch(0.96 0.008 90);
-  --muted: oklch(0.26 0.022 255);
-  --muted-foreground: oklch(0.7 0.02 250);
-  --accent: oklch(0.32 0.05 220);
-  --accent-foreground: oklch(0.96 0.008 90);
+  --secondary: oklch(0.27 0.016 258);
+  --secondary-foreground: oklch(0.96 0.004 90);
+  --muted: oklch(0.26 0.014 258);
+  --muted-foreground: oklch(0.68 0.014 258);
+  --accent: oklch(0.3 0.018 258);
+  --accent-foreground: oklch(0.96 0.004 90);
 
   --destructive: oklch(0.704 0.191 22.216);
   --destructive-foreground: oklch(0.16 0 0);
-  --success: oklch(0.68 0.15 155);
+  --success: oklch(0.66 0.14 155);
   --success-foreground: oklch(0.16 0 0);
 
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.72 0.13 220 / 55%);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 14%);
+  --ring: oklch(0.72 0.1 232 / 50%);
 
-  --brand-blue: oklch(0.72 0.13 220);
-  --brand-cyan: oklch(0.78 0.11 210);
+  --brand-ink: oklch(0.2 0.03 258);
+
   --brand-orange: oklch(0.75 0.17 45);
   --brand-orange-strong: oklch(0.68 0.18 42);
   --brand-orange-foreground: oklch(0.18 0.04 40);
@@ -101,8 +103,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-ink: var(--brand-ink);
   --color-brand-orange: var(--brand-orange);
   --color-brand-orange-strong: var(--brand-orange-strong);
   --color-brand-orange-foreground: var(--brand-orange-foreground);
@@ -124,11 +125,10 @@
 }
 
 @layer utilities {
-  /* Manchas de gradiente suaves para dar vida a heros e cabeçalhos, sem depender de imagens */
+  /* Mancha de fundo discreta para heros e cabeçalhos — só laranja + neutro escuro, sem azul */
   .brand-mesh {
     background-image:
-      radial-gradient(50% 65% at 12% 15%, color-mix(in oklch, var(--brand-cyan) 30%, transparent) 0%, transparent 100%),
-      radial-gradient(45% 60% at 90% 0%, color-mix(in oklch, var(--brand-orange) 26%, transparent) 0%, transparent 100%),
-      radial-gradient(60% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 22%, transparent) 0%, transparent 100%);
+      radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
+      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-ink) 7%, transparent) 0%, transparent 100%);
   }
 }

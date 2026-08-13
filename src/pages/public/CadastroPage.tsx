@@ -74,7 +74,7 @@ export default function CadastroPage() {
                     className={cn(
                       'flex items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left text-sm transition-all',
                       isActive
-                        ? 'border-primary bg-brand-blue/8 ring-1 ring-primary'
+                        ? 'border-primary bg-primary/8 ring-1 ring-primary'
                         : 'border-border hover:border-primary/40 hover:bg-accent',
                     )}
                   >

@@ -65,7 +65,7 @@ export default function AutonomoDetailPage() {
         <CardContent className="flex flex-col gap-4">
           {(autonomo.hourly_rate || autonomo.delivery_rate_note) && (
             <div className="flex items-start gap-2.5 text-sm">
-              <Wallet className="mt-0.5 size-4 shrink-0 text-brand-blue" />
+              <Wallet className="mt-0.5 size-4 shrink-0 text-muted-foreground" />
               <div>
                 {autonomo.hourly_rate && (
                   <p className="font-medium">A partir de R$ {autonomo.hourly_rate}/hora</p>
@@ -77,7 +77,7 @@ export default function AutonomoDetailPage() {
             </div>
           )}
           <div className="flex items-center gap-2.5 text-sm">
-            <MapPin className="size-4 shrink-0 text-brand-blue" />
+            <MapPin className="size-4 shrink-0 text-muted-foreground" />
             {[autonomo.service_area_city, autonomo.service_area_state].filter(Boolean).join(' — ') ||
               'Área de atendimento a combinar'}
           </div>

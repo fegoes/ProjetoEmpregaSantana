@@ -7,6 +7,7 @@ const LINKS = [
   { to: '/admin/usuarios', label: 'Usuários' },
   { to: '/admin/planos', label: 'Planos' },
   { to: '/admin/vagas', label: 'Vagas' },
+  { to: '/admin/paginas', label: 'Páginas institucionais' },
   { to: '/admin/ads', label: 'ADS' },
 ]
 

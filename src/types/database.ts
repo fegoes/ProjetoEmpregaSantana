@@ -332,6 +332,23 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['ads']['Row']>
         Relationships: []
       }
+      paginas_institucionais: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          content_html: string
+          updated_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['paginas_institucionais']['Row']> & {
+          slug: string
+          title: string
+        }
+        Update: Partial<Database['public']['Tables']['paginas_institucionais']['Row']>
+        Relationships: []
+      }
     }
     Views: Record<string, never>
     Functions: Record<string, never>

@@ -1,11 +1,12 @@
 import { cn } from '@/lib/utils'
 
+// Paleta restrita à identidade da marca: azul-marinho, tons neutros e laranja —
+// nada de cores decorativas soltas fora desse conjunto.
 const PALETTE = [
-  'bg-brand-blue/15 text-brand-blue',
-  'bg-brand-cyan/20 text-brand-blue',
-  'bg-brand-orange/20 text-brand-orange-strong',
-  'bg-violet-500/15 text-violet-600 dark:text-violet-400',
-  'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400',
+  'bg-primary/12 text-primary',
+  'bg-foreground/8 text-foreground/75',
+  'bg-brand-orange/18 text-brand-orange-strong',
+  'bg-muted text-muted-foreground',
 ]
 
 function initialsOf(name: string) {

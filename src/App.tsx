@@ -44,6 +44,7 @@ import AdminUsuariosPage from '@/pages/admin/UsuariosPage'
 import AdminPlanosPage from '@/pages/admin/PlanosPage'
 import AdminVagasPage from '@/pages/admin/VagasPage'
 import AdminAdsPage from '@/pages/admin/AdsPage'
+import AdminPaginasPage from '@/pages/admin/PaginasPage'
 
 export default function App() {
   return (
@@ -115,6 +116,7 @@ export default function App() {
             <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
             <Route path="admin/planos" element={<AdminPlanosPage />} />
             <Route path="admin/vagas" element={<AdminVagasPage />} />
+            <Route path="admin/paginas" element={<AdminPaginasPage />} />
             <Route path="admin/ads" element={<AdminAdsPage />} />
           </Route>
         </Route>

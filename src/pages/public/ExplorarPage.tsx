@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input'
 import { VagaCard } from '@/components/VagaCard'
 import { AutonomoCard } from '@/components/AutonomoCard'
 import { EmptyState } from '@/components/EmptyState'
+import { ShowMoreGrid } from '@/components/ShowMoreGrid'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
 
@@ -47,27 +48,33 @@ export default function ExplorarPage() {
 
       {debounced && (
         <>
-          <section>
-            <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-              Vagas <span className="text-foreground">({vagasQuery.data?.length ?? 0})</span>
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {vagasQuery.data?.map((vaga) => (
-                <VagaCard key={vaga.id} vaga={vaga} />
-              ))}
-            </div>
-          </section>
+          {vagasQuery.data && vagasQuery.data.length > 0 && (
+            <section>
+              <h2 className="mb-3 text-base font-semibold text-muted-foreground">
+                Vagas <span className="text-foreground">({vagasQuery.data.length})</span>
+              </h2>
+              <ShowMoreGrid
+                key={`vagas-${debounced}`}
+                items={vagasQuery.data}
+                keyExtractor={(vaga) => vaga.id}
+                renderItem={(vaga) => <VagaCard vaga={vaga} />}
+              />
+            </section>
+          )}
 
-          <section>
-            <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-              Autônomos <span className="text-foreground">({autonomosQuery.data?.length ?? 0})</span>
-            </h2>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {autonomosQuery.data?.map((autonomo) => (
-                <AutonomoCard key={autonomo.id} autonomo={autonomo} />
-              ))}
-            </div>
-          </section>
+          {autonomosQuery.data && autonomosQuery.data.length > 0 && (
+            <section>
+              <h2 className="mb-3 text-base font-semibold text-muted-foreground">
+                Autônomos <span className="text-foreground">({autonomosQuery.data.length})</span>
+              </h2>
+              <ShowMoreGrid
+                key={`autonomos-${debounced}`}
+                items={autonomosQuery.data}
+                keyExtractor={(autonomo) => autonomo.id}
+                renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
+              />
+            </section>
+          )}
 
           {totalResults === 0 && !vagasQuery.isLoading && !autonomosQuery.isLoading && (
             <EmptyState

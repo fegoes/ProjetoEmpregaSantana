@@ -52,7 +52,7 @@ export default function VagaDetailPage() {
     <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-1 space-y-5">
         <div className="flex items-start gap-4">
-          <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-brand-blue/10 text-brand-blue">
+          <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground/70">
             <Icon className="size-6" strokeWidth={2} />
           </span>
           <div>
@@ -93,17 +93,17 @@ export default function VagaDetailPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex items-center gap-2.5 text-sm">
-            <Wallet className="size-4 shrink-0 text-brand-blue" />
+            <Wallet className="size-4 shrink-0 text-muted-foreground" />
             <span className="font-medium">{salaryLabel}</span>
           </div>
           <div className="flex items-center gap-2.5 text-sm">
-            <MapPin className="size-4 shrink-0 text-brand-blue" />
+            <MapPin className="size-4 shrink-0 text-muted-foreground" />
             {vaga.is_remote
               ? 'Remoto'
               : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'Local a combinar'}
           </div>
           <div className="flex items-center gap-2.5 text-sm">
-            <Clock3 className="size-4 shrink-0 text-brand-blue" />
+            <Clock3 className="size-4 shrink-0 text-muted-foreground" />
             {EMPLOYMENT_LABELS[vaga.employment_type]}
           </div>
 

@@ -32,7 +32,7 @@ export function Navbar() {
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex size-9 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white shadow-sm">
+          <span className="flex size-9 items-center justify-center rounded-2xl bg-brand-ink text-white shadow-sm">
             <Briefcase className="size-4.5" strokeWidth={2.4} />
           </span>
           <span className="text-lg font-extrabold tracking-tight">

@@ -18,7 +18,7 @@ export function RootLayout() {
       <footer className="border-t bg-secondary/40">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-2 font-semibold">
-            <span className="flex size-7 items-center justify-center rounded-xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white">
+            <span className="flex size-7 items-center justify-center rounded-xl bg-brand-ink text-white">
               <Briefcase className="size-3.5" strokeWidth={2.4} />
             </span>
             Emprega<span className="text-brand-orange-strong">Santana</span>

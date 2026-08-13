@@ -25,7 +25,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
           <div className="min-w-0 pt-0.5">
             <h3 className="flex items-center gap-1.5 truncate text-[15px] leading-snug font-semibold">
               <span className="truncate">{empresa.nome_fantasia}</span>
-              {empresa.is_verified && <BadgeCheck className="size-4 shrink-0 text-brand-blue" />}
+              {empresa.is_verified && <BadgeCheck className="size-4 shrink-0 text-primary" />}
             </h3>
             <p className="truncate text-sm text-muted-foreground">{empresa.sector ?? 'Setor não informado'}</p>
           </div>

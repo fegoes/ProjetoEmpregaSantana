@@ -45,11 +45,11 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
           </span>
         )}
         <CardHeader className="flex-row items-start gap-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-blue/10 text-brand-blue">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground/70">
             <Icon className="size-5" strokeWidth={2} />
           </span>
           <div className="min-w-0 pt-0.5">
-            <h3 className="truncate pr-16 text-[15px] leading-snug font-semibold">{vaga.title}</h3>
+            <h3 className="line-clamp-2 pr-14 text-[15px] leading-snug font-semibold">{vaga.title}</h3>
             <p className="truncate text-sm text-muted-foreground">
               {vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'}
             </p>

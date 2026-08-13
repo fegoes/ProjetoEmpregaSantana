@@ -34,7 +34,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <Card className="rounded-2xl border-none shadow-lg">
           <CardHeader className="items-center text-center">
-            <span className="mb-1 flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white shadow-sm">
+            <span className="mb-1 flex size-11 items-center justify-center rounded-2xl bg-brand-ink text-white shadow-sm">
               <Briefcase className="size-5" strokeWidth={2.4} />
             </span>
             <CardTitle className="text-xl">Bem-vindo(a) de volta</CardTitle>

@@ -18,7 +18,7 @@ export function EmptyState({ icon: Icon, title, description, action, className }
         className,
       )}
     >
-      <span className="flex size-12 items-center justify-center rounded-full bg-brand-blue/10 text-brand-blue">
+      <span className="flex size-12 items-center justify-center rounded-full bg-muted text-muted-foreground">
         <Icon className="size-5" strokeWidth={2} />
       </span>
       <div className="space-y-1">
