@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { MapPin, Sparkles } from 'lucide-react'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { iconForCategory } from '@/lib/categoryIcons'
 
 const EMPLOYMENT_LABELS: Record<string, string> = {
   clt: 'CLT',
@@ -20,6 +22,7 @@ export interface VagaCardData {
   title: string
   employment_type: string
   pricing_model: string
+  category?: string | null
   location_city: string | null
   location_state: string | null
   is_remote: boolean
@@ -31,21 +34,38 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
   const local = vaga.is_remote
     ? 'Remoto'
     : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
+  const Icon = iconForCategory(vaga.category)
 
   return (
-    <Link to={`/vagas/${vaga.id}`}>
-      <Card className="h-full transition-colors hover:border-primary">
-        <CardHeader>
-          <div className="flex items-start justify-between gap-2">
-            <CardTitle className="text-base">{vaga.title}</CardTitle>
-            {vaga.is_featured && <Badge>Destaque</Badge>}
+    <Link to={`/vagas/${vaga.id}`} className="group block h-full">
+      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
+        {vaga.is_featured && (
+          <span className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-strong">
+            <Sparkles className="size-3" /> Destaque
+          </span>
+        )}
+        <CardHeader className="flex-row items-start gap-3">
+          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-brand-blue/10 text-brand-blue">
+            <Icon className="size-5" strokeWidth={2} />
+          </span>
+          <div className="min-w-0 pt-0.5">
+            <h3 className="truncate pr-16 text-[15px] leading-snug font-semibold">{vaga.title}</h3>
+            <p className="truncate text-sm text-muted-foreground">
+              {vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'}
+            </p>
           </div>
-          <CardDescription>{vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'}</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-          <Badge variant="secondary">{EMPLOYMENT_LABELS[vaga.employment_type]}</Badge>
-          <Badge variant="outline">{PRICING_LABELS[vaga.pricing_model]}</Badge>
-          <span>{local}</span>
+        <CardContent className="flex flex-wrap items-center gap-1.5">
+          <Badge variant="secondary" className="rounded-full font-medium">
+            {EMPLOYMENT_LABELS[vaga.employment_type]}
+          </Badge>
+          <Badge variant="outline" className="rounded-full font-medium">
+            {PRICING_LABELS[vaga.pricing_model]}
+          </Badge>
+          <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
+            <MapPin className="size-3.5" />
+            {local}
+          </span>
         </CardContent>
       </Card>
     </Link>

@@ -63,7 +63,7 @@ export default function EmpresaOnboardingPage() {
             <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" variant="cta" disabled={loading}>
             {loading ? 'Criando…' : 'Criar empresa'}
           </Button>
         </form>

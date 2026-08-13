@@ -89,7 +89,7 @@ export default function AutonomoOnboardingPage() {
             <Input id="hourlyRate" type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
           </div>
           {error && <p className="text-sm text-destructive">{error}</p>}
-          <Button type="submit" disabled={loading}>
+          <Button type="submit" variant="cta" disabled={loading}>
             {loading ? 'Salvando…' : 'Publicar meu perfil'}
           </Button>
         </form>

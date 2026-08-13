@@ -127,7 +127,7 @@ export default function VagaFormPage() {
           <Button variant="outline" onClick={() => handleSave('draft')} disabled={saveVaga.isPending}>
             Salvar rascunho
           </Button>
-          <Button onClick={() => handleSave('published')} disabled={saveVaga.isPending}>
+          <Button variant="cta" onClick={() => handleSave('published')} disabled={saveVaga.isPending}>
             Publicar vaga
           </Button>
         </div>

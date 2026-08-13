@@ -84,7 +84,7 @@ function AplicarForm({ vagaId, candidatoId }: { vagaId: string; candidatoId: str
             </option>
           ))}
         </select>
-        <Button onClick={() => aplicar.mutate()} disabled={aplicar.isPending || !selectedCv}>
+        <Button variant="cta" onClick={() => aplicar.mutate()} disabled={aplicar.isPending || !selectedCv}>
           {aplicar.isPending ? 'Enviando…' : 'Enviar candidatura'}
         </Button>
       </CardContent>

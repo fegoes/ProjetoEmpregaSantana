@@ -1,9 +1,26 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Briefcase, LogOut, Settings, User as UserIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
+import { InitialsAvatar } from '@/components/InitialsAvatar'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
+
+const NAV_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
+  cn(
+    'rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors',
+    isActive ? 'bg-accent text-primary' : 'text-foreground/70 hover:bg-accent hover:text-foreground',
+  )
 
 export function Navbar() {
-  const { user, signOut } = useAuth()
+  const { user, profile, signOut } = useAuth()
   const navigate = useNavigate()
 
   const handleLogout = async () => {
@@ -12,44 +29,74 @@ export function Navbar() {
   }
 
   return (
-    <header className="border-b bg-background">
+    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link to="/" className="text-lg font-semibold">
-          Emprega<span className="text-primary">Santana</span>
+        <Link to="/" className="flex items-center gap-2.5">
+          <span className="flex size-9 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-blue to-brand-cyan text-white shadow-sm">
+            <Briefcase className="size-4.5" strokeWidth={2.4} />
+          </span>
+          <span className="text-lg font-extrabold tracking-tight">
+            Emprega<span className="text-brand-orange-strong">Santana</span>
+          </span>
         </Link>
 
-        <nav className="flex items-center gap-4 text-sm font-medium">
-          <Link to="/" className="hover:text-primary">
+        <nav className="hidden items-center gap-1 sm:flex">
+          <NavLink to="/" end className={NAV_LINK_CLASS}>
             Home
-          </Link>
+          </NavLink>
           {user && (
-            <Link to="/empresas" className="hover:text-primary">
+            <NavLink to="/empresas" className={NAV_LINK_CLASS}>
               Empresas
-            </Link>
+            </NavLink>
           )}
-          <Link to="/explorar" className="hover:text-primary">
+          <NavLink to="/explorar" className={NAV_LINK_CLASS}>
             Explorar
-          </Link>
+          </NavLink>
           {user && (
-            <Link to="/perfil" className="hover:text-primary">
+            <NavLink to="/perfil" className={NAV_LINK_CLASS}>
               Meu Perfil
-            </Link>
+            </NavLink>
           )}
         </nav>
 
         <div className="flex items-center gap-2">
           {user ? (
-            <Button variant="outline" size="sm" onClick={handleLogout}>
-              Sair
-            </Button>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 rounded-full py-0.5 pr-1 pl-0.5 transition-colors hover:bg-accent">
+                  <InitialsAvatar name={profile?.full_name ?? 'Usuário'} size="sm" />
+                  <span className="hidden max-w-28 truncate text-sm font-medium sm:inline">
+                    {profile?.full_name?.split(' ')[0] ?? 'Você'}
+                  </span>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>{profile?.full_name ?? 'Minha conta'}</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/perfil">
+                    <UserIcon /> Meu Perfil
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/perfil/conta">
+                    <Settings /> Configurações
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem variant="destructive" onClick={handleLogout}>
+                  <LogOut /> Sair
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           ) : (
-            <div className="flex flex-col items-end gap-1">
-              <Button asChild size="sm">
-                <Link to="/login">Entrar</Link>
-              </Button>
-              <Link to="/cadastro" className="text-xs text-muted-foreground hover:text-primary">
+            <div className="flex items-center gap-3">
+              <Link to="/cadastro" className="hidden text-sm font-medium text-foreground/70 hover:text-primary sm:inline">
                 Criar conta
               </Link>
+              <Button asChild size="sm" variant="cta">
+                <Link to="/login">Entrar</Link>
+              </Button>
             </div>
           )}
         </div>
