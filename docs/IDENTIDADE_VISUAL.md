@@ -1,8 +1,10 @@
 # EmpregaSantana — Identidade Visual & Design System
 
-> Versão 1.1 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
+> Versão 1.2 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
 > Fonte de verdade: **o manual de marca**. Onde o código diverge, o código é que muda (ver §9).
-> Estado: **Bloco 1 aplicado** (tokens e tipografia, §9.1). Blocos 2 e 3 pendentes.
+> Estado: **Blocos 1, 2 e 3 aplicados** (§9.1). Pendência real remanescente: os assets vetoriais do
+> selo oficial (§7) — o produto usa o fallback tile+ícone documentado em §6.2 até o logo em SVG
+> existir em `public/brand/`.
 > Os blocos de código deste documento refletem o que está em `src/index.css` hoje.
 
 ---
@@ -673,13 +675,13 @@ A previsão de "sem tocar em nenhum componente" **não se confirmou**, e vale re
 
 *Visível para o usuário final: sim, integralmente.*
 
-**Bloco 2 — Logotipo e assets** (`src/components/brand/Logo.tsx`, `public/brand/`, `index.html`)
-Extrair o `<Logo>` da §6.2 e substituir as 3 cópias; depositar os assets da §7; deletar `public/icons.svg`; adicionar favicon, manifest e OG tags.
-*Depende de export do logo pelo usuário. A extração do componente pode ir antes, com o fallback atual.*
+**Bloco 2 — Logotipo e assets** ✅ **APLICADO** (`src/components/brand/Logo.tsx`, `public/`, `index.html`)
+`<Logo>` extraído e as 3 cópias (`Navbar`, `RootLayout`, `LoginPage`) substituídas — com o fallback tile+ícone da §6.2, não o selo oficial, que ainda depende de export do usuário (§7). `favicon.svg` trocado (era o raio roxo do scaffold Vite); `favicon-96.png` e `apple-touch-icon.png` gerados a partir do mesmo tile provisório; `site.webmanifest` criado apontando pra esses três arquivos; `public/icons.svg` deletado; `index.html` com as tags da §7.3 (favicon, manifest, `theme-color`, OG/Twitter já existiam da rodada de SEO anterior).
+*`public/brand/logo-mark.svg`, `logo-full.svg`, `logo-mono-white.svg` e `logo-3d.png` — não criados. Continuam dependendo do export do selo oficial pelo usuário; nenhuma tentativa de redesenhar o selo a partir só da descrição textual da §2, para não arriscar publicar uma versão que não bate com o board real.*
 
-**Bloco 3 — Varredura de conformidade**
-Corrigir o `violet` em `StatusBadge.tsx:27`, o ano em `RootLayout.tsx:40`, a `.brand-mesh`, a `<meta description>`; adicionar a tagline ao hero da HomePage; atualizar `docs/PRD.md:347` (hoje descreve o design system antigo, "paleta azul/ciano + Plus Jakarta Sans") e reescrever o `README.md`, que ainda é o boilerplate em inglês do Vite.
-*Visível para o usuário final: parcialmente (footer, hero, badge de entrevista).*
+**Bloco 3 — Varredura de conformidade** ✅ **APLICADO**
+`violet` removido de `StatusBadge.tsx:27` (→ `bg-primary/12 text-primary border-primary/25`, unificando com `em_analise`/`enviada` — a paleta oficial não tem uma sexta cor pra status "entrevista" ficar distinto); ano corrigido em `RootLayout.tsx` (era "desde 2026", virou "desde agosto de 2022"); tagline oficial aplicada em `<meta description>`/`og:description`/`twitter:description`, no eyebrow+subtítulo do hero da Home ("Conecta · Orienta · Transforma" + o texto completo) e no footer; `docs/PRD.md` (§8.1 e novo §8.2) e `README.md` (era o boilerplate em inglês do Vite) atualizados.
+*Visível para o usuário final: sim — footer, hero, badge de entrevista, favicon da aba do navegador.*
 
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 
@@ -701,25 +703,25 @@ Marcar conforme a implementação avançar.
 - [x] `font-feature-settings` da Plus Jakarta Sans removido
 
 **Logotipo e assets**
-- [ ] `src/components/brand/Logo.tsx` criado
-- [ ] As 3 cópias do lockup substituídas (`Navbar.tsx`, `RootLayout.tsx`, `LoginPage.tsx`)
-- [ ] `public/brand/` com `logo-mark.svg`, `logo-full.svg`, `logo-mono-white.svg`
-- [ ] `favicon.svg` roxo do Vite substituído
-- [ ] `public/icons.svg` deletado
-- [ ] `apple-touch-icon.png`, `og-image.png` e `site.webmanifest` adicionados
+- [x] `src/components/brand/Logo.tsx` criado
+- [x] As 3 cópias do lockup substituídas (`Navbar.tsx`, `RootLayout.tsx`, `LoginPage.tsx`)
+- [ ] `public/brand/` com `logo-mark.svg`, `logo-full.svg`, `logo-mono-white.svg` — **depende do usuário exportar o selo oficial** (§7.1); até lá, `Logo.tsx` usa o fallback tile+ícone
+- [x] `favicon.svg` roxo do Vite substituído (tile+ícone provisório, cores da marca)
+- [x] `public/icons.svg` deletado
+- [x] `apple-touch-icon.png`, `favicon-96.png` e `site.webmanifest` adicionados (`og-image.png` já existia da rodada de SEO; refazer quando o selo oficial chegar)
 
 **Conformidade**
-- [ ] `StatusBadge.tsx:27` sem `violet-*`
-- [ ] `grep -rE "#[0-9a-fA-F]{6}|rgb\(|hsl\(" src/` retorna só `src/index.css`
-- [ ] Ano da fundação corrigido para agosto de 2022 (`RootLayout.tsx:40`)
-- [ ] Tagline oficial no `<meta description>`, no hero e no footer
+- [x] `StatusBadge.tsx:27` sem `violet-*`
+- [x] `grep -rE "#[0-9a-fA-F]{6}|rgb\(|hsl\(" src/` retorna só `src/index.css`
+- [x] Ano da fundação corrigido para agosto de 2022 (`RootLayout.tsx`)
+- [x] Tagline oficial no `<meta description>`, no hero e no footer
 - [x] Nenhum texto branco sobre `#FF8A00` na interface (§3.4)
 - [x] `.brand-mesh` usando `--brand-blue`
 - [x] Laranja usado como texto migrado para `--brand-orange-ink` (8 usos, 7 arquivos)
 
 **Documentação**
-- [ ] `docs/PRD.md:347` atualizado (descreve o design system antigo)
-- [ ] `README.md` reescrito (hoje é o boilerplate do Vite, em inglês)
+- [x] `docs/PRD.md` atualizado (§8.1 corrigido + novo §8.2 registrando a migração)
+- [x] `README.md` reescrito (era o boilerplate do Vite, em inglês)
 
 ---
 

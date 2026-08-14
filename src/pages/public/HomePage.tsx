@@ -47,15 +47,15 @@ export default function HomePage() {
         <section className="brand-mesh relative -mx-4 overflow-hidden rounded-3xl border px-6 py-12 sm:mx-0 sm:px-12">
           <div className="relative mx-auto max-w-2xl text-center">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1 text-xs font-semibold text-foreground/70 ring-1 ring-border">
-              <HandHeart className="size-3.5" /> Feito para conectar pessoas de verdade
+              <HandHeart className="size-3.5" /> Conecta · Orienta · Transforma
             </span>
             <h1 className="mt-4 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
               Encontre sua próxima <span className="text-primary">vaga</span> ou o{' '}
               <span className="text-brand-orange-ink">profissional certo</span> para o seu serviço
             </h1>
             <p className="mt-3 text-muted-foreground text-balance">
-              Vagas fixas, trabalhos temporários e autônomos disponíveis — tudo em um só lugar, sem
-              complicação. Navegue à vontade; crie uma conta só quando quiser agir.
+              Somos muito mais que uma página: somos a sua conexão de empregabilidade no sertão.
+              Vagas fixas, trabalhos temporários e autônomos — tudo em um só lugar, sem complicação.
             </p>
 
             <form onSubmit={handleSearch} className="mx-auto mt-6 flex max-w-lg gap-2">

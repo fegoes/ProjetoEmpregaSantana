@@ -1,6 +1,6 @@
 import { Link, Outlet } from 'react-router-dom'
-import { Briefcase } from 'lucide-react'
 import { Navbar } from '@/components/layout/Navbar'
+import { Logo } from '@/components/brand/Logo'
 
 export function RootLayout() {
   return (
@@ -17,12 +17,7 @@ export function RootLayout() {
       </main>
       <footer className="border-t bg-secondary/40">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-2 font-semibold">
-            <span className="flex size-7 items-center justify-center rounded-xl bg-brand-ink text-white">
-              <Briefcase className="size-3.5" strokeWidth={2.4} />
-            </span>
-            Emprega<span className="text-brand-orange-ink">Santana</span>
-          </div>
+          <Logo size="sm" />
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-muted-foreground">
             <Link to="/sobre" className="hover:text-primary">
               Sobre
@@ -37,7 +32,9 @@ export function RootLayout() {
               Privacidade
             </Link>
           </nav>
-          <p className="text-muted-foreground">Conectando pessoas e oportunidades desde 2026.</p>
+          <p className="max-w-xs text-muted-foreground sm:text-right">
+            Somos a sua conexão de empregabilidade no sertão — desde agosto de 2022.
+          </p>
         </div>
       </footer>
     </div>

@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { Briefcase } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Logo } from '@/components/brand/Logo'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
@@ -34,9 +34,7 @@ export default function LoginPage() {
       <div className="w-full max-w-sm">
         <Card className="rounded-2xl border-none shadow-lg">
           <CardHeader className="items-center text-center">
-            <span className="mb-1 flex size-11 items-center justify-center rounded-2xl bg-brand-ink text-white shadow-sm">
-              <Briefcase className="size-5" strokeWidth={2.4} />
-            </span>
+            <Logo variant="mark" size="lg" asLink={false} className="mb-1" />
             <CardTitle className="text-xl">Bem-vindo(a) de volta</CardTitle>
             <CardDescription>Entre para candidatar-se, contratar ou gerenciar suas vagas.</CardDescription>
           </CardHeader>

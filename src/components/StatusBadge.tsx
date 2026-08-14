@@ -24,7 +24,7 @@ const STYLES: Record<string, string> = {
   pending: 'bg-brand-orange/15 text-brand-orange-ink border-brand-orange/25',
   em_analise: 'bg-primary/12 text-primary border-primary/25',
   enviada: 'bg-primary/12 text-primary border-primary/25',
-  entrevista: 'bg-violet-500/12 text-violet-600 border-violet-500/25 dark:text-violet-400',
+  entrevista: 'bg-primary/12 text-primary border-primary/25',
   paused: 'bg-brand-orange/15 text-brand-orange-ink border-brand-orange/25',
   suspended: 'bg-destructive/12 text-destructive border-destructive/25',
   closed: 'bg-muted text-muted-foreground border-transparent',

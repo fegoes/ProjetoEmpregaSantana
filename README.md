@@ -1,32 +1,53 @@
-# React + TypeScript + Vite
+# EmpregaSantana
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Marketplace de trabalho: vagas fixas e temporárias (por hora ou por entrega) e profissionais autônomos, tudo no mesmo lugar. *"Somos muito mais que uma página, somos a sua conexão de empregabilidade no sertão."*
 
-Currently, two official plugins are available:
+- **Documento de produto/arquitetura:** [`docs/PRD.md`](docs/PRD.md)
+- **Identidade visual (marca, paleta, tipografia):** [`docs/IDENTIDADE_VISUAL.md`](docs/IDENTIDADE_VISUAL.md)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Stack
 
-## React Compiler
+- **Frontend:** React 19 + TypeScript + Vite, React Router, TanStack Query
+- **UI:** shadcn/ui (`new-york`) + Tailwind CSS v4 (CSS-first, tokens em `src/index.css`, sem `tailwind.config.js`)
+- **Editor de texto rico:** Tiptap, com saída sempre sanitizada por DOMPurify antes de renderizar
+- **Backend:** Supabase — Postgres com Row Level Security, Supabase Auth, Edge Functions (Deno) para lógica sensível (ex.: sitemap dinâmico)
+- **Testes:** Vitest · **Lint:** ESLint
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Rodando localmente
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+cp .env.example .env.local   # preencha com as credenciais do seu projeto Supabase
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Outros scripts: `npm run build`, `npm run lint`, `npm run test`.
+
+## Banco de dados
+
+As migrations em `supabase/migrations/` são a fonte de verdade do schema (tabelas, RLS, seed de categorias/planos). Para aplicar num projeto Supabase linkado:
+
+```bash
+supabase link --project-ref <seu-project-ref>
+supabase db push
+```
+
+## Estrutura
+
+```
+src/
+  components/   # componentes de UI compartilhados (cards, formulários, shadcn/ui em components/ui)
+  contexts/      # AuthContext (sessão/papéis), EmpresaContext (empresa do usuário logado)
+  hooks/         # data-fetching via TanStack Query, um hook por domínio
+  pages/         # rotas, organizadas por área: public/ shared/ candidato/ autonomo/ empresa/ admin/
+  lib/           # Supabase client, upload de storage, utilitários
+  types/         # tipos do banco (espelham as migrations)
+supabase/
+  migrations/    # schema versionado
+  functions/     # Edge Functions (Deno)
+docs/            # PRD e identidade visual
+```
+
+## Papéis de usuário
+
+Um mesmo usuário pode acumular papéis: **candidato** (currículo, candidaturas), **autônomo** (perfil de serviços público) e **empresa** (vagas, candidatos). O papel **admin** é uma flag em `profiles.is_admin`, provisionada manualmente — não há autocadastro de admin.

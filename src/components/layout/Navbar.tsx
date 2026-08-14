@@ -1,8 +1,9 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { Briefcase, LogOut, Settings, User as UserIcon } from 'lucide-react'
+import { LogOut, Settings, User as UserIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { Logo } from '@/components/brand/Logo'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,14 +32,7 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Link to="/" className="flex items-center gap-2.5">
-          <span className="flex size-9 items-center justify-center rounded-2xl bg-brand-ink text-white shadow-sm">
-            <Briefcase className="size-4.5" strokeWidth={2.4} />
-          </span>
-          <span className="text-lg font-extrabold tracking-tight">
-            Emprega<span className="text-brand-orange-ink">Santana</span>
-          </span>
-        </Link>
+        <Logo />
 
         <nav className="hidden items-center gap-1 sm:flex">
           <NavLink to="/" end className={NAV_LINK_CLASS}>

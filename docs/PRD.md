@@ -344,7 +344,7 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 ### 8.1 Status desta rodada (2026-08-13)
 
 **Feito nesta sessão** (além das Fases 1 e 2 completas):
-- Sistema de design próprio: paleta azul/ciano (marca/confiança) + laranja (CTAs de ação), tipografia Plus Jakarta Sans, cantos arredondados, avatares com iniciais, ícones por categoria, hero com busca e estatísticas reais, empty states ilustrados. Aplicado em Navbar, Home, cards, StatusBadge, Login/Cadastro e páginas de detalhe.
+- Sistema de design próprio (posteriormente substituído pela identidade oficial da marca — ver §8.2 e `docs/IDENTIDADE_VISUAL.md`): cantos arredondados, avatares com iniciais, ícones por categoria, hero com busca e estatísticas reais, empty states ilustrados. Aplicado em Navbar, Home, cards, StatusBadge, Login/Cadastro e páginas de detalhe.
 - Dados de demonstração reais no Supabase (não mockados): migration `0003_seed_demo_data.sql` com 16 empresas, 48 vagas, 18 autônomos, 8 candidatos e 20 candidaturas, aplicada no projeto remoto já linkado (`ProjetoEmpregaSantana`).
 - Verificação visual em navegador (Playwright headless) nas páginas públicas, em claro e escuro, sem erros de console.
 
@@ -364,6 +364,18 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 4. Início da Fase 3 (Stripe): schema já pronto, falta só as Edge Functions e as telas de checkout.
 
 **Fase 4 (roadmap, fora do MVP)** — IA (Gemini) para CV, notificações (e-mail → WhatsApp), pagamento real de ADS + agendamento, upgrade de busca se o full-text do Postgres não bastar, normalização das sub-tabelas de CV se filtro estruturado virar requisito.
+
+### 8.2 Identidade visual oficial aplicada
+
+O sistema de design "provisório" descrito em §8.1 foi substituído pela leitura do manual de marca oficial — ver **`docs/IDENTIDADE_VISUAL.md`** para a especificação completa (paleta com contraste WCAG verificado, tipografia, regras de logotipo, tom de voz). Resumo do que mudou no código:
+
+- Paleta: azul `#1E63B6` + azul profundo `#0D3A66` + laranja `#FF8A00` (com os derivados `-strong`/`-ink` para hover e texto, ver §3.2 do manual) + neutros puros `#F2F2F2`/`#333333`, todos em `src/index.css`.
+- Tipografia: Montserrat (títulos) + Poppins (corpo), substituindo Plus Jakarta Sans.
+- Logotipo consolidado em `src/components/brand/Logo.tsx` (fonte única, antes duplicado em 3 arquivos) — ainda no fallback tile+ícone; o selo oficial em SVG entra quando o asset vetorial existir.
+- Favicon, `apple-touch-icon.png`, `site.webmanifest` e `og-image.png` alinhados às cores da marca.
+- Tagline oficial ("Somos muito mais que uma página, somos a sua conexão de empregabilidade no sertão.") na `<meta description>`, no hero da Home e no footer.
+
+Pendências continuam rastreadas no checklist de `docs/IDENTIDADE_VISUAL.md` §10 (principalmente: assets vetoriais do selo oficial, que dependem do usuário exportar o logo do board de identidade).
 
 ---
 
