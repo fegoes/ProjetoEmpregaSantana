@@ -11,6 +11,25 @@ export type CandidaturaStatus = 'enviada' | 'em_analise' | 'entrevista' | 'aprov
 export type UserRole = 'candidato' | 'autonomo' | 'empresa_owner'
 export type PlanAudience = 'empresa' | 'autonomo'
 
+export interface CvExperience {
+  id: string
+  role: string
+  company: string
+  startDate: string
+  endDate: string
+  current: boolean
+  description: string
+}
+
+export interface CvEducation {
+  id: string
+  course: string
+  institution: string
+  startDate: string
+  endDate: string
+  current: boolean
+}
+
 export interface Database {
   public: {
     Tables: {
@@ -192,8 +211,11 @@ export interface Database {
           candidato_id: string
           title: string
           summary_html: string | null
-          experiences: unknown[]
-          education: unknown[]
+          contact_email: string | null
+          contact_phone: string | null
+          address: string | null
+          experiences: CvExperience[]
+          education: CvEducation[]
           skills: string[]
           is_default: boolean
           is_public: boolean
