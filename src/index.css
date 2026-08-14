@@ -6,80 +6,95 @@
 :root {
   --radius: 0.85rem;
 
-  /* Neutros: cinza levemente frio, não cinza puro nem cream — base "organizada" para o site inteiro */
-  --background: oklch(0.99 0.002 260);
-  --foreground: oklch(0.2 0.02 258);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.02 258);
+  /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
+     Rampa de três degraus para dar elevação sem sombra pesada —
+     página #F8F8F8 → card #FFFFFF → superfície de apoio #F2F2F2 */
+  --background: oklch(0.98 0 0);           /* #F8F8F8 */
+  --foreground: oklch(0.321 0 0);          /* #333333 — 11.9:1 sobre o fundo */
+  --card: oklch(1 0 0);                    /* #FFFFFF */
+  --card-foreground: oklch(0.321 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.02 258);
+  --popover-foreground: oklch(0.321 0 0);
 
-  /* Azul: usado só em campos específicos e deliberados (links, foco, estado ativo, verificação) —
-     é um azul-marinho contido, não o ciano vibrante usado antes em todo lugar */
-  --primary: oklch(0.4 0.09 255);
-  --primary-foreground: oklch(0.99 0 0);
+  /* Azul da marca — navegação, links, foco, estado ativo, verificação */
+  --primary: oklch(0.504 0.148 255.8);     /* #1E63B6 */
+  --primary-foreground: oklch(1 0 0);      /* branco — 5.97:1 sobre o azul */
 
-  --secondary: oklch(0.95 0.006 260);
-  --secondary-foreground: oklch(0.22 0.02 258);
-  --muted: oklch(0.955 0.006 260);
-  --muted-foreground: oklch(0.48 0.02 258);
-  --accent: oklch(0.94 0.008 258);
-  --accent-foreground: oklch(0.22 0.02 258);
+  --secondary: oklch(0.961 0 0);           /* #F2F2F2 */
+  --secondary-foreground: oklch(0.321 0 0);
+  --muted: oklch(0.961 0 0);               /* #F2F2F2 */
+  --muted-foreground: oklch(0.50 0 0);     /* #636363 — 5.4:1 na superfície mais escura */
+  --accent: oklch(0.94 0.012 255.8);       /* #E6ECF3 — azul lavado, hover de menu */
+  --accent-foreground: oklch(0.344 0.09 252);
 
   --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0 0);
+  --destructive-foreground: oklch(1 0 0);
   --success: oklch(0.58 0.13 155);
-  --success-foreground: oklch(0.99 0 0);
+  --success-foreground: oklch(1 0 0);
 
-  --border: oklch(0.9 0.008 260);
-  --input: oklch(0.9 0.008 260);
-  --ring: oklch(0.4 0.09 255 / 40%);
+  --border: oklch(0.90 0 0);               /* #DEDEDE */
+  --input: oklch(0.90 0 0);
+  --ring: oklch(0.504 0.148 255.8 / 40%);
 
-  /* Marca fixa (logotipo) — preto-azulado constante, não muda entre claro/escuro */
-  --brand-ink: oklch(0.2 0.03 258);
+  /* Marca fixa (logotipo) — azul profundo constante, não muda entre claro/escuro */
+  --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
+  --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
+  --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
 
-  /* Laranja: cor de ação/energia — reservada para CTAs de alta prioridade */
-  --brand-orange: oklch(0.705 0.191 41.6);
-  --brand-orange-strong: oklch(0.635 0.19 39);
-  --brand-orange-foreground: oklch(0.24 0.055 40);
+  /* Laranja: cor de AÇÃO. Reservada a CTA de alta prioridade e destaque.
+     Nunca recebe texto branco (2.36:1) — ver docs/IDENTIDADE_VISUAL.md §3.4
+     Os três tons têm papéis distintos e NÃO são intercambiáveis:
+       -orange        → fundo de CTA
+       -orange-strong → fundo de hover do CTA (claro demais para texto)
+       -orange-ink    → laranja como texto, calibrado para o pior fundo claro
+                        do projeto (badge em bg-brand-orange/18): 4.75:1 */
+  --brand-orange: oklch(0.747 0.180 57.4);        /* #FF8A00 — só como fundo */
+  --brand-orange-strong: oklch(0.720 0.180 55);   /* #F77F00 — hover, 4.81:1 com #333 */
+  --brand-orange-ink: oklch(0.530 0.143 52.5);    /* #A94E00 — laranja como TEXTO */
+  --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
 }
 
 .dark {
-  --background: oklch(0.16 0.014 258);
-  --foreground: oklch(0.96 0.004 90);
-  --card: oklch(0.21 0.016 258);
+  --background: oklch(0.17 0.028 252);     /* #06101B */
+  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF — 17.1:1 */
+  --card: oklch(0.22 0.030 252);           /* #101B28 */
   --card-foreground: oklch(0.96 0.004 90);
-  --popover: oklch(0.21 0.016 258);
+  --popover: oklch(0.22 0.030 252);
   --popover-foreground: oklch(0.96 0.004 90);
 
-  --primary: oklch(0.72 0.1 232);
-  --primary-foreground: oklch(0.15 0.02 250);
+  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo */
+  --primary-foreground: oklch(0.17 0.028 252);
 
-  --secondary: oklch(0.27 0.016 258);
+  --secondary: oklch(0.27 0.026 252);      /* #1D2733 */
   --secondary-foreground: oklch(0.96 0.004 90);
-  --muted: oklch(0.26 0.014 258);
-  --muted-foreground: oklch(0.68 0.014 258);
-  --accent: oklch(0.3 0.018 258);
+  --muted: oklch(0.26 0.024 252);
+  --muted-foreground: oklch(0.70 0.020 252);  /* #96A0AB — 7.2:1 */
+  --accent: oklch(0.30 0.030 252);
   --accent-foreground: oklch(0.96 0.004 90);
 
   --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.16 0 0);
+  --destructive-foreground: oklch(0.17 0.028 252);
   --success: oklch(0.66 0.14 155);
-  --success-foreground: oklch(0.16 0 0);
+  --success-foreground: oklch(0.17 0.028 252);
 
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 14%);
-  --ring: oklch(0.72 0.1 232 / 50%);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.70 0.130 255.8 / 50%);
 
-  --brand-ink: oklch(0.2 0.03 258);
+  /* Cor de logotipo: idêntica ao tema claro, por definição */
+  --brand-ink: oklch(0.344 0.090 252);
+  --brand-blue: oklch(0.70 0.130 255.8);
+  --brand-blue-strong: oklch(0.63 0.135 256);
 
-  --brand-orange: oklch(0.75 0.17 45);
-  --brand-orange-strong: oklch(0.68 0.18 42);
-  --brand-orange-foreground: oklch(0.18 0.04 40);
+  --brand-orange: oklch(0.780 0.170 57.4);        /* #FF9732 — 8.9:1 sobre o fundo */
+  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F — 4.83:1 com #333 */
+  --brand-orange-ink: oklch(0.780 0.170 57.4);    /* no escuro o laranja puro já passa */
+  --brand-orange-foreground: oklch(0.321 0 0);
 }
 
 @theme inline {
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -104,8 +119,11 @@
   --color-ring: var(--ring);
 
   --color-brand-ink: var(--brand-ink);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-blue-strong: var(--brand-blue-strong);
   --color-brand-orange: var(--brand-orange);
   --color-brand-orange-strong: var(--brand-orange-strong);
+  --color-brand-orange-ink: var(--brand-orange-ink);
   --color-brand-orange-foreground: var(--brand-orange-foreground);
 
   --radius-sm: calc(var(--radius) - 6px);
@@ -120,15 +138,20 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: "cv11", "ss01";
+  }
+  /* Montserrat só em título de página e de seção. Os <h3> do projeto são
+     títulos de card, que por especificação ficam em Poppins — ver §4.3 */
+  h1,
+  h2 {
+    @apply font-display;
   }
 }
 
 @layer utilities {
-  /* Mancha de fundo discreta para heros e cabeçalhos — só laranja + neutro escuro, sem azul */
+  /* Mancha de fundo discreta para heros e cabeçalhos — laranja + azul da marca */
   .brand-mesh {
     background-image:
       radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
-      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-ink) 7%, transparent) 0%, transparent 100%);
+      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 10%, transparent) 0%, transparent 100%);
   }
 }

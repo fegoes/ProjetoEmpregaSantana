@@ -43,7 +43,7 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
     <Link to={`/vagas/${vaga.id}`} className="group block h-full">
       <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         {vaga.is_featured && (
-          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-strong backdrop-blur-sm">
+          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink backdrop-blur-sm">
             <Sparkles className="size-3" /> Destaque
           </span>
         )}

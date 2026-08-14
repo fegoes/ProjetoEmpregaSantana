@@ -36,7 +36,7 @@ export function Navbar() {
             <Briefcase className="size-4.5" strokeWidth={2.4} />
           </span>
           <span className="text-lg font-extrabold tracking-tight">
-            Emprega<span className="text-brand-orange-strong">Santana</span>
+            Emprega<span className="text-brand-orange-ink">Santana</span>
           </span>
         </Link>
 
