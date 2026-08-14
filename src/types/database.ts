@@ -44,6 +44,7 @@ export interface Database {
           state: string | null
           country: string
           is_admin: boolean
+          is_active: boolean
           created_at: string
           updated_at: string
         }
@@ -142,7 +143,7 @@ export interface Database {
         Row: {
           id: string
           empresa_id: string | null
-          created_by: string
+          created_by: string | null
           title: string
           description_html: string | null
           employment_type: EmploymentType

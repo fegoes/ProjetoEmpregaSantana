@@ -35,6 +35,21 @@ export function useSaveVaga() {
   })
 }
 
+export function useDeleteVaga() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({ id }: { id: string; empresaId?: string }) => {
+      const { error } = await supabase.from('vagas').delete().eq('id', id)
+      if (error) throw error
+    },
+    onSuccess: (_data, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['vagas', 'by-empresa', variables.empresaId] })
+      queryClient.invalidateQueries({ queryKey: ['vagas', 'list'] })
+      queryClient.invalidateQueries({ queryKey: ['admin', 'vagas'] })
+    },
+  })
+}
+
 export function useVagaCandidaturas(vagaId: string | undefined) {
   return useQuery({
     queryKey: ['candidaturas', 'by-vaga', vagaId],

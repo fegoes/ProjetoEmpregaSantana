@@ -1,8 +1,10 @@
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
+import { useDeleteVaga } from '@/hooks/useEmpresaVagas'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatusBadge } from '@/components/StatusBadge'
 import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
 
 function useAllVagas() {
   return useQuery({
@@ -20,6 +22,16 @@ function useAllVagas() {
 
 export default function AdminVagasPage() {
   const { data: vagas, isLoading } = useAllVagas()
+  const deleteVaga = useDeleteVaga()
+  const queryClient = useQueryClient()
+
+  const handleDelete = (id: string, title: string) => {
+    if (!window.confirm(`Excluir a vaga "${title}"? As candidaturas recebidas também serão apagadas. Essa ação não pode ser desfeita.`)) return
+    deleteVaga.mutate(
+      { id },
+      { onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'vagas'] }) },
+    )
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -32,12 +44,21 @@ export default function AdminVagasPage() {
               <CardTitle className="text-base">{vaga.title}</CardTitle>
               <StatusBadge status={vaga.status} />
             </CardHeader>
-            <CardContent className="flex items-center gap-2 text-sm text-muted-foreground">
+            <CardContent className="flex items-center justify-between gap-2 text-sm text-muted-foreground">
               {vaga.empresas ? (
                 <span>{vaga.empresas.nome_fantasia}</span>
               ) : (
                 <Badge variant="destructive">Sem empresa cadastrada</Badge>
               )}
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-destructive hover:text-destructive"
+                onClick={() => handleDelete(vaga.id, vaga.title)}
+                disabled={deleteVaga.isPending}
+              >
+                Excluir
+              </Button>
             </CardContent>
           </Card>
         ))}

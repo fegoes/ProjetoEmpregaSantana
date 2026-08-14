@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useEmpresa } from '@/contexts/EmpresaContext'
-import { useEmpresaVagas } from '@/hooks/useEmpresaVagas'
+import { useEmpresaVagas, useDeleteVaga } from '@/hooks/useEmpresaVagas'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { StatusBadge } from '@/components/StatusBadge'
@@ -8,6 +8,12 @@ import { StatusBadge } from '@/components/StatusBadge'
 export default function EmpresaVagasListPage() {
   const { empresa } = useEmpresa()
   const { data: vagas, isLoading } = useEmpresaVagas(empresa?.id)
+  const deleteVaga = useDeleteVaga()
+
+  const handleDelete = (id: string, title: string) => {
+    if (!window.confirm(`Excluir a vaga "${title}"? As candidaturas recebidas também serão apagadas. Essa ação não pode ser desfeita.`)) return
+    deleteVaga.mutate({ id, empresaId: empresa?.id })
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -33,6 +39,15 @@ export default function EmpresaVagasListPage() {
               </Button>
               <Button asChild size="sm" variant="outline">
                 <Link to={`/empresa/vagas/${vaga.id}/candidatos`}>Candidatos</Link>
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-destructive hover:text-destructive"
+                onClick={() => handleDelete(vaga.id, vaga.title)}
+                disabled={deleteVaga.isPending}
+              >
+                Excluir
               </Button>
             </CardContent>
           </Card>

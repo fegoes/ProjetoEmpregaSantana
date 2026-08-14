@@ -31,9 +31,31 @@ function useUpdateEmpresaStatus() {
   })
 }
 
+function useDeleteEmpresa() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from('empresas').delete().eq('id', id)
+      if (error) throw error
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'empresas'] }),
+  })
+}
+
 export default function AdminEmpresasPage() {
   const { data: empresas, isLoading } = useAllEmpresas()
   const updateStatus = useUpdateEmpresaStatus()
+  const deleteEmpresa = useDeleteEmpresa()
+
+  const handleDelete = (id: string, nome: string) => {
+    if (
+      !window.confirm(
+        `Excluir "${nome}" permanentemente? Todas as vagas, candidaturas recebidas nelas e vínculos de equipe dessa empresa serão apagados junto. Essa ação não pode ser desfeita.`,
+      )
+    )
+      return
+    deleteEmpresa.mutate(id)
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -65,6 +87,15 @@ export default function AdminEmpresasPage() {
                   Suspender
                 </Button>
               )}
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-destructive hover:text-destructive"
+                onClick={() => handleDelete(empresa.id, empresa.nome_fantasia)}
+                disabled={deleteEmpresa.isPending}
+              >
+                Excluir
+              </Button>
             </CardContent>
           </Card>
         ))}

@@ -56,6 +56,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { profile: nextProfile, roles: nextRoles } = await loadProfileAndRoles(
       nextSession.user.id,
     )
+
+    if (!nextProfile || !nextProfile.is_active) {
+      await supabase.auth.signOut()
+      setSession(null)
+      setProfile(null)
+      setRoles([])
+      return
+    }
+
     setProfile(nextProfile)
     setRoles(nextRoles)
   }, [])
@@ -79,8 +88,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [hydrate])
 
   const signIn: AuthContextValue['signIn'] = async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
-    return { error: error?.message ?? null }
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) return { error: error.message }
+
+    if (data.user) {
+      const { data: activeCheck } = await supabase
+        .from('profiles')
+        .select('is_active')
+        .eq('id', data.user.id)
+        .single()
+      if (!activeCheck || !activeCheck.is_active) {
+        await supabase.auth.signOut()
+        return { error: 'Sua conta foi desativada. Entre em contato com o suporte.' }
+      }
+    }
+
+    return { error: null }
   }
 
   const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName) => {
