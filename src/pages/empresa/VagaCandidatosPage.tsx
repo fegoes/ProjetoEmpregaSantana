@@ -20,7 +20,7 @@ export default function VagaCandidatosPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Candidatos</h1>
+      <h1 className="text-2xl font-extrabold tracking-tight">Candidatos</h1>
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
 

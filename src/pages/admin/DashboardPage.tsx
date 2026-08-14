@@ -27,7 +27,7 @@ export default function AdminDashboardPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Painel administrativo</h1>
+      <h1 className="text-2xl font-extrabold tracking-tight">Painel administrativo</h1>
       <div className="grid gap-4 sm:grid-cols-4">
         {[
           { label: 'Usuários', value: counts?.usuarios },

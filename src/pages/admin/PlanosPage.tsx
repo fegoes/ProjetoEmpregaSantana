@@ -33,7 +33,7 @@ export default function AdminPlanosPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold">Cadastro de Planos</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de Planos</h1>
         <p className="text-sm text-muted-foreground">
           Checkout/cobrança via Stripe é implementado na Fase 3 (docs/PRD.md seção 6). Por ora, os planos são dados de referência.
         </p>

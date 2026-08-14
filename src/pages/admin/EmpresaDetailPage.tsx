@@ -36,7 +36,7 @@ export default function AdminEmpresaDetailPage() {
           <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-cover" />
         )}
         <div>
-          <h1 className="text-2xl font-semibold">{empresa.nome_fantasia}</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>
           <div className="mt-2 flex items-center gap-2">
             <StatusBadge status={empresa.status} />
             <Button size="sm" variant="outline" onClick={() => toggleVerified.mutate()}>

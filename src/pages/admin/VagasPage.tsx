@@ -23,7 +23,7 @@ export default function AdminVagasPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Lista de Vagas</h1>
+      <h1 className="text-2xl font-extrabold tracking-tight">Lista de Vagas</h1>
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
       <div className="flex flex-col gap-2">
         {vagas?.map((vaga) => (

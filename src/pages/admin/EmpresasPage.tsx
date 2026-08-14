@@ -37,7 +37,7 @@ export default function AdminEmpresasPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Cadastro de Empresas</h1>
+      <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de Empresas</h1>
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
       <div className="flex flex-col gap-3">
         {empresas?.map((empresa) => (

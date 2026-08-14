@@ -20,7 +20,7 @@ export default function AdminAdsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold">Campo de ADS</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">Campo de ADS</h1>
         <p className="text-sm text-muted-foreground">
           Impulsionamento pago (self-serve, checkout Stripe avulso) é roadmap pós-Fase 3 — ver docs/PRD.md
           seção 6.4. Esta tela só lista/gerencia registros manuais por enquanto.

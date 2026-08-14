@@ -20,7 +20,7 @@ export default function CvListPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">Meus currículos</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">Meus currículos</h1>
           <p className="text-sm text-muted-foreground">
             Crie versões diferentes para se candidatar a vagas distintas.
           </p>

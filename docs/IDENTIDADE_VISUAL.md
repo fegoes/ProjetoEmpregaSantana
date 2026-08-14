@@ -1,9 +1,10 @@
 # EmpregaSantana — Identidade Visual & Design System
 
-> Versão 1.2 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
+> Versão 1.3 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
 > Fonte de verdade: **o manual de marca**. Onde o código diverge, o código é que muda (ver §9).
-> Estado: **Blocos 1, 2 e 3 aplicados** (§9.1). Pendência real remanescente: os assets vetoriais do
-> selo oficial (§7) — o produto usa o fallback tile+ícone documentado em §6.2 até o logo em SVG
+> Estado: **Blocos 1, 2, 3 e 4 aplicados** (§9.1) — paleta, logo/favicon, correções pontuais e
+> tipografia consistente em toda tela autenticada. Pendência real remanescente: os assets vetoriais
+> do selo oficial (§7) — o produto usa o fallback tile+ícone documentado em §6.2 até o logo em SVG
 > existir em `public/brand/`.
 > Os blocos de código deste documento refletem o que está em `src/index.css` hoje.
 
@@ -683,11 +684,21 @@ A previsão de "sem tocar em nenhum componente" **não se confirmou**, e vale re
 `violet` removido de `StatusBadge.tsx:27` (→ `bg-primary/12 text-primary border-primary/25`, unificando com `em_analise`/`enviada` — a paleta oficial não tem uma sexta cor pra status "entrevista" ficar distinto); ano corrigido em `RootLayout.tsx` (era "desde 2026", virou "desde agosto de 2022"); tagline oficial aplicada em `<meta description>`/`og:description`/`twitter:description`, no eyebrow+subtítulo do hero da Home ("Conecta · Orienta · Transforma" + o texto completo) e no footer; `docs/PRD.md` (§8.1 e novo §8.2) e `README.md` (era o boilerplate em inglês do Vite) atualizados.
 *Visível para o usuário final: sim — footer, hero, badge de entrevista, favicon da aba do navegador.*
 
+**Bloco 4 — Tipografia em todas as telas (painéis autenticados)** ✅ **APLICADO**
+Auditoria completa pós-Bloco 3, disparada por revisão explícita de "todas as telas do sistema". Repetido o grep de cores cru (`#hex`/`rgb(`/`hsl(`/utilitário Tailwind cru tipo `bg-blue-500`) em todo `src/` — **zero ocorrências fora de `src/index.css`**, a paleta já estava 100% tokenizada. O que a varredura por cor não pega — e esta rodada corrigiu:
+
+- **`CardTitle` (`src/components/ui/card.tsx`) não tinha `font-display`.** É um `<div>` do shadcn, não um `<h1>`/`<h2>`, então a regra do `@layer base` (§5, `h1, h2 { @apply font-display }`) nunca alcançava. Resultado prático: os 29 arquivos que usam `<CardTitle>` — onboarding de candidato/autônomo/empresa, login, cadastro, `CvEditPage`, `VagaFormPage`, perfil de empresa/autônomo, números de destaque dos dashboards (`PainelPage`, `admin/DashboardPage`) — renderizavam o título em Poppins (corpo), não Montserrat. É justamente a "área logada nunca revisada" apontada em §9.2. Corrigido com uma linha em `card.tsx` (`font-display` na classe base do `CardTitle`), sem tocar nos 29 usos. Não conflita com a regra dos `<h3>` de `VagaCard`/`AutonomoCard`/`EmpresaCard` (§4.3): aqueles são `<h3>` cru, um componente arquiteturalmente diferente do `CardTitle`.
+- **`<h1>` de página com dois pesos concorrentes.** Todas as páginas públicas de destino (`EmpresasDirectoryPage`, `EmpresaDetailPage`, `AutonomoDetailPage`, `VagaDetailPage`, `StaticPage`, `ExplorarPage`, `HomePage`) já usavam `font-extrabold tracking-tight`; 15 páginas internas (`admin/*`, `empresa/VagasListPage`, `empresa/VagaCandidatosPage`, `empresa/PainelPage`, `candidato/CvListPage`, `candidato/CandidaturasPage`, `shared/PerfilPage`, `public/PlanosPage`) ficaram para trás em `font-semibold` — peso mais leve, sem `tracking-tight`, contradizendo a própria razão de ser da Montserrat no manual ("ganha peso e autoridade em título", §4). Unificado para `font-extrabold tracking-tight` nas 15.
+- Verificado com Playwright autenticado como cada persona (admin, empresa, candidato, autônomo) nas telas internas principais — `getComputedStyle` confirma `font-family: Montserrat` e `font-weight: 800` no `<h1>` de cada uma, zero erros de console.
+- Variantes de botão (`cta` vs `default`) já estavam corretas em toda a área logada (ex.: "Nova vaga" no painel é navegação → `default`; "Publicar vaga" no formulário é a ação real → `cta`) — nada a mudar ali.
+
+*Visível para o usuário final: sim — todo título de card em toda tela autenticada (antes em Poppins, agora Montserrat) e o `<h1>` de 15 páginas internas.*
+
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 
 - **Não há alternador de tema.** O bloco `.dark` existe, é completo e está validado — mas nenhum controle na UI o ativa. O site sempre abre claro. Já registrado em `docs/PRD.md` §8.1.
 - **Escalas implícitas.** Só cor e raio são tokenizados. Espaçamento, sombra e tipografia são utilitários Tailwind repetidos à mão pelos arquivos. A §4.3 desta doc é o primeiro passo para tokenizar a tipografia.
-- **Áreas logadas nunca passaram por revisão visual** (painel de empresa, admin, onboarding). A migração de tokens as alcança automaticamente, mas o layout delas não foi desenhado.
+- **Áreas logadas nunca passaram por revisão de *layout*** (painel de empresa, admin, onboarding). A migração de tokens as alcança automaticamente, e o Bloco 4 corrigiu a tipografia (título de card em Montserrat, `<h1>` unificado) — mas o layout em si (densidade, grid, hierarquia visual além de cor/fonte) não foi desenhado.
 
 ---
 
@@ -701,6 +712,8 @@ Marcar conforme a implementação avançar.
 - [x] Montserrat + Poppins carregados em `index.html` (§4.1)
 - [x] `--font-display` registrado e aplicado em `h1`–`h2` (ver nota na §4.3)
 - [x] `font-feature-settings` da Plus Jakarta Sans removido
+- [x] `CardTitle` (`ui/card.tsx`) com `font-display` — cobre os 29 usos (onboarding, login, cadastro, formulários, dashboards)
+- [x] `<h1>` de página unificado em `font-extrabold tracking-tight` nas 15 páginas internas que ainda usavam `font-semibold`
 
 **Logotipo e assets**
 - [x] `src/components/brand/Logo.tsx` criado

@@ -35,7 +35,7 @@ export default function AdminUsuariosPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-semibold">Cadastro de usuários</h1>
+      <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de usuários</h1>
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
       <div className="flex flex-col gap-2">
         {usuarios?.map((u) => (

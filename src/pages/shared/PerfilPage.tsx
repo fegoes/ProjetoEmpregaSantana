@@ -28,7 +28,7 @@ export default function PerfilPage() {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-semibold">Olá, {profile?.full_name ?? 'usuário'}</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">Olá, {profile?.full_name ?? 'usuário'}</h1>
         <p className="text-sm text-muted-foreground">
           <Link to="/perfil/conta" className="hover:underline">
             Configurações de conta

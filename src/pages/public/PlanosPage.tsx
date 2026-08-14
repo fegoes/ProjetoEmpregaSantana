@@ -34,7 +34,7 @@ export default function PlanosPage() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="text-2xl font-semibold">Planos</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">Planos</h1>
         <p className="text-sm text-muted-foreground">
           Checkout via Stripe chega na Fase 3 — por enquanto esta é a vitrine de planos.
         </p>

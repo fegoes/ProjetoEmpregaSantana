@@ -18,7 +18,7 @@ export default function EmpresaPainelPage() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-semibold">{empresa.nome_fantasia}</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>
           <StatusBadge status={empresa.status} />
         </div>
         <Button asChild>
