@@ -397,7 +397,39 @@ export interface Database {
         Relationships: []
       }
     }
-    Views: Record<string, never>
+    Views: {
+      empresas_public: {
+        Row: {
+          id: string
+          owner_id: string
+          razao_social: string | null
+          nome_fantasia: string
+          cnpj: string | null
+          sector: string | null
+          description_html: string | null
+          logo_url: string | null
+          cover_url: string | null
+          website: string | null
+          city: string | null
+          state: string | null
+          is_verified: boolean
+          status: EmpresaStatus
+          address: string | null
+          address_visible: boolean
+          mission_vision_values_html: string | null
+          mission_visible: boolean
+          org_chart_html: string | null
+          org_chart_visible: boolean
+          interior_photo_urls: string[]
+          interior_photos_visible: boolean
+          employee_count: string | null
+          employee_count_visible: boolean
+          created_at: string
+          updated_at: string
+        }
+        Relationships: []
+      }
+    }
     Functions: Record<string, never>
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>

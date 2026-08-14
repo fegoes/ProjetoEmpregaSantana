@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEmpresa } from '@/hooks/useEmpresas'
+import { useEmpresaAdmin } from '@/hooks/useEmpresas'
 import { supabase } from '@/lib/supabase'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 
 export default function AdminEmpresaDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { data: empresa, isLoading } = useEmpresa(id)
+  const { data: empresa, isLoading } = useEmpresaAdmin(id)
   const queryClient = useQueryClient()
 
   const toggleVerified = useMutation({
