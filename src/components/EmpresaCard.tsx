@@ -27,6 +27,9 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
               src={empresa.logo_url}
               alt={empresa.nome_fantasia}
               className="size-10 shrink-0 rounded-full border object-cover"
+              loading="lazy"
+              width={40}
+              height={40}
             />
           ) : (
             <InitialsAvatar name={empresa.nome_fantasia} size="md" />

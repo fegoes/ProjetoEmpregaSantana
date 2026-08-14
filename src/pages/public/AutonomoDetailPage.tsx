@@ -47,7 +47,12 @@ export default function AutonomoDetailPage() {
   return (
     <div className="flex flex-col gap-6">
       {autonomo.portfolio_urls?.length > 0 && (
-        <ImageCarousel images={autonomo.portfolio_urls} alt={name} className="aspect-[21/9] w-full rounded-2xl" />
+        <ImageCarousel
+          images={autonomo.portfolio_urls}
+          alt={name}
+          className="aspect-[21/9] w-full rounded-2xl"
+          loading="eager"
+        />
       )}
       <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-1 space-y-5">

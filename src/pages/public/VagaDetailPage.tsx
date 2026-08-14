@@ -131,6 +131,7 @@ export default function VagaDetailPage() {
           images={vaga.photo_urls?.length ? vaga.photo_urls : [vaga.photo_url as string]}
           alt={vaga.title}
           className="aspect-[21/9] w-full rounded-2xl"
+          loading="eager"
         />
       )}
       <div className="flex flex-col gap-6 lg:flex-row">

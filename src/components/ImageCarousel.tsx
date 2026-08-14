@@ -6,11 +6,15 @@ interface ImageCarouselProps {
   images: string[]
   alt: string
   className?: string
+  /** 'eager' quando é o maior elemento visível ao carregar a página (banner
+   * de topo em tela de detalhe) — lazy adiaria o LCP. Padrão 'lazy', certo
+   * pra miniaturas dentro de grid, quase sempre abaixo da dobra. */
+  loading?: 'lazy' | 'eager'
 }
 
 // Usado dentro de cards que são <Link>: os controles precisam de
 // stopPropagation + preventDefault pra não disparar a navegação do card.
-export function ImageCarousel({ images, alt, className }: ImageCarouselProps) {
+export function ImageCarousel({ images, alt, className, loading = 'lazy' }: ImageCarouselProps) {
   const [index, setIndex] = React.useState(0)
   const clampedIndex = Math.min(index, images.length - 1)
 
@@ -24,7 +28,13 @@ export function ImageCarousel({ images, alt, className }: ImageCarouselProps) {
 
   return (
     <div className={cn('group/carousel relative size-full overflow-hidden bg-muted', className)}>
-      <img src={images[clampedIndex]} alt={alt} className="size-full object-cover" loading="lazy" />
+      <img
+        src={images[clampedIndex]}
+        alt={alt}
+        className="size-full object-cover"
+        loading={loading}
+        fetchPriority={loading === 'eager' ? 'high' : undefined}
+      />
       {images.length > 1 && (
         <>
           <button

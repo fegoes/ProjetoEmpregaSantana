@@ -61,6 +61,9 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
               src={vaga.empresas.logo_url}
               alt={empresaNome}
               className="size-11 shrink-0 rounded-xl border object-cover"
+              loading="lazy"
+              width={44}
+              height={44}
             />
           ) : (
             <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground/70">
