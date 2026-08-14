@@ -34,3 +34,7 @@ export function TermosPage() {
 export function PrivacidadePage() {
   return <InstitutionalPage slug="privacidade" fallbackTitle="Política de privacidade" />
 }
+
+export function LgpdPage() {
+  return <InstitutionalPage slug="lgpd" fallbackTitle="Privacidade e LGPD" />
+}

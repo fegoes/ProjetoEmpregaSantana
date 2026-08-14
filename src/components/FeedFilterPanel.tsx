@@ -1,5 +1,6 @@
+import * as React from 'react'
 import type { ReactNode } from 'react'
-import { SlidersHorizontal } from 'lucide-react'
+import { ChevronDown, SlidersHorizontal } from 'lucide-react'
 import { useCategories } from '@/hooks/useCategories'
 import {
   DEFAULT_FEED_FILTERS,
@@ -62,17 +63,30 @@ function CheckboxRow({
 export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
   const { data: categories } = useCategories()
   const inline = layout === 'inline'
+  const [expanded, setExpanded] = React.useState(false)
+  const activeCount =
+    value.categories.length + value.employmentTypes.length + value.pricingModels.length + (value.remoteOnly ? 1 : 0)
 
   const sectionClass = inline ? 'flex flex-col gap-2' : 'flex flex-col gap-2.5'
   const optionsClass = inline ? 'flex flex-wrap gap-2' : 'flex flex-col gap-1.5'
 
   return (
-    <div className={inline ? 'flex flex-col gap-4' : 'flex flex-col gap-6'}>
+    <div className={inline ? 'flex flex-col gap-4' : 'flex flex-col gap-4 lg:gap-6'}>
       {!inline && (
         <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-1.5 text-sm font-semibold">
+          <button
+            type="button"
+            onClick={() => setExpanded((e) => !e)}
+            className="flex items-center gap-1.5 text-sm font-semibold lg:cursor-default"
+          >
             <SlidersHorizontal className="size-4" /> Filtros
-          </h2>
+            {activeCount > 0 && (
+              <span className="flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+                {activeCount}
+              </span>
+            )}
+            <ChevronDown className={cn('size-4 transition-transform lg:hidden', expanded && 'rotate-180')} />
+          </button>
           {hasActiveFilters(value) && (
             <button
               type="button"
@@ -85,6 +99,7 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
         </div>
       )}
 
+      <div className={cn('flex flex-col gap-4', !inline && (expanded ? 'flex' : 'hidden'), !inline && 'lg:flex lg:gap-6')}>
       <div className={sectionClass}>
         <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">O que buscar</p>
         <div className={optionsClass}>
@@ -208,6 +223,7 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
           </div>
         </div>
       )}
+      </div>
     </div>
   )
 }

@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
-import { useEmpresa } from '@/contexts/EmpresaContext'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -10,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 
 export default function EmpresaOnboardingPage() {
   const { user } = useAuth()
-  const { refresh } = useEmpresa()
   const navigate = useNavigate()
   const [nomeFantasia, setNomeFantasia] = React.useState('')
   const [cnpj, setCnpj] = React.useState('')
@@ -36,7 +34,6 @@ export default function EmpresaOnboardingPage() {
       setError(insertError.message)
       return
     }
-    await refresh()
     navigate('/empresa/painel')
   }
 

@@ -11,7 +11,7 @@ import PlanosPage from '@/pages/public/PlanosPage'
 import LoginPage from '@/pages/public/LoginPage'
 import CadastroPage from '@/pages/public/CadastroPage'
 import CadastroConfirmarPage from '@/pages/public/CadastroConfirmarPage'
-import { SobrePage, TermosPage, PrivacidadePage } from '@/pages/public/StaticPage'
+import { SobrePage, TermosPage, PrivacidadePage, LgpdPage } from '@/pages/public/StaticPage'
 
 import EmpresasDirectoryPage from '@/pages/shared/EmpresasDirectoryPage'
 import PerfilPage from '@/pages/shared/PerfilPage'
@@ -63,6 +63,7 @@ export default function App() {
         <Route path="sobre" element={<SobrePage />} />
         <Route path="termos" element={<TermosPage />} />
         <Route path="privacidade" element={<PrivacidadePage />} />
+        <Route path="lgpd" element={<LgpdPage />} />
 
         {/* Autenticadas — comum */}
         <Route element={<ProtectedRoute />}>

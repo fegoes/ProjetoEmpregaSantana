@@ -31,6 +31,9 @@ export function RootLayout() {
             <Link to="/privacidade" className="hover:text-primary">
               Privacidade
             </Link>
+            <Link to="/lgpd" className="hover:text-primary">
+              LGPD
+            </Link>
           </nav>
           <p className="max-w-xs text-muted-foreground sm:text-right">
             Somos a sua conexão de empregabilidade no sertão — desde agosto de 2022.
