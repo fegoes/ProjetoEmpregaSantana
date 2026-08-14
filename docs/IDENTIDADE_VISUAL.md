@@ -565,9 +565,11 @@ public/
   favicon.svg              # selo flat simplificado, legível a 16px
   favicon-96.png           # fallback raster
   apple-touch-icon.png     # 180×180, fundo #FFFFFF chapado (iOS não respeita transparência)
-  og-image.png             # 1200×630, selo + tagline sobre #0D3A66
+  og-image.png             # ✅ JÁ EXISTE — revisar quando o logo oficial chegar
   site.webmanifest
 ```
+
+> **Atualização:** a `main` trouxe SEO (`og-image.png`, `robots.txt`, sitemap, meta tags OG/Twitter em `index.html`) depois que este documento foi escrito. O `og-image.png` existe e as meta tags OG/Twitter já estão no lugar — o que resta da §7.3 é `favicon`, `apple-touch-icon`, `manifest` e `theme-color`. Quando o logo oficial chegar, o `og-image.png` deve ser refeito com o selo e a tagline.
 
 ### 7.2 Limpeza obrigatória
 

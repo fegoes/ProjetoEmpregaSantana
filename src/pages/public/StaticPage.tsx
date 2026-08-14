@@ -1,8 +1,15 @@
 import { usePaginaInstitucional } from '@/hooks/usePaginasInstitucionais'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
+import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 
 function InstitutionalPage({ slug, fallbackTitle }: { slug: string; fallbackTitle: string }) {
   const { data: pagina, isLoading } = usePaginaInstitucional(slug)
+
+  useDocumentMeta({
+    title: pagina?.title ?? fallbackTitle,
+    description: stripHtml(pagina?.content_html) || undefined,
+  })
 
   return (
     <article className="max-w-2xl">

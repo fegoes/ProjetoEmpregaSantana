@@ -2,6 +2,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { MapPin, MessageCircle, Wallet } from 'lucide-react'
 import { useAutonomo } from '@/hooks/useAutonomos'
 import { useAuth } from '@/contexts/AuthContext'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
+import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { Badge } from '@/components/ui/badge'
@@ -19,6 +21,15 @@ export default function AutonomoDetailPage() {
   const { data: autonomo, isLoading } = useAutonomo(id)
   const { user } = useAuth()
   const navigate = useNavigate()
+
+  useDocumentMeta({
+    title: autonomo
+      ? `${autonomo.profiles?.full_name ?? 'Profissional autônomo'} — ${autonomo.headline ?? 'Autônomo'}`
+      : 'Autônomo',
+    description: autonomo
+      ? stripHtml(autonomo.description_html) || autonomo.headline || undefined
+      : undefined,
+  })
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando perfil…</p>
   if (!autonomo) return <p className="text-sm text-muted-foreground">Autônomo não encontrado.</p>

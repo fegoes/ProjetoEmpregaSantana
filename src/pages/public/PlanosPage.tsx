@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 
@@ -21,6 +22,11 @@ function usePlans() {
 
 export default function PlanosPage() {
   const { data: plans, isLoading } = usePlans()
+
+  useDocumentMeta({
+    title: 'Planos',
+    description: 'Planos para empresas e autônomos no EmpregaSantana: destaque nos resultados, mais vagas ativas e acesso ao banco de currículos.',
+  })
 
   const empresaPlans = plans?.filter((p) => p.audience === 'empresa') ?? []
   const autonomoPlans = plans?.filter((p) => p.audience === 'autonomo') ?? []

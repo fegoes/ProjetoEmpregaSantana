@@ -11,6 +11,7 @@ export interface EmpresaCardData {
   city: string | null
   state: string | null
   is_verified: boolean
+  logo_url?: string | null
   vagas: { id: string; status: string }[] | null
 }
 
@@ -21,7 +22,15 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
     <Link to={`/empresas/${empresa.id}`} className="group block h-full">
       <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         <CardHeader className="flex-row items-start gap-3">
-          <InitialsAvatar name={empresa.nome_fantasia} size="md" />
+          {empresa.logo_url ? (
+            <img
+              src={empresa.logo_url}
+              alt={empresa.nome_fantasia}
+              className="size-10 shrink-0 rounded-full border object-cover"
+            />
+          ) : (
+            <InitialsAvatar name={empresa.nome_fantasia} size="md" />
+          )}
           <div className="min-w-0 pt-0.5">
             <h3 className="flex items-center gap-1.5 truncate text-[15px] leading-snug font-semibold">
               <span className="truncate">{empresa.nome_fantasia}</span>

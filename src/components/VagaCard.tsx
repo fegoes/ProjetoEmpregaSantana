@@ -27,7 +27,9 @@ export interface VagaCardData {
   location_state: string | null
   is_remote: boolean
   is_featured: boolean
-  empresas: { nome_fantasia: string; city: string | null; state: string | null } | null
+  photo_url?: string | null
+  created_at?: string
+  empresas: { nome_fantasia: string; city: string | null; state: string | null; logo_url?: string | null } | null
 }
 
 export function VagaCard({ vaga }: { vaga: VagaCardData }) {
@@ -35,24 +37,36 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
     ? 'Remoto'
     : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
   const Icon = iconForCategory(vaga.category)
+  const empresaNome = vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'
 
   return (
     <Link to={`/vagas/${vaga.id}`} className="group block h-full">
       <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         {vaga.is_featured && (
-          <span className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink">
+          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink backdrop-blur-sm">
             <Sparkles className="size-3" /> Destaque
           </span>
         )}
+        {vaga.photo_url && (
+          <div className="-mt-5 mb-1 aspect-video w-full overflow-hidden bg-muted">
+            <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" loading="lazy" />
+          </div>
+        )}
         <CardHeader className="flex-row items-start gap-3">
-          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground/70">
-            <Icon className="size-5" strokeWidth={2} />
-          </span>
+          {vaga.empresas?.logo_url ? (
+            <img
+              src={vaga.empresas.logo_url}
+              alt={empresaNome}
+              className="size-11 shrink-0 rounded-xl border object-cover"
+            />
+          ) : (
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground/70">
+              <Icon className="size-5" strokeWidth={2} />
+            </span>
+          )}
           <div className="min-w-0 pt-0.5">
             <h3 className="line-clamp-2 pr-14 text-[15px] leading-snug font-semibold">{vaga.title}</h3>
-            <p className="truncate text-sm text-muted-foreground">
-              {vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'}
-            </p>
+            <p className="truncate text-sm text-muted-foreground">{empresaNome}</p>
           </div>
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-1.5">

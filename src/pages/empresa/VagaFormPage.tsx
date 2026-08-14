@@ -5,8 +5,10 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { useSaveVaga } from '@/hooks/useEmpresaVagas'
 import { supabase } from '@/lib/supabase'
+import { uploadVagaPhoto } from '@/lib/storage'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
+import { ImageUploadField } from '@/components/ImageUploadField'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -39,6 +41,7 @@ export default function VagaFormPage() {
   const [pricingModel, setPricingModel] = React.useState<PricingModelVaga>('fixed_salary')
   const [locationCity, setLocationCity] = React.useState('')
   const [isRemote, setIsRemote] = React.useState(false)
+  const [photoUrl, setPhotoUrl] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     if (!existing) return
@@ -48,6 +51,7 @@ export default function VagaFormPage() {
     setPricingModel(existing.pricing_model)
     setLocationCity(existing.location_city ?? '')
     setIsRemote(existing.is_remote)
+    setPhotoUrl(existing.photo_url)
   }, [existing])
 
   const handleSave = async (status: VagaStatus) => {
@@ -62,6 +66,7 @@ export default function VagaFormPage() {
       pricing_model: pricingModel,
       location_city: locationCity || null,
       is_remote: isRemote,
+      photo_url: photoUrl,
       status,
     })
     navigate(`/empresa/vagas/${saved.id}/editar`)
@@ -82,6 +87,21 @@ export default function VagaFormPage() {
           <Label>Descrição</Label>
           <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} placeholder="Descreva a vaga…" />
         </div>
+
+        {id ? (
+          <ImageUploadField
+            label="Foto (opcional)"
+            currentUrl={photoUrl}
+            onUpload={(file) => uploadVagaPhoto(file, id)}
+            onUploaded={setPhotoUrl}
+            shape="banner"
+            hint="Mostrada na vaga e no card de listagem. PNG ou JPG, até 5 MB."
+          />
+        ) : (
+          <p className="text-xs text-muted-foreground">
+            Salve a vaga como rascunho para poder adicionar uma foto.
+          </p>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">

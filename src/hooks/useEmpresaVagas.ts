@@ -43,7 +43,9 @@ export function useVagaCandidaturas(vagaId: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('candidaturas')
-        .select('*, candidato_profiles ( headline, profiles ( full_name, email ) ), cv_variants ( title, summary_html )')
+        .select(
+          '*, candidato_profiles ( headline, profiles ( full_name, email ) ), cv_variants ( title, summary_html, contact_email, contact_phone, address, experiences, education, skills )',
+        )
         .eq('vaga_id', vagaId as string)
         .order('created_at', { ascending: false })
       if (error) throw error
