@@ -55,9 +55,9 @@ export default function AutonomoDetailPage() {
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {autonomo.category && (
-            <Badge variant="secondary" className="rounded-full capitalize">
-              {autonomo.category.replace(/-/g, ' ')}
+          {autonomo.categories?.label && (
+            <Badge variant="secondary" className="rounded-full">
+              {autonomo.categories.label}
             </Badge>
           )}
           <Badge variant="outline" className="rounded-full">

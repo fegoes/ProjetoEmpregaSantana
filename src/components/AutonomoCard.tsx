@@ -21,6 +21,7 @@ export interface AutonomoCardData {
   is_featured: boolean
   created_at?: string
   profiles: { full_name: string | null } | null
+  categories?: { label: string } | null
 }
 
 export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
@@ -45,9 +46,9 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
           </div>
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-1.5">
-          {autonomo.category && (
-            <Badge variant="secondary" className="rounded-full font-medium capitalize">
-              {autonomo.category.replace(/-/g, ' ')}
+          {autonomo.categories?.label && (
+            <Badge variant="secondary" className="rounded-full font-medium">
+              {autonomo.categories.label}
             </Badge>
           )}
           <Badge variant="outline" className="rounded-full font-medium">

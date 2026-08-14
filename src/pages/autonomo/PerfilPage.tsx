@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { CategorySelect } from '@/components/CategorySelect'
 import { Navigate } from 'react-router-dom'
 
 function useOwnAutonomoProfile(userId: string | undefined) {
@@ -31,6 +32,7 @@ export default function AutonomoPerfilPage() {
   const { data: autonomo, isLoading, refetch } = useOwnAutonomoProfile(user?.id)
 
   const [headline, setHeadline] = React.useState('')
+  const [category, setCategory] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
   const [hourlyRate, setHourlyRate] = React.useState('')
@@ -40,6 +42,7 @@ export default function AutonomoPerfilPage() {
   React.useEffect(() => {
     if (!autonomo) return
     setHeadline(autonomo.headline ?? '')
+    setCategory(autonomo.category ?? '')
     setDescriptionHtml(autonomo.description_html ?? '')
     setPricingModel(autonomo.pricing_model)
     setHourlyRate(autonomo.hourly_rate?.toString() ?? '')
@@ -56,6 +59,7 @@ export default function AutonomoPerfilPage() {
       .from('autonomo_profiles')
       .update({
         headline,
+        category: category || null,
         description_html: descriptionHtml,
         pricing_model: pricingModel,
         hourly_rate: hourlyRate ? Number(hourlyRate) : null,
@@ -75,6 +79,10 @@ export default function AutonomoPerfilPage() {
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="headline">Título</Label>
           <Input id="headline" value={headline} onChange={(e) => setHeadline(e.target.value)} />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="category">Categoria</Label>
+          <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label>Descrição dos serviços</Label>

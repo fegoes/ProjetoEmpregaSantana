@@ -177,6 +177,13 @@ export interface Database {
             referencedRelation: 'empresas'
             referencedColumns: ['id']
           },
+          {
+            foreignKeyName: 'vagas_category_fkey'
+            columns: ['category']
+            isOneToOne: false
+            referencedRelation: 'categories'
+            referencedColumns: ['slug']
+          },
         ]
       }
       candidato_profiles: {
@@ -302,6 +309,13 @@ export interface Database {
             isOneToOne: true
             referencedRelation: 'profiles'
             referencedColumns: ['id']
+          },
+          {
+            foreignKeyName: 'autonomo_profiles_category_fkey'
+            columns: ['category']
+            isOneToOne: false
+            referencedRelation: 'categories'
+            referencedColumns: ['slug']
           },
         ]
       }

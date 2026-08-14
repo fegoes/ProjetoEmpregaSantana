@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { CategorySelect } from '@/components/CategorySelect'
 
 export default function AutonomoOnboardingPage() {
   const { user, roles, addRole } = useAuth()
@@ -69,7 +70,7 @@ export default function AutonomoOnboardingPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="category">Categoria</Label>
-            <Input id="category" placeholder="ex.: eletricista" value={category} onChange={(e) => setCategory(e.target.value)} />
+            <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="pricingModel">Como você cobra?</Label>

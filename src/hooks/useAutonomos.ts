@@ -12,7 +12,7 @@ export function useAutonomosAtivos(filters: AutonomoFilters = {}) {
     queryFn: async () => {
       let query = supabase
         .from('autonomo_profiles')
-        .select('*, profiles ( full_name, avatar_url, city, state )')
+        .select('*, profiles ( full_name, avatar_url, city, state ), categories ( label )')
         .eq('status', 'active')
         .order('is_featured', { ascending: false })
         .order('created_at', { ascending: false })
@@ -34,7 +34,7 @@ export function useAutonomo(id: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('autonomo_profiles')
-        .select('*, profiles ( full_name, avatar_url, city, state, phone ) ')
+        .select('*, profiles ( full_name, avatar_url, city, state, phone ), categories ( label )')
         .eq('id', id as string)
         .single()
       if (error) throw error

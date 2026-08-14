@@ -9,6 +9,7 @@ import { uploadVagaPhoto } from '@/lib/storage'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { ImageUploadField } from '@/components/ImageUploadField'
+import { CategorySelect } from '@/components/CategorySelect'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -39,6 +40,7 @@ export default function VagaFormPage() {
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [employmentType, setEmploymentType] = React.useState<EmploymentType>('clt')
   const [pricingModel, setPricingModel] = React.useState<PricingModelVaga>('fixed_salary')
+  const [category, setCategory] = React.useState('')
   const [locationCity, setLocationCity] = React.useState('')
   const [isRemote, setIsRemote] = React.useState(false)
   const [photoUrl, setPhotoUrl] = React.useState<string | null>(null)
@@ -49,6 +51,7 @@ export default function VagaFormPage() {
     setDescriptionHtml(existing.description_html ?? '')
     setEmploymentType(existing.employment_type)
     setPricingModel(existing.pricing_model)
+    setCategory(existing.category ?? '')
     setLocationCity(existing.location_city ?? '')
     setIsRemote(existing.is_remote)
     setPhotoUrl(existing.photo_url)
@@ -64,6 +67,7 @@ export default function VagaFormPage() {
       description_html: descriptionHtml,
       employment_type: employmentType,
       pricing_model: pricingModel,
+      category: category || null,
       location_city: locationCity || null,
       is_remote: isRemote,
       photo_url: photoUrl,
@@ -131,6 +135,11 @@ export default function VagaFormPage() {
               <option value="per_delivery">Por entrega</option>
             </select>
           </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="category">Categoria</Label>
+          <CategorySelect id="category" kind="vaga" value={category} onChange={setCategory} />
         </div>
 
         <div className="flex flex-col gap-1.5">
