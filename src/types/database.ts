@@ -84,6 +84,16 @@ export interface Database {
           state: string | null
           is_verified: boolean
           status: EmpresaStatus
+          address: string | null
+          address_visible: boolean
+          mission_vision_values_html: string | null
+          mission_visible: boolean
+          org_chart_html: string | null
+          org_chart_visible: boolean
+          interior_photo_urls: string[]
+          interior_photos_visible: boolean
+          employee_count: string | null
+          employee_count_visible: boolean
           created_at: string
           updated_at: string
         }
@@ -128,6 +138,7 @@ export interface Database {
           category: string | null
           status: VagaStatus
           is_featured: boolean
+          photo_url: string | null
           expires_at: string | null
           created_at: string
           updated_at: string

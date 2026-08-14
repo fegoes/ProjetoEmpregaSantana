@@ -19,6 +19,7 @@ export interface AutonomoCardData {
   service_area_city: string | null
   service_area_state: string | null
   is_featured: boolean
+  created_at?: string
   profiles: { full_name: string | null } | null
 }
 

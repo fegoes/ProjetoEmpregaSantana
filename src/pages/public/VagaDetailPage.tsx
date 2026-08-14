@@ -49,12 +49,26 @@ export default function VagaDetailPage() {
         : 'A combinar'
 
   return (
-    <div className="flex flex-col gap-6 lg:flex-row">
+    <div className="flex flex-col gap-6">
+      {vaga.photo_url && (
+        <div className="aspect-[21/9] w-full overflow-hidden rounded-2xl bg-muted">
+          <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" />
+        </div>
+      )}
+      <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-1 space-y-5">
         <div className="flex items-start gap-4">
-          <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground/70">
-            <Icon className="size-6" strokeWidth={2} />
-          </span>
+          {vaga.empresas?.logo_url ? (
+            <img
+              src={vaga.empresas.logo_url}
+              alt={vaga.empresas.nome_fantasia}
+              className="size-14 shrink-0 rounded-2xl border object-cover"
+            />
+          ) : (
+            <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground/70">
+              <Icon className="size-6" strokeWidth={2} />
+            </span>
+          )}
           <div>
             <h1 className="text-2xl font-extrabold tracking-tight text-balance">{vaga.title}</h1>
             {vaga.empresas && (
@@ -109,7 +123,15 @@ export default function VagaDetailPage() {
 
           {vaga.empresas && (
             <div className="flex items-center gap-2.5 border-t pt-4">
-              <InitialsAvatar name={vaga.empresas.nome_fantasia} size="sm" />
+              {vaga.empresas.logo_url ? (
+                <img
+                  src={vaga.empresas.logo_url}
+                  alt={vaga.empresas.nome_fantasia}
+                  className="size-8 shrink-0 rounded-full border object-cover"
+                />
+              ) : (
+                <InitialsAvatar name={vaga.empresas.nome_fantasia} size="sm" />
+              )}
               <span className="truncate text-sm text-muted-foreground">{vaga.empresas.nome_fantasia}</span>
             </div>
           )}
@@ -119,6 +141,7 @@ export default function VagaDetailPage() {
           </Button>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }

@@ -27,15 +27,22 @@ export default function AdminEmpresaDetailPage() {
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
   if (!empresa) return <p className="text-sm text-muted-foreground">Empresa não encontrada.</p>
 
+  const visibilityNote = (visible: boolean) => (visible ? '' : ' (oculto no perfil público)')
+
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-semibold">{empresa.nome_fantasia}</h1>
-        <div className="mt-2 flex items-center gap-2">
-          <StatusBadge status={empresa.status} />
-          <Button size="sm" variant="outline" onClick={() => toggleVerified.mutate()}>
-            {empresa.is_verified ? 'Remover verificação' : 'Marcar como verificada'}
-          </Button>
+      <div className="flex items-start gap-3">
+        {empresa.logo_url && (
+          <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-cover" />
+        )}
+        <div>
+          <h1 className="text-2xl font-semibold">{empresa.nome_fantasia}</h1>
+          <div className="mt-2 flex items-center gap-2">
+            <StatusBadge status={empresa.status} />
+            <Button size="sm" variant="outline" onClick={() => toggleVerified.mutate()}>
+              {empresa.is_verified ? 'Remover verificação' : 'Marcar como verificada'}
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -48,6 +55,26 @@ export default function AdminEmpresaDetailPage() {
           <span>Setor: {empresa.sector ?? '—'}</span>
           <span>Cidade: {[empresa.city, empresa.state].filter(Boolean).join(' — ') || '—'}</span>
           <span>Site: {empresa.website ?? '—'}</span>
+          <span>
+            Endereço: {empresa.address ?? '—'}
+            {empresa.address && visibilityNote(empresa.address_visible)}
+          </span>
+          <span>
+            Nº de funcionários: {empresa.employee_count ?? '—'}
+            {empresa.employee_count && visibilityNote(empresa.employee_count_visible)}
+          </span>
+          <span>
+            Missão/visão/valores: {empresa.mission_vision_values_html ? 'preenchido' : '—'}
+            {empresa.mission_vision_values_html && visibilityNote(empresa.mission_visible)}
+          </span>
+          <span>
+            Organograma: {empresa.org_chart_html ? 'preenchido' : '—'}
+            {empresa.org_chart_html && visibilityNote(empresa.org_chart_visible)}
+          </span>
+          <span>
+            Fotos internas: {empresa.interior_photo_urls.length}
+            {empresa.interior_photo_urls.length > 0 && visibilityNote(empresa.interior_photos_visible)}
+          </span>
         </CardContent>
       </Card>
 

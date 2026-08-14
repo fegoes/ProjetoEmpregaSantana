@@ -6,13 +6,16 @@ import { VagaCard } from '@/components/VagaCard'
 import { AutonomoCard } from '@/components/AutonomoCard'
 import { EmptyState } from '@/components/EmptyState'
 import { ShowMoreGrid } from '@/components/ShowMoreGrid'
+import { FeedFilterPanel } from '@/components/FeedFilterPanel'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
+import { DEFAULT_FEED_FILTERS, filterAutonomos, filterVagas } from '@/lib/feedFilters'
 
 export default function ExplorarPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [term, setTerm] = React.useState(searchParams.get('q') ?? '')
   const [debounced, setDebounced] = React.useState(searchParams.get('q') ?? '')
+  const [filters, setFilters] = React.useState(DEFAULT_FEED_FILTERS)
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -25,7 +28,13 @@ export default function ExplorarPage() {
 
   const vagasQuery = useVagasPublicadas({ search: debounced })
   const autonomosQuery = useAutonomosAtivos({ search: debounced })
-  const totalResults = (vagasQuery.data?.length ?? 0) + (autonomosQuery.data?.length ?? 0)
+
+  const vagas = React.useMemo(() => filterVagas(vagasQuery.data ?? [], filters), [vagasQuery.data, filters])
+  const autonomos = React.useMemo(
+    () => filterAutonomos(autonomosQuery.data ?? [], filters),
+    [autonomosQuery.data, filters],
+  )
+  const totalResults = vagas.length + autonomos.length
 
   return (
     <div className="flex flex-col gap-8">
@@ -44,32 +53,35 @@ export default function ExplorarPage() {
             className="h-11 rounded-full pl-10"
           />
         </div>
+        <div className="mt-4 max-w-2xl rounded-2xl border p-4">
+          <FeedFilterPanel value={filters} onChange={setFilters} layout="inline" />
+        </div>
       </div>
 
       {debounced && (
         <>
-          {vagasQuery.data && vagasQuery.data.length > 0 && (
+          {vagas.length > 0 && (
             <section>
               <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                Vagas <span className="text-foreground">({vagasQuery.data.length})</span>
+                Vagas <span className="text-foreground">({vagas.length})</span>
               </h2>
               <ShowMoreGrid
                 key={`vagas-${debounced}`}
-                items={vagasQuery.data}
+                items={vagas}
                 keyExtractor={(vaga) => vaga.id}
                 renderItem={(vaga) => <VagaCard vaga={vaga} />}
               />
             </section>
           )}
 
-          {autonomosQuery.data && autonomosQuery.data.length > 0 && (
+          {autonomos.length > 0 && (
             <section>
               <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                Autônomos <span className="text-foreground">({autonomosQuery.data.length})</span>
+                Autônomos <span className="text-foreground">({autonomos.length})</span>
               </h2>
               <ShowMoreGrid
                 key={`autonomos-${debounced}`}
-                items={autonomosQuery.data}
+                items={autonomos}
                 keyExtractor={(autonomo) => autonomo.id}
                 renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
               />
@@ -80,7 +92,7 @@ export default function ExplorarPage() {
             <EmptyState
               icon={SearchX}
               title={`Nada encontrado para "${debounced}"`}
-              description="Tente um termo mais genérico, como o nome de uma profissão ou categoria."
+              description="Tente um termo mais genérico ou ajuste os filtros acima."
             />
           )}
         </>
