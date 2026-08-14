@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom'
 import { MapPin, Users } from 'lucide-react'
 import { useEmpresa } from '@/hooks/useEmpresas'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
+import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { VagaCard } from '@/components/VagaCard'
 import { EmptyState } from '@/components/EmptyState'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { JsonLd } from '@/components/JsonLd'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
@@ -12,13 +15,38 @@ export default function EmpresaDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { data: empresa, isLoading } = useEmpresa(id)
 
+  useDocumentMeta({
+    title: empresa ? empresa.nome_fantasia : 'Empresa',
+    description: empresa
+      ? stripHtml(empresa.description_html) || `${empresa.nome_fantasia} no EmpregaSantana.`
+      : undefined,
+    image: empresa?.logo_url ?? undefined,
+    type: 'profile',
+  })
+
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando empresa…</p>
   if (!empresa) return <p className="text-sm text-muted-foreground">Empresa não encontrada.</p>
 
   const vagasPublicadas = (empresa.vagas ?? []).filter((v) => v.status === 'published')
 
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: empresa.nome_fantasia,
+    ...(empresa.description_html ? { description: stripHtml(empresa.description_html, 500) } : {}),
+    ...(empresa.logo_url ? { logo: empresa.logo_url } : {}),
+    ...(empresa.website ? { url: empresa.website } : {}),
+    ...(empresa.address_visible && empresa.address
+      ? { address: { '@type': 'PostalAddress', streetAddress: empresa.address, addressCountry: 'BR' } }
+      : {}),
+    ...(empresa.employee_count_visible && empresa.employee_count
+      ? { numberOfEmployees: empresa.employee_count }
+      : {}),
+  }
+
   return (
     <div className="flex flex-col gap-8">
+      <JsonLd data={organizationJsonLd} />
       <div className="flex items-start gap-4">
         {empresa.logo_url ? (
           <img

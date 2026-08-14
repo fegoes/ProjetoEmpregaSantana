@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /empresa/
+Disallow: /candidato/
+Disallow: /autonomo/
+Disallow: /perfil
+
+Sitemap: /sitemap.xml

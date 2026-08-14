@@ -49,7 +49,7 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
         )}
         {vaga.photo_url && (
           <div className="-mt-5 mb-1 aspect-video w-full overflow-hidden bg-muted">
-            <img src={vaga.photo_url} alt="" className="size-full object-cover" loading="lazy" />
+            <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" loading="lazy" />
           </div>
         )}
         <CardHeader className="flex-row items-start gap-3">

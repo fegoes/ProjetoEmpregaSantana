@@ -2,9 +2,12 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Clock3, MapPin, Wallet } from 'lucide-react'
 import { useVaga } from '@/hooks/useVagas'
 import { useAuth } from '@/contexts/AuthContext'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
+import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { JsonLd } from '@/components/JsonLd'
 import { iconForCategory } from '@/lib/categoryIcons'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -21,6 +24,13 @@ const PRICING_LABELS: Record<string, string> = {
   hourly: 'Por hora',
   per_delivery: 'Por entrega',
 }
+// https://schema.org/JobPosting employmentType usa um enum próprio, diferente do nosso.
+const SCHEMA_EMPLOYMENT_TYPE: Record<string, string> = {
+  clt: 'FULL_TIME',
+  pj: 'CONTRACTOR',
+  temporario: 'TEMPORARY',
+  freelance: 'CONTRACTOR',
+}
 
 export default function VagaDetailPage() {
   const { id } = useParams<{ id: string }>()
@@ -28,10 +38,74 @@ export default function VagaDetailPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
 
+  useDocumentMeta({
+    title: vaga ? `${vaga.title}${vaga.empresas ? ` — ${vaga.empresas.nome_fantasia}` : ''}` : 'Vaga',
+    description: vaga
+      ? stripHtml(vaga.description_html) ||
+        `Vaga de ${vaga.title}${vaga.empresas ? ` na ${vaga.empresas.nome_fantasia}` : ''} no EmpregaSantana.`
+      : undefined,
+    image: vaga?.photo_url ?? vaga?.empresas?.logo_url ?? undefined,
+    type: 'website',
+  })
+
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando vaga…</p>
   if (!vaga) return <p className="text-sm text-muted-foreground">Vaga não encontrada.</p>
 
   const Icon = iconForCategory(vaga.category)
+
+  const jobPostingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: vaga.title,
+    description: vaga.description_html || vaga.title,
+    datePosted: vaga.created_at,
+    ...(vaga.expires_at ? { validThrough: vaga.expires_at } : {}),
+    employmentType: SCHEMA_EMPLOYMENT_TYPE[vaga.employment_type],
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: vaga.empresas?.nome_fantasia ?? 'EmpregaSantana',
+      ...(vaga.empresas?.logo_url ? { logo: vaga.empresas.logo_url } : {}),
+    },
+    ...(vaga.is_remote
+      ? {
+          jobLocationType: 'TELECOMMUTE',
+          applicantLocationRequirements: { '@type': 'Country', name: 'BR' },
+        }
+      : {
+          jobLocation: {
+            '@type': 'Place',
+            address: {
+              '@type': 'PostalAddress',
+              addressLocality: vaga.location_city ?? undefined,
+              addressRegion: vaga.location_state ?? undefined,
+              addressCountry: 'BR',
+            },
+          },
+        }),
+    ...(vaga.pricing_model === 'fixed_salary' && vaga.salary_min
+      ? {
+          baseSalary: {
+            '@type': 'MonetaryAmount',
+            currency: 'BRL',
+            value: {
+              '@type': 'QuantitativeValue',
+              minValue: vaga.salary_min,
+              ...(vaga.salary_max ? { maxValue: vaga.salary_max } : {}),
+              unitText: 'MONTH',
+            },
+          },
+        }
+      : {}),
+    ...(vaga.pricing_model === 'hourly' && vaga.hourly_rate
+      ? {
+          baseSalary: {
+            '@type': 'MonetaryAmount',
+            currency: 'BRL',
+            value: { '@type': 'QuantitativeValue', value: vaga.hourly_rate, unitText: 'HOUR' },
+          },
+        }
+      : {}),
+  }
 
   const handleCandidatar = () => {
     if (!user) {
@@ -50,6 +124,7 @@ export default function VagaDetailPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      <JsonLd data={jobPostingJsonLd} />
       {vaga.photo_url && (
         <div className="aspect-[21/9] w-full overflow-hidden rounded-2xl bg-muted">
           <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" />

@@ -9,6 +9,7 @@ import { EmptyState } from '@/components/EmptyState'
 import { ShowMoreGrid } from '@/components/ShowMoreGrid'
 import { FeedFilterPanel } from '@/components/FeedFilterPanel'
 import { useAuth } from '@/contexts/AuthContext'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
 import { useEmpresasCount } from '@/hooks/useEmpresas'
@@ -22,6 +23,12 @@ export default function HomePage() {
   const vagasQuery = useVagasPublicadas()
   const autonomosQuery = useAutonomosAtivos()
   const empresasCount = useEmpresasCount()
+
+  useDocumentMeta({
+    title: 'Vagas e autônomos',
+    description:
+      'Vagas fixas e temporárias, e profissionais autônomos, em um só lugar. Encontre sua próxima vaga ou contrate um profissional de confiança.',
+  })
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()

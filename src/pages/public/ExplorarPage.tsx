@@ -7,6 +7,7 @@ import { AutonomoCard } from '@/components/AutonomoCard'
 import { EmptyState } from '@/components/EmptyState'
 import { ShowMoreGrid } from '@/components/ShowMoreGrid'
 import { FeedFilterPanel } from '@/components/FeedFilterPanel'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
 import { DEFAULT_FEED_FILTERS, filterAutonomos, filterVagas } from '@/lib/feedFilters'
@@ -16,6 +17,11 @@ export default function ExplorarPage() {
   const [term, setTerm] = React.useState(searchParams.get('q') ?? '')
   const [debounced, setDebounced] = React.useState(searchParams.get('q') ?? '')
   const [filters, setFilters] = React.useState(DEFAULT_FEED_FILTERS)
+
+  useDocumentMeta({
+    title: 'Explorar',
+    description: 'Busque por cargo, categoria de serviço ou palavra-chave entre vagas e autônomos no EmpregaSantana.',
+  })
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
@@ -53,58 +59,61 @@ export default function ExplorarPage() {
             className="h-11 rounded-full pl-10"
           />
         </div>
-        <div className="mt-4 max-w-2xl rounded-2xl border p-4">
-          <FeedFilterPanel value={filters} onChange={setFilters} layout="inline" />
-        </div>
       </div>
 
-      {debounced && (
-        <>
-          {vagas.length > 0 && (
-            <section>
-              <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                Vagas <span className="text-foreground">({vagas.length})</span>
-              </h2>
-              <ShowMoreGrid
-                key={`vagas-${debounced}`}
-                items={vagas}
-                keyExtractor={(vaga) => vaga.id}
-                renderItem={(vaga) => <VagaCard vaga={vaga} />}
-              />
-            </section>
-          )}
+      <div className="flex flex-col gap-8 lg:flex-row">
+        <aside className="shrink-0 lg:w-56">
+          <FeedFilterPanel value={filters} onChange={setFilters} layout="sidebar" />
+        </aside>
 
-          {autonomos.length > 0 && (
-            <section>
-              <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                Autônomos <span className="text-foreground">({autonomos.length})</span>
-              </h2>
-              <ShowMoreGrid
-                key={`autonomos-${debounced}`}
-                items={autonomos}
-                keyExtractor={(autonomo) => autonomo.id}
-                renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
-              />
-            </section>
-          )}
+        <div className="min-w-0 flex-1">
+          {debounced ? (
+            <div className="flex flex-col gap-8">
+              {vagas.length > 0 && (
+                <section>
+                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
+                    Vagas <span className="text-foreground">({vagas.length})</span>
+                  </h2>
+                  <ShowMoreGrid
+                    key={`vagas-${debounced}`}
+                    items={vagas}
+                    keyExtractor={(vaga) => vaga.id}
+                    renderItem={(vaga) => <VagaCard vaga={vaga} />}
+                  />
+                </section>
+              )}
 
-          {totalResults === 0 && !vagasQuery.isLoading && !autonomosQuery.isLoading && (
+              {autonomos.length > 0 && (
+                <section>
+                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
+                    Autônomos <span className="text-foreground">({autonomos.length})</span>
+                  </h2>
+                  <ShowMoreGrid
+                    key={`autonomos-${debounced}`}
+                    items={autonomos}
+                    keyExtractor={(autonomo) => autonomo.id}
+                    renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
+                  />
+                </section>
+              )}
+
+              {totalResults === 0 && !vagasQuery.isLoading && !autonomosQuery.isLoading && (
+                <EmptyState
+                  icon={SearchX}
+                  title={`Nada encontrado para "${debounced}"`}
+                  description="Tente um termo mais genérico ou ajuste os filtros na lateral."
+                />
+              )}
+            </div>
+          ) : (
             <EmptyState
-              icon={SearchX}
-              title={`Nada encontrado para "${debounced}"`}
-              description="Tente um termo mais genérico ou ajuste os filtros acima."
+              icon={Search}
+              title="Digite algo para começar"
+              description="Busque por cargos como “vendedor”, categorias como “construção” ou serviços como “eletricista”."
             />
           )}
-        </>
-      )}
-
-      {!debounced && (
-        <EmptyState
-          icon={Search}
-          title="Digite algo para começar"
-          description="Busque por cargos como “vendedor”, categorias como “construção” ou serviços como “eletricista”."
-        />
-      )}
+        </div>
+      </div>
     </div>
   )
 }
