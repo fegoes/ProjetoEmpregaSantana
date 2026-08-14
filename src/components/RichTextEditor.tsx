@@ -1,5 +1,6 @@
 import { EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
+import Link from '@tiptap/extension-link'
 import { cn } from '@/lib/utils'
 
 interface RichTextEditorProps {
@@ -13,7 +14,7 @@ interface RichTextEditorProps {
 // A saída HTML é sempre sanitizada no render via <RichTextRenderer /> (nunca aqui).
 export function RichTextEditor({ value, onChange, placeholder, className }: RichTextEditorProps) {
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [StarterKit, Link.configure({ openOnClick: false, autolink: true })],
     content: value,
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
