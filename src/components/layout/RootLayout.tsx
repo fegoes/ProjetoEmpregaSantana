@@ -21,7 +21,7 @@ export function RootLayout() {
             <span className="flex size-7 items-center justify-center rounded-xl bg-brand-ink text-white">
               <Briefcase className="size-3.5" strokeWidth={2.4} />
             </span>
-            Emprega<span className="text-brand-orange-strong">Santana</span>
+            Emprega<span className="text-brand-orange-ink">Santana</span>
           </div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-muted-foreground">
             <Link to="/sobre" className="hover:text-primary">

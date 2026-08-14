@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 const PALETTE = [
   'bg-primary/12 text-primary',
   'bg-foreground/8 text-foreground/75',
-  'bg-brand-orange/18 text-brand-orange-strong',
+  'bg-brand-orange/18 text-brand-orange-ink',
   'bg-muted text-muted-foreground',
 ]
 

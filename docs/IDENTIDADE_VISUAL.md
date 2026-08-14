@@ -1,8 +1,9 @@
 # EmpregaSantana — Identidade Visual & Design System
 
-> Versão 1.0 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
+> Versão 1.1 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
 > Fonte de verdade: **o manual de marca**. Onde o código diverge, o código é que muda (ver §9).
-> Escopo desta versão: **documentação apenas** — nenhum arquivo de `src/`, `index.html` ou `public/` foi alterado.
+> Estado: **Bloco 1 aplicado** (tokens e tipografia, §9.1). Blocos 2 e 3 pendentes.
+> Os blocos de código deste documento refletem o que está em `src/index.css` hoje.
 
 ---
 
@@ -126,7 +127,27 @@ Não estão no manual, mas são **obrigatórias** para a interface funcionar (es
 |---|---|---|---|
 | `--brand-blue-strong` | `#17539C` | `oklch(0.447 0.133 256)` | `:hover` do azul marca — `#1E63B6` sem escurecer não dá feedback |
 | `--brand-orange-strong` | `#F77F00` | `oklch(0.720 0.180 55)` | `:hover` do CTA laranja. Não escurecer além disso (ver §3.4) |
-| `--brand-orange-ink` | `#B35700` | `oklch(0.560 0.143 52.5)` | laranja **como texto** sobre fundo claro; `#FF8A00` reprova em contraste |
+| `--brand-orange-ink` | `#A94E00` | `oklch(0.530 0.143 52.5)` | laranja **como texto** sobre fundo claro; `#FF8A00` reprova em contraste |
+
+**A rampa de neutros tem três degraus**, e a diferença entre eles é o que dá elevação aos cards sem sombra pesada. Não colapse os dois primeiros:
+
+| Superfície | Valor | Uso |
+|---|---|---|
+| Página | `#F8F8F8` `oklch(0.98 0 0)` | `--background` |
+| Card | `#FFFFFF` `oklch(1 0 0)` | `--card` / `--popover` |
+| Apoio | `#F2F2F2` `oklch(0.961 0 0)` | `--secondary` / `--muted` |
+
+### 3.2.1 Os três laranjas não são intercambiáveis
+
+Erro fácil de cometer e difícil de enxergar: usar o mesmo token para pintar fundo e texto. Cada tom tem um papel só.
+
+| Token | Papel | Nunca use para |
+|---|---|---|
+| `--brand-orange` `#FF8A00` | fundo de CTA e de destaque | texto (2.36:1 no branco) |
+| `--brand-orange-strong` `#F77F00` | **fundo** de hover do CTA | texto (2.63:1 no branco) |
+| `--brand-orange-ink` `#A94E00` | **texto** laranja sobre fundo claro | fundo de CTA (escuro demais, some a hierarquia) |
+
+`--brand-orange-ink` foi calibrado para o **pior fundo claro do projeto** — o badge com `bg-brand-orange/18`, que é branco puxado para creme (`#FFEAD1`). Ali ele entrega 4.75:1. Nos fundos mais claros sobra margem (5.56:1 no branco).
 
 ### 3.3 Proporção de uso
 
@@ -149,7 +170,10 @@ Todos os valores abaixo foram verificados. Contraste WCAG AA exige **4.5:1** par
 | **branco sobre `#FF8A00`** | **2.36:1** | ❌ **reprova até para texto grande** |
 | `#333333` sobre `#FF8A00` | 5.35:1 | ✅ aprovado |
 | `#0D3A66` sobre `#FF8A00` | 4.90:1 | ✅ aprovado |
-| `#B35700` sobre branco | 4.91:1 | ✅ aprovado — é o laranja de texto |
+| `#A94E00` sobre branco | 5.56:1 | ✅ aprovado — é o laranja de texto |
+| `#A94E00` sobre `#F8F8F8` | 5.24:1 | ✅ aprovado |
+| `#A94E00` sobre badge `orange/18` | 4.75:1 | ✅ aprovado — é o pior caso, calibrado por ele |
+| `#F77F00` sobre branco | 2.63:1 | ❌ é tom de **fundo**, nunca de texto |
 | `#FF8A00` sobre branco | 2.36:1 | ❌ nunca como texto em fundo claro |
 | `#1E63B6` sobre branco | 5.97:1 | ✅ aprovado |
 | `#0D3A66` sobre branco | 11.58:1 | ✅ aprovado |
@@ -167,7 +191,7 @@ Regras práticas:
 - Sobre `#FF8A00` só entra `#333333` ou `#0D3A66`. Nunca branco.
 - **`#333333` é o único texto seguro no CTA laranja**, porque o hover escurece o fundo para `#F77F00` e ali o `#0D3A66` cai para 4.40:1. `#0D3A66` sobre laranja só em peça estática, no tom base.
 - Cuidado ao escurecer o laranja: como o texto de apoio também é escuro, **escurecer o fundo *reduz* o contraste**. O hover não pode passar de `oklch(0.72 …)`.
-- Laranja como *texto* sobre fundo claro é sempre `#B35700` (`--brand-orange-ink`), nunca `#FF8A00`.
+- Laranja como *texto* sobre fundo claro é sempre `#A94E00` (`--brand-orange-ink`), nunca `#FF8A00` nem `#F77F00`.
 - Isso já está correto no código atual: `src/components/ui/button.tsx:13` usa `text-brand-orange-foreground` (escuro) na variante `cta`. Mantenha assim.
 
 ---
@@ -207,7 +231,7 @@ Em `src/index.css`, dentro de `@theme inline`:
 
 Isso habilita a classe `font-display` no Tailwind, que passa a ser aplicada em `h1`–`h3` e no wordmark.
 
-> **Nota de migração:** o `body` hoje aplica `font-feature-settings: "cv11", "ss01"` (`src/index.css:123`) — são features da Plus Jakarta Sans. Poppins não as tem; a linha deve ser removida na migração, não herdada.
+> **Nota de migração (feita):** o `body` aplicava `font-feature-settings: "cv11", "ss01"` — features da Plus Jakarta Sans, que Poppins não tem. A linha foi removida, não herdada.
 
 ### 4.3 Escala de uso
 
@@ -227,6 +251,8 @@ Mapeada sobre os padrões que **já existem** no código, para a migração ser 
 
 Regra: **caixa alta só em rótulo curto** (badge, categoria, "VAGA NOVA"). Nunca em frase.
 
+> **Por que a regra base cobre só `h1, h2`.** Os únicos `<h3>` do projeto são os títulos de card (`VagaCard.tsx`, `AutonomoCard.tsx`, `EmpresaCard.tsx`), que a tabela acima define como **Poppins 600**. Aplicar `font-display` a `h3` no `@layer base` colocaria Montserrat exatamente onde ele não deve ir. Subtítulo de seção em Montserrat, quando existir, recebe a classe `font-display` explicitamente.
+
 ---
 
 ## 5. Tokens — bloco pronto para `src/index.css`
@@ -244,23 +270,25 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
 :root {
   --radius: 0.85rem;
 
-  /* Neutros do manual: #F2F2F2 e #333333, cinza puro sem viés de temperatura */
-  --background: oklch(1 0 0);              /* #FFFFFF */
-  --foreground: oklch(0.321 0 0);          /* #333333 */
+  /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
+     Rampa de três degraus para dar elevação sem sombra pesada —
+     página #F8F8F8 → card #FFFFFF → superfície de apoio #F2F2F2 */
+  --background: oklch(0.98 0 0);           /* #F8F8F8 */
+  --foreground: oklch(0.321 0 0);          /* #333333 — 11.9:1 sobre o fundo */
   --card: oklch(1 0 0);                    /* #FFFFFF */
   --card-foreground: oklch(0.321 0 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.321 0 0);
 
-  /* Azul da marca — links, foco, estado ativo, navegação */
+  /* Azul da marca — navegação, links, foco, estado ativo, verificação */
   --primary: oklch(0.504 0.148 255.8);     /* #1E63B6 */
-  --primary-foreground: oklch(1 0 0);      /* #FFFFFF — 5.97:1 sobre o azul */
+  --primary-foreground: oklch(1 0 0);      /* branco — 5.97:1 sobre o azul */
 
   --secondary: oklch(0.961 0 0);           /* #F2F2F2 */
   --secondary-foreground: oklch(0.321 0 0);
   --muted: oklch(0.961 0 0);               /* #F2F2F2 */
-  --muted-foreground: oklch(0.50 0 0);     /* #636363 — cinza de apoio, 6.0:1 sobre branco */
-  --accent: oklch(0.94 0.012 255.8);       /* azul lavado — hover de item de menu */
+  --muted-foreground: oklch(0.50 0 0);     /* #636363 — 5.4:1 na superfície mais escura */
+  --accent: oklch(0.94 0.012 255.8);       /* #E6ECF3 — azul lavado, hover de menu */
   --accent-foreground: oklch(0.344 0.09 252);
 
   --destructive: oklch(0.577 0.245 27.325);
@@ -268,31 +296,37 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   --success: oklch(0.58 0.13 155);
   --success-foreground: oklch(1 0 0);
 
-  --border: oklch(0.90 0 0);
+  --border: oklch(0.90 0 0);               /* #DEDEDE */
   --input: oklch(0.90 0 0);
   --ring: oklch(0.504 0.148 255.8 / 40%);
 
-  /* Marca fixa (logotipo) — azul profundo constante, NÃO muda entre claro/escuro */
+  /* Marca fixa (logotipo) — azul profundo constante, não muda entre claro/escuro */
   --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
   --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
-  --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover */
+  --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
 
-  /* Laranja: cor de AÇÃO. Reservada a CTA de alta prioridade e destaque. */
+  /* Laranja: cor de AÇÃO. Reservada a CTA de alta prioridade e destaque.
+     Nunca recebe texto branco (2.36:1) — ver docs/IDENTIDADE_VISUAL.md §3.4
+     Os três tons têm papéis distintos e NÃO são intercambiáveis:
+       -orange        → fundo de CTA
+       -orange-strong → fundo de hover do CTA (claro demais para texto)
+       -orange-ink    → laranja como texto, calibrado para o pior fundo claro
+                        do projeto (badge em bg-brand-orange/18): 4.75:1 */
   --brand-orange: oklch(0.747 0.180 57.4);        /* #FF8A00 — só como fundo */
-  --brand-orange-strong: oklch(0.720 0.180 55);   /* #F77F00 — hover do CTA, 4.81:1 com #333 */
-  --brand-orange-ink: oklch(0.560 0.143 52.5);    /* #B35700 — laranja como TEXTO */
+  --brand-orange-strong: oklch(0.720 0.180 55);   /* #F77F00 — hover, 4.81:1 com #333 */
+  --brand-orange-ink: oklch(0.530 0.143 52.5);    /* #A94E00 — laranja como TEXTO */
   --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
 }
 
 .dark {
   --background: oklch(0.17 0.028 252);     /* #06101B */
-  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF */
+  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF — 17.1:1 */
   --card: oklch(0.22 0.030 252);           /* #101B28 */
   --card-foreground: oklch(0.96 0.004 90);
   --popover: oklch(0.22 0.030 252);
   --popover-foreground: oklch(0.96 0.004 90);
 
-  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo escuro */
+  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo */
   --primary-foreground: oklch(0.17 0.028 252);
 
   --secondary: oklch(0.27 0.026 252);      /* #1D2733 */
@@ -317,7 +351,7 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   --brand-blue-strong: oklch(0.63 0.135 256);
 
   --brand-orange: oklch(0.780 0.170 57.4);        /* #FF9732 — 8.9:1 sobre o fundo */
-  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F */
+  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F — 4.83:1 com #333 */
   --brand-orange-ink: oklch(0.780 0.170 57.4);    /* no escuro o laranja puro já passa */
   --brand-orange-foreground: oklch(0.321 0 0);
 }
@@ -369,13 +403,16 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   body {
     @apply bg-background text-foreground;
   }
-  h1, h2, h3 {
+  /* Montserrat só em título de página e de seção. Os <h3> do projeto são
+     títulos de card, que por especificação ficam em Poppins — ver §4.3 */
+  h1,
+  h2 {
     @apply font-display;
   }
 }
 
 @layer utilities {
-  /* Mancha de fundo para heros e cabeçalhos — laranja + azul da marca, discretos */
+  /* Mancha de fundo discreta para heros e cabeçalhos — laranja + azul da marca */
   .brand-mesh {
     background-image:
       radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
@@ -469,20 +506,34 @@ Observe: o `<img>` é `aria-hidden` porque o texto ao lado já nomeia a marca; n
 |---|---|---|
 | `src/components/layout/RootLayout.tsx:40` | "Conectando pessoas e oportunidades desde 2026." | ❌ **Ano errado.** Trocar para "desde agosto de 2022" |
 | `src/components/StatusBadge.tsx:27` | `bg-violet-500/12 text-violet-600 …` no status `entrevista` | Único vazamento fora dos tokens. Trocar por `bg-primary/12 text-primary border-primary/25` |
-| `src/index.css:123` | `font-feature-settings: "cv11", "ss01"` | Features da Plus Jakarta Sans; remover ao migrar para Poppins |
-| `src/index.css:129` | `.brand-mesh` só com laranja + tinta | Passar a usar `--brand-blue` (bloco em §5) |
+| `src/index.css` `font-feature-settings` | features da Plus Jakarta Sans | ✅ removido no Bloco 1 |
+| `src/index.css` `.brand-mesh` | só laranja + tinta | ✅ usa `--brand-blue` desde o Bloco 1 |
 | `index.html:9` | `<meta description>` sem a tagline | Usar a tagline oficial da §1 |
 
-### 6.4 Componentes que já estão conformes
+### 6.4 Laranja como texto — a migração que o Bloco 1 obrigou
+
+Sete arquivos usavam `text-brand-orange-strong`, um tom pensado para **fundo** de hover. Com o laranja do manual (mais claro que o anterior), isso desabava para 2.63:1. Todos migraram para `text-brand-orange-ink`:
+
+| Arquivo | Onde |
+|---|---|
+| `src/components/layout/Navbar.tsx` | wordmark "Santana" |
+| `src/components/layout/RootLayout.tsx` | wordmark do rodapé |
+| `src/pages/public/HomePage.tsx` | "profissional certo" no hero |
+| `src/components/VagaCard.tsx` / `AutonomoCard.tsx` | ribbon "Destaque" |
+| `src/components/StatusBadge.tsx` | status `pending` e `paused` |
+| `src/components/InitialsAvatar.tsx` | terceira entrada da paleta |
+
+`src/components/ui/button.tsx:13` **não** mudou: ali `brand-orange-strong` é `hover:bg-*`, que é o uso correto do token.
+
+### 6.5 Componentes que já estão conformes
 
 Não mexer — só herdam os tokens novos:
 
-- `src/components/InitialsAvatar.tsx` — a paleta de 4 entradas (linhas 6-9) já é explicitamente restrita à marca. Reaponta sozinha.
 - `src/components/{VagaCard,AutonomoCard,EmpresaCard}.tsx` — padrão `rounded-2xl`, tile de categoria `size-11 rounded-xl bg-muted`, ribbon "Destaque" em `bg-brand-orange/15`.
 - `src/components/EmptyState.tsx` — `rounded-2xl border-dashed`.
 - `src/components/ui/*` — primitivas shadcn "new-york", todas em `data-slot` + `cn()`.
 
-### 6.5 Iconografia
+### 6.6 Iconografia
 
 O board define cinco ícones conceituais. **Eles não viram um icon set novo** — o projeto já usa lucide (`iconLibrary: "lucide"` em `components.json`), e `src/lib/categoryIcons.tsx` já mapeia 30 categorias. O mapeamento dos cinco conceitos para o que existe:
 
@@ -613,8 +664,11 @@ Estado em `HEAD` (`6bfa705`). **O manual é a fonte de verdade em todas as linha
 
 ### 9.1 Ordem de execução sugerida
 
-**Bloco 1 — Tokens e tipografia** (`src/index.css`, `index.html`)
-Colar o bloco da §5, trocar as fontes da §4.1, remover `font-feature-settings`. Muda a aparência do site inteiro de uma vez, sem tocar em nenhum componente — é o passo de maior efeito e menor risco, porque nenhum `.tsx` referencia cor crua.
+**Bloco 1 — Tokens e tipografia** ✅ **APLICADO** (`src/index.css`, `index.html`)
+Paleta da §5, fontes da §4.1, `font-feature-settings` removido. Mudou a aparência do site inteiro de uma vez.
+
+A previsão de "sem tocar em nenhum componente" **não se confirmou**, e vale registrar o porquê. `--brand-orange-strong` acumulava dois papéis incompatíveis: fundo de hover do CTA (1 uso) e cor de texto (8 usos). Como o laranja do manual é mais claro que o antigo, trocar só o token teria piorado o contraste do laranja-texto de 3.72:1 para 2.63:1 — uma regressão de acessibilidade. Os 8 usos de texto migraram para `--brand-orange-ink` em 7 arquivos (`InitialsAvatar`, `AutonomoCard`, `VagaCard`, `StatusBadge`, `Navbar`, `RootLayout`, `HomePage`); `hover:bg-brand-orange-strong` em `button.tsx:13` ficou como estava.
+
 *Visível para o usuário final: sim, integralmente.*
 
 **Bloco 2 — Logotipo e assets** (`src/components/brand/Logo.tsx`, `public/brand/`, `index.html`)
@@ -638,11 +692,11 @@ Corrigir o `violet` em `StatusBadge.tsx:27`, o ano em `RootLayout.tsx:40`, a `.b
 Marcar conforme a implementação avançar.
 
 **Tokens e tipografia**
-- [ ] `src/index.css` com a paleta do manual (§5)
-- [ ] `--brand-blue-strong` e `--brand-orange-ink` criados
-- [ ] Montserrat + Poppins carregados em `index.html` (§4.1)
-- [ ] `--font-display` registrado e aplicado em `h1`–`h3`
-- [ ] `font-feature-settings` da Plus Jakarta Sans removido
+- [x] `src/index.css` com a paleta do manual (§5)
+- [x] `--brand-blue-strong` e `--brand-orange-ink` criados
+- [x] Montserrat + Poppins carregados em `index.html` (§4.1)
+- [x] `--font-display` registrado e aplicado em `h1`–`h2` (ver nota na §4.3)
+- [x] `font-feature-settings` da Plus Jakarta Sans removido
 
 **Logotipo e assets**
 - [ ] `src/components/brand/Logo.tsx` criado
@@ -657,8 +711,9 @@ Marcar conforme a implementação avançar.
 - [ ] `grep -rE "#[0-9a-fA-F]{6}|rgb\(|hsl\(" src/` retorna só `src/index.css`
 - [ ] Ano da fundação corrigido para agosto de 2022 (`RootLayout.tsx:40`)
 - [ ] Tagline oficial no `<meta description>`, no hero e no footer
-- [ ] Nenhum texto branco sobre `#FF8A00` na interface (§3.4)
-- [ ] `.brand-mesh` usando `--brand-blue`
+- [x] Nenhum texto branco sobre `#FF8A00` na interface (§3.4)
+- [x] `.brand-mesh` usando `--brand-blue`
+- [x] Laranja usado como texto migrado para `--brand-orange-ink` (8 usos, 7 arquivos)
 
 **Documentação**
 - [ ] `docs/PRD.md:347` atualizado (descreve o design system antigo)

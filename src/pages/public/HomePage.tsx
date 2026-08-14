@@ -34,7 +34,7 @@ export default function HomePage() {
           </span>
           <h1 className="mt-4 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
             Encontre sua próxima <span className="text-primary">vaga</span> ou o{' '}
-            <span className="text-brand-orange-strong">profissional certo</span> para o seu serviço
+            <span className="text-brand-orange-ink">profissional certo</span> para o seu serviço
           </h1>
           <p className="mt-3 text-muted-foreground text-balance">
             Vagas fixas, trabalhos temporários e autônomos disponíveis — tudo em um só lugar, sem
