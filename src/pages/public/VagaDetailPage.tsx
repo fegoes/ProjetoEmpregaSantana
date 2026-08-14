@@ -8,7 +8,8 @@ import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { JsonLd } from '@/components/JsonLd'
-import { iconForCategory } from '@/lib/categoryIcons'
+import { ImageCarousel } from '@/components/ImageCarousel'
+import { iconForVaga } from '@/lib/categoryIcons'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -51,7 +52,7 @@ export default function VagaDetailPage() {
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando vaga…</p>
   if (!vaga) return <p className="text-sm text-muted-foreground">Vaga não encontrada.</p>
 
-  const Icon = iconForCategory(vaga.category)
+  const Icon = iconForVaga(vaga.icon_key, vaga.category)
 
   const jobPostingJsonLd = {
     '@context': 'https://schema.org',
@@ -125,10 +126,12 @@ export default function VagaDetailPage() {
   return (
     <div className="flex flex-col gap-6">
       <JsonLd data={jobPostingJsonLd} />
-      {vaga.photo_url && (
-        <div className="aspect-[21/9] w-full overflow-hidden rounded-2xl bg-muted">
-          <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" />
-        </div>
+      {(vaga.photo_urls?.length > 0 || vaga.photo_url) && (
+        <ImageCarousel
+          images={vaga.photo_urls?.length ? vaga.photo_urls : [vaga.photo_url as string]}
+          alt={vaga.title}
+          className="aspect-[21/9] w-full rounded-2xl"
+        />
       )}
       <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-1 space-y-5">

@@ -50,7 +50,7 @@ export function useEmpresa(id: string | undefined) {
         supabase
           .from('vagas')
           .select(
-            'id, title, status, employment_type, pricing_model, category, location_city, location_state, is_remote, is_featured, created_at',
+            'id, title, status, employment_type, pricing_model, category, location_city, location_state, is_remote, is_featured, photo_url, photo_urls, icon_key, description_html, created_at',
           )
           .eq('empresa_id', id as string)
           .eq('status', 'published')

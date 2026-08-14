@@ -39,3 +39,13 @@ export function uploadEmpresaInteriorPhoto(file: File, empresaId: string) {
   const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
   return uploadImage(file, `empresas/${empresaId}/interior-${unique}`)
 }
+
+export function uploadVagaGalleryPhoto(file: File, vagaId: string) {
+  const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  return uploadImage(file, `vagas/${vagaId}/foto-${unique}`)
+}
+
+export function uploadAutonomoPortfolioPhoto(file: File, autonomoId: string) {
+  const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  return uploadImage(file, `autonomos/${autonomoId}/portfolio-${unique}`)
+}

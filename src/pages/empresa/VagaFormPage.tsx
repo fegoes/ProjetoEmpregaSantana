@@ -5,10 +5,11 @@ import { useAuth } from '@/contexts/AuthContext'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { useSaveVaga } from '@/hooks/useEmpresaVagas'
 import { supabase } from '@/lib/supabase'
-import { uploadVagaPhoto } from '@/lib/storage'
+import { uploadVagaGalleryPhoto } from '@/lib/storage'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
-import { ImageUploadField } from '@/components/ImageUploadField'
+import { PhotoGalleryField } from '@/components/PhotoGalleryField'
+import { IconPickerField } from '@/components/IconPickerField'
 import { CategorySelect } from '@/components/CategorySelect'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -43,7 +44,8 @@ export default function VagaFormPage() {
   const [category, setCategory] = React.useState('')
   const [locationCity, setLocationCity] = React.useState('')
   const [isRemote, setIsRemote] = React.useState(false)
-  const [photoUrl, setPhotoUrl] = React.useState<string | null>(null)
+  const [photoUrls, setPhotoUrls] = React.useState<string[]>([])
+  const [iconKey, setIconKey] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     if (!existing) return
@@ -54,7 +56,8 @@ export default function VagaFormPage() {
     setCategory(existing.category ?? '')
     setLocationCity(existing.location_city ?? '')
     setIsRemote(existing.is_remote)
-    setPhotoUrl(existing.photo_url)
+    setPhotoUrls(existing.photo_urls ?? [])
+    setIconKey(existing.icon_key ?? null)
   }, [existing])
 
   const handleSave = async (status: VagaStatus) => {
@@ -70,7 +73,8 @@ export default function VagaFormPage() {
       category: category || null,
       location_city: locationCity || null,
       is_remote: isRemote,
-      photo_url: photoUrl,
+      photo_urls: photoUrls,
+      icon_key: iconKey,
       status,
     })
     navigate(`/empresa/vagas/${saved.id}/editar`)
@@ -93,19 +97,23 @@ export default function VagaFormPage() {
         </div>
 
         {id ? (
-          <ImageUploadField
-            label="Foto (opcional)"
-            currentUrl={photoUrl}
-            onUpload={(file) => uploadVagaPhoto(file, id)}
-            onUploaded={setPhotoUrl}
-            shape="banner"
-            hint="Mostrada na vaga e no card de listagem. PNG ou JPG, até 5 MB."
+          <PhotoGalleryField
+            label="Fotos (opcional)"
+            photos={photoUrls}
+            onUpload={(file) => uploadVagaGalleryPhoto(file, id)}
+            onChange={setPhotoUrls}
+            hint="Aparecem como carrossel na vaga e no card de listagem. PNG ou JPG, até 5 MB cada."
           />
         ) : (
           <p className="text-xs text-muted-foreground">
-            Salve a vaga como rascunho para poder adicionar uma foto.
+            Salve a vaga como rascunho para poder adicionar fotos.
           </p>
         )}
+
+        <div className="flex flex-col gap-1.5">
+          <Label>Ícone (usado quando não há foto)</Label>
+          <IconPickerField value={iconKey} onChange={setIconKey} />
+        </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">

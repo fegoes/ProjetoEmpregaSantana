@@ -9,6 +9,8 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CategorySelect } from '@/components/CategorySelect'
+import { PhotoGalleryField } from '@/components/PhotoGalleryField'
+import { uploadAutonomoPortfolioPhoto } from '@/lib/storage'
 import { Navigate } from 'react-router-dom'
 
 function useOwnAutonomoProfile(userId: string | undefined) {
@@ -37,6 +39,7 @@ export default function AutonomoPerfilPage() {
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
   const [hourlyRate, setHourlyRate] = React.useState('')
   const [status, setStatus] = React.useState<'active' | 'paused'>('active')
+  const [portfolioUrls, setPortfolioUrls] = React.useState<string[]>([])
   const [saving, setSaving] = React.useState(false)
 
   React.useEffect(() => {
@@ -47,6 +50,7 @@ export default function AutonomoPerfilPage() {
     setPricingModel(autonomo.pricing_model)
     setHourlyRate(autonomo.hourly_rate?.toString() ?? '')
     setStatus(autonomo.status)
+    setPortfolioUrls(autonomo.portfolio_urls ?? [])
   }, [autonomo])
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
@@ -64,6 +68,7 @@ export default function AutonomoPerfilPage() {
         pricing_model: pricingModel,
         hourly_rate: hourlyRate ? Number(hourlyRate) : null,
         status,
+        portfolio_urls: portfolioUrls,
       })
       .eq('id', user.id)
     await refetch()
@@ -88,6 +93,13 @@ export default function AutonomoPerfilPage() {
           <Label>Descrição dos serviços</Label>
           <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} />
         </div>
+        <PhotoGalleryField
+          label="Fotos de trabalhos (opcional)"
+          photos={portfolioUrls}
+          onUpload={(file) => uploadAutonomoPortfolioPhoto(file, autonomo.id)}
+          onChange={setPortfolioUrls}
+          hint="Aparecem como carrossel no seu card e no perfil público. PNG ou JPG, até 5 MB cada."
+        />
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="pricingModel">Cobrança</Label>

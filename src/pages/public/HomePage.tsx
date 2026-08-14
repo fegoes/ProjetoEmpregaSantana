@@ -8,6 +8,7 @@ import { AutonomoCard } from '@/components/AutonomoCard'
 import { EmptyState } from '@/components/EmptyState'
 import { ShowMoreGrid } from '@/components/ShowMoreGrid'
 import { FeedFilterPanel } from '@/components/FeedFilterPanel'
+import { FeaturedCarousel } from '@/components/FeaturedCarousel'
 import { useAuth } from '@/contexts/AuthContext'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { useVagasPublicadas } from '@/hooks/useVagas'
@@ -40,6 +41,12 @@ export default function HomePage() {
     const autonomos = filterAutonomos(autonomosQuery.data ?? [], filters)
     return mergeFeed(vagas, autonomos)
   }, [vagasQuery.data, autonomosQuery.data, filters])
+
+  const featuredFeed = React.useMemo(() => {
+    const vagas = (vagasQuery.data ?? []).filter((v) => v.is_featured)
+    const autonomos = (autonomosQuery.data ?? []).filter((a) => a.is_featured)
+    return mergeFeed(vagas, autonomos)
+  }, [vagasQuery.data, autonomosQuery.data])
 
   return (
     <div className="flex flex-col gap-8">
@@ -103,6 +110,8 @@ export default function HomePage() {
           </p>
         </div>
       )}
+
+      <FeaturedCarousel items={featuredFeed} />
 
       <div className="flex flex-col gap-8 lg:flex-row">
         <aside className="shrink-0 lg:w-56">

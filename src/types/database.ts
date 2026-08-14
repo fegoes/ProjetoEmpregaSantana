@@ -159,6 +159,8 @@ export interface Database {
           status: VagaStatus
           is_featured: boolean
           photo_url: string | null
+          photo_urls: string[]
+          icon_key: string | null
           expires_at: string | null
           created_at: string
           updated_at: string

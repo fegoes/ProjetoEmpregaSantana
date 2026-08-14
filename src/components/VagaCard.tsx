@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 import { MapPin, Sparkles } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { iconForCategory } from '@/lib/categoryIcons'
+import { ImageCarousel } from '@/components/ImageCarousel'
+import { iconForVaga } from '@/lib/categoryIcons'
+import { stripHtml } from '@/lib/utils'
 
 const EMPLOYMENT_LABELS: Record<string, string> = {
   clt: 'CLT',
@@ -23,11 +25,14 @@ export interface VagaCardData {
   employment_type: string
   pricing_model: string
   category?: string | null
+  icon_key?: string | null
   location_city: string | null
   location_state: string | null
   is_remote: boolean
   is_featured: boolean
   photo_url?: string | null
+  photo_urls?: string[] | null
+  description_html?: string | null
   created_at?: string
   empresas: { nome_fantasia: string; city: string | null; state: string | null; logo_url?: string | null } | null
 }
@@ -36,8 +41,10 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
   const local = vaga.is_remote
     ? 'Remoto'
     : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
-  const Icon = iconForCategory(vaga.category)
+  const Icon = iconForVaga(vaga.icon_key, vaga.category)
   const empresaNome = vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'
+  const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
+  const excerpt = stripHtml(vaga.description_html, 140)
 
   return (
     <Link to={`/vagas/${vaga.id}`} className="group block h-full">
@@ -47,11 +54,7 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
             <Sparkles className="size-3" /> Destaque
           </span>
         )}
-        {vaga.photo_url && (
-          <div className="-mt-5 mb-1 aspect-video w-full overflow-hidden bg-muted">
-            <img src={vaga.photo_url} alt={vaga.title} className="size-full object-cover" loading="lazy" />
-          </div>
-        )}
+        {photos.length > 0 && <ImageCarousel images={photos} alt={vaga.title} className="-mt-5 mb-1 aspect-video w-full" />}
         <CardHeader className="flex-row items-start gap-3">
           {vaga.empresas?.logo_url ? (
             <img
@@ -81,6 +84,11 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
             {local}
           </span>
         </CardContent>
+        {excerpt && (
+          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+            <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
+          </CardContent>
+        )}
       </Card>
     </Link>
   )

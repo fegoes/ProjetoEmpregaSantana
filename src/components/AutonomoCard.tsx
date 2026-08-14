@@ -3,6 +3,8 @@ import { MapPin, Sparkles } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { ImageCarousel } from '@/components/ImageCarousel'
+import { stripHtml } from '@/lib/utils'
 
 const PRICING_LABELS: Record<string, string> = {
   hourly: 'Por hora',
@@ -22,6 +24,8 @@ export interface AutonomoCardData {
   created_at?: string
   profiles: { full_name: string | null } | null
   categories?: { label: string } | null
+  portfolio_urls?: string[] | null
+  description_html?: string | null
 }
 
 export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
@@ -29,6 +33,8 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
     [autonomo.service_area_city, autonomo.service_area_state].filter(Boolean).join(' — ') ||
     'A combinar'
   const name = autonomo.profiles?.full_name ?? 'Profissional autônomo'
+  const photos = autonomo.portfolio_urls ?? []
+  const excerpt = stripHtml(autonomo.description_html, 140)
 
   return (
     <Link to={`/autonomos/${autonomo.id}`} className="group block h-full">
@@ -38,6 +44,7 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
             <Sparkles className="size-3" /> Destaque
           </span>
         )}
+        {photos.length > 0 && <ImageCarousel images={photos} alt={name} className="-mt-5 mb-1 aspect-video w-full" />}
         <CardHeader className="flex-row items-start gap-3">
           <InitialsAvatar name={name} size="md" />
           <div className="min-w-0 pt-0.5">
@@ -59,6 +66,11 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
             {local}
           </span>
         </CardContent>
+        {excerpt && (
+          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+            <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
+          </CardContent>
+        )}
       </Card>
     </Link>
   )

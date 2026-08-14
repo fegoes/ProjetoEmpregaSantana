@@ -6,6 +6,7 @@ import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { ImageCarousel } from '@/components/ImageCarousel'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -44,7 +45,11 @@ export default function AutonomoDetailPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 lg:flex-row">
+    <div className="flex flex-col gap-6">
+      {autonomo.portfolio_urls?.length > 0 && (
+        <ImageCarousel images={autonomo.portfolio_urls} alt={name} className="aspect-[21/9] w-full rounded-2xl" />
+      )}
+      <div className="flex flex-col gap-6 lg:flex-row">
       <div className="flex-1 space-y-5">
         <div className="flex items-start gap-4">
           <InitialsAvatar name={name} size="lg" />
@@ -98,6 +103,7 @@ export default function AutonomoDetailPage() {
           </Button>
         </CardContent>
       </Card>
+      </div>
     </div>
   )
 }
