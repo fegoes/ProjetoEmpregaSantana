@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
+import { useAuth } from '@/contexts/AuthContext'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -54,10 +55,25 @@ function useDeleteUser() {
 
 export default function AdminUsuariosPage() {
   const { data: usuarios, isLoading } = useAllUsers()
+  const { requestPasswordReset } = useAuth()
   const toggleAdmin = useToggleAdmin()
   const toggleActive = useToggleActive()
   const deleteUser = useDeleteUser()
   const [deleteError, setDeleteError] = React.useState<string | null>(null)
+  const [resetSentFor, setResetSentFor] = React.useState<string | null>(null)
+  const [resetError, setResetError] = React.useState<string | null>(null)
+
+  const handleSendReset = async (id: string, email: string | null) => {
+    if (!email) return
+    setResetError(null)
+    setResetSentFor(null)
+    const { error } = await requestPasswordReset(email)
+    if (error) {
+      setResetError(error)
+      return
+    }
+    setResetSentFor(id)
+  }
 
   const handleDelete = (id: string, nome: string) => {
     if (
@@ -85,6 +101,7 @@ export default function AdminUsuariosPage() {
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de usuários</h1>
       {deleteError && <p className="text-sm text-destructive">{deleteError}</p>}
+      {resetError && <p className="text-sm text-destructive">{resetError}</p>}
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
       <div className="flex flex-col gap-2">
         {usuarios?.map((u) => (
@@ -102,7 +119,11 @@ export default function AdminUsuariosPage() {
                   {!u.is_active && <Badge variant="destructive">inativo</Badge>}
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap items-center justify-end gap-2">
+                {resetSentFor === u.id && <span className="text-xs text-muted-foreground">Link enviado</span>}
+                <Button size="sm" variant="outline" onClick={() => handleSendReset(u.id, u.email)}>
+                  Redefinir senha
+                </Button>
                 <Button
                   size="sm"
                   variant="outline"

@@ -9,6 +9,8 @@ import EmpresaDetailPagePublic from '@/pages/public/EmpresaDetailPage'
 import ExplorarPage from '@/pages/public/ExplorarPage'
 import PlanosPage from '@/pages/public/PlanosPage'
 import LoginPage from '@/pages/public/LoginPage'
+import ForgotPasswordPage from '@/pages/public/ForgotPasswordPage'
+import ResetPasswordPage from '@/pages/public/ResetPasswordPage'
 import CadastroPage from '@/pages/public/CadastroPage'
 import CadastroConfirmarPage from '@/pages/public/CadastroConfirmarPage'
 import { SobrePage, TermosPage, PrivacidadePage, LgpdPage } from '@/pages/public/StaticPage'
@@ -58,6 +60,8 @@ export default function App() {
         <Route path="explorar" element={<ExplorarPage />} />
         <Route path="planos" element={<PlanosPage />} />
         <Route path="login" element={<LoginPage />} />
+        <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
+        <Route path="redefinir-senha" element={<ResetPasswordPage />} />
         <Route path="cadastro" element={<CadastroPage />} />
         <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
         <Route path="sobre" element={<SobrePage />} />

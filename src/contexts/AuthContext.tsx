@@ -22,6 +22,8 @@ interface AuthContextValue {
   signOut: () => Promise<void>
   addRole: (role: UserRole) => Promise<{ error: string | null }>
   refreshProfile: () => Promise<void>
+  requestPasswordReset: (email: string) => Promise<{ error: string | null }>
+  updatePassword: (newPassword: string) => Promise<{ error: string | null }>
 }
 
 const AuthContext = React.createContext<AuthContextValue | undefined>(undefined)
@@ -140,6 +142,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     await hydrate(session)
   }
 
+  const requestPasswordReset: AuthContextValue['requestPasswordReset'] = async (email) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/redefinir-senha`,
+    })
+    return { error: error?.message ?? null }
+  }
+
+  const updatePassword: AuthContextValue['updatePassword'] = async (newPassword) => {
+    const { error } = await supabase.auth.updateUser({ password: newPassword })
+    return { error: error?.message ?? null }
+  }
+
   const value: AuthContextValue = {
     session,
     user: session?.user ?? null,
@@ -152,6 +166,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     signOut,
     addRole,
     refreshProfile,
+    requestPasswordReset,
+    updatePassword,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
