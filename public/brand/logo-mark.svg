@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="EmpregaSantana">
+  <title>EmpregaSantana</title>
+  <!-- Anel: comunidade e ciclo do mercado de trabalho local -->
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#0B1D39" stroke-width="9" />
+  <!-- Currículos: os dois lados do marketplace, quem oferece e quem procura -->
+  <g fill="#1E90FF">
+    <g transform="rotate(-15 30 43)">
+      <rect x="20" y="30" width="20" height="26" rx="3" />
+      <g fill="#FFFFFF">
+        <circle cx="26.5" cy="37" r="2.6" />
+        <rect x="31" y="35.4" width="7" height="2.2" rx="1.1" />
+        <rect x="22.5" y="43" width="15.5" height="2.2" rx="1.1" />
+        <rect x="22.5" y="47.6" width="15.5" height="2.2" rx="1.1" />
+        <rect x="22.5" y="52.2" width="10" height="2.2" rx="1.1" />
+      </g>
+    </g>
+    <g transform="rotate(15 70 43)">
+      <rect x="60" y="30" width="20" height="26" rx="3" />
+      <g fill="#FFFFFF">
+        <circle cx="66.5" cy="37" r="2.6" />
+        <rect x="71" y="35.4" width="7" height="2.2" rx="1.1" />
+        <rect x="62.5" y="43" width="15.5" height="2.2" rx="1.1" />
+        <rect x="62.5" y="47.6" width="15.5" height="2.2" rx="1.1" />
+        <rect x="62.5" y="52.2" width="10" height="2.2" rx="1.1" />
+      </g>
+    </g>
+  </g>
+  <!-- Figura: a pessoa no centro da marca, braços erguidos em conquista -->
+  <g stroke="#FF5A2A" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M31 45 L50 58 L69 45" stroke-width="10" />
+    <path d="M50 57 L50 71" stroke-width="12" />
+    <path d="M50 70 L42 82" stroke-width="8" />
+    <path d="M50 70 L58 82" stroke-width="8" />
+  </g>
+  <circle cx="50" cy="39" r="8.5" fill="#FF5A2A" />
+</svg>

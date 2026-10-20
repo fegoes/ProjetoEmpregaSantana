@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Sparkles } from 'lucide-react'
+import { MapPin, Star } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
@@ -38,10 +38,10 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
 
   return (
     <Link to={`/autonomos/${autonomo.id}`} className="group block h-full">
-      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
+      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-[border-color,box-shadow] duration-200 group-hover:border-primary/50 group-hover:shadow-md">
         {autonomo.is_featured && (
           <span className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink">
-            <Sparkles className="size-3" /> Destaque
+            <Star className="size-3" fill="currentColor" /> Destaque
           </span>
         )}
         {photos.length > 0 && <ImageCarousel images={photos} alt={name} className="-mt-5 mb-1 aspect-video w-full" />}
@@ -58,9 +58,11 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
               {autonomo.categories.label}
             </Badge>
           )}
-          <Badge variant="outline" className="rounded-full font-medium">
-            {PRICING_LABELS[autonomo.pricing_model]}
-          </Badge>
+          {PRICING_LABELS[autonomo.pricing_model] && (
+            <Badge variant="outline" className="rounded-full font-medium">
+              {PRICING_LABELS[autonomo.pricing_model]}
+            </Badge>
+          )}
           <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="size-3.5" />
             {local}

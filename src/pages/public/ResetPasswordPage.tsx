@@ -35,7 +35,7 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="brand-mesh -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
+    <div className="brand-edge -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
       <div className="w-full max-w-sm">
         <Card className="rounded-2xl border-none shadow-lg">
           <CardHeader className="items-center text-center">
