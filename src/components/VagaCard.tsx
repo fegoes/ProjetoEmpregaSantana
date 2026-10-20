@@ -1,29 +1,19 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Sparkles } from 'lucide-react'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { MapPin, Star } from 'lucide-react'
 import { ImageCarousel } from '@/components/ImageCarousel'
-import { iconForVaga } from '@/lib/categoryIcons'
-import { stripHtml } from '@/lib/utils'
-
-const EMPLOYMENT_LABELS: Record<string, string> = {
-  clt: 'CLT',
-  pj: 'PJ',
-  temporario: 'Temporário',
-  freelance: 'Freelance',
-}
-
-const PRICING_LABELS: Record<string, string> = {
-  fixed_salary: 'Salário fixo',
-  hourly: 'Por hora',
-  per_delivery: 'Por entrega',
-}
+import { PosterShape } from '@/components/PosterShape'
+import { EMPLOYMENT_LABELS, formatLocal, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
+import { cn } from '@/lib/utils'
 
 export interface VagaCardData {
   id: string
   title: string
   employment_type: string
   pricing_model: string
+  salary_min?: number | null
+  salary_max?: number | null
+  hourly_rate?: number | null
+  salary_visible?: boolean | null
   category?: string | null
   icon_key?: string | null
   location_city: string | null
@@ -37,62 +27,103 @@ export interface VagaCardData {
   empresas: { nome_fantasia: string; city: string | null; state: string | null; logo_url?: string | null } | null
 }
 
-export function VagaCard({ vaga }: { vaga: VagaCardData }) {
-  const local = vaga.is_remote
-    ? 'Remoto'
-    : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
-  const Icon = iconForVaga(vaga.icon_key, vaga.category)
+export function VagaNovaTag({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        'inline-flex h-5 shrink-0 items-center rounded-[4px] bg-brand-orange px-1.5 font-display text-[11px] font-bold tracking-wide whitespace-nowrap text-brand-orange-foreground uppercase',
+        className,
+      )}
+    >
+      Vaga nova
+    </span>
+  )
+}
+
+/** Card de vaga. O destaque vira o cartaz "VAGA NOVA" da marca: azul profundo com o grafismo laranja. */
+export function VagaCard({ vaga, hideEmpresa = false }: { vaga: VagaCardData; hideEmpresa?: boolean }) {
+  const featured = vaga.is_featured
+  const local = vaga.is_remote ? 'Remoto' : formatLocal(vaga.location_city, vaga.location_state)
   const empresaNome = vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'
   const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
-  const excerpt = stripHtml(vaga.description_html, 140)
+  const pay = formatVagaPay(vaga)
+  const nova = isVagaNova(vaga.created_at)
 
   return (
-    <Link to={`/vagas/${vaga.id}`} className="group block h-full">
-      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
-        {vaga.is_featured && (
-          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink backdrop-blur-sm">
-            <Sparkles className="size-3" /> Destaque
-          </span>
+    <Link
+      to={`/vagas/${vaga.id}`}
+      className="group block h-full rounded-2xl focus-visible:ring-[3px] focus-visible:ring-ring/60 focus-visible:outline-none"
+    >
+      <article
+        className={cn(
+          'relative flex h-full flex-col overflow-hidden rounded-2xl border transition-colors duration-150',
+          featured
+            ? 'border-brand-ink bg-brand-ink text-white group-hover:border-brand-orange'
+            : 'bg-card group-hover:border-primary/50',
         )}
-        {photos.length > 0 && <ImageCarousel images={photos} alt={vaga.title} className="-mt-5 mb-1 aspect-video w-full" />}
-        <CardHeader className="flex-row items-start gap-3">
-          {vaga.empresas?.logo_url ? (
-            <img
-              src={vaga.empresas.logo_url}
-              alt={empresaNome}
-              className="size-11 shrink-0 rounded-xl border object-cover"
-              loading="lazy"
-              width={44}
-              height={44}
-            />
-          ) : (
-            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-muted text-foreground/70">
-              <Icon className="size-5" strokeWidth={2} />
-            </span>
-          )}
-          <div className="min-w-0 pt-0.5">
-            <h3 className="line-clamp-2 pr-14 text-[15px] leading-snug font-semibold">{vaga.title}</h3>
-            <p className="truncate text-sm text-muted-foreground">{empresaNome}</p>
+      >
+        {photos.length > 0 && <ImageCarousel images={photos} alt={vaga.title} className="aspect-video w-full" />}
+        {featured && photos.length === 0 && <PosterShape />}
+
+        <div className="relative flex flex-1 flex-col gap-3 p-5">
+          <div className="flex items-start gap-3">
+            <div className={cn('min-w-0 flex-1', featured && photos.length === 0 && 'pr-9')}>
+              <h3 className="line-clamp-2 text-[15px] leading-snug font-semibold decoration-2 group-hover:underline">
+                {vaga.title}
+              </h3>
+              {!hideEmpresa && (
+                <p className={cn('mt-0.5 truncate text-sm', featured ? 'text-white/75' : 'text-muted-foreground')}>
+                  {empresaNome}
+                </p>
+              )}
+            </div>
+            {!featured && vaga.empresas?.logo_url && (
+              <img
+                src={vaga.empresas.logo_url}
+                alt=""
+                className="size-10 shrink-0 rounded-lg border object-cover"
+                loading="lazy"
+                width={40}
+                height={40}
+              />
+            )}
           </div>
-        </CardHeader>
-        <CardContent className="flex flex-wrap items-center gap-1.5">
-          <Badge variant="secondary" className="rounded-full font-medium">
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
-          </Badge>
-          <Badge variant="outline" className="rounded-full font-medium">
-            {PRICING_LABELS[vaga.pricing_model]}
-          </Badge>
-          <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
-            <MapPin className="size-3.5" />
-            {local}
-          </span>
-        </CardContent>
-        {excerpt && (
-          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
-            <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
-          </CardContent>
-        )}
-      </Card>
+
+          <p
+            className={cn(
+              'tabular-nums',
+              hasVagaPayValue(vaga) ? 'text-base font-semibold' : 'text-sm font-medium',
+              !hasVagaPayValue(vaga) && (featured ? 'text-white/80' : 'text-muted-foreground'),
+            )}
+          >
+            {pay}
+          </p>
+
+          <div className={cn('mt-auto flex flex-col gap-1 text-[13px]', featured ? 'text-white/75' : 'text-muted-foreground')}>
+            <span className={cn('font-medium', featured ? 'text-white' : 'text-foreground')}>
+              {EMPLOYMENT_LABELS[vaga.employment_type] ?? vaga.employment_type}
+            </span>
+            <span className="inline-flex min-w-0 items-center gap-1">
+              <MapPin className="size-3.5 shrink-0" />
+              <span className="truncate">{local}</span>
+            </span>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-2 text-xs">
+            {featured && (
+              <span className="inline-flex items-center gap-1 font-display font-bold tracking-wide text-brand-orange uppercase">
+                <Star className="size-3.5 fill-current" /> Destaque
+              </span>
+            )}
+            {nova && <VagaNovaTag />}
+            {vaga.created_at && (
+              <span className={cn('ml-auto whitespace-nowrap', featured ? 'text-white/70' : 'text-muted-foreground')}>
+                {timeAgo(vaga.created_at)}
+              </span>
+            )}
+          </div>
+        </div>
+      </article>
     </Link>
   )
 }

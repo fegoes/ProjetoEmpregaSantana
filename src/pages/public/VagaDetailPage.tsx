@@ -1,30 +1,22 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
-import { Clock3, MapPin, Wallet } from 'lucide-react'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
+import { Briefcase, CalendarDays, MapPin, SearchX } from 'lucide-react'
 import { useVaga } from '@/hooks/useVagas'
-import { useAuth } from '@/contexts/AuthContext'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { stripHtml } from '@/lib/utils'
+import { EMPLOYMENT_LABELS, formatLocal, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
-import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { JsonLd } from '@/components/JsonLd'
 import { ImageCarousel } from '@/components/ImageCarousel'
-import { iconForVaga } from '@/lib/categoryIcons'
-import { Badge } from '@/components/ui/badge'
+import { EmptyState } from '@/components/EmptyState'
+import { BackLink } from '@/components/BackLink'
+import { BrandDivider } from '@/components/BrandDivider'
+import { ApplyToVaga } from '@/components/ApplyToVaga'
+import { ShareWhatsAppButton } from '@/components/ShareWhatsAppButton'
+import { VagaNovaTag } from '@/components/VagaCard'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { cn } from '@/lib/utils'
 
-const EMPLOYMENT_LABELS: Record<string, string> = {
-  clt: 'CLT',
-  pj: 'PJ',
-  temporario: 'Temporário',
-  freelance: 'Freelance',
-}
-const PRICING_LABELS: Record<string, string> = {
-  fixed_salary: 'Salário fixo',
-  hourly: 'Por hora',
-  per_delivery: 'Por entrega',
-}
 // https://schema.org/JobPosting employmentType usa um enum próprio, diferente do nosso.
 const SCHEMA_EMPLOYMENT_TYPE: Record<string, string> = {
   clt: 'FULL_TIME',
@@ -33,11 +25,21 @@ const SCHEMA_EMPLOYMENT_TYPE: Record<string, string> = {
   freelance: 'CONTRACTOR',
 }
 
+function DetailSkeleton() {
+  return (
+    <div className="flex flex-col gap-4" aria-busy="true" aria-label="Carregando vaga">
+      <div className="h-8 w-2/3 animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="h-4 w-1/3 animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="h-6 w-40 animate-pulse rounded bg-muted motion-reduce:animate-none" />
+      <div className="mt-6 h-40 w-full max-w-2xl animate-pulse rounded-xl bg-muted motion-reduce:animate-none" />
+    </div>
+  )
+}
+
 export default function VagaDetailPage() {
   const { id } = useParams<{ id: string }>()
+  const [searchParams] = useSearchParams()
   const { data: vaga, isLoading } = useVaga(id)
-  const { user } = useAuth()
-  const navigate = useNavigate()
 
   useDocumentMeta({
     title: vaga ? `${vaga.title}${vaga.empresas ? ` — ${vaga.empresas.nome_fantasia}` : ''}` : 'Vaga',
@@ -49,10 +51,21 @@ export default function VagaDetailPage() {
     type: 'website',
   })
 
-  if (isLoading) return <p className="text-sm text-muted-foreground">Carregando vaga…</p>
-  if (!vaga) return <p className="text-sm text-muted-foreground">Vaga não encontrada.</p>
-
-  const Icon = iconForVaga(vaga.icon_key, vaga.category)
+  if (isLoading) return <DetailSkeleton />
+  if (!vaga) {
+    return (
+      <EmptyState
+        icon={SearchX}
+        title="Esta vaga não está mais disponível"
+        description="Ela pode ter sido encerrada ou removida pela empresa."
+        action={
+          <Button asChild>
+            <Link to="/">Ver outras vagas</Link>
+          </Button>
+        }
+      />
+    )
+  }
 
   const jobPostingJsonLd = {
     '@context': 'https://schema.org',
@@ -108,119 +121,165 @@ export default function VagaDetailPage() {
       : {}),
   }
 
-  const handleCandidatar = () => {
-    if (!user) {
-      navigate(`/login?redirect=/vagas/${id}`)
-      return
-    }
-    navigate(`/candidato/candidaturas?aplicar=${id}`)
-  }
-
-  const salaryLabel =
-    vaga.pricing_model === 'fixed_salary' && vaga.salary_min
-      ? `R$ ${vaga.salary_min.toLocaleString('pt-BR')}${vaga.salary_max ? ` – R$ ${vaga.salary_max.toLocaleString('pt-BR')}` : ''}`
-      : vaga.pricing_model === 'hourly' && vaga.hourly_rate
-        ? `R$ ${vaga.hourly_rate.toLocaleString('pt-BR')} / hora`
-        : 'A combinar'
+  const empresaNome = vaga.empresas?.nome_fantasia ?? null
+  const local = vaga.is_remote ? 'Remoto' : formatLocal(vaga.location_city, vaga.location_state)
+  const pay = formatVagaPay(vaga)
+  const open = vaga.status === 'published'
+  const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
+  const shareText = `Vaga: ${vaga.title}${empresaNome ? ` na ${empresaNome}` : ''}. ${pay}, ${local}. Vi no EmpregaSantana:`
+  const published = timeAgo(vaga.created_at)
 
   return (
-    <div className="flex flex-col gap-6">
-      <JsonLd data={jobPostingJsonLd} />
-      {(vaga.photo_urls?.length > 0 || vaga.photo_url) && (
-        <ImageCarousel
-          images={vaga.photo_urls?.length ? vaga.photo_urls : [vaga.photo_url as string]}
-          alt={vaga.title}
-          className="aspect-[21/9] w-full rounded-2xl"
-          loading="eager"
-        />
-      )}
-      <div className="flex flex-col gap-6 lg:flex-row">
-      <div className="flex-1 space-y-5">
-        <div className="flex items-start gap-4">
-          {vaga.empresas?.logo_url ? (
-            <img
-              src={vaga.empresas.logo_url}
-              alt={vaga.empresas.nome_fantasia}
-              className="size-14 shrink-0 rounded-2xl border object-cover"
-            />
-          ) : (
-            <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-muted text-foreground/70">
-              <Icon className="size-6" strokeWidth={2} />
-            </span>
+    <ApplyToVaga
+      vagaId={vaga.id}
+      vagaTitle={vaga.title}
+      empresaNome={empresaNome}
+      autoOpen={open && searchParams.get('candidatar') === '1'}
+    >
+      {(apply) => (
+        <div className="flex flex-col gap-4">
+          <JsonLd data={jobPostingJsonLd} />
+          <BackLink fallback="/" label="Voltar para as vagas" />
+
+          {photos.length > 0 && (
+            <ImageCarousel images={photos} alt={vaga.title} className="aspect-[16/9] w-full rounded-2xl sm:aspect-[21/9]" loading="eager" />
           )}
-          <div>
-            <h1 className="text-2xl font-extrabold tracking-tight text-balance">{vaga.title}</h1>
-            {vaga.empresas && (
-              <Link
-                to={`/empresas/${vaga.empresas.id}`}
-                className="text-sm font-medium text-primary hover:underline"
-              >
-                {vaga.empresas.nome_fantasia}
-              </Link>
-            )}
-          </div>
-        </div>
 
-        <div className="flex flex-wrap gap-2">
-          <StatusBadge status={vaga.status} />
-          <Badge variant="secondary" className="rounded-full">
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
-          </Badge>
-          <Badge variant="outline" className="rounded-full">
-            {PRICING_LABELS[vaga.pricing_model]}
-          </Badge>
-          {vaga.is_remote && (
-            <Badge variant="outline" className="rounded-full">
-              Remoto
-            </Badge>
-          )}
-        </div>
+          <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
+            <article className="min-w-0 flex-1">
+              <header className="flex flex-col gap-4">
+                {!open && (
+                  <div className="flex flex-wrap items-center gap-2 rounded-xl bg-secondary px-4 py-3 text-sm">
+                    <StatusBadge status={vaga.status} />
+                    Esta vaga não está recebendo candidaturas agora.
+                  </div>
+                )}
+                <div className="flex items-start gap-4">
+                  {vaga.empresas?.logo_url && (
+                    <img
+                      src={vaga.empresas.logo_url}
+                      alt=""
+                      className="size-14 shrink-0 rounded-xl border object-cover"
+                      width={56}
+                      height={56}
+                    />
+                  )}
+                  <div className="min-w-0">
+                    <h1 className="text-2xl leading-tight font-extrabold tracking-tight text-balance sm:text-3xl">
+                      {vaga.title}
+                    </h1>
+                    {vaga.empresas && (
+                      <Link
+                        to={`/empresas/${vaga.empresas.id}`}
+                        className="mt-1 inline-block text-[15px] font-medium text-primary hover:underline"
+                      >
+                        {vaga.empresas.nome_fantasia}
+                      </Link>
+                    )}
+                  </div>
+                </div>
 
-        <RichTextRenderer html={vaga.description_html} className="text-[15px]" />
-      </div>
+                <p
+                  className={cn(
+                    'tabular-nums',
+                    hasVagaPayValue(vaga) ? 'text-xl font-bold' : 'text-base font-medium text-muted-foreground',
+                  )}
+                >
+                  {pay}
+                </p>
 
-      <Card className="h-fit w-full rounded-2xl lg:w-80">
-        <CardHeader>
-          <CardTitle className="text-base">Sobre a vaga</CardTitle>
-          <CardDescription>Confira os detalhes antes de se candidatar</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center gap-2.5 text-sm">
-            <Wallet className="size-4 shrink-0 text-muted-foreground" />
-            <span className="font-medium">{salaryLabel}</span>
-          </div>
-          <div className="flex items-center gap-2.5 text-sm">
-            <MapPin className="size-4 shrink-0 text-muted-foreground" />
-            {vaga.is_remote
-              ? 'Remoto'
-              : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'Local a combinar'}
-          </div>
-          <div className="flex items-center gap-2.5 text-sm">
-            <Clock3 className="size-4 shrink-0 text-muted-foreground" />
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
-          </div>
+                <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-1.5">
+                    <Briefcase className="size-4" />
+                    <span className="font-medium text-foreground">
+                      {EMPLOYMENT_LABELS[vaga.employment_type] ?? vaga.employment_type}
+                    </span>
+                  </li>
+                  <li className="flex items-center gap-1.5">
+                    <MapPin className="size-4" />
+                    {local}
+                  </li>
+                  {published && (
+                    <li className="flex items-center gap-1.5">
+                      <CalendarDays className="size-4" />
+                      Publicada {published}
+                    </li>
+                  )}
+                  {isVagaNova(vaga.created_at) && (
+                    <li>
+                      <VagaNovaTag />
+                    </li>
+                  )}
+                </ul>
+              </header>
 
-          {vaga.empresas && (
-            <div className="flex items-center gap-2.5 border-t pt-4">
-              {vaga.empresas.logo_url ? (
-                <img
-                  src={vaga.empresas.logo_url}
-                  alt={vaga.empresas.nome_fantasia}
-                  className="size-8 shrink-0 rounded-full border object-cover"
-                />
-              ) : (
-                <InitialsAvatar name={vaga.empresas.nome_fantasia} size="sm" />
+              <section className="mt-8" aria-labelledby="descricao-vaga">
+                <BrandDivider className="mb-6" />
+                <h2 id="descricao-vaga" className="mb-3 text-lg font-bold">
+                  Descrição da vaga
+                </h2>
+                {vaga.description_html ? (
+                  <RichTextRenderer html={vaga.description_html} className="text-[15px]" />
+                ) : (
+                  <p className="text-[15px] text-muted-foreground">A empresa não incluiu uma descrição.</p>
+                )}
+              </section>
+
+              {vaga.empresas && (
+                <section className="mt-8" aria-labelledby="sobre-empresa">
+                <BrandDivider className="mb-6" />
+                  <h2 id="sobre-empresa" className="mb-3 text-lg font-bold">
+                    Sobre a empresa
+                  </h2>
+                  {vaga.empresas.description_html && (
+                    <RichTextRenderer html={vaga.empresas.description_html} className="mb-3 text-[15px]" />
+                  )}
+                  <Link to={`/empresas/${vaga.empresas.id}`} className="text-sm font-medium text-primary hover:underline">
+                    Ver página e outras vagas da {vaga.empresas.nome_fantasia}
+                  </Link>
+                </section>
               )}
-              <span className="truncate text-sm text-muted-foreground">{vaga.empresas.nome_fantasia}</span>
+            </article>
+
+            <aside className="hidden w-80 shrink-0 lg:sticky lg:top-24 lg:block" aria-label="Resumo da vaga">
+              <div className="flex flex-col gap-4 rounded-2xl border bg-card p-5">
+                <dl className="flex flex-col gap-3 text-sm">
+                  <div>
+                    <dt className="text-muted-foreground">Remuneração</dt>
+                    <dd className="text-base font-semibold tabular-nums">{pay}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-muted-foreground">Contratação</dt>
+                    <dd className="font-medium">{EMPLOYMENT_LABELS[vaga.employment_type] ?? vaga.employment_type}</dd>
+                  </div>
+                  <div>
+                    <dt className="text-muted-foreground">Local</dt>
+                    <dd className="font-medium">{local}</dd>
+                  </div>
+                </dl>
+                {open ? (
+                  <Button {...apply} size="lg" className="w-full" />
+                ) : (
+                  <p className="text-sm text-muted-foreground">Candidaturas encerradas.</p>
+                )}
+                <ShareWhatsAppButton text={shareText} className="w-full" />
+              </div>
+            </aside>
+          </div>
+
+          {open && (
+            <div
+              data-sticky-cta
+              className="fixed inset-x-0 bottom-0 z-30 border-t bg-card px-4 pt-3 pb-[calc(0.75rem+env(safe-area-inset-bottom))] shadow-[0_-6px_20px_-12px_oklch(0_0_0/0.3)] lg:hidden"
+            >
+              <div className="mx-auto flex max-w-6xl items-center gap-2">
+                <ShareWhatsAppButton text={shareText} iconOnly />
+                <Button {...apply} size="lg" className="flex-1" />
+              </div>
             </div>
           )}
-
-          <Button onClick={handleCandidatar} variant="cta" size="lg" className="mt-1">
-            Candidatar-se
-          </Button>
-        </CardContent>
-      </Card>
-      </div>
-    </div>
+        </div>
+      )}
+    </ApplyToVaga>
   )
 }

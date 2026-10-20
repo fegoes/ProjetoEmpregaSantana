@@ -15,3 +15,9 @@ export function stripHtml(html: string | null | undefined, maxLength = 160): str
     .trim()
   return text.length > maxLength ? `${text.slice(0, maxLength - 1)}…` : text
 }
+
+/** Aceita só caminhos internos ("/vagas/1?x=y") vindos da URL — nunca "//site.com" ou "https://…". */
+export function safeInternalPath(path: string | null | undefined): string | null {
+  if (!path || !path.startsWith('/') || path.startsWith('//') || path.startsWith('/\\')) return null
+  return path
+}

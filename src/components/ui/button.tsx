@@ -5,12 +5,12 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-all duration-200 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full text-sm font-semibold transition-[background-color,border-color,color,box-shadow,transform] duration-150 ease-out active:scale-[0.97] motion-reduce:transition-none motion-reduce:active:scale-100 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5',
-        cta: 'bg-brand-orange text-brand-orange-foreground shadow-sm hover:bg-brand-orange-strong hover:shadow-md hover:-translate-y-0.5',
+        default: 'bg-primary text-primary-foreground shadow-xs hover:bg-brand-blue-strong',
+        cta: 'bg-brand-orange text-brand-orange-foreground shadow-xs hover:bg-brand-orange-strong',
         destructive:
           'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20',
         outline:
@@ -21,10 +21,11 @@ const buttonVariants = cva(
         link: 'rounded-none text-primary underline-offset-4 hover:underline',
       },
       size: {
-        default: 'h-10 px-5 py-2 has-[>svg]:px-4',
-        sm: 'h-8 gap-1.5 px-3.5 has-[>svg]:px-3 text-[13px]',
+        // No celular todo alvo de toque tem pelo menos 40–44px; no desktop volta à densidade de antes
+        default: 'h-11 px-5 py-2 has-[>svg]:px-4 md:h-10',
+        sm: 'h-10 gap-1.5 px-4 has-[>svg]:px-3 text-[13px] md:h-8 md:px-3.5',
         lg: 'h-12 px-7 text-base has-[>svg]:px-5',
-        icon: 'size-10 rounded-full',
+        icon: 'size-11 rounded-full md:size-10',
       },
     },
     defaultVariants: {

@@ -1,0 +1,411 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T01:52:33.263434+00:00",
+  "title": "Design System: EmpregaSantana",
+  "extensions": {
+    "colorMeta": {
+      "azul-marca": {
+        "role": "primary",
+        "displayName": "Azul marca",
+        "canonical": "oklch(0.504 0.148 255.8)",
+        "tonalRamp": [
+          "oklch(0.15 0.048 255.8)",
+          "oklch(0.26 0.085 255.8)",
+          "oklch(0.38 0.121 255.8)",
+          "oklch(0.49 0.148 255.8)",
+          "oklch(0.61 0.148 255.8)",
+          "oklch(0.72 0.148 255.8)",
+          "oklch(0.84 0.117 255.8)",
+          "oklch(0.95 0.080 255.8)"
+        ]
+      },
+      "azul-marca-forte": {
+        "role": "primary",
+        "displayName": "Azul marca forte (hover)",
+        "canonical": "oklch(0.447 0.133 256)",
+        "tonalRamp": [
+          "oklch(0.15 0.043 256.0)",
+          "oklch(0.26 0.076 256.0)",
+          "oklch(0.38 0.109 256.0)",
+          "oklch(0.49 0.133 256.0)",
+          "oklch(0.61 0.133 256.0)",
+          "oklch(0.72 0.133 256.0)",
+          "oklch(0.84 0.105 256.0)",
+          "oklch(0.95 0.072 256.0)"
+        ]
+      },
+      "azul-profundo": {
+        "role": "primary",
+        "displayName": "Azul profundo (campo de cartaz)",
+        "canonical": "oklch(0.344 0.090 252)",
+        "tonalRamp": [
+          "oklch(0.15 0.029 252.0)",
+          "oklch(0.26 0.052 252.0)",
+          "oklch(0.38 0.074 252.0)",
+          "oklch(0.49 0.090 252.0)",
+          "oklch(0.61 0.090 252.0)",
+          "oklch(0.72 0.090 252.0)",
+          "oklch(0.84 0.071 252.0)",
+          "oklch(0.95 0.049 252.0)"
+        ]
+      },
+      "laranja-acao": {
+        "role": "secondary",
+        "displayName": "Laranja ação",
+        "canonical": "oklch(0.747 0.180 57.4)",
+        "tonalRamp": [
+          "oklch(0.15 0.058 57.4)",
+          "oklch(0.26 0.103 57.4)",
+          "oklch(0.38 0.148 57.4)",
+          "oklch(0.49 0.180 57.4)",
+          "oklch(0.61 0.180 57.4)",
+          "oklch(0.72 0.180 57.4)",
+          "oklch(0.84 0.142 57.4)",
+          "oklch(0.95 0.097 57.4)"
+        ]
+      },
+      "laranja-acao-forte": {
+        "role": "secondary",
+        "displayName": "Laranja ação forte (hover)",
+        "canonical": "oklch(0.720 0.180 55)",
+        "tonalRamp": [
+          "oklch(0.15 0.058 55.0)",
+          "oklch(0.26 0.103 55.0)",
+          "oklch(0.38 0.148 55.0)",
+          "oklch(0.49 0.180 55.0)",
+          "oklch(0.61 0.180 55.0)",
+          "oklch(0.72 0.180 55.0)",
+          "oklch(0.84 0.142 55.0)",
+          "oklch(0.95 0.097 55.0)"
+        ]
+      },
+      "laranja-texto": {
+        "role": "secondary",
+        "displayName": "Laranja texto",
+        "canonical": "oklch(0.530 0.143 52.5)",
+        "tonalRamp": [
+          "oklch(0.15 0.046 52.5)",
+          "oklch(0.26 0.082 52.5)",
+          "oklch(0.38 0.117 52.5)",
+          "oklch(0.49 0.143 52.5)",
+          "oklch(0.61 0.143 52.5)",
+          "oklch(0.72 0.143 52.5)",
+          "oklch(0.84 0.113 52.5)",
+          "oklch(0.95 0.077 52.5)"
+        ]
+      },
+      "fundo-pagina": {
+        "role": "neutral",
+        "displayName": "Fundo da página",
+        "canonical": "oklch(0.98 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "superficie-card": {
+        "role": "neutral",
+        "displayName": "Superfície de card",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "superficie-apoio": {
+        "role": "neutral",
+        "displayName": "Superfície de apoio",
+        "canonical": "oklch(0.961 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "texto": {
+        "role": "neutral",
+        "displayName": "Texto",
+        "canonical": "oklch(0.321 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "texto-secundario": {
+        "role": "neutral",
+        "displayName": "Texto secundário",
+        "canonical": "oklch(0.50 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "borda": {
+        "role": "neutral",
+        "displayName": "Borda",
+        "canonical": "oklch(0.90 0 0)",
+        "tonalRamp": [
+          "oklch(0.15 0.000 0.0)",
+          "oklch(0.26 0.000 0.0)",
+          "oklch(0.38 0.000 0.0)",
+          "oklch(0.49 0.000 0.0)",
+          "oklch(0.61 0.000 0.0)",
+          "oklch(0.72 0.000 0.0)",
+          "oklch(0.84 0.000 0.0)",
+          "oklch(0.95 0.000 0.0)"
+        ]
+      },
+      "sucesso-texto": {
+        "role": "neutral",
+        "displayName": "Sucesso (texto de status)",
+        "canonical": "oklch(0.48 0.11 155)",
+        "tonalRamp": [
+          "oklch(0.15 0.036 155.0)",
+          "oklch(0.26 0.063 155.0)",
+          "oklch(0.38 0.090 155.0)",
+          "oklch(0.49 0.110 155.0)",
+          "oklch(0.61 0.110 155.0)",
+          "oklch(0.72 0.110 155.0)",
+          "oklch(0.84 0.087 155.0)",
+          "oklch(0.95 0.060 155.0)"
+        ]
+      },
+      "erro-texto": {
+        "role": "neutral",
+        "displayName": "Erro (texto de status)",
+        "canonical": "oklch(0.50 0.19 27.3)",
+        "tonalRamp": [
+          "oklch(0.15 0.062 27.3)",
+          "oklch(0.26 0.109 27.3)",
+          "oklch(0.38 0.156 27.3)",
+          "oklch(0.49 0.190 27.3)",
+          "oklch(0.61 0.190 27.3)",
+          "oklch(0.72 0.190 27.3)",
+          "oklch(0.84 0.150 27.3)",
+          "oklch(0.95 0.103 27.3)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Título da faixa da home; uma por tela."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Título de página."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Título de seção."
+      },
+      "card-title": {
+        "displayName": "Título de card",
+        "purpose": "Vaga/profissional, até 2 linhas, Poppins por regra do manual."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descrições, até 68ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Legendas de grupo de filtro, caixa alta."
+      },
+      "tag": {
+        "displayName": "Tag",
+        "purpose": "Selos Vaga nova / Destaque."
+      }
+    },
+    "shadows": [
+      {
+        "name": "barra-fixa",
+        "value": "0 -6px 20px -12px oklch(0 0 0 / 0.3)",
+        "purpose": "Barra de ação fixa no rodapé do celular."
+      },
+      {
+        "name": "painel",
+        "value": "0 -8px 32px -8px oklch(0 0 0 / 0.25)",
+        "purpose": "Painel inferior/lateral (filtros, menu, candidatura)."
+      }
+    ],
+    "motion": [
+      {
+        "name": "press",
+        "value": "transform 150ms ease-out, scale(0.97)",
+        "purpose": "Retorno de toque em botões; desligado com prefers-reduced-motion."
+      },
+      {
+        "name": "sheet",
+        "value": "300ms cubic-bezier(0.32, 0.72, 0, 1)",
+        "purpose": "Entrada e saída do painel inferior/lateral."
+      },
+      {
+        "name": "state",
+        "value": "150ms ease-out (cor de borda/fundo)",
+        "purpose": "Hover de card, chip e botão."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      },
+      {
+        "name": "xl",
+        "value": "1280px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão de ação (CTA)",
+      "kind": "button",
+      "refersTo": "button-cta",
+      "description": "Ação principal da tela: Buscar, Candidatar-se, Chamar no WhatsApp. Uma por tela.",
+      "html": "<button class=\"ds-btn-cta\">Candidatar-se</button>",
+      "css": ".ds-btn-cta{font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:16px;height:48px;padding:0 28px;border:0;border-radius:9999px;background:var(--brand-orange,oklch(0.747 0.180 57.4));color:var(--brand-orange-foreground,oklch(0.321 0 0));box-shadow:0 1px 2px oklch(0 0 0/0.05);transition:background-color .15s ease-out,transform .15s ease-out;cursor:pointer}.ds-btn-cta:hover{background:var(--brand-orange-strong,oklch(0.720 0.180 55))}.ds-btn-cta:active{transform:scale(.97)}.ds-btn-cta:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.504 0.148 255.8/0.4)}"
+    },
+    {
+      "name": "Botão primário",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação secundária e confirmação de formulário.",
+      "html": "<button class=\"ds-btn-primary\">Ver minhas candidaturas</button>",
+      "css": ".ds-btn-primary{font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:14px;height:44px;padding:0 20px;border:0;border-radius:9999px;background:var(--primary,oklch(0.504 0.148 255.8));color:#fff;transition:background-color .15s ease-out,transform .15s ease-out;cursor:pointer}.ds-btn-primary:hover{background:var(--brand-blue-strong,oklch(0.447 0.133 256))}.ds-btn-primary:active{transform:scale(.97)}.ds-btn-primary:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.504 0.148 255.8/0.4)}"
+    },
+    {
+      "name": "Botão de contorno",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Ação terciária: Filtros, Enviar no WhatsApp, Mostrar mais.",
+      "html": "<button class=\"ds-btn-outline\">Filtros</button>",
+      "css": ".ds-btn-outline{font-family:Poppins,system-ui,sans-serif;font-weight:600;font-size:14px;height:44px;padding:0 20px;border:2px solid var(--border,oklch(0.90 0 0));border-radius:9999px;background:var(--background,oklch(0.98 0 0));color:var(--foreground,oklch(0.321 0 0));transition:border-color .15s ease-out,color .15s ease-out;cursor:pointer}.ds-btn-outline:hover{border-color:var(--primary,oklch(0.504 0.148 255.8));color:var(--primary,oklch(0.504 0.148 255.8))}.ds-btn-outline:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.504 0.148 255.8/0.4)}"
+    },
+    {
+      "name": "Chip de categoria",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Filtro rápido de categoria; selecionado vira campo azul profundo.",
+      "html": "<div class=\"ds-chips\"><button class=\"ds-chip\" aria-pressed=\"true\">Vendas</button><button class=\"ds-chip\" aria-pressed=\"false\">Saúde</button></div>",
+      "css": ".ds-chips{display:flex;gap:8px}.ds-chip{font-family:Poppins,system-ui,sans-serif;font-weight:500;font-size:14px;height:40px;padding:0 16px;border:1px solid var(--border,oklch(0.90 0 0));border-radius:9999px;background:var(--card,#fff);color:var(--foreground,oklch(0.321 0 0));cursor:pointer;transition:border-color .15s,background-color .15s}.ds-chip:hover{border-color:oklch(0.504 0.148 255.8/0.5)}.ds-chip[aria-pressed=true]{background:var(--brand-ink,oklch(0.344 0.090 252));border-color:var(--brand-ink,oklch(0.344 0.090 252));color:#fff}.ds-chip:focus-visible{outline:none;box-shadow:0 0 0 3px oklch(0.504 0.148 255.8/0.4)}"
+    },
+    {
+      "name": "Campo de busca",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Busca em pílula de 48px; campos de formulário usam 44px e canto de 10,6px.",
+      "html": "<label class=\"ds-search\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"11\" cy=\"11\" r=\"8\"/><path d=\"m21 21-4.3-4.3\"/></svg><input type=\"search\" placeholder=\"Cargo ou serviço\"></label>",
+      "css": ".ds-search{display:flex;align-items:center;gap:10px;height:48px;padding:0 16px;border:1px solid var(--border,oklch(0.90 0 0));border-radius:9999px;background:var(--card,#fff);color:var(--muted-foreground,oklch(0.50 0 0));max-width:420px}.ds-search input{flex:1;border:0;outline:none;background:transparent;font:400 16px Poppins,system-ui,sans-serif;color:var(--foreground,oklch(0.321 0 0))}.ds-search:focus-within{border-color:var(--primary,oklch(0.504 0.148 255.8));box-shadow:0 0 0 3px oklch(0.504 0.148 255.8/0.4)}"
+    },
+    {
+      "name": "Card de vaga",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Card padrão: título, empresa, valor, contrato, local, selo e data.",
+      "html": "<a class=\"ds-card\" href=\"#\"><h3>Técnico(a) de Enfermagem</h3><p class=\"ds-sub\">Clínica Santa Sofia</p><p class=\"ds-pay\">R$ 2.100 a R$ 2.600/mês</p><p class=\"ds-meta\"><strong>CLT</strong><br>Santana do Ipanema, AL</p><p class=\"ds-foot\"><span class=\"ds-tag\">Vaga nova</span><span>ontem</span></p></a>",
+      "css": ".ds-card{display:flex;flex-direction:column;gap:10px;width:280px;padding:20px;border:1px solid var(--border,oklch(0.90 0 0));border-radius:16px;background:var(--card,#fff);color:var(--foreground,oklch(0.321 0 0));text-decoration:none;font-family:Poppins,system-ui,sans-serif;transition:border-color .15s ease-out}.ds-card:hover{border-color:oklch(0.504 0.148 255.8/0.5)}.ds-card:hover h3{text-decoration:underline}.ds-card h3{margin:0;font-size:15px;font-weight:600;line-height:1.375}.ds-sub{margin:-6px 0 0;font-size:14px;color:var(--muted-foreground,oklch(0.50 0 0))}.ds-pay{margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}.ds-meta{margin:0;font-size:13px;line-height:1.6;color:var(--muted-foreground,oklch(0.50 0 0))}.ds-meta strong{color:var(--foreground,oklch(0.321 0 0));font-weight:500}.ds-foot{display:flex;justify-content:space-between;align-items:center;margin:0;font-size:12px;color:var(--muted-foreground,oklch(0.50 0 0))}.ds-tag{display:inline-flex;align-items:center;height:20px;padding:0 6px;border-radius:4px;background:var(--brand-orange,oklch(0.747 0.180 57.4));color:oklch(0.321 0 0);font:700 11px Montserrat,system-ui,sans-serif;letter-spacing:.025em;text-transform:uppercase}"
+    },
+    {
+      "name": "Card-cartaz \"VAGA NOVA\"",
+      "kind": "custom",
+      "refersTo": "card-poster",
+      "description": "Assinatura: card em destaque no campo azul profundo com o círculo laranja no canto.",
+      "html": "<a class=\"ds-poster\" href=\"#\"><span class=\"ds-poster-shape\" aria-hidden=\"true\"></span><h3>Operador(a) de Caixa</h3><p class=\"ds-sub\">Supermercado Sertão Bom Preço</p><p class=\"ds-pay\">R$ 1.518/mês</p><p class=\"ds-meta\"><strong>CLT</strong><br>Santana do Ipanema, AL</p><p class=\"ds-flag\">★ Destaque</p></a>",
+      "css": ".ds-poster{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:10px;width:280px;padding:20px;border:1px solid var(--brand-ink,oklch(0.344 0.090 252));border-radius:16px;background:var(--brand-ink,oklch(0.344 0.090 252));color:#fff;text-decoration:none;font-family:Poppins,system-ui,sans-serif;transition:border-color .15s ease-out}.ds-poster:hover{border-color:var(--brand-orange,oklch(0.747 0.180 57.4))}.ds-poster-shape{position:absolute;top:-32px;right:-32px;width:80px;height:80px;border-radius:9999px;background:var(--brand-orange,oklch(0.747 0.180 57.4))}.ds-poster h3{margin:0;padding-right:36px;font-size:15px;font-weight:600}.ds-poster .ds-sub{margin:-6px 0 0;font-size:14px;color:rgb(255 255 255/.75)}.ds-poster .ds-pay{margin:0;font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}.ds-poster .ds-meta{margin:0;font-size:13px;line-height:1.6;color:rgb(255 255 255/.75)}.ds-poster .ds-meta strong{color:#fff;font-weight:500}.ds-flag{margin:0;font:700 12px Montserrat,system-ui,sans-serif;letter-spacing:.025em;text-transform:uppercase;color:var(--brand-orange,oklch(0.747 0.180 57.4))}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Mural da cidade",
+    "overview": "O site é o mural de vagas da cidade, com a mesma cara dos posts \"VAGA NOVA\" que o público já segue no Instagram: campos chapados de azul profundo, formas geométricas laranja e títulos em Montserrat pesada. O fundo é neutro e calmo; a cor aparece em blocos que ocupam regiões inteiras (a faixa de busca da home, os cards em destaque, a barra de ação do celular), nunca espalhada em detalhes.\n\nÉ uma interface de trabalho: a pessoa veio achar uma vaga ou um profissional e agir. Por isso a densidade é de lista útil, não de vitrine. O dado principal de cada card é o salário; cidade, tipo de contrato e \"há quanto tempo\" vêm logo depois. Tudo funciona com o polegar: alvos de 44px, ações principais embaixo no celular, painéis que sobem de baixo.\n\nRecusado: hero de startup centralizado numa caixa com degradê, selo-pílula acima do título, palavras coloridas no título, linha de números, ícone de brilho (✨) para destaque, cards que \"levantam\" no hover.",
+    "keyCharacteristics": [
+      "Fundo neutro (#F8F8F8), cards brancos planos com borda de 1px, sem sombra de elevação.",
+      "Azul profundo como campo de cartaz; laranja só em ação e no grafismo.",
+      "Card em destaque = cartaz \"VAGA NOVA\": azul profundo, texto branco, círculo laranja no canto.",
+      "Salário em números tabulares como dado principal do card.",
+      "Painéis inferiores (bottom sheet) no celular para filtros, menu e candidatura."
+    ],
+    "rules": [
+      {
+        "name": "The One Orange Rule",
+        "body": "No máximo um botão laranja por tela (ou por painel aberto). O resto é azul ou contorno.",
+        "section": "colors"
+      },
+      {
+        "name": "The Poster Field Rule",
+        "body": "Azul profundo só aparece como campo inteiro (faixa, card, plano), nunca como cor de texto ou detalhe solto.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dark-on-Orange Rule",
+        "body": "Sobre laranja, só texto #333333. Branco sobre laranja reprova (2,36:1).",
+        "section": "colors"
+      },
+      {
+        "name": "The No Eyebrow Rule",
+        "body": "Nenhum rótulo acima de título. O título carrega o próprio peso; tipo, categoria e data vão depois do título.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Money Rule",
+        "body": "Todo valor em R$ usa números tabulares e o formato brasileiro (R$ 1.518/mês, R$ 39,90).",
+        "section": "typography"
+      },
+      {
+        "name": "The Flat Card Rule",
+        "body": "Cards não ganham sombra nem se deslocam no hover; o hover muda só a cor da borda (azul) ou, no cartaz, a borda vira laranja.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** mostrar o valor no card (\"R$ 1.518/mês\", \"A partir de R$ 60/hora\", \"Salário a combinar\").",
+      "**Do** usar azul profundo em campos inteiros (faixa, cartaz, plano em destaque).",
+      "**Do** manter a ação principal ao alcance do polegar: barra fixa no rodapé no celular, painel inferior para escolhas.",
+      "**Do** separar cidade e estado com vírgula (\"Santana do Ipanema, AL\").",
+      "**Do** usar o divisor de pontos e traço entre seções longas."
+    ],
+    "donts": [
+      "**Don't** usar degradê, vidro/blur decorativo ou o ícone de brilho (✨).",
+      "**Don't** pôr rótulo/eyebrow acima de título nem linha de números como prova social.",
+      "**Don't** fazer cards ou botões subirem no hover.",
+      "**Don't** usar travessão (—) como separador em dados de card.",
+      "**Don't** pôr texto branco sobre laranja."
+    ]
+  }
+}

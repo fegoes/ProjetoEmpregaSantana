@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCvVariant, useSaveCvVariant } from '@/hooks/useCvVariants'
 import type { CvEducation, CvExperience } from '@/types/database'
@@ -10,11 +10,14 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { safeInternalPath } from '@/lib/utils'
 
 export default function CvEditPage() {
   const { id } = useParams<{ id: string }>()
   const { user, profile } = useAuth()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const voltar = safeInternalPath(searchParams.get('voltar'))
   const { data: cv, isLoading } = useCvVariant(id)
   const saveCv = useSaveCvVariant()
 
@@ -60,7 +63,7 @@ export default function CvEditPage() {
         .filter(Boolean),
       is_default: isDefault,
     })
-    navigate('/candidato/cv')
+    navigate(voltar ?? '/candidato/cv')
   }
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando currículo…</p>
@@ -162,8 +165,11 @@ export default function CvEditPage() {
         </CardContent>
       </Card>
 
-      <Button onClick={handleSave} variant="cta" disabled={saveCv.isPending}>
-        {saveCv.isPending ? 'Salvando…' : 'Salvar currículo'}
+      {voltar && (
+        <p className="text-sm text-muted-foreground">Depois de salvar, você volta para a vaga e termina a candidatura.</p>
+      )}
+      <Button onClick={handleSave} variant="cta" size="lg" disabled={saveCv.isPending}>
+        {saveCv.isPending ? 'Salvando…' : voltar ? 'Salvar e voltar para a vaga' : 'Salvar currículo'}
       </Button>
     </div>
   )

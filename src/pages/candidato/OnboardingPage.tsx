@@ -1,15 +1,18 @@
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { safeInternalPath } from '@/lib/utils'
 
 export default function CandidatoOnboardingPage() {
   const { user, roles, addRole } = useAuth()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const voltar = safeInternalPath(searchParams.get('voltar'))
   const [headline, setHeadline] = React.useState('')
   const [desiredRole, setDesiredRole] = React.useState('')
   const [loading, setLoading] = React.useState(false)
@@ -36,10 +39,10 @@ export default function CandidatoOnboardingPage() {
 
     setLoading(false)
     if (profileError) {
-      setError(profileError.message)
+      setError('Não foi possível salvar agora. Confira sua conexão e tente de novo.')
       return
     }
-    navigate('/candidato/cv')
+    navigate(voltar ?? '/candidato/cv')
   }
 
   return (

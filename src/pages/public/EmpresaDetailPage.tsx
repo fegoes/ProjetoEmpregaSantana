@@ -3,6 +3,8 @@ import { MapPin, Users } from 'lucide-react'
 import { useEmpresa } from '@/hooks/useEmpresas'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { stripHtml } from '@/lib/utils'
+import { formatLocal } from '@/lib/format'
+import { BackLink } from '@/components/BackLink'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { VagaCard } from '@/components/VagaCard'
 import { EmptyState } from '@/components/EmptyState'
@@ -47,6 +49,7 @@ export default function EmpresaDetailPage() {
   return (
     <div className="flex flex-col gap-8">
       <JsonLd data={organizationJsonLd} />
+      <BackLink fallback="/" />
       <div className="flex items-start gap-4">
         {empresa.logo_url ? (
           <img
@@ -58,7 +61,7 @@ export default function EmpresaDetailPage() {
           <InitialsAvatar name={empresa.nome_fantasia} size="lg" />
         )}
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
             <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>
             {empresa.is_verified && <Badge className="rounded-full">Verificada</Badge>}
           </div>
@@ -67,7 +70,7 @@ export default function EmpresaDetailPage() {
             {[empresa.city, empresa.state].filter(Boolean).length > 0 && (
               <span className="flex items-center gap-1">
                 <MapPin className="size-3.5" />
-                {[empresa.city, empresa.state].filter(Boolean).join(' — ')}
+                {formatLocal(empresa.city, empresa.state)}
               </span>
             )}
             {empresa.employee_count_visible && empresa.employee_count && (
@@ -81,6 +84,31 @@ export default function EmpresaDetailPage() {
       </div>
 
       <RichTextRenderer html={empresa.description_html} />
+
+      <div>
+        <h2 className="mb-3 text-lg font-bold">Vagas abertas ({vagasPublicadas.length})</h2>
+        {vagasPublicadas.length > 0 ? (
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {vagasPublicadas.map((vaga) => (
+              <VagaCard
+                key={vaga.id}
+                hideEmpresa
+                vaga={{
+                  ...vaga,
+                  empresas: {
+                    nome_fantasia: empresa.nome_fantasia,
+                    city: empresa.city,
+                    state: empresa.state,
+                    logo_url: empresa.logo_url,
+                  },
+                }}
+              />
+            ))}
+          </div>
+        ) : (
+          <EmptyState icon={Users} title="Nenhuma vaga aberta no momento" description="Quando esta empresa publicar uma vaga, ela aparece aqui." />
+        )}
+      </div>
 
       {empresa.address_visible && empresa.address && (
         <Card>
@@ -118,7 +146,7 @@ export default function EmpresaDetailPage() {
 
       {empresa.interior_photos_visible && empresa.interior_photo_urls.length > 0 && (
         <div>
-          <h2 className="mb-3 text-lg font-semibold">Conheça o ambiente</h2>
+          <h2 className="mb-3 text-lg font-bold">Conheça o ambiente</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {empresa.interior_photo_urls.map((url) => (
               <div key={url} className="aspect-square overflow-hidden rounded-xl bg-muted">
@@ -129,29 +157,6 @@ export default function EmpresaDetailPage() {
         </div>
       )}
 
-      <div>
-        <h2 className="mb-3 text-lg font-semibold">Vagas abertas ({vagasPublicadas.length})</h2>
-        {vagasPublicadas.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {vagasPublicadas.map((vaga) => (
-              <VagaCard
-                key={vaga.id}
-                vaga={{
-                  ...vaga,
-                  empresas: {
-                    nome_fantasia: empresa.nome_fantasia,
-                    city: empresa.city,
-                    state: empresa.state,
-                    logo_url: empresa.logo_url,
-                  },
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyState icon={Users} title="Nenhuma vaga aberta no momento" />
-        )}
-      </div>
     </div>
   )
 }

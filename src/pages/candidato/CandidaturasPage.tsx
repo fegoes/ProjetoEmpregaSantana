@@ -1,128 +1,81 @@
-import * as React from 'react'
-import { useSearchParams } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { Link, Navigate, useSearchParams } from 'react-router-dom'
+import { ChevronRight, Inbox } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
-import { supabase } from '@/lib/supabase'
-import { useCvVariants } from '@/hooks/useCvVariants'
-import { useVaga } from '@/hooks/useVagas'
+import { CANDIDATURA_STATUS_HINTS, useMinhasCandidaturas } from '@/hooks/useCandidaturas'
 import { StatusBadge } from '@/components/StatusBadge'
+import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-
-function useCandidaturas(candidatoId: string | undefined) {
-  return useQuery({
-    queryKey: ['candidaturas', 'by-candidato', candidatoId],
-    enabled: Boolean(candidatoId),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('candidaturas')
-        .select('*, vagas ( title, empresas ( nome_fantasia ) )')
-        .eq('candidato_id', candidatoId as string)
-        .order('created_at', { ascending: false })
-      if (error) throw error
-      return data
-    },
-  })
-}
-
-function AplicarForm({ vagaId, candidatoId }: { vagaId: string; candidatoId: string }) {
-  const { data: vaga } = useVaga(vagaId)
-  const { data: cvs } = useCvVariants(candidatoId)
-  const [selectedCv, setSelectedCv] = React.useState<string>('')
-  const queryClient = useQueryClient()
-  const [, setSearchParams] = useSearchParams()
-
-  const aplicar = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase
-        .from('candidaturas')
-        .upsert(
-          { vaga_id: vagaId, candidato_id: candidatoId, cv_variant_id: selectedCv },
-          { onConflict: 'vaga_id,candidato_id' },
-        )
-      if (error) throw error
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['candidaturas', 'by-candidato', candidatoId] })
-      setSearchParams({})
-    },
-  })
-
-  React.useEffect(() => {
-    const defaultCv = cvs?.find((cv) => cv.is_default) ?? cvs?.[0]
-    if (defaultCv) setSelectedCv(defaultCv.id)
-  }, [cvs])
-
-  if (!cvs || cvs.length === 0) {
-    return (
-      <Card className="border-primary">
-        <CardHeader>
-          <CardTitle className="text-base">Candidatar-se a {vaga?.title}</CardTitle>
-        </CardHeader>
-        <CardContent className="text-sm text-muted-foreground">
-          Você precisa criar um currículo antes de se candidatar.
-        </CardContent>
-      </Card>
-    )
-  }
-
-  return (
-    <Card className="border-primary">
-      <CardHeader>
-        <CardTitle className="text-base">Candidatar-se a {vaga?.title}</CardTitle>
-        <CardDescription>Escolha qual currículo enviar</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-3">
-        <select
-          className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-          value={selectedCv}
-          onChange={(e) => setSelectedCv(e.target.value)}
-        >
-          {cvs.map((cv) => (
-            <option key={cv.id} value={cv.id}>
-              {cv.title}
-            </option>
-          ))}
-        </select>
-        <Button variant="cta" onClick={() => aplicar.mutate()} disabled={aplicar.isPending || !selectedCv}>
-          {aplicar.isPending ? 'Enviando…' : 'Enviar candidatura'}
-        </Button>
-      </CardContent>
-    </Card>
-  )
-}
+import { timeAgo } from '@/lib/format'
 
 export default function CandidaturasPage() {
   const { user } = useAuth()
   const [searchParams] = useSearchParams()
-  const vagaIdParaAplicar = searchParams.get('aplicar')
-  const { data: candidaturas, isLoading } = useCandidaturas(user?.id)
+  const { data: candidaturas, isLoading, isError, refetch } = useMinhasCandidaturas(user?.id)
+
+  // Link antigo "?aplicar=<vaga>": a candidatura agora acontece na própria página da vaga
+  const aplicar = searchParams.get('aplicar')
+  if (aplicar) return <Navigate to={`/vagas/${aplicar}?candidatar=1`} replace />
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-extrabold tracking-tight">Minhas candidaturas</h1>
-
-      {vagaIdParaAplicar && user && (
-        <AplicarForm vagaId={vagaIdParaAplicar} candidatoId={user.id} />
-      )}
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight">Minhas candidaturas</h1>
+          <p className="mt-1 text-sm text-muted-foreground">Acompanhe aqui o andamento de cada vaga.</p>
+        </div>
+        <Button asChild variant="outline" className="self-start sm:self-auto">
+          <Link to="/candidato/cv">Meus currículos</Link>
+        </Button>
+      </div>
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
+      {isError && (
+        <div className="flex flex-wrap items-center gap-3 text-sm">
+          <span>Não conseguimos carregar suas candidaturas.</span>
+          <Button variant="outline" size="sm" onClick={() => void refetch()}>
+            Tentar de novo
+          </Button>
+        </div>
+      )}
 
-      <div className="flex flex-col gap-3">
-        {candidaturas?.map((c) => (
-          <Card key={c.id}>
-            <CardContent className="flex items-center justify-between py-4">
-              <div>
-                <p className="font-medium">{c.vagas?.title}</p>
-                <p className="text-sm text-muted-foreground">{c.vagas?.empresas?.nome_fantasia}</p>
-              </div>
-              <StatusBadge status={c.status} />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      {candidaturas?.length === 0 && !vagaIdParaAplicar && (
-        <p className="text-sm text-muted-foreground">Você ainda não se candidatou a nenhuma vaga.</p>
+      {candidaturas && candidaturas.length > 0 && (
+        <ul className="flex flex-col divide-y overflow-hidden rounded-2xl border bg-card">
+          {candidaturas.map((c) => (
+            <li key={c.id}>
+              <Link
+                to={`/vagas/${c.vaga_id}`}
+                className="group flex items-center gap-3 px-4 py-4 transition-colors hover:bg-muted/60 sm:px-5"
+              >
+                <div className="min-w-0 flex-1">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <p className="font-semibold group-hover:underline">{c.vagas?.title ?? 'Vaga removida'}</p>
+                    <StatusBadge status={c.status} />
+                  </div>
+                  <p className="mt-0.5 text-sm text-muted-foreground">
+                    {c.vagas?.empresas?.nome_fantasia}
+                    {c.vagas?.empresas?.nome_fantasia && ' · '}
+                    enviada {timeAgo(c.created_at)}
+                  </p>
+                  <p className="mt-1.5 text-sm">{CANDIDATURA_STATUS_HINTS[c.status]}</p>
+                </div>
+                <ChevronRight className="size-5 shrink-0 text-muted-foreground" />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {candidaturas?.length === 0 && (
+        <EmptyState
+          icon={Inbox}
+          title="Você ainda não se candidatou"
+          description="Quando enviar seu currículo para uma vaga, ela aparece aqui com o andamento."
+          action={
+            <Button asChild variant="cta">
+              <Link to="/">Ver vagas</Link>
+            </Button>
+          }
+        />
       )}
     </div>
   )

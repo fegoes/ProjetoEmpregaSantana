@@ -645,7 +645,7 @@ Constantes em todos: onda/curva de transição entre os blocos de cor, selo semp
 
 ### 8.3 Elemento gráfico de apoio
 
-O board traz uma faixa de pontos e traços (`•••——figura——••`) que funciona como divisor e como metáfora da conexão. Usar como separador entre seções em peça longa e como ornamento de rodapé. No produto, o equivalente é a `.brand-mesh` (§5).
+O board traz uma faixa de pontos e traços (`•••——figura——••`) que funciona como divisor e como metáfora da conexão. Usar como separador entre seções em peça longa e como ornamento de rodapé. No produto ela é o componente `BrandDivider` (três pontos laranja + linha), usado entre seções das páginas de vaga e de autônomo. A antiga `.brand-mesh` (degradê) foi removida no Bloco 5 (§9.1).
 
 ---
 
@@ -693,6 +693,14 @@ Auditoria completa pós-Bloco 3, disparada por revisão explícita de "todas as 
 - Variantes de botão (`cta` vs `default`) já estavam corretas em toda a área logada (ex.: "Nova vaga" no painel é navegação → `default`; "Publicar vaga" no formulário é a ação real → `cta`) — nada a mudar ali.
 
 *Visível para o usuário final: sim — todo título de card em toda tela autenticada (antes em Poppins, agora Montserrat) e o `<h1>` de 15 páginas internas.*
+
+**Bloco 5 — Redesenho "Mural da cidade" (telas públicas e área do candidato)** ✅ **APLICADO**
+Saída da crítica de design de 2026-10-16 (`.impeccable/critique/`). O registro visual vivo agora é o `DESIGN.md` da raiz; o contexto de produto, o `PRODUCT.md`.
+- Hero de startup (caixa com degradê, selo-pílula, palavras coloridas, linha de números) trocado por faixa chapada em `#0D3A66` com busca e o círculo laranja dos posts. `.brand-mesh` removida.
+- Card em destaque vira o cartaz "VAGA NOVA" (azul profundo + círculo laranja); ícone ✨ trocado por estrela (§6.6, "Potencial → Star"). Selo "Vaga nova" para vagas de até 3 dias.
+- Cards mostram salário, contrato, cidade e data; separador de local com vírgula, sem travessão.
+- Dois tokens de sistema novos (não são cores de marca): `--success-ink` e `--destructive-ink`, texto de status sobre o próprio tom lavado (5,2:1 e 5,3:1; os tons base davam 3,2:1 e 3,8:1).
+- Botões sem "levantar" no hover; 44px de altura no celular.
 
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 

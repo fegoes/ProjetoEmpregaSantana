@@ -1,44 +1,52 @@
 import * as React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Briefcase, GraduationCap, HardHat, type LucideIcon } from 'lucide-react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Briefcase, HardHat, UserRound, type LucideIcon } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import type { UserRole } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { cn } from '@/lib/utils'
+import { AuthLayout } from '@/components/auth/AuthLayout'
+import { PasswordInput } from '@/components/auth/PasswordInput'
+import { FormError } from '@/components/auth/FormError'
+import { cn, safeInternalPath } from '@/lib/utils'
 
-const ROLE_OPTIONS: { role: UserRole; icon: LucideIcon; label: string; description: string }[] = [
+const ROLE_OPTIONS: { role: UserRole; param: string; icon: LucideIcon; label: string; description: string }[] = [
   {
     role: 'candidato',
-    icon: GraduationCap,
-    label: 'Sou candidato',
-    description: 'Quero montar meu currículo e me candidatar a vagas.',
+    param: 'candidato',
+    icon: UserRound,
+    label: 'Procuro emprego',
+    description: 'Monto meu currículo e me candidato a vagas.',
   },
   {
     role: 'autonomo',
+    param: 'autonomo',
     icon: HardHat,
     label: 'Sou autônomo',
-    description: 'Quero divulgar meus serviços para contratação direta.',
+    description: 'Divulgo meus serviços para ser contratado direto.',
   },
   {
     role: 'empresa_owner',
+    param: 'empresa',
     icon: Briefcase,
-    label: 'Sou empresa',
-    description: 'Quero publicar vagas e contratar.',
+    label: 'Quero contratar',
+    description: 'Publico vagas da minha empresa.',
   },
 ]
 
 export default function CadastroPage() {
   const { signUp } = useAuth()
   const navigate = useNavigate()
-  const [role, setRole] = React.useState<UserRole>('candidato')
+  const [searchParams] = useSearchParams()
+  const initialRole = ROLE_OPTIONS.find((o) => o.param === searchParams.get('perfil'))?.role ?? 'candidato'
+  const [role, setRole] = React.useState<UserRole>(initialRole)
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState(false)
+  const redirect = safeInternalPath(searchParams.get('redirect'))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -54,87 +62,93 @@ export default function CadastroPage() {
   }
 
   return (
-    <div className="brand-mesh -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
-      <div className="w-full max-w-md">
-        <Card className="rounded-2xl border-none shadow-lg">
-          <CardHeader className="items-center text-center">
-            <CardTitle className="text-xl">Criar conta</CardTitle>
-            <CardDescription>Leva menos de um minuto. Você pode adicionar outros perfis depois.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="mb-5 grid gap-2">
-              {ROLE_OPTIONS.map((option) => {
-                const Icon = option.icon
-                const isActive = role === option.role
-                return (
-                  <button
-                    key={option.role}
-                    type="button"
-                    onClick={() => setRole(option.role)}
-                    className={cn(
-                      'flex items-center gap-3 rounded-xl border px-3.5 py-2.5 text-left text-sm transition-all',
-                      isActive
-                        ? 'border-primary bg-primary/8 ring-1 ring-primary'
-                        : 'border-border hover:border-primary/40 hover:bg-accent',
-                    )}
-                  >
-                    <span
-                      className={cn(
-                        'flex size-9 shrink-0 items-center justify-center rounded-full',
-                        isActive ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground',
-                      )}
-                    >
-                      <Icon className="size-4.5" />
-                    </span>
-                    <div>
-                      <div className="font-semibold">{option.label}</div>
-                      <div className="text-xs text-muted-foreground">{option.description}</div>
-                    </div>
-                  </button>
-                )
-              })}
-            </div>
+    <AuthLayout
+      title="Criar conta"
+      description="Leva menos de um minuto. Depois você pode adicionar outros perfis."
+      footer={
+        <>
+          Já tem conta?{' '}
+          <Link to={redirect ? `/login?redirect=${encodeURIComponent(redirect)}` : '/login'} className="font-semibold text-primary hover:underline">
+            Entrar
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+        <fieldset className="flex flex-col gap-2">
+          <legend className="mb-2 text-sm font-medium">Como você vai usar o EmpregaSantana?</legend>
+          {ROLE_OPTIONS.map((option) => {
+            const Icon = option.icon
+            const active = role === option.role
+            return (
+              <label
+                key={option.role}
+                className={cn(
+                  'flex min-h-16 cursor-pointer items-center gap-3 rounded-xl border bg-card px-4 py-3 transition-colors has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50',
+                  active ? 'border-primary ring-1 ring-primary' : 'hover:border-primary/40',
+                )}
+              >
+                <input
+                  type="radio"
+                  name="perfil"
+                  value={option.role}
+                  checked={active}
+                  onChange={() => setRole(option.role)}
+                  className="sr-only"
+                />
+                <Icon className={cn('size-5 shrink-0', active ? 'text-primary' : 'text-muted-foreground')} />
+                <span className="min-w-0">
+                  <span className="block font-semibold">{option.label}</span>
+                  <span className="block text-sm text-muted-foreground">{option.description}</span>
+                </span>
+              </label>
+            )
+          })}
+        </fieldset>
 
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="fullName">Nome completo</Label>
-                <Input id="fullName" required value={fullName} onChange={(e) => setFullName(e.target.value)} />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="password">Senha</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  minLength={6}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              {error && <p className="text-sm text-destructive">{error}</p>}
-              <Button type="submit" variant="cta" className="mt-1" disabled={loading}>
-                {loading ? 'Criando conta…' : 'Criar conta'}
-              </Button>
-            </form>
-            <p className="mt-5 text-center text-sm text-muted-foreground">
-              Já tem conta?{' '}
-              <Link to="/login" className="font-medium text-primary hover:underline">
-                Entrar
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="fullName">{role === 'empresa_owner' ? 'Seu nome (responsável)' : 'Nome completo'}</Label>
+          <Input
+            id="fullName"
+            autoComplete="name"
+            autoCapitalize="words"
+            required
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="email">E-mail</Label>
+          <Input
+            id="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="password">Senha</Label>
+          <PasswordInput
+            id="password"
+            autoComplete="new-password"
+            required
+            minLength={6}
+            aria-describedby="password-hint"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <p id="password-hint" className="text-sm text-muted-foreground">
+            Mínimo de 6 caracteres.
+          </p>
+        </div>
+        {error && <FormError>{error}</FormError>}
+        <Button type="submit" variant="cta" size="lg" disabled={loading}>
+          {loading ? 'Criando conta…' : 'Criar conta'}
+        </Button>
+      </form>
+    </AuthLayout>
   )
 }

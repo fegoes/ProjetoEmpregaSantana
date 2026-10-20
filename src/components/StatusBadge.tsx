@@ -17,18 +17,18 @@ const LABELS: Record<string, string> = {
 
 // Cores semânticas: verde = confirmado/ativo, azul = em andamento, laranja = precisa de atenção, vermelho = negativo/encerrado
 const STYLES: Record<string, string> = {
-  published: 'bg-success/15 text-success border-success/25',
-  active: 'bg-success/15 text-success border-success/25',
-  aprovada: 'bg-success/15 text-success border-success/25',
+  published: 'bg-success/15 text-success-ink border-success/25',
+  active: 'bg-success/15 text-success-ink border-success/25',
+  aprovada: 'bg-success/15 text-success-ink border-success/25',
   draft: 'bg-muted text-muted-foreground border-transparent',
   pending: 'bg-brand-orange/15 text-brand-orange-ink border-brand-orange/25',
   em_analise: 'bg-primary/12 text-primary border-primary/25',
   enviada: 'bg-primary/12 text-primary border-primary/25',
   entrevista: 'bg-primary/12 text-primary border-primary/25',
   paused: 'bg-brand-orange/15 text-brand-orange-ink border-brand-orange/25',
-  suspended: 'bg-destructive/12 text-destructive border-destructive/25',
+  suspended: 'bg-destructive/12 text-destructive-ink border-destructive/25',
   closed: 'bg-muted text-muted-foreground border-transparent',
-  rejeitada: 'bg-destructive/12 text-destructive border-destructive/25',
+  rejeitada: 'bg-destructive/12 text-destructive-ink border-destructive/25',
 }
 
 export function StatusBadge({ status, className }: { status: string; className?: string }) {

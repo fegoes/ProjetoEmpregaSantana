@@ -4,13 +4,16 @@ import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Logo } from '@/components/brand/Logo'
+import { AuthLayout } from '@/components/auth/AuthLayout'
+import { PasswordInput } from '@/components/auth/PasswordInput'
+import { FormError } from '@/components/auth/FormError'
+import { safeInternalPath } from '@/lib/utils'
 
 export default function LoginPage() {
   const { signIn } = useAuth()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
+  const redirect = safeInternalPath(searchParams.get('redirect'))
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [error, setError] = React.useState<string | null>(null)
@@ -26,59 +29,59 @@ export default function LoginPage() {
       setError(signInError)
       return
     }
-    navigate(searchParams.get('redirect') ?? '/perfil')
+    navigate(redirect ?? '/perfil')
   }
 
   return (
-    <div className="brand-mesh -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
-      <div className="w-full max-w-sm">
-        <Card className="rounded-2xl border-none shadow-lg">
-          <CardHeader className="items-center text-center">
-            <Logo variant="mark" size="lg" asLink={false} className="mb-1" />
-            <CardTitle className="text-xl">Bem-vindo(a) de volta</CardTitle>
-            <CardDescription>Entre para candidatar-se, contratar ou gerenciar suas vagas.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-              <div className="flex flex-col gap-1.5">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Senha</Label>
-                  <Link to="/esqueci-senha" className="text-xs font-medium text-primary hover:underline">
-                    Esqueci minha senha
-                  </Link>
-                </div>
-                <Input
-                  id="password"
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-              {error && <p className="text-sm text-destructive">{error}</p>}
-              <Button type="submit" variant="cta" className="mt-1" disabled={loading}>
-                {loading ? 'Entrando…' : 'Entrar'}
-              </Button>
-            </form>
-            <p className="mt-5 text-center text-sm text-muted-foreground">
-              Não tem conta?{' '}
-              <Link to="/cadastro" className="font-medium text-primary hover:underline">
-                Criar conta grátis
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <AuthLayout
+      title="Entrar"
+      description={
+        redirect?.startsWith('/vagas/')
+          ? 'Entre para terminar sua candidatura. Você volta direto para a vaga.'
+          : 'Para se candidatar, contratar ou gerenciar suas vagas.'
+      }
+      footer={
+        <>
+          Ainda não tem conta?{' '}
+          <Link to={redirect ? `/cadastro?redirect=${encodeURIComponent(redirect)}` : '/cadastro'} className="font-semibold text-primary hover:underline">
+            Criar conta grátis
+          </Link>
+        </>
+      }
+    >
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate={false}>
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="email">E-mail</Label>
+          <Input
+            id="email"
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
+        <div className="flex flex-col gap-1.5">
+          <div className="flex items-center justify-between">
+            <Label htmlFor="password">Senha</Label>
+            <Link to="/esqueci-senha" className="-my-2 py-2 text-sm font-medium text-primary hover:underline">
+              Esqueci minha senha
+            </Link>
+          </div>
+          <PasswordInput
+            id="password"
+            autoComplete="current-password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        {error && <FormError>{error}</FormError>}
+        <Button type="submit" variant="cta" size="lg" className="mt-1" disabled={loading}>
+          {loading ? 'Entrando…' : 'Entrar'}
+        </Button>
+      </form>
+    </AuthLayout>
   )
 }

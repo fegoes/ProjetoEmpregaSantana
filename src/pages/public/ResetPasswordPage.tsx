@@ -2,10 +2,10 @@ import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Logo } from '@/components/brand/Logo'
+import { AuthLayout } from '@/components/auth/AuthLayout'
+import { PasswordInput } from '@/components/auth/PasswordInput'
+import { FormError } from '@/components/auth/FormError'
 
 export default function ResetPasswordPage() {
   const { user, loading: authLoading, updatePassword } = useAuth()
@@ -20,7 +20,7 @@ export default function ResetPasswordPage() {
     e.preventDefault()
     setError(null)
     if (password !== confirmPassword) {
-      setError('As senhas não coincidem.')
+      setError('As duas senhas não são iguais. Digite de novo.')
       return
     }
     setLoading(true)
@@ -35,60 +35,55 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="brand-mesh -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
-      <div className="w-full max-w-sm">
-        <Card className="rounded-2xl border-none shadow-lg">
-          <CardHeader className="items-center text-center">
-            <Logo variant="mark" size="lg" asLink={false} className="mb-1" />
-            <CardTitle className="text-xl">Definir nova senha</CardTitle>
-            <CardDescription>Escolha uma nova senha para sua conta.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {authLoading ? (
-              <p className="text-sm text-muted-foreground">Verificando link…</p>
-            ) : !user ? (
-              <p className="text-sm text-destructive">
-                Este link de redefinição é inválido ou expirou.{' '}
-                <Link to="/esqueci-senha" className="font-medium underline">
-                  Solicite um novo
-                </Link>
-                .
-              </p>
-            ) : done ? (
-              <p className="text-sm text-muted-foreground">Senha atualizada! Redirecionando…</p>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="password">Nova senha</Label>
-                  <Input
-                    id="password"
-                    type="password"
-                    required
-                    minLength={6}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="confirmPassword">Confirmar nova senha</Label>
-                  <Input
-                    id="confirmPassword"
-                    type="password"
-                    required
-                    minLength={6}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
-                </div>
-                {error && <p className="text-sm text-destructive">{error}</p>}
-                <Button type="submit" variant="cta" className="mt-1" disabled={loading}>
-                  {loading ? 'Salvando…' : 'Salvar nova senha'}
-                </Button>
-              </form>
-            )}
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <AuthLayout title="Criar nova senha" description="Escolha uma senha nova para sua conta.">
+      {authLoading ? (
+        <p className="text-sm text-muted-foreground">Conferindo o link…</p>
+      ) : !user ? (
+        <FormError>
+          Este link já foi usado ou expirou.{' '}
+          <Link to="/esqueci-senha" className="font-semibold underline">
+            Peça um link novo
+          </Link>
+          .
+        </FormError>
+      ) : done ? (
+        <p className="text-[15px]" role="status">
+          Senha atualizada! Levando você para o seu perfil…
+        </p>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="password">Nova senha</Label>
+            <PasswordInput
+              id="password"
+              autoComplete="new-password"
+              required
+              minLength={6}
+              aria-describedby="password-hint"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <p id="password-hint" className="text-sm text-muted-foreground">
+              Mínimo de 6 caracteres.
+            </p>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="confirmPassword">Repita a nova senha</Label>
+            <PasswordInput
+              id="confirmPassword"
+              autoComplete="new-password"
+              required
+              minLength={6}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+          </div>
+          {error && <FormError>{error}</FormError>}
+          <Button type="submit" variant="cta" size="lg" className="mt-1" disabled={loading}>
+            {loading ? 'Salvando…' : 'Salvar nova senha'}
+          </Button>
+        </form>
+      )}
+    </AuthLayout>
   )
 }

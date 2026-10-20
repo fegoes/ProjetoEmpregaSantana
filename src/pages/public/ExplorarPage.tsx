@@ -1,22 +1,13 @@
 import * as React from 'react'
 import { useSearchParams } from 'react-router-dom'
-import { Search, SearchX } from 'lucide-react'
-import { Input } from '@/components/ui/input'
-import { VagaCard } from '@/components/VagaCard'
-import { AutonomoCard } from '@/components/AutonomoCard'
-import { EmptyState } from '@/components/EmptyState'
-import { ShowMoreGrid } from '@/components/ShowMoreGrid'
-import { FeedFilterPanel } from '@/components/FeedFilterPanel'
+import { Search, X } from 'lucide-react'
+import { FeedBrowser } from '@/components/feed/FeedBrowser'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
-import { useVagasPublicadas } from '@/hooks/useVagas'
-import { useAutonomosAtivos } from '@/hooks/useAutonomos'
-import { DEFAULT_FEED_FILTERS, filterAutonomos, filterVagas } from '@/lib/feedFilters'
 
 export default function ExplorarPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const [term, setTerm] = React.useState(searchParams.get('q') ?? '')
   const [debounced, setDebounced] = React.useState(searchParams.get('q') ?? '')
-  const [filters, setFilters] = React.useState(DEFAULT_FEED_FILTERS)
 
   useDocumentMeta({
     title: 'Explorar',
@@ -25,95 +16,52 @@ export default function ExplorarPage() {
 
   React.useEffect(() => {
     const timeout = setTimeout(() => {
-      setDebounced(term)
-      setSearchParams(term ? { q: term } : {}, { replace: true })
+      const q = term.trim()
+      setDebounced(q)
+      setSearchParams(q ? { q } : {}, { replace: true })
     }, 300)
     return () => clearTimeout(timeout)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [term])
 
-  const vagasQuery = useVagasPublicadas({ search: debounced })
-  const autonomosQuery = useAutonomosAtivos({ search: debounced })
-
-  const vagas = React.useMemo(() => filterVagas(vagasQuery.data ?? [], filters), [vagasQuery.data, filters])
-  const autonomos = React.useMemo(
-    () => filterAutonomos(autonomosQuery.data ?? [], filters),
-    [autonomosQuery.data, filters],
-  )
-  const totalResults = vagas.length + autonomos.length
+  const clear = () => {
+    setTerm('')
+    setDebounced('')
+    setSearchParams({}, { replace: true })
+  }
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-2xl font-extrabold tracking-tight">Explorar</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Busque por cargo, categoria de serviço ou palavra-chave entre vagas e autônomos.
-        </p>
-        <div className="relative mt-4 max-w-lg">
-          <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            autoFocus
+        <h1 className="text-2xl font-extrabold tracking-tight sm:text-[1.75rem]">Buscar vagas e profissionais</h1>
+        <form role="search" onSubmit={(e) => e.preventDefault()} className="relative mt-4 max-w-xl">
+          <label htmlFor="explorar-search" className="sr-only">
+            Buscar por cargo, serviço ou palavra-chave
+          </label>
+          <Search className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted-foreground" />
+          <input
+            id="explorar-search"
+            type="search"
+            enterKeyHint="search"
             value={term}
             onChange={(e) => setTerm(e.target.value)}
-            placeholder="Ex.: eletricista, vendedor, designer…"
-            className="h-11 rounded-full pl-10"
+            placeholder="Ex.: vendedor, eletricista, enfermagem"
+            className="h-12 w-full rounded-full border bg-card pr-12 pl-12 text-base shadow-xs outline-none placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [&::-webkit-search-cancel-button]:hidden"
           />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-8 lg:flex-row">
-        <aside className="shrink-0 lg:w-56">
-          <FeedFilterPanel value={filters} onChange={setFilters} layout="sidebar" />
-        </aside>
-
-        <div className="min-w-0 flex-1">
-          {debounced ? (
-            <div className="flex flex-col gap-8">
-              {vagas.length > 0 && (
-                <section>
-                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                    Vagas <span className="text-foreground">({vagas.length})</span>
-                  </h2>
-                  <ShowMoreGrid
-                    key={`vagas-${debounced}`}
-                    items={vagas}
-                    keyExtractor={(vaga) => vaga.id}
-                    renderItem={(vaga) => <VagaCard vaga={vaga} />}
-                  />
-                </section>
-              )}
-
-              {autonomos.length > 0 && (
-                <section>
-                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                    Autônomos <span className="text-foreground">({autonomos.length})</span>
-                  </h2>
-                  <ShowMoreGrid
-                    key={`autonomos-${debounced}`}
-                    items={autonomos}
-                    keyExtractor={(autonomo) => autonomo.id}
-                    renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
-                  />
-                </section>
-              )}
-
-              {totalResults === 0 && !vagasQuery.isLoading && !autonomosQuery.isLoading && (
-                <EmptyState
-                  icon={SearchX}
-                  title={`Nada encontrado para "${debounced}"`}
-                  description="Tente um termo mais genérico ou ajuste os filtros na lateral."
-                />
-              )}
-            </div>
-          ) : (
-            <EmptyState
-              icon={Search}
-              title="Digite algo para começar"
-              description="Busque por cargos como “vendedor”, categorias como “construção” ou serviços como “eletricista”."
-            />
+          {term && (
+            <button
+              type="button"
+              onClick={clear}
+              aria-label="Limpar busca"
+              className="absolute top-1/2 right-1 flex size-10 -translate-y-1/2 items-center justify-center rounded-full text-muted-foreground hover:bg-muted hover:text-foreground"
+            >
+              <X className="size-4" />
+            </button>
           )}
-        </div>
+        </form>
       </div>
+
+      <FeedBrowser search={debounced} onClearSearch={clear} />
     </div>
   )
 }

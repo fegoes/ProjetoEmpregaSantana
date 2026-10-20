@@ -100,3 +100,47 @@ export function mergeFeed(vagas: VagaCardData[], autonomos: AutonomoCardData[]):
     return a.createdAt < b.createdAt ? 1 : -1
   })
 }
+
+// ---------------------------------------------------------------------------
+// Seletor "Tudo · Vagas · Profissionais" — mapeado sobre showVagas/showAutonomos
+// para a lógica de filtro continuar uma só.
+
+export type FeedKind = 'todos' | 'vagas' | 'autonomos'
+
+export function kindOf(filters: FeedFilters): FeedKind {
+  if (filters.showVagas && !filters.showAutonomos) return 'vagas'
+  if (!filters.showVagas && filters.showAutonomos) return 'autonomos'
+  return 'todos'
+}
+
+export function withKind(filters: FeedFilters, kind: FeedKind): FeedFilters {
+  return { ...filters, showVagas: kind !== 'autonomos', showAutonomos: kind !== 'vagas' }
+}
+
+/** Filtros do painel (sem contar o seletor de tipo). */
+export function countPanelFilters(filters: FeedFilters): number {
+  return (
+    filters.categories.length +
+    filters.employmentTypes.length +
+    filters.pricingModels.length +
+    (filters.remoteOnly ? 1 : 0)
+  )
+}
+
+/** Limpa os filtros do painel e mantém o tipo escolhido no seletor. */
+export function clearPanelFilters(filters: FeedFilters): FeedFilters {
+  return { ...DEFAULT_FEED_FILTERS, showVagas: filters.showVagas, showAutonomos: filters.showAutonomos }
+}
+
+/** Categorias presentes nos resultados, da mais frequente para a menos. */
+export function categoryCounts(
+  vagas: { category?: string | null }[],
+  autonomos: { category?: string | null }[],
+): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const item of [...vagas, ...autonomos]) {
+    if (!item.category) continue
+    counts.set(item.category, (counts.get(item.category) ?? 0) + 1)
+  }
+  return new Map([...counts.entries()].sort((a, b) => b[1] - a[1]))
+}

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { BadgeCheck, MapPin } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { formatLocal } from '@/lib/format'
 import { Badge } from '@/components/ui/badge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 
@@ -20,7 +21,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
 
   return (
     <Link to={`/empresas/${empresa.id}`} className="group block h-full">
-      <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
+      <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 shadow-none transition-colors duration-150 group-hover:border-primary/50">
         <CardHeader className="flex-row items-start gap-3">
           {empresa.logo_url ? (
             <img
@@ -48,7 +49,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
           </Badge>
           <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="size-3.5" />
-            {[empresa.city, empresa.state].filter(Boolean).join(' — ') || 'Local não informado'}
+            {formatLocal(empresa.city, empresa.state, 'Local não informado')}
           </span>
         </CardContent>
       </Card>

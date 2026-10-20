@@ -2,6 +2,7 @@ import * as React from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import type { Database, UserRole } from '@/types/database'
+import { translateAuthError } from '@/lib/authErrors'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
 
@@ -91,7 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn: AuthContextValue['signIn'] = async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) return { error: error.message }
+    if (error) return { error: translateAuthError(error.message) }
 
     if (data.user) {
       const { data: activeCheck } = await supabase
@@ -115,14 +116,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       options: { data: { full_name: fullName } },
     })
 
-    if (error) return { error: error.message }
+    if (error) return { error: translateAuthError(error.message) }
     if (!data.user) return { error: null }
 
     const { error: roleError } = await supabase
       .from('user_roles')
       .insert({ user_id: data.user.id, role: initialRole })
 
-    return { error: roleError?.message ?? null }
+    return { error: roleError ? 'Sua conta foi criada, mas não conseguimos salvar o perfil escolhido. Entre e adicione o perfil em "Meu perfil".' : null }
   }
 
   const signOut = async () => {
@@ -130,12 +131,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const addRole: AuthContextValue['addRole'] = async (role) => {
-    if (!session?.user) return { error: 'Não autenticado' }
+    if (!session?.user) return { error: 'Sua sessão expirou. Entre de novo para continuar.' }
     const { error } = await supabase
       .from('user_roles')
       .insert({ user_id: session.user.id, role })
     if (!error) await hydrate(session)
-    return { error: error?.message ?? null }
+    return { error: error ? 'Não foi possível adicionar o perfil agora. Tente de novo em instantes.' : null }
   }
 
   const refreshProfile = async () => {
@@ -146,12 +147,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/redefinir-senha`,
     })
-    return { error: error?.message ?? null }
+    return { error: translateAuthError(error?.message) }
   }
 
   const updatePassword: AuthContextValue['updatePassword'] = async (newPassword) => {
     const { error } = await supabase.auth.updateUser({ password: newPassword })
-    return { error: error?.message ?? null }
+    return { error: translateAuthError(error?.message) }
   }
 
   const value: AuthContextValue = {

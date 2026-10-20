@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import { MailCheck } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Logo } from '@/components/brand/Logo'
+import { AuthLayout } from '@/components/auth/AuthLayout'
+import { FormError } from '@/components/auth/FormError'
 
 export default function ForgotPasswordPage() {
   const { requestPasswordReset } = useAuth()
@@ -28,40 +29,43 @@ export default function ForgotPasswordPage() {
   }
 
   return (
-    <div className="brand-mesh -mx-4 flex justify-center rounded-3xl px-4 py-10 sm:mx-0">
-      <div className="w-full max-w-sm">
-        <Card className="rounded-2xl border-none shadow-lg">
-          <CardHeader className="items-center text-center">
-            <Logo variant="mark" size="lg" asLink={false} className="mb-1" />
-            <CardTitle className="text-xl">Esqueci minha senha</CardTitle>
-            <CardDescription>Informe seu e-mail e enviaremos um link para redefinir a senha.</CardDescription>
-          </CardHeader>
-          <CardContent>
-            {sent ? (
-              <p className="text-sm text-muted-foreground">
-                Se esse e-mail estiver cadastrado, enviamos um link de redefinição. Confira sua caixa de
-                entrada (e o spam).
-              </p>
-            ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <div className="flex flex-col gap-1.5">
-                  <Label htmlFor="email">E-mail</Label>
-                  <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
-                </div>
-                {error && <p className="text-sm text-destructive">{error}</p>}
-                <Button type="submit" variant="cta" className="mt-1" disabled={loading}>
-                  {loading ? 'Enviando…' : 'Enviar link de redefinição'}
-                </Button>
-              </form>
-            )}
-            <p className="mt-5 text-center text-sm text-muted-foreground">
-              <Link to="/login" className="font-medium text-primary hover:underline">
-                Voltar para o login
-              </Link>
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
+    <AuthLayout
+      title="Esqueci minha senha"
+      description="Informe seu e-mail e enviamos um link para você criar uma senha nova."
+      footer={
+        <Link to="/login" className="font-semibold text-primary hover:underline">
+          Voltar para o login
+        </Link>
+      }
+    >
+      {sent ? (
+        <div className="flex flex-col gap-3" role="status">
+          <MailCheck className="size-9 text-success-ink" strokeWidth={1.75} />
+          <p className="text-[15px]">
+            Se <span className="font-medium">{email}</span> tiver conta no EmpregaSantana, o link já está a caminho.
+            Confira a caixa de entrada e também o spam.
+          </p>
+        </div>
+      ) : (
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="email">E-mail</Label>
+            <Input
+              id="email"
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          {error && <FormError>{error}</FormError>}
+          <Button type="submit" variant="cta" size="lg" className="mt-1" disabled={loading}>
+            {loading ? 'Enviando…' : 'Enviar link'}
+          </Button>
+        </form>
+      )}
+    </AuthLayout>
   )
 }
