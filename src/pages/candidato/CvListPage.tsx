@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCvVariants, useDeleteCvVariant, useSaveCvVariant } from '@/hooks/useCvVariants'
 import { Button } from '@/components/ui/button'
@@ -7,18 +7,19 @@ import { Badge } from '@/components/ui/badge'
 
 export default function CvListPage() {
   const { user } = useAuth()
-  const { data: cvs, isLoading } = useCvVariants(user?.id)
+  const navigate = useNavigate()
+  const { data: cvs, isLoading, isError, refetch } = useCvVariants(user?.id)
   const saveCv = useSaveCvVariant()
   const deleteCv = useDeleteCvVariant()
 
   const handleCreate = () => {
     if (!user) return
-    saveCv.mutate({ candidato_id: user.id, title: `Currículo ${(cvs?.length ?? 0) + 1}` })
+    saveCv.mutate({ candidato_id: user.id, title: `Currículo ${(cvs?.length ?? 0) + 1}` }, { onSuccess: cv => navigate(`/candidato/cv/${cv.id}`) })
   }
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">Meus currículos</h1>
           <p className="text-sm text-muted-foreground">
@@ -32,6 +33,8 @@ export default function CvListPage() {
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
 
+      {isError && <p role="alert" className="text-sm text-destructive">Não foi possível carregar os currículos. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>}
+      {(saveCv.isError || deleteCv.isError) && <p role="alert" className="text-sm text-destructive">Não foi possível concluir a operação. Um currículo enviado em candidatura pode precisar ser preservado. Tente novamente.</p>}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {cvs?.map((cv) => (
           <Card key={cv.id}>
@@ -51,7 +54,8 @@ export default function CvListPage() {
               <Button
                 size="sm"
                 variant="ghost"
-                onClick={() => user && deleteCv.mutate({ id: cv.id, candidatoId: user.id })}
+                disabled={deleteCv.isPending}
+                onClick={() => { if (user && window.confirm(`Excluir o currículo “${cv.title}”? Esta ação não pode ser desfeita.`)) deleteCv.mutate({ id: cv.id, candidatoId: user.id }) }}
               >
                 Excluir
               </Button>

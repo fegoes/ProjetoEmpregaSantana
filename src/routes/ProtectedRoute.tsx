@@ -14,7 +14,7 @@ export function ProtectedRoute({ roles, adminOnly = false }: ProtectedRouteProps
   if (loading) return null
 
   if (!user) {
-    return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname)}`} replace />
+    return <Navigate to={`/login?redirect=${encodeURIComponent(location.pathname + location.search)}`} replace />
   }
 
   if (adminOnly && !isAdmin) {

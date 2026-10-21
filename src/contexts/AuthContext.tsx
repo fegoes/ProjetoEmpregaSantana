@@ -1,6 +1,8 @@
 import * as React from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
+import { hasAdminAccess, isPublicRole } from '@/lib/accessControl'
+import { queryClient } from '@/lib/queryClient'
 import type { Database, UserRole } from '@/types/database'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
@@ -46,29 +48,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [roles, setRoles] = React.useState<UserRole[]>([])
   const [loading, setLoading] = React.useState(true)
 
+  const hydrationVersion = React.useRef(0)
+  const sessionUserId = React.useRef<string | null>(null)
   const hydrate = React.useCallback(async (nextSession: Session | null) => {
+    const version = ++hydrationVersion.current
+    const nextUserId = nextSession?.user.id ?? null
+    setLoading(true)
     setSession(nextSession)
-
-    if (!nextSession?.user) {
-      setProfile(null)
-      setRoles([])
-      return
+    setProfile(null)
+    setRoles([])
+    if (sessionUserId.current !== nextUserId) {
+      queryClient.clear()
+      sessionUserId.current = nextUserId
     }
-
-    const { profile: nextProfile, roles: nextRoles } = await loadProfileAndRoles(
-      nextSession.user.id,
-    )
-
-    if (!nextProfile || !nextProfile.is_active) {
-      await supabase.auth.signOut()
-      setSession(null)
-      setProfile(null)
-      setRoles([])
-      return
+    try {
+      if (!nextSession?.user) return
+      const { profile: nextProfile, roles: nextRoles } = await loadProfileAndRoles(nextSession.user.id)
+      if (version !== hydrationVersion.current) return
+      if (!nextProfile || !nextProfile.is_active) {
+        await supabase.auth.signOut()
+        if (version === hydrationVersion.current) setSession(null)
+        return
+      }
+      setProfile(nextProfile)
+      setRoles(nextRoles)
+    } catch {
+      if (version === hydrationVersion.current) setSession(null)
+    } finally {
+      if (version === hydrationVersion.current) setLoading(false)
     }
-
-    setProfile(nextProfile)
-    setRoles(nextRoles)
   }, [])
 
   React.useEffect(() => {
@@ -76,7 +84,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     supabase.auth.getSession().then(({ data }) => {
       if (!isMounted) return
-      hydrate(data.session).finally(() => setLoading(false))
+      hydrate(data.session)
+    }).catch(() => {
+      if (isMounted) hydrate(null)
     })
 
     const { data: subscription } = supabase.auth.onAuthStateChange((_event, nextSession) => {
@@ -109,6 +119,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName) => {
+    if (!isPublicRole(initialRole)) return { error: 'Escolha um perfil público válido.' }
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -130,6 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const addRole: AuthContextValue['addRole'] = async (role) => {
+    if (!isPublicRole(role)) return { error: 'Este perfil não está disponível para cadastro.' }
     if (!session?.user) return { error: 'Não autenticado' }
     const { error } = await supabase
       .from('user_roles')
@@ -157,9 +169,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const value: AuthContextValue = {
     session,
     user: session?.user ?? null,
-    profile,
-    roles,
-    isAdmin: profile?.is_admin ?? false,
+    profile: profile?.id === session?.user.id ? profile : null,
+    roles: profile?.id === session?.user.id ? roles : [],
+    isAdmin: hasAdminAccess(session?.user ?? null, profile),
     loading,
     signIn,
     signUp,

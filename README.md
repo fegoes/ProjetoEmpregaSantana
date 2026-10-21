@@ -3,7 +3,16 @@
 Marketplace de trabalho: vagas fixas e temporárias (por hora ou por entrega) e profissionais autônomos, tudo no mesmo lugar. *"Somos muito mais que uma página, somos a sua conexão de empregabilidade no sertão."*
 
 - **Documento de produto/arquitetura:** [`docs/PRD.md`](docs/PRD.md)
+- **CRUD e integração de dados:** [`docs/CRUD_E_INTEGRACAO.md`](docs/CRUD_E_INTEGRACAO.md)
+- **Protótipos navegáveis de identidade aplicada:** [`docs/PROTOTIPOS.md`](docs/PROTOTIPOS.md) — execute `npm run prototype`
+- **Análise de Gupy e Infojobs por tela:** [`docs/ANALISE_GUPY_INFOJOBS.md`](docs/ANALISE_GUPY_INFOJOBS.md)
+- **Referências de UX e inspirações:** [`docs/REFERENCIAS_UX.md`](docs/REFERENCIAS_UX.md)
+- **Impeccable e Playwright:** [`docs/FERRAMENTAS_DESIGN.md`](docs/FERRAMENTAS_DESIGN.md)
 - **Identidade visual (marca, paleta, tipografia):** [`docs/IDENTIDADE_VISUAL.md`](docs/IDENTIDADE_VISUAL.md)
+
+**Direção visual:** todo o site e sistema em modo claro, incluindo painéis autenticados, independentemente do tema do dispositivo. Responsividade obrigatória em toda a plataforma; área logada com menu global no topo e navegação do usuário à esquerda, recolhida em telas pequenas.
+
+A home pública está sendo estudada como apresentação do projeto em formato de pitch, com referência narrativa no FinGestão. Os protótipos ficam em `prototipos/`, separados da aplicação funcional em `src/`.
 
 ## Stack
 
@@ -51,3 +60,11 @@ docs/            # PRD e identidade visual
 ## Papéis de usuário
 
 Um mesmo usuário pode acumular papéis: **candidato** (currículo, candidaturas), **autônomo** (perfil de serviços público) e **empresa** (vagas, candidatos). O papel **admin** é uma flag em `profiles.is_admin`, provisionada manualmente — não há autocadastro de admin.
+
+### Implementação da direção visual
+
+A aplicação principal recebeu home de apresentação, painel com menu lateral, busca e blog com gestão editorial. Consulte [IMPLEMENTACAO.md](docs/IMPLEMENTACAO.md) para configurar o Supabase, aplicar a migration 0021 e conhecer os limites da validação local. O protótipo independente continua disponível para comparação.
+
+Administração, CRUDs e aparência: [ADMINISTRACAO.md](docs/ADMINISTRACAO.md). A prévia navegável da administração fica em `/#admin` no servidor de protótipos.
+
+Modelos e permissões: [MODELOS_E_ACESSOS.md](docs/MODELOS_E_ACESSOS.md). Testes isolados de autorização: `npm run test:database`.

@@ -15,9 +15,10 @@ export default function CvEditPage() {
   const { id } = useParams<{ id: string }>()
   const { user, profile } = useAuth()
   const navigate = useNavigate()
-  const { data: cv, isLoading } = useCvVariant(id)
+  const { data: cv, isLoading, isError, refetch } = useCvVariant(id)
   const saveCv = useSaveCvVariant()
 
+  const [validation, setValidation] = React.useState('')
   const [title, setTitle] = React.useState('')
   const [contactEmail, setContactEmail] = React.useState('')
   const [contactPhone, setContactPhone] = React.useState('')
@@ -44,10 +45,13 @@ export default function CvEditPage() {
 
   const handleSave = async () => {
     if (!user || !id) return
+    setValidation('')
+    if (!title.trim()) { setValidation('Dê um nome ao currículo antes de salvar.'); return }
+    try {
     await saveCv.mutateAsync({
       id,
       candidato_id: user.id,
-      title,
+      title: title.trim(),
       contact_email: contactEmail || null,
       contact_phone: contactPhone || null,
       address: address || null,
@@ -61,15 +65,18 @@ export default function CvEditPage() {
       is_default: isDefault,
     })
     navigate('/candidato/cv')
+    } catch { /* A mutation mantém o erro para exibição e preserva o formulário. */ }
   }
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando currículo…</p>
+
+  if (isError || !cv) return <p role="alert">Não foi possível abrir o currículo. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Editar currículo</CardTitle>
+          <h1 className="font-display text-xl font-semibold">Editar currículo</h1>
           <CardDescription>{profile?.full_name}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -162,6 +169,7 @@ export default function CvEditPage() {
         </CardContent>
       </Card>
 
+      {(validation || saveCv.isError) && <p role="alert" className="text-sm text-destructive">{validation || 'Não foi possível salvar. Seus campos foram preservados; tente novamente.'}</p>}
       <Button onClick={handleSave} variant="cta" disabled={saveCv.isPending}>
         {saveCv.isPending ? 'Salvando…' : 'Salvar currículo'}
       </Button>

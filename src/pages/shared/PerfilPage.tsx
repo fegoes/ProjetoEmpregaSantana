@@ -1,5 +1,8 @@
 import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { supabase } from '@/lib/supabase'
+import { useCvVariants } from '@/hooks/useCvVariants'
 import { useAuth } from '@/contexts/AuthContext'
 import type { UserRole } from '@/types/database'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -18,8 +21,19 @@ const ADD_ROLE_OPTIONS: { role: UserRole; label: string; onboarding: string }[] 
 ]
 
 export default function PerfilPage() {
-  const { profile, roles, isAdmin } = useAuth()
+  const { user, profile, roles, isAdmin } = useAuth()
   const navigate = useNavigate()
+  const candidate = roles.includes('candidato')
+  const cvs = useCvVariants(candidate ? user?.id : undefined)
+  const applications = useQuery({
+    queryKey: ['candidaturas', 'by-candidato', user?.id, 'summary'],
+    enabled: candidate && Boolean(user),
+    queryFn: async () => {
+      const { data, error } = await supabase.from('candidaturas').select('id,status,created_at,vagas(title)').eq('candidato_id', user!.id).order('created_at', { ascending: false })
+      if (error) throw error
+      return data
+    },
+  })
 
   React.useEffect(() => {
     if (isAdmin) navigate('/admin', { replace: true })
@@ -36,6 +50,17 @@ export default function PerfilPage() {
         </p>
       </div>
 
+      {candidate && <>
+        <div className="grid gap-3 sm:grid-cols-3">
+          {[
+            ['Candidaturas enviadas', applications.isLoading || applications.isError ? '—' : applications.data?.length ?? 0],
+            ['Em análise', applications.isLoading || applications.isError ? '—' : applications.data?.filter(a => a.status === 'em_analise').length ?? 0],
+            ['Currículos criados', cvs.isLoading || cvs.isError ? '—' : cvs.data?.length ?? 0],
+          ].map(([label, value]) => <div key={label} className="rounded-2xl border bg-card p-5"><p className="text-xs text-muted-foreground">{label}</p><p className="mt-3 font-display text-3xl font-extrabold text-brand-ink">{value}</p></div>)}
+        </div>
+        {(applications.isError || cvs.isError) && <p role="alert" className="text-sm text-destructive">Não foi possível atualizar seu resumo. <button className="underline" onClick={() => { applications.refetch(); cvs.refetch() }}>Tentar novamente</button></p>}
+        {!!applications.data?.length && <section className="rounded-2xl border bg-card p-5"><h2 className="mb-4 text-lg font-bold">Suas oportunidades</h2><div className="divide-y">{applications.data.slice(0, 3).map(a => <Link key={a.id} to="/candidato/candidaturas" className="flex min-h-14 flex-wrap items-center justify-between gap-3 py-3 text-sm"><span>{a.vagas?.title ?? 'Vaga indisponível'}</span><span className="rounded-full bg-accent px-3 py-1 text-xs text-primary">{{ enviada: 'Enviada', em_analise: 'Em análise', entrevista: 'Entrevista', aprovada: 'Aprovada', rejeitada: 'Encerrada' }[a.status]}</span></Link>)}</div></section>}
+      </>}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {ROLE_CARDS.filter((card) => roles.includes(card.role)).map((card) => (
           <Card key={card.role}>
@@ -52,7 +77,7 @@ export default function PerfilPage() {
         ))}
       </div>
 
-      <div>
+      <div id="perfis" className="scroll-mt-24">
         <h2 className="mb-3 text-lg font-semibold">Adicionar outro perfil</h2>
         <div className="flex flex-wrap gap-2">
           {ADD_ROLE_OPTIONS.filter((option) => !roles.includes(option.role)).map((option) => (

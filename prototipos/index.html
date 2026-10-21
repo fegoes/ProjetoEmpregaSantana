@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="only light">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Protótipos navegáveis da identidade do EmpregaSantana. Conteúdo ilustrativo.">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <title>EmpregaSantana · Protótipos</title>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <div class="study-bar"><span>Estudo de identidade · dados ilustrativos</span><a href="#admin">Prévia administrativa</a><a href="#identidade">Ver identidade visual <span aria-hidden="true">↗</span></a></div>
+  <header id="site-header"></header>
+  <main id="conteudo"></main>
+  <footer id="site-footer"></footer>
+  <dialog id="site-menu" aria-label="Menu do site" class="drawer"><div class="dialog-top"><strong>Menu do site</strong><button class="icon-button" data-close aria-label="Fechar menu do site">×</button></div><nav aria-label="Site no celular" id="site-mobile-links"></nav></dialog>
+  <dialog id="panel-menu" aria-label="Meu painel" class="drawer left-drawer"><div class="dialog-top"><strong>Meu painel</strong><button class="icon-button" data-close aria-label="Fechar meu painel">×</button></div><div id="panel-mobile-links"></div></dialog>
+  <dialog id="action-dialog" aria-labelledby="dialog-title" class="action-dialog"><div class="dialog-top"><strong id="dialog-title">Próximo passo</strong><button class="icon-button" data-close aria-label="Fechar janela">×</button></div><div id="dialog-body"></div></dialog>
+  <div id="notice" role="status" aria-live="polite"></div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>

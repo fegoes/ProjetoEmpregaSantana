@@ -83,7 +83,7 @@ export default function VagaDetailPage() {
             },
           },
         }),
-    ...(vaga.pricing_model === 'fixed_salary' && vaga.salary_min
+    ...(vaga.salary_visible && vaga.pricing_model === 'fixed_salary' && vaga.salary_min
       ? {
           baseSalary: {
             '@type': 'MonetaryAmount',
@@ -97,7 +97,7 @@ export default function VagaDetailPage() {
           },
         }
       : {}),
-    ...(vaga.pricing_model === 'hourly' && vaga.hourly_rate
+    ...(vaga.salary_visible && vaga.pricing_model === 'hourly' && vaga.hourly_rate
       ? {
           baseSalary: {
             '@type': 'MonetaryAmount',
@@ -117,11 +117,11 @@ export default function VagaDetailPage() {
   }
 
   const salaryLabel =
-    vaga.pricing_model === 'fixed_salary' && vaga.salary_min
+    vaga.salary_visible && vaga.pricing_model === 'fixed_salary' && vaga.salary_min
       ? `R$ ${vaga.salary_min.toLocaleString('pt-BR')}${vaga.salary_max ? ` – R$ ${vaga.salary_max.toLocaleString('pt-BR')}` : ''}`
-      : vaga.pricing_model === 'hourly' && vaga.hourly_rate
+      : vaga.salary_visible && vaga.pricing_model === 'hourly' && vaga.hourly_rate
         ? `R$ ${vaga.hourly_rate.toLocaleString('pt-BR')} / hora`
-        : 'A combinar'
+        : vaga.salary_visible ? 'A combinar' : 'Remuneração não divulgada'
 
   return (
     <div className="flex flex-col gap-6">

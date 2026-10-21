@@ -1,8 +1,14 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 import { Navbar } from '@/components/layout/Navbar'
+import { PanelLayout } from '@/components/layout/PanelLayout'
+import { useAuth } from '@/contexts/AuthContext'
 import { Logo } from '@/components/brand/Logo'
 
 export function RootLayout() {
+  const { pathname } = useLocation()
+  const { user } = useAuth()
+  const panel = Boolean(user) && (/^\/(perfil|candidato|autonomo|empresa|admin)(\/|$)/.test(pathname) || pathname === '/empresas')
+  if (/^\/admin(\/|$)/.test(pathname)) return <Outlet />
   return (
     <div className="flex min-h-screen flex-col">
       <a
@@ -13,12 +19,13 @@ export function RootLayout() {
       </a>
       <Navbar />
       <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        <Outlet />
+        {panel ? <PanelLayout><Outlet /></PanelLayout> : <Outlet />}
       </main>
       <footer className="border-t bg-secondary/40">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
           <Logo size="sm" />
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-muted-foreground">
+            <Link to="/blog" className="hover:text-primary">Dicas de carreira</Link>
             <Link to="/sobre" className="hover:text-primary">
               Sobre
             </Link>

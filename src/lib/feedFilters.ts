@@ -63,10 +63,11 @@ export function filterVagas(vagas: VagaCardData[], filters: FeedFilters): VagaCa
 export function filterAutonomos(autonomos: AutonomoCardData[], filters: FeedFilters): AutonomoCardData[] {
   if (!filters.showAutonomos) return []
   return autonomos.filter((autonomo) => {
+    if (filters.remoteOnly && !autonomo.serves_remote) return false
     if (filters.categories.length > 0 && !filters.categories.includes(autonomo.category ?? '')) return false
     if (filters.pricingModels.length > 0) {
       const matches =
-        filters.pricingModels.includes(autonomo.pricing_model) || autonomo.pricing_model === 'both'
+        filters.pricingModels.includes(autonomo.pricing_model) || (autonomo.pricing_model === 'both' && filters.pricingModels.some(model => model === 'hourly' || model === 'per_delivery'))
       if (!matches) return false
     }
     return true
@@ -99,4 +100,29 @@ export function mergeFeed(vagas: VagaCardData[], autonomos: AutonomoCardData[]):
     if (a.featured !== b.featured) return a.featured ? -1 : 1
     return a.createdAt < b.createdAt ? 1 : -1
   })
+}
+
+export function readFeedFilters(params: URLSearchParams): FeedFilters {
+  const kind = params.get('tipo')
+  return {
+    showVagas: kind !== 'autonomos' && kind !== 'nenhum',
+    showAutonomos: kind !== 'vagas' && kind !== 'nenhum',
+    categories: params.getAll('categoria'),
+    employmentTypes: params.getAll('contratacao').filter(v => EMPLOYMENT_TYPE_OPTIONS.some(o => o.value === v)),
+    pricingModels: params.getAll('pagamento').filter(v => PRICING_MODEL_OPTIONS.some(o => o.value === v)),
+    remoteOnly: params.get('remoto') === '1',
+  }
+}
+
+export function writeFeedFilters(params: URLSearchParams, filters: FeedFilters): URLSearchParams {
+  const next = new URLSearchParams(params)
+  for (const key of ['tipo', 'categoria', 'contratacao', 'pagamento', 'remoto']) next.delete(key)
+  if (!filters.showVagas && !filters.showAutonomos) next.set('tipo', 'nenhum')
+  else if (!filters.showVagas) next.set('tipo', 'autonomos')
+  else if (!filters.showAutonomos) next.set('tipo', 'vagas')
+  filters.categories.forEach(v => next.append('categoria', v))
+  filters.employmentTypes.forEach(v => next.append('contratacao', v))
+  filters.pricingModels.forEach(v => next.append('pagamento', v))
+  if (filters.remoteOnly) next.set('remoto', '1')
+  return next
 }

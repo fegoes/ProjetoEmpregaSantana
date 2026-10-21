@@ -36,7 +36,7 @@ export default function PlanosPage() {
       <div>
         <h1 className="text-2xl font-extrabold tracking-tight">Planos</h1>
         <p className="text-sm text-muted-foreground">
-          Checkout via Stripe chega na Fase 3 — por enquanto esta é a vitrine de planos.
+          Conheça os recursos disponíveis para empresas e profissionais autônomos.
         </p>
       </div>
 

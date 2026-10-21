@@ -1,152 +1,36 @@
-import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
-import { HandHeart, Search, Users } from 'lucide-react'
-import { Input } from '@/components/ui/input'
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, Check, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { VagaCard } from '@/components/VagaCard'
 import { AutonomoCard } from '@/components/AutonomoCard'
-import { EmptyState } from '@/components/EmptyState'
-import { ShowMoreGrid } from '@/components/ShowMoreGrid'
-import { FeedFilterPanel } from '@/components/FeedFilterPanel'
-import { FeaturedCarousel } from '@/components/FeaturedCarousel'
-import { useAuth } from '@/contexts/AuthContext'
-import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
-import { useEmpresasCount } from '@/hooks/useEmpresas'
-import { DEFAULT_FEED_FILTERS, filterAutonomos, filterVagas, mergeFeed } from '@/lib/feedFilters'
+import { useAuth } from '@/contexts/AuthContext'
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 
 export default function HomePage() {
-  const { user } = useAuth()
-  const [term, setTerm] = React.useState('')
-  const [filters, setFilters] = React.useState(DEFAULT_FEED_FILTERS)
-  const navigate = useNavigate()
-  const vagasQuery = useVagasPublicadas()
-  const autonomosQuery = useAutonomosAtivos()
-  const empresasCount = useEmpresasCount()
-
-  useDocumentMeta({
-    title: 'Vagas e autônomos',
-    description:
-      'Vagas fixas e temporárias, e profissionais autônomos, em um só lugar. Encontre sua próxima vaga ou contrate um profissional de confiança.',
-  })
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault()
-    navigate(term ? `/explorar?q=${encodeURIComponent(term)}` : '/explorar')
-  }
-
-  const feed = React.useMemo(() => {
-    const vagas = filterVagas(vagasQuery.data ?? [], filters)
-    const autonomos = filterAutonomos(autonomosQuery.data ?? [], filters)
-    return mergeFeed(vagas, autonomos)
-  }, [vagasQuery.data, autonomosQuery.data, filters])
-
-  const featuredFeed = React.useMemo(() => {
-    const vagas = (vagasQuery.data ?? []).filter((v) => v.is_featured)
-    const autonomos = (autonomosQuery.data ?? []).filter((a) => a.is_featured)
-    return mergeFeed(vagas, autonomos)
-  }, [vagasQuery.data, autonomosQuery.data])
-
-  return (
-    <div className="flex flex-col gap-8">
-      {!user && (
-        <section className="brand-mesh relative -mx-4 overflow-hidden rounded-3xl border px-6 py-12 sm:mx-0 sm:px-12">
-          <div className="relative mx-auto max-w-2xl text-center">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1 text-xs font-semibold text-foreground/70 ring-1 ring-border">
-              <HandHeart className="size-3.5" /> Conecta · Orienta · Transforma
-            </span>
-            <h1 className="mt-4 text-3xl leading-tight font-extrabold tracking-tight text-balance sm:text-4xl">
-              Encontre sua próxima <span className="text-primary">vaga</span> ou o{' '}
-              <span className="text-brand-orange-ink">profissional certo</span> para o seu serviço
-            </h1>
-            <p className="mt-3 text-muted-foreground text-balance">
-              Somos muito mais que uma página: somos a sua conexão de empregabilidade no sertão.
-              Vagas fixas, trabalhos temporários e autônomos — tudo em um só lugar, sem complicação.
-            </p>
-
-            <form onSubmit={handleSearch} className="mx-auto mt-6 flex max-w-lg gap-2">
-              <div className="relative flex-1">
-                <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={term}
-                  onChange={(e) => setTerm(e.target.value)}
-                  placeholder="Cargo, serviço ou palavra-chave…"
-                  className="h-11 rounded-full bg-background pl-10 shadow-sm"
-                />
-              </div>
-              <Button type="submit" size="lg" variant="cta" className="h-11">
-                Buscar
-              </Button>
-            </form>
-
-            <dl className="mx-auto mt-8 grid max-w-md grid-cols-3 gap-4 text-sm">
-              <div>
-                <dt className="sr-only">Vagas ativas</dt>
-                <dd className="text-xl font-extrabold">{vagasQuery.data?.length ?? '–'}</dd>
-                <dd className="text-xs text-muted-foreground">vagas ativas</dd>
-              </div>
-              <div>
-                <dt className="sr-only">Autônomos</dt>
-                <dd className="text-xl font-extrabold">{autonomosQuery.data?.length ?? '–'}</dd>
-                <dd className="text-xs text-muted-foreground">autônomos</dd>
-              </div>
-              <div>
-                <dt className="sr-only">Empresas</dt>
-                <dd className="text-xl font-extrabold">{empresasCount.data ?? '–'}</dd>
-                <dd className="text-xs text-muted-foreground">empresas</dd>
-              </div>
-            </dl>
-          </div>
-        </section>
-      )}
-
-      {user && (
-        <div>
-          <h1 className="text-2xl font-extrabold tracking-tight">Vagas e autônomos para você</h1>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {feed.length} oportunidade{feed.length === 1 ? '' : 's'} disponíve
-            {feed.length === 1 ? 'l' : 'is'} agora.
-          </p>
-        </div>
-      )}
-
-      <FeaturedCarousel items={featuredFeed} />
-
-      <div className="flex flex-col gap-8 lg:flex-row">
-        <aside className="shrink-0 lg:w-56">
-          <FeedFilterPanel value={filters} onChange={setFilters} layout="sidebar" />
-        </aside>
-
-        <div className="min-w-0 flex-1">
-          {(vagasQuery.isLoading || autonomosQuery.isLoading) && (
-            <p className="text-sm text-muted-foreground">Carregando…</p>
-          )}
-          {(vagasQuery.isError || autonomosQuery.isError) && (
-            <p className="text-sm text-destructive">Não foi possível carregar o feed.</p>
-          )}
-
-          {feed.length > 0 ? (
-            <ShowMoreGrid
-              items={feed}
-              keyExtractor={(item) => item.key}
-              renderItem={(item) =>
-                item.kind === 'vaga' ? <VagaCard vaga={item.vaga} /> : <AutonomoCard autonomo={item.autonomo} />
-              }
-              pageSize={12}
-            />
-          ) : (
-            !vagasQuery.isLoading &&
-            !autonomosQuery.isLoading && (
-              <EmptyState
-                icon={Users}
-                title="Nada por aqui com esses filtros"
-                description="Tente ajustar ou limpar os filtros na lateral para ver mais resultados."
-              />
-            )
-          )}
+  const [audience, setAudience] = useState('candidato')
+  const vagas = useVagasPublicadas()
+  const autonomos = useAutonomosAtivos()
+  const { user, roles } = useAuth()
+  useDocumentMeta({ title: 'Seu próximo passo começa perto de casa', description: 'Vagas, serviços e conexões que movimentam o nosso sertão. Conheça o EmpregaSantana, sua conexão de empregabilidade em Santana do Ipanema e região.' })
+  const enterprisePath = user && roles.includes('empresa_owner') ? '/empresa/painel' : '/cadastro'
+  return <div className="flex flex-col gap-16 sm:gap-24">
+    <section className="grid min-w-0 items-center gap-10 py-6 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-12">
+      <div className="min-w-0"><h1 className="max-w-2xl text-[clamp(2.4rem,5vw,4.1rem)] leading-[1.1] font-extrabold tracking-[-0.04em] text-brand-ink">Seu próximo passo começa <span className="text-primary">perto de casa.</span></h1><p className="mt-6 max-w-lg text-base leading-loose text-muted-foreground">Quem procura trabalho e quem precisa de um profissional têm um lugar para se encontrar. Vagas, serviços e conexões que movimentam o nosso sertão.</p><div className="mt-7 flex flex-wrap items-center gap-5"><Button asChild variant="cta" size="lg" className="max-w-full whitespace-normal"><Link to="/explorar">Encontrar oportunidades<ArrowRight /></Link></Button><a href="#como-funciona" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary">Como funciona<ArrowRight className="size-4" /></a></div><p className="mt-6 flex items-center gap-2 text-xs text-muted-foreground"><MapPin className="size-4 text-primary" />Feito para Santana do Ipanema e região.</p></div>
+      <div className="min-w-0 rounded-3xl bg-accent/50 p-4 sm:p-6"><div className="mb-6 grid grid-cols-3 gap-1 rounded-2xl border bg-card p-1" role="group" aria-label="Conheça os caminhos">{[['candidato', 'Quero trabalhar'], ['autonomo', 'Sou autônomo'], ['empresa', 'Quero contratar']].map(([key, label]) => <button id={`home-tab-${key}`} type="button" aria-pressed={audience === key} aria-controls="home-path" key={key} onClick={() => setAudience(key)} className={`min-h-12 rounded-xl px-2 py-2 text-xs font-medium ${audience === key ? 'bg-brand-ink text-white' : 'text-foreground'}`}>{label}</button>)}</div>
+        <div id="home-path" role="region" aria-labelledby={`home-tab-${audience}`} className="min-h-56" aria-live="polite">
+          {audience === 'candidato' ? vagas.data?.[0] ? <VagaCard vaga={vagas.data[0]} /> : <div className="rounded-2xl border bg-card p-6"><h2 className="text-2xl font-bold text-brand-ink">Um caminho para sua próxima oportunidade.</h2><p className="mt-4 text-sm leading-loose text-muted-foreground">Explore as vagas, organize seus currículos e acompanhe cada candidatura no seu painel.</p><Button asChild className="mt-6 max-w-full whitespace-normal" variant="outline"><Link to="/explorar">Explorar vagas<ArrowRight /></Link></Button></div> : audience === 'autonomo' ? autonomos.data?.[0] ? <AutonomoCard autonomo={autonomos.data[0]} /> : <div className="rounded-2xl border bg-card p-6"><h2 className="text-2xl font-bold text-brand-ink">Seu serviço, encontrado por quem precisa.</h2><p className="mt-4 text-sm leading-loose text-muted-foreground">Apresente o que você faz, onde atende e seu portfólio de trabalhos.</p><Button asChild className="mt-6 max-w-full whitespace-normal" variant="outline"><Link to="/explorar?tipo=autonomos">Conhecer profissionais<ArrowRight /></Link></Button></div> : <div className="rounded-2xl border bg-card p-6"><h2 className="text-2xl font-bold text-brand-ink">O talento que você procura pode estar por perto.</h2><p className="mt-4 text-sm leading-loose text-muted-foreground">Publique suas oportunidades e organize as candidaturas em um só lugar.</p><Button asChild className="mt-6 max-w-full whitespace-normal" variant="outline"><Link to={enterprisePath}>Conhecer a área da empresa<ArrowRight /></Link></Button></div>}
         </div>
       </div>
-    </div>
-  )
+    </section>
+    <div className="grid gap-3 border-y py-6 text-sm text-muted-foreground sm:grid-cols-3"><strong className="font-semibold text-brand-ink">Conecta · Orienta · Transforma</strong><span>Vagas fixas e temporárias</span><span>Profissionais e empresas da região</span></div>
+    <section><h2 className="max-w-2xl text-3xl leading-tight font-extrabold tracking-tight sm:text-4xl">Tem gente procurando.<br />Tem gente precisando.</h2><p className="mt-4 text-muted-foreground">A oportunidade existe. O encontro é que nem sempre acontece.</p><div className="mt-9 grid gap-8 md:grid-cols-3">{[['A vaga se perde nas mensagens.', 'Entre grupos, indicações e postagens, fica difícil saber onde procurar.'], ['O serviço depende de uma indicação.', 'Quem trabalha por conta própria precisa ser encontrado por mais pessoas.'], ['A contratação demora a se encontrar.', 'A empresa tem uma oportunidade. O profissional tem o que oferecer. Falta um caminho entre os dois.']].map(([title, text]) => <article key={title} className="border-t-2 border-primary/20 pt-6"><h3 className="text-lg leading-relaxed font-semibold text-brand-ink">{title}</h3><p className="mt-3 text-sm leading-loose text-muted-foreground">{text}</p></article>)}</div></section>
+    <section className="grid gap-6 rounded-3xl bg-accent/50 p-7 sm:p-10 md:grid-cols-2 md:items-center md:gap-16"><h2 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink">Somos muito mais<br />que uma página.</h2><p className="text-sm leading-loose text-muted-foreground">Somos a sua conexão de empregabilidade no sertão. Um espaço para aproximar o talento da nossa gente de quem precisa dele, com oportunidades e serviços organizados em um só lugar.</p></section>
+    <section className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20"><div><h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Um lugar.<br />Diferentes caminhos.</h2><p className="mt-5 max-w-sm text-sm leading-loose text-muted-foreground">Você não precisa caber em uma opção só. Pode procurar uma vaga e também divulgar seu trabalho.</p></div><div className="divide-y">{[['Para quem quer trabalhar.', 'Encontre vagas na região e escolha o currículo certo para cada oportunidade.', '/explorar', 'Explorar vagas'], ['Para quem faz acontecer.', 'Apresente seu serviço, mostre seu portfólio e deixe claro onde você atende.', '/explorar?tipo=autonomos', 'Conhecer profissionais'], ['Para quem precisa contratar.', 'Divulgue oportunidades e organize as candidaturas recebidas.', enterprisePath, 'Conhecer a área da empresa']].map(([title, text, path, label]) => <article key={title} className="py-6 first:pt-0"><h3 className="text-xl font-bold text-brand-ink">{title}</h3><p className="mt-3 text-sm leading-loose text-muted-foreground">{text}</p><Link to={path} className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary">{label}<ArrowRight className="size-4" /></Link></article>)}</div></section>
+    <section id="como-funciona" className="scroll-mt-28"><h2 className="text-3xl font-extrabold tracking-tight sm:text-4xl">Do primeiro encontro ao próximo passo.</h2><ol className="mt-9 grid gap-8 md:grid-cols-3">{[['Explore as possibilidades.', 'Navegue pelas vagas e pelos serviços antes de criar uma conta.'], ['Conte o que você tem a oferecer.', 'Organize seu currículo, apresente seu serviço ou publique uma oportunidade.'], ['Faça a conexão acontecer.', 'Envie sua candidatura ou encontre o profissional para conversar sobre o serviço.']].map(([title, text], i) => <li key={title}><span className="mb-5 inline-grid size-9 place-items-center rounded-full border border-primary/30 text-sm font-semibold text-primary">{i + 1}</span><h3 className="text-lg leading-relaxed font-semibold">{title}</h3><p className="mt-3 text-sm leading-loose text-muted-foreground">{text}</p></li>)}</ol></section>
+    <section className="grid gap-8 md:grid-cols-[0.85fr_1.15fr]"><h2 className="text-3xl font-extrabold tracking-tight">Antes de dar<br />o primeiro passo.</h2><div>{[['Preciso criar conta para ver as vagas?', 'Você pode explorar vagas e profissionais sem entrar. A conta é necessária para se candidatar, entrar em contato ou publicar.'], ['Posso procurar vaga e divulgar meu serviço?', 'Sim. Uma mesma conta pode ter perfis de candidato e autônomo. Adicione outro perfil no seu painel quando precisar.'], ['Funciona no celular?', 'Sim. Você pode acessar o site e seu painel pelo celular, tablet ou computador.']].map(([q, a]) => <details key={q} className="border-b py-5"><summary className="cursor-pointer text-sm font-medium">{q}</summary><p className="mt-4 text-sm leading-loose text-muted-foreground">{a}</p></details>)}</div></section>
+    <section className="mb-4 flex flex-col items-start justify-between gap-7 rounded-3xl bg-accent/50 p-7 sm:p-10 md:flex-row md:items-center"><div><h2 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink">Conectamos talentos.<br />Transformamos futuros.</h2><p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground"><Check className="size-4 text-primary" />Seu próximo passo pode começar por aqui.</p></div><Button asChild variant="default" size="lg" className="max-w-full whitespace-normal"><Link to="/explorar">Encontrar oportunidades<ArrowRight /></Link></Button></section>
+  </div>
 }

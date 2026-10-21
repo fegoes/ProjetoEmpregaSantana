@@ -24,6 +24,10 @@ export interface VagaCardData {
   title: string
   employment_type: string
   pricing_model: string
+  salary_min?: number | null
+  salary_max?: number | null
+  salary_visible?: boolean
+  hourly_rate?: number | null
   category?: string | null
   icon_key?: string | null
   location_city: string | null
@@ -50,7 +54,7 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
     <Link to={`/vagas/${vaga.id}`} className="group block h-full">
       <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         {vaga.is_featured && (
-          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink backdrop-blur-sm">
+          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-xs font-semibold text-brand-orange-ink backdrop-blur-sm">
             <Sparkles className="size-3" /> Destaque
           </span>
         )}
@@ -87,8 +91,11 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
             {local}
           </span>
         </CardContent>
+        <CardContent className="text-sm font-semibold">
+          {vaga.salary_visible === false ? 'Remuneração não divulgada' : vaga.pricing_model === 'hourly' && vaga.hourly_rate != null ? `${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.hourly_rate)} / hora` : vaga.pricing_model === 'fixed_salary' && vaga.salary_min != null ? `${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.salary_min)}${vaga.salary_max != null ? ` a ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.salary_max)}` : ''}` : 'A combinar'}
+        </CardContent>
         {excerpt && (
-          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+          <CardContent className="block">
             <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
           </CardContent>
         )}

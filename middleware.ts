@@ -129,6 +129,7 @@ interface VagaRow {
   location_city: string | null
   location_state: string | null
   is_remote: boolean
+  salary_visible: boolean
   salary_min: number | null
   salary_max: number | null
   created_at: string
@@ -137,7 +138,7 @@ interface VagaRow {
 
 async function renderVaga(id: string, path: string, siteUrl: string): Promise<Response | null> {
   const rows = await supabaseSelect<VagaRow>(
-    `vagas?id=eq.${id}&status=eq.published&select=title,description_html,employment_type,location_city,location_state,is_remote,salary_min,salary_max,created_at,updated_at,empresas(nome_fantasia,city,state,logo_url)`,
+    `vagas?id=eq.${id}&status=eq.published&select=title,description_html,employment_type,location_city,location_state,is_remote,salary_visible,salary_min,salary_max,created_at,updated_at,empresas(nome_fantasia,city,state,logo_url)`,
   )
   const vaga = rows[0]
   if (!vaga) return null
@@ -171,7 +172,7 @@ async function renderVaga(id: string, path: string, siteUrl: string): Promise<Re
       jobLocationType: 'TELECOMMUTE',
       applicantLocationRequirements: { '@type': 'Country', name: 'BR' },
     }),
-    ...(vaga.salary_min && {
+    ...(vaga.salary_visible && vaga.salary_min && {
       baseSalary: {
         '@type': 'MonetaryAmount',
         currency: 'BRL',
@@ -332,7 +333,7 @@ async function renderHome(path: string, siteUrl: string): Promise<Response> {
 <p>Somos muito mais que uma página: somos a sua conexão de empregabilidade no sertão. Vagas fixas, trabalhos temporários e autônomos — tudo em um só lugar.</p>
 <h2>Vagas em destaque</h2>
 <ul>${items || '<li>Nenhuma vaga publicada no momento.</li>'}</ul>
-<p><a href="/explorar">Ver todas as vagas e autônomos</a></p>`
+<p><a href="/explorar">Ver todas as vagas e autônomos</a> · <a href="/blog">Dicas de carreira</a></p>`
 
   return new Response(
     renderPage({
@@ -370,6 +371,32 @@ async function renderStaticPage(slug: string, path: string, siteUrl: string, fal
   )
 }
 
+interface BlogRow {
+  slug: string
+  title: string
+  excerpt: string
+  content_html: string
+  author_name: string
+  cover_url: string | null
+  published_at: string
+  updated_at: string
+}
+
+async function renderBlog(path: string, siteUrl: string, slug?: string): Promise<Response | null> {
+  const params = new URLSearchParams({ status: 'eq.published', published_at: `lte.${new Date().toISOString()}`, select: 'slug,title,excerpt,content_html,author_name,cover_url,published_at,updated_at', order: 'published_at.desc' })
+  if (slug) params.set('slug', `eq.${slug}`)
+  const rows = await supabaseSelect<BlogRow>(`artigos?${params}`)
+  const article = slug ? rows[0] : undefined
+  if (slug && !article) return new Response('Artigo não encontrado', { status: 404, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+  const title = article?.title ?? 'Dicas de carreira'
+  const description = article?.excerpt ?? 'Orientação para o seu próximo passo, com o EmpregaSantana.'
+  const bodyHtml = article
+    ? `<article><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.author_name)}</p><p>${escapeHtml(article.excerpt)}</p><div>${escapeHtml(stripHtml(article.content_html, 30000))}</div></article>`
+    : `<main><h1>Orientação para o seu próximo passo.</h1><ul>${rows.map(a => `<li><a href="/blog/${escapeHtml(a.slug)}">${escapeHtml(a.title)}</a><p>${escapeHtml(a.excerpt)}</p></li>`).join('')}</ul></main>`
+  const jsonLd = article ? { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: article.title, description, author: { '@type': 'Person', name: article.author_name }, datePublished: article.published_at, dateModified: article.updated_at } : undefined
+  return new Response(renderPage({ siteUrl, title: `${title} | EmpregaSantana`, description, path, image: article?.cover_url, jsonLd, bodyHtml }), { headers: { 'content-type': 'text/html; charset=utf-8' } })
+}
+
 export default async function middleware(request: Request) {
   const userAgent = request.headers.get('user-agent')
   if (!isNoJsBot(userAgent)) return next()
@@ -379,6 +406,10 @@ export default async function middleware(request: Request) {
   const siteUrl = url.origin
 
   try {
+    if (path === '/blog') return await renderBlog(path, siteUrl) ?? next()
+    const blogMatch = path.match(/^\/blog\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)
+    if (blogMatch) return await renderBlog(path, siteUrl, blogMatch[1]) ?? next()
+
     if (path === '/') {
       return await renderHome(path, siteUrl)
     }

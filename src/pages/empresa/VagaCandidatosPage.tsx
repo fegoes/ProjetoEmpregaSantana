@@ -111,10 +111,11 @@ export default function VagaCandidatosPage() {
                   </div>
                 )}
 
-                <div className="flex gap-3 border-t pt-3 text-sm">
+                <div className="flex flex-wrap gap-3 border-t pt-3 text-sm">
                   {nextStatus && (
                     <button
                       className="font-medium text-primary hover:underline"
+                      disabled={updateStatus.isPending}
                       onClick={() => id && updateStatus.mutate({ id: c.id, status: nextStatus, vagaId: id })}
                     >
                       Avançar para "{nextStatus}"
@@ -123,6 +124,7 @@ export default function VagaCandidatosPage() {
                   {c.status !== 'rejeitada' && (
                     <button
                       className="font-medium text-destructive hover:underline"
+                      disabled={updateStatus.isPending}
                       onClick={() => id && updateStatus.mutate({ id: c.id, status: 'rejeitada', vagaId: id })}
                     >
                       Rejeitar
@@ -134,6 +136,7 @@ export default function VagaCandidatosPage() {
           )
         })}
       </div>
+      {updateStatus.isError && <p role="alert" className="text-sm text-destructive">Não foi possível atualizar a candidatura. Tente novamente.</p>}
       {candidaturas?.length === 0 && (
         <p className="text-sm text-muted-foreground">Nenhuma candidatura recebida ainda.</p>
       )}

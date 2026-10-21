@@ -40,8 +40,8 @@ export function useSaveCvVariant() {
       if (error) throw error
       return data
     },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['cv-variants', data.candidato_id] })
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cv-variants'] })
     },
   })
 }
@@ -50,7 +50,7 @@ export function useDeleteCvVariant() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ id }: { id: string; candidatoId: string }) => {
-      const { error } = await supabase.from('cv_variants').delete().eq('id', id)
+      const { error } = await supabase.from('cv_variants').delete().eq('id', id).select('id').single()
       if (error) throw error
     },
     onSuccess: (_data, variables) => {

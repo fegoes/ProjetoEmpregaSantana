@@ -1,9 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
+  color-scheme: only light;
   --radius: 0.85rem;
 
   /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
@@ -36,7 +35,7 @@
   --input: oklch(0.90 0 0);
   --ring: oklch(0.504 0.148 255.8 / 40%);
 
-  /* Marca fixa (logotipo) — azul profundo constante, não muda entre claro/escuro */
+  /* Marca fixa (logotipo) — azul profundo constante no modo claro */
   --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
   --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
   --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
@@ -54,43 +53,6 @@
   --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
 }
 
-.dark {
-  --background: oklch(0.17 0.028 252);     /* #06101B */
-  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF — 17.1:1 */
-  --card: oklch(0.22 0.030 252);           /* #101B28 */
-  --card-foreground: oklch(0.96 0.004 90);
-  --popover: oklch(0.22 0.030 252);
-  --popover-foreground: oklch(0.96 0.004 90);
-
-  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo */
-  --primary-foreground: oklch(0.17 0.028 252);
-
-  --secondary: oklch(0.27 0.026 252);      /* #1D2733 */
-  --secondary-foreground: oklch(0.96 0.004 90);
-  --muted: oklch(0.26 0.024 252);
-  --muted-foreground: oklch(0.70 0.020 252);  /* #96A0AB — 7.2:1 */
-  --accent: oklch(0.30 0.030 252);
-  --accent-foreground: oklch(0.96 0.004 90);
-
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.17 0.028 252);
-  --success: oklch(0.66 0.14 155);
-  --success-foreground: oklch(0.17 0.028 252);
-
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.70 0.130 255.8 / 50%);
-
-  /* Cor de logotipo: idêntica ao tema claro, por definição */
-  --brand-ink: oklch(0.344 0.090 252);
-  --brand-blue: oklch(0.70 0.130 255.8);
-  --brand-blue-strong: oklch(0.63 0.135 256);
-
-  --brand-orange: oklch(0.780 0.170 57.4);        /* #FF9732 — 8.9:1 sobre o fundo */
-  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F — 4.83:1 com #333 */
-  --brand-orange-ink: oklch(0.780 0.170 57.4);    /* no escuro o laranja puro já passa */
-  --brand-orange-foreground: oklch(0.321 0 0);
-}
 
 @theme inline {
   --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -155,3 +117,20 @@
       radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 10%, transparent) 0%, transparent 100%);
   }
 }
+
+/* Reflow comum às páginas públicas, editores e áreas de gestão. */
+@layer base {
+  h1, h2, h3 { overflow-wrap: anywhere; }
+  :focus-visible { scroll-margin-block: 6rem; }
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-width: 0; }
+  .tiptap { overflow-wrap: anywhere; }
+}
+@media (pointer: coarse) {
+  [data-slot="button"], summary { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+:root { --button-radius: 9999px; }
+[data-slot="button"] { border-radius: var(--button-radius); }

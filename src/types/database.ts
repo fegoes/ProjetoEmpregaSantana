@@ -33,6 +33,37 @@ export interface CvEducation {
 export interface Database {
   public: {
     Tables: {
+      site_appearance: {
+        Row: { id: boolean; primary_color: '#1E63B6' | '#16529A' | '#0D3A66'; background: 'soft' | 'white'; font_scale: 'normal' | 'comfortable'; button_shape: 'pill' | 'rounded'; updated_at: string }
+        Insert: Partial<Database['public']['Tables']['site_appearance']['Row']>
+        Update: Partial<Database['public']['Tables']['site_appearance']['Row']>
+        Relationships: []
+      }
+      artigos: {
+        Row: {
+          id: string
+          slug: string
+          title: string
+          excerpt: string
+          content_html: string
+          category: string
+          author_name: string
+          author_id: string | null
+          cover_url: string | null
+          cover_alt: string
+          status: 'draft' | 'published' | 'archived'
+          published_at: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Partial<Database['public']['Tables']['artigos']['Row']> & {
+          slug: string
+          title: string
+          author_name: string
+        }
+        Update: Partial<Database['public']['Tables']['artigos']['Row']>
+        Relationships: []
+      }
       profiles: {
         Row: {
           id: string

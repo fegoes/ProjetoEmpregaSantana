@@ -11,7 +11,7 @@ const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_ANON_KEY = Deno.env.get('SUPABASE_ANON_KEY')!
 const SITE_URL = Deno.env.get('SITE_URL') ?? 'https://empregasantana.example.com'
 
-const STATIC_ROUTES = ['', '/explorar', '/planos', '/sobre', '/termos', '/privacidade']
+const STATIC_ROUTES = ['', '/explorar', '/blog', '/lgpd', '/planos', '/sobre', '/termos', '/privacidade']
 
 function xmlEscape(value: string) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -26,13 +26,15 @@ function urlEntry(path: string, lastmod?: string | null) {
 Deno.serve(async () => {
   const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-  const [vagas, autonomos, empresas] = await Promise.all([
+  const [vagas, autonomos, empresas, artigos] = await Promise.all([
     supabase.from('vagas').select('id, updated_at').eq('status', 'published'),
     supabase.from('autonomo_profiles').select('id, updated_at').eq('status', 'active'),
     supabase.from('empresas').select('id, updated_at').eq('status', 'active'),
+    supabase.from('artigos').select('slug, updated_at').eq('status', 'published').lte('published_at', new Date().toISOString()),
   ])
 
   const entries = [
+    ...(artigos.data ?? []).map((a) => urlEntry(`/blog/${a.slug}`, a.updated_at)),
     ...STATIC_ROUTES.map((path) => urlEntry(path)),
     ...(vagas.data ?? []).map((v) => urlEntry(`/vagas/${v.id}`, v.updated_at)),
     ...(autonomos.data ?? []).map((a) => urlEntry(`/autonomos/${a.id}`, a.updated_at)),

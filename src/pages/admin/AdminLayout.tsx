@@ -1,39 +1,6 @@
-import { NavLink, Outlet } from 'react-router-dom'
-import { cn } from '@/lib/utils'
-
-const LINKS = [
-  { to: '/admin', label: 'Dashboard', end: true },
-  { to: '/admin/empresas', label: 'Empresas' },
-  { to: '/admin/usuarios', label: 'Usuários' },
-  { to: '/admin/planos', label: 'Planos' },
-  { to: '/admin/vagas', label: 'Vagas' },
-  { to: '/admin/paginas', label: 'Páginas institucionais' },
-  { to: '/admin/ads', label: 'ADS' },
-]
+import { Outlet } from 'react-router-dom'
+import { PanelLayout } from '@/components/layout/PanelLayout'
 
 export default function AdminLayout() {
-  return (
-    <div className="flex flex-col gap-6 lg:flex-row">
-      <aside className="flex gap-2 lg:w-48 lg:flex-col">
-        {LINKS.map((link) => (
-          <NavLink
-            key={link.to}
-            to={link.to}
-            end={link.end}
-            className={({ isActive }) =>
-              cn(
-                'rounded-md px-3 py-2 text-sm font-medium',
-                isActive ? 'bg-accent text-accent-foreground' : 'text-muted-foreground hover:bg-accent',
-              )
-            }
-          >
-            {link.label}
-          </NavLink>
-        ))}
-      </aside>
-      <div className="flex-1">
-        <Outlet />
-      </div>
-    </div>
-  )
+  return <><a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:p-3">Pular para o conteúdo</a><PanelLayout mode="admin"><Outlet /></PanelLayout></>
 }

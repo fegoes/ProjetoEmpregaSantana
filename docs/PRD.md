@@ -6,7 +6,7 @@
 
 ## 1. Visão Geral do Produto
 
-**EmpregaSantana** é um marketplace de trabalho no modelo **OLX + LinkedIn**: navegação pública e aberta (qualquer visitante vê vagas e prestadores de serviço sem precisar de conta), com cadastro exigido apenas para agir (candidatar-se, contratar, publicar).
+**EmpregaSantana** é um marketplace regional de trabalho: navegação pública e aberta (qualquer visitante vê vagas e prestadores de serviço sem precisar de conta), com cadastro exigido apenas para agir (candidatar-se, contratar, publicar).
 
 ### 1.1 Personas
 
@@ -43,7 +43,7 @@ Um mesmo usuário pode acumular papéis (ex.: ser Candidato e também Autônomo)
 | `avatar_url` | text | |
 | `city`, `state` | text | |
 | `country` | text | default `'BR'` |
-| `is_admin` | boolean | default `false` — só setado via seed/promoção manual, **fonte única de verdade para admin** |
+| `is_admin` | boolean | default `false` — concessão somente por operação privilegiada para contas escolhidas; exige perfil ativo para autorizar admin |
 | `created_at`, `updated_at` | timestamptz | |
 
 **`user_roles`** — papéis são **aditivos** (um usuário pode ter vários)
@@ -197,7 +197,7 @@ Um mesmo usuário pode acumular papéis (ex.: ser Candidato e também Autônomo)
 
 - **Papéis aditivos**: `profiles` (1) + `user_roles` (0..N: candidato/autonomo/empresa_owner) + `is_admin` (flag isolada).
 - **Fluxo de cadastro**: no signup, o usuário escolhe a intenção inicial ("Sou candidato" / "Sou autônomo" / "Quero contratar / Sou empresa"), o que insere a linha correspondente em `user_roles` e leva a um wizard de onboarding curto daquele perfil. Um novo papel pode ser adicionado depois em **Meu Perfil > Adicionar perfil**.
-- **Roteamento do admin por e-mail**: login normal via Supabase Auth; ao autenticar, o `AuthContext` carrega `profiles.is_admin`. Se `true`, o usuário é redirecionado para `/admin` em vez do destino padrão (`/perfil`). A checagem é sempre no banco (RLS/Edge Functions também validam `is_admin`), nunca só no cliente. Contas admin são provisionadas manualmente (seed SQL ou promoção por outro admin) — sem auto-cadastro de admin.
+- **Roteamento administrativo por autorização**: login normal via Supabase Auth; o cliente exige perfil ativo do mesmo usuário da sessão com `profiles.is_admin = true`. Operadores autorizados seguem para `/admin`. Nome e e-mail não concedem privilégios. O banco valida `is_admin()` nas políticas; concessão/revogação ocorre somente por operação privilegiada, fora do painel de usuários e do cadastro público. A migration0023 retira o privilégio da antiga fixture administrativa.
 - **`AuthContext`**: `session`, `user`, `profile`, `roles[]`, `isAdmin`, `loading` + métodos `signIn`, `signUp(role)`, `signOut`, `refreshProfile`, `addRole(role)`.
 - **`EmpresaContext`** (equivalente enxuto do `CompanyContext` do FinGestão): `{ empresa, loading, refresh }`, escopado às rotas `/empresa/*`. Na v1, um usuário gerencia **uma** empresa (sem seletor); a tabela `empresa_members` já existe para permitir múltiplos gestores/múltiplas empresas por usuário no futuro sem migração de schema.
 - **Guards de rota**: componente `<ProtectedRoute roles={[...]}>` redireciona não-autenticado para `/login?redirect=<path>` e papel não-autorizado para `/perfil` com aviso.
@@ -261,7 +261,7 @@ Um mesmo usuário pode acumular papéis (ex.: ser Candidato e também Autônomo)
 | `/admin` | Dashboard geral (contadores) |
 | `/admin/empresas` | **Cadastro de Empresas** — listar/buscar/editar/verificar/suspender |
 | `/admin/empresas/:id` | **Dados da empresa** — detalhe/edição, vagas daquela empresa |
-| `/admin/usuarios` | **Cadastro de usuários** — todos os perfis, filtro por papel, promover a admin, suspender |
+| `/admin/usuarios` | **Cadastro de usuários** — consulta de perfis, ativar/desativar e ações existentes; sem concessão de administração pela interface |
 | `/admin/planos` | **Cadastro de Planos** — CRUD em `plans` (ambas as famílias) |
 | `/admin/vagas` | **Lista de Vagas** — todas as vagas da plataforma, incluindo `empresa_id IS NULL` |
 | `/admin/ads` | **Campo de ADS** — tela stub: lista `ads`, criação/status manual, sem fluxo de pagamento ainda |
@@ -349,7 +349,7 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 - Verificação visual em navegador (Playwright headless) nas páginas públicas, em claro e escuro, sem erros de console.
 
 **Pendências técnicas identificadas nesta rodada** (não bloqueiam uso, mas devem entrar no backlog):
-1. **Sem alternador de tema** — o CSS de dark mode existe e foi validado, mas não há botão/toggle nem detecção automática de `prefers-color-scheme` na UI; hoje o site sempre abre no claro.
+1. **Decisão atualizada em 20/10/2026: modo claro obrigatório** — site e painéis permanecem claros, independentemente do tema do dispositivo; sem alternador. A implementação anterior de dark mode foi removida.
 2. **Sem code-splitting de rotas** — o bundle de produção passou de 500 kB (aviso do Vite); vale introduzir `React.lazy`/`import()` por rota antes de ir para produção.
 3. **Truncamento de título em 1 linha** nos cards (`VagaCard`/`AutonomoCard`) — títulos longos cortam cedo; considerar `line-clamp-2`.
 4. **Sem paginação/scroll infinito** — Home e Explorar carregam a lista inteira de uma vez; ok para dezenas de vagas, não escala para centenas.
@@ -359,7 +359,7 @@ Nesta fase, `/admin/ads` é uma tela manual (sem Stripe). Roadmap: pagamento avu
 
 **Sugestão de ordem para a próxima sessão:**
 1. Login com um usuário de seed (ex. `rh.empresa1@empregasantana-seed.com` / `seed-demo-password`) e revisão visual dos painéis logados + editor Tiptap.
-2. Toggle de tema claro/escuro (rápido, alto impacto percebido).
+2. Legibilidade e consistência em modo claro em todas as áreas (decisão de 20/10/2026; substitui a sugestão anterior de toggle).
 3. `line-clamp` nos cards + paginação simples na Home/Explorar.
 4. Início da Fase 3 (Stripe): schema já pronto, falta só as Edge Functions e as telas de checkout.
 
@@ -413,7 +413,45 @@ Pendências continuam rastreadas no checklist de `docs/IDENTIDADE_VISUAL.md` §1
 - [x] Candidato com múltiplos currículos (`cv_variants`)
 - [x] Autônomo cobrando por hora ou por entrega, público na Home
 - [x] Empresa escolhendo contratação fixa ou temporária (hora/entrega)
-- [x] Navegação pública tipo OLX + cadastro para desbloquear ações tipo LinkedIn
-- [x] Menu: Home | Empresas (diretório logado) | Explorar | Meu Perfil | Login/Logout
-- [x] Login normal roteando por e-mail/flag para o admin
+- [x] Navegação pública com cadastro para desbloquear ações
+- [x] Navegação global de projeto, vagas, autônomos e conteúdo; diretório de empresas logado, opções do usuário no painel lateral e login/logout
+- [x] Login normal roteando por autorização do perfil ativo para o admin
 - [x] Admin: Cadastro de Empresas, Cadastro de usuários, Cadastro de Planos, Lista de Vagas (com/sem empresa), Campo de ADS, Dados da empresa
+
+
+## 11. Referências de mercado e direção de interface — 20/10/2026
+
+**Requisito confirmado:** site público e sistema autenticado inteiramente em modo claro, preservando a identidade oficial.
+
+O estudo das referências de design vigentes — Gupy, Infojobs e 99Freelas está em [REFERENCIAS_UX.md](REFERENCIAS_UX.md), com fontes, limites da pesquisa, lacunas no código e prioridades sugeridas. Os itens propostos nesse estudo são backlog de descoberta; não representam funcionalidades já implementadas nem mudança automática de escopo do MVP.
+
+Ferramentas e reprodução: [FERRAMENTAS_DESIGN.md](FERRAMENTAS_DESIGN.md).
+
+
+### 11.1 Diretrizes confirmadas para a evolução da interface
+
+- **Responsividade em toda a plataforma:** site, blog, formulários, editores e todos os painéis devem se adaptar a larguras variáveis, mantendo ações acessíveis por toque e teclado, reflow com zoom e ausência de transbordamento horizontal da página.
+- **Navegação autenticada separada:** menu global do site no topo e menu de opções do usuário à esquerda dentro do painel. Em telas pequenas, menu do site e Meu painel usam acionadores distintos e navegações recolhidas. Links dependem dos papéis ativos; guards e RLS continuam obrigatórios.
+- **Referências de design:** Gupy e Infojobs são o foco do estudo detalhado, com 99Freelas como referência complementar.
+- **Blog:** rotas públicas `/blog` e `/blog/:slug` e gestão `/admin/artigos` implementadas após autorização do responsável. Migration0021 cria o modelo e RLS; ainda precisa ser aplicada no banco configurado.
+
+Especificação por tela, critérios responsivos e prioridades: [ANALISE_GUPY_INFOJOBS.md](ANALISE_GUPY_INFOJOBS.md).
+
+
+### 11.2 Home de apresentação e protótipos
+
+A home pública deve apresentar o EmpregaSantana como um pitch, inspirada na sequência narrativa do [FinGestão](https://fingestao.vercel.app/). Explica propósito, dificuldade, solução e funcionamento antes dos convites para explorar vagas, serviços ou área de empresa. A área de busca continua com foco em encontrar oportunidades. O conjunto `prototipos/` demonstra essa direção separadamente da aplicação, com dados fictícios. Ver [PROTOTIPOS.md](PROTOTIPOS.md).
+
+
+### 11.3 CRUD conectado aos dados reais
+
+As telas funcionais precisam de operações de criar, consultar, editar e excluir/desativar conforme o domínio e a permissão. O layout do painel deve tornar esses caminhos acessíveis. O inventário de operações já presentes, lacunas e critérios de aceite está em [CRUD_E_INTEGRACAO.md](CRUD_E_INTEGRACAO.md). As ações de demonstração dos protótipos não constituem persistência real.
+
+### 11.4 Implementação autorizada
+
+A direção foi transferida para o aplicativo funcional com consultas e mutations Supabase. Entregas, configuração, testes e limites estão em [IMPLEMENTACAO.md](IMPLEMENTACAO.md). A validação local usou API simulada; não houve migração ou deploy de banco real.
+
+
+### 11.5 Modelos e acesso reservado à administração
+
+A base funcional de modelos e CRUDs antecede o aprofundamento dos protótipos administrativos inspirados no WordPress. O responsável confirmou que somente operadores explicitamente autorizados podem administrar; o cadastro público não concede esse acesso. Administração não integra os papéis públicos e seu provisionamento é privilegiado. Veja [MODELOS_E_ACESSOS.md](MODELOS_E_ACESSOS.md) e a migration0023.

@@ -31,6 +31,7 @@ function Pill({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={checked}
       className={cn(
         'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
         checked
@@ -74,14 +75,17 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
     <div className={inline ? 'flex flex-col gap-4' : 'flex flex-col gap-4 lg:gap-6'}>
       {!inline && (
         <div className="flex items-center justify-between">
+          <span className="hidden items-center gap-1.5 text-sm font-semibold lg:inline-flex"><SlidersHorizontal className="size-4" />Filtros{activeCount > 0 ? ` (${activeCount})` : ''}</span>
           <button
             type="button"
+            aria-expanded={expanded}
+            aria-controls="feed-filter-options"
             onClick={() => setExpanded((e) => !e)}
-            className="flex items-center gap-1.5 text-sm font-semibold lg:cursor-default"
+            className="flex items-center gap-1.5 text-sm font-semibold lg:hidden"
           >
             <SlidersHorizontal className="size-4" /> Filtros
             {activeCount > 0 && (
-              <span className="flex size-4 items-center justify-center rounded-full bg-primary text-[10px] font-semibold text-primary-foreground">
+              <span className="flex size-4 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
                 {activeCount}
               </span>
             )}
@@ -99,7 +103,7 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
         </div>
       )}
 
-      <div className={cn('flex flex-col gap-4', !inline && (expanded ? 'flex' : 'hidden'), !inline && 'lg:flex lg:gap-6')}>
+      <div id="feed-filter-options" className={cn('flex flex-col gap-4', !inline && (expanded ? 'flex' : 'hidden'), !inline && 'lg:flex lg:gap-6')}>
       <div className={sectionClass}>
         <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">O que buscar</p>
         <div className={optionsClass}>

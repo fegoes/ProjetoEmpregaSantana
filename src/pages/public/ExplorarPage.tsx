@@ -1,7 +1,8 @@
-import * as React from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { type FormEvent } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Search, SearchX } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { VagaCard } from '@/components/VagaCard'
 import { AutonomoCard } from '@/components/AutonomoCard'
 import { EmptyState } from '@/components/EmptyState'
@@ -10,110 +11,46 @@ import { FeedFilterPanel } from '@/components/FeedFilterPanel'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
-import { DEFAULT_FEED_FILTERS, filterAutonomos, filterVagas } from '@/lib/feedFilters'
+import { filterAutonomos, filterVagas, readFeedFilters, writeFeedFilters } from '@/lib/feedFilters'
 
 export default function ExplorarPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [term, setTerm] = React.useState(searchParams.get('q') ?? '')
-  const [debounced, setDebounced] = React.useState(searchParams.get('q') ?? '')
-  const [filters, setFilters] = React.useState(DEFAULT_FEED_FILTERS)
-
-  useDocumentMeta({
-    title: 'Explorar',
-    description: 'Busque por cargo, categoria de serviço ou palavra-chave entre vagas e autônomos no EmpregaSantana.',
-  })
-
-  React.useEffect(() => {
-    const timeout = setTimeout(() => {
-      setDebounced(term)
-      setSearchParams(term ? { q: term } : {}, { replace: true })
-    }, 300)
-    return () => clearTimeout(timeout)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [term])
-
-  const vagasQuery = useVagasPublicadas({ search: debounced })
-  const autonomosQuery = useAutonomosAtivos({ search: debounced })
-
-  const vagas = React.useMemo(() => filterVagas(vagasQuery.data ?? [], filters), [vagasQuery.data, filters])
-  const autonomos = React.useMemo(
-    () => filterAutonomos(autonomosQuery.data ?? [], filters),
-    [autonomosQuery.data, filters],
-  )
-  const totalResults = vagas.length + autonomos.length
-
-  return (
-    <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight">Explorar</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Busque por cargo, categoria de serviço ou palavra-chave entre vagas e autônomos.
-        </p>
-        <div className="relative mt-4 max-w-lg">
-          <Search className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            autoFocus
-            value={term}
-            onChange={(e) => setTerm(e.target.value)}
-            placeholder="Ex.: eletricista, vendedor, designer…"
-            className="h-11 rounded-full pl-10"
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-8 lg:flex-row">
-        <aside className="shrink-0 lg:w-56">
-          <FeedFilterPanel value={filters} onChange={setFilters} layout="sidebar" />
-        </aside>
-
-        <div className="min-w-0 flex-1">
-          {debounced ? (
-            <div className="flex flex-col gap-8">
-              {vagas.length > 0 && (
-                <section>
-                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                    Vagas <span className="text-foreground">({vagas.length})</span>
-                  </h2>
-                  <ShowMoreGrid
-                    key={`vagas-${debounced}`}
-                    items={vagas}
-                    keyExtractor={(vaga) => vaga.id}
-                    renderItem={(vaga) => <VagaCard vaga={vaga} />}
-                  />
-                </section>
-              )}
-
-              {autonomos.length > 0 && (
-                <section>
-                  <h2 className="mb-3 text-base font-semibold text-muted-foreground">
-                    Autônomos <span className="text-foreground">({autonomos.length})</span>
-                  </h2>
-                  <ShowMoreGrid
-                    key={`autonomos-${debounced}`}
-                    items={autonomos}
-                    keyExtractor={(autonomo) => autonomo.id}
-                    renderItem={(autonomo) => <AutonomoCard autonomo={autonomo} />}
-                  />
-                </section>
-              )}
-
-              {totalResults === 0 && !vagasQuery.isLoading && !autonomosQuery.isLoading && (
-                <EmptyState
-                  icon={SearchX}
-                  title={`Nada encontrado para "${debounced}"`}
-                  description="Tente um termo mais genérico ou ajuste os filtros na lateral."
-                />
-              )}
-            </div>
-          ) : (
-            <EmptyState
-              icon={Search}
-              title="Digite algo para começar"
-              description="Busque por cargos como “vendedor”, categorias como “construção” ou serviços como “eletricista”."
-            />
-          )}
-        </div>
-      </div>
-    </div>
-  )
+  const [params, setParams] = useSearchParams()
+  const term = params.get('q') ?? ''
+  const city = params.get('cidade') ?? ''
+  const filters = readFeedFilters(params)
+  const vagasQuery = useVagasPublicadas({ search: term })
+  const autonomosQuery = useAutonomosAtivos({ search: term })
+  const matchesCity = (value: string | null) => !city || value?.toLocaleLowerCase('pt-BR').includes(city.toLocaleLowerCase('pt-BR'))
+  const vagas = filterVagas(vagasQuery.data ?? [], filters).filter(v => matchesCity(v.location_city))
+  const autonomos = filterAutonomos(autonomosQuery.data ?? [], filters).filter(a => matchesCity(a.service_area_city))
+  const loading = (filters.showVagas && vagasQuery.isLoading) || (filters.showAutonomos && autonomosQuery.isLoading)
+  const error = (filters.showVagas && vagasQuery.isError) || (filters.showAutonomos && autonomosQuery.isError)
+  useDocumentMeta({ title: 'Vagas e profissionais', description: 'Encontre vagas e profissionais autônomos em Santana do Ipanema e região.' })
+  function search(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    const next = new URLSearchParams(params)
+    for (const [key, name] of [['q', 'termo'], ['cidade', 'cidade']]) {
+      const value = String(data.get(name) ?? '').trim()
+      if (value) next.set(key, value); else next.delete(key)
+    }
+    setParams(next)
+  }
+  return <div className="flex flex-col gap-7"><header><h1 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-4xl">Oportunidades perto de você.</h1><p className="mt-4 text-sm text-muted-foreground">Explore vagas e encontre profissionais para o serviço que você precisa.</p><form key={`${term}-${city}`} onSubmit={search} className="mt-6 grid items-end gap-4 rounded-2xl border bg-card p-5 sm:grid-cols-[1.5fr_1fr_auto]"><div className="space-y-2"><label htmlFor="explore-term" className="text-xs font-medium">Cargo ou serviço</label><Input id="explore-term" name="termo" defaultValue={term} placeholder="Ex.: vendedor, eletricista…" className="h-11" /></div><div className="space-y-2"><label htmlFor="explore-city" className="text-xs font-medium">Cidade</label><Input id="explore-city" name="cidade" defaultValue={city} placeholder="Toda a região" className="h-11" /></div><Button type="submit" variant="cta" className="h-11"><Search />Buscar</Button></form></header>
+    <nav aria-label="Tipo de resultado" className="flex flex-wrap gap-5 border-b text-sm">{[
+      { label: 'Vagas', showVagas: true, showAutonomos: false },
+      { label: 'Autônomos', showVagas: false, showAutonomos: true },
+      { label: 'Todos', showVagas: true, showAutonomos: true },
+    ].map(option => {
+      const active = filters.showVagas === option.showVagas && filters.showAutonomos === option.showAutonomos
+      return <Link key={option.label} to={`/explorar?${writeFeedFilters(params, { ...filters, showVagas: option.showVagas, showAutonomos: option.showAutonomos })}`} aria-current={active ? 'page' : undefined} className={`min-h-11 border-b-2 py-3 ${active ? 'border-primary font-semibold text-primary' : 'border-transparent text-muted-foreground hover:text-primary'}`}>{option.label}</Link>
+    })}</nav>
+    <div className="flex flex-col gap-7 lg:flex-row"><aside className="shrink-0 rounded-2xl border bg-card p-5 lg:w-56"><FeedFilterPanel value={filters} onChange={value => setParams(writeFeedFilters(params, value))} /></aside><div className="min-w-0 flex-1 space-y-8">
+      {loading && <p role="status" className="text-sm text-muted-foreground">Buscando oportunidades…</p>}
+      {error && <div role="alert" className="rounded-xl border p-5"><p className="text-sm">Não foi possível carregar todos os resultados.</p><Button variant="outline" className="mt-3" onClick={() => { vagasQuery.refetch(); autonomosQuery.refetch() }}>Tentar novamente</Button></div>}
+      {vagas.length > 0 && <section><h2 className="mb-4 text-base font-semibold">Vagas ({vagas.length})</h2><ShowMoreGrid key={`vagas-${params}`} items={vagas} keyExtractor={v => v.id} renderItem={v => <VagaCard vaga={v} />} /></section>}
+      {autonomos.length > 0 && <section><h2 className="mb-4 text-base font-semibold">Autônomos ({autonomos.length})</h2><ShowMoreGrid key={`autonomos-${params}`} items={autonomos} keyExtractor={a => a.id} renderItem={a => <AutonomoCard autonomo={a} />} /></section>}
+      {!loading && !error && vagas.length + autonomos.length === 0 && <EmptyState icon={SearchX} title="Vamos tentar outro caminho?" description="Nenhum resultado corresponde à busca. Tente outro termo ou limpe os filtros." action={<Button variant="outline" onClick={() => setParams({})}>Limpar busca e filtros</Button>} />}
+    </div></div>
+  </div>
 }

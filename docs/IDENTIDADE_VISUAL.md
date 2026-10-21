@@ -262,15 +262,14 @@ Regra: **caixa alta só em rótulo curto** (badge, categoria, "VAGA NOVA"). Nunc
 
 O projeto é **Tailwind v4 CSS-first**: não existe nem deve existir `tailwind.config.js` (`components.json` tem `"config": ""`). Todos os tokens vivem em `src/index.css`, arquivo único.
 
-A arquitetura atual está correta e é preservada — mesmos nomes de token, mesmo `@custom-variant dark`, mesmo `--radius: 0.85rem`. **O que muda são os valores.** Dois tokens novos entram: `--brand-blue-strong` e `--brand-orange-ink`.
+A arquitetura atual está correta e é preservada — mesmos nomes de token e mesmo `--radius: 0.85rem`; somente modo claro, conforme decisão de 20/10/2026. **O que muda são os valores.** Dois tokens novos entram: `--brand-blue-strong` e `--brand-orange-ink`.
 
 ```css
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
+  color-scheme: only light;
   --radius: 0.85rem;
 
   /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
@@ -303,7 +302,7 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   --input: oklch(0.90 0 0);
   --ring: oklch(0.504 0.148 255.8 / 40%);
 
-  /* Marca fixa (logotipo) — azul profundo constante, não muda entre claro/escuro */
+  /* Marca fixa (logotipo) — azul profundo constante no modo claro */
   --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
   --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
   --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
@@ -321,43 +320,6 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
 }
 
-.dark {
-  --background: oklch(0.17 0.028 252);     /* #06101B */
-  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF — 17.1:1 */
-  --card: oklch(0.22 0.030 252);           /* #101B28 */
-  --card-foreground: oklch(0.96 0.004 90);
-  --popover: oklch(0.22 0.030 252);
-  --popover-foreground: oklch(0.96 0.004 90);
-
-  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo */
-  --primary-foreground: oklch(0.17 0.028 252);
-
-  --secondary: oklch(0.27 0.026 252);      /* #1D2733 */
-  --secondary-foreground: oklch(0.96 0.004 90);
-  --muted: oklch(0.26 0.024 252);
-  --muted-foreground: oklch(0.70 0.020 252);  /* #96A0AB — 7.2:1 */
-  --accent: oklch(0.30 0.030 252);
-  --accent-foreground: oklch(0.96 0.004 90);
-
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.17 0.028 252);
-  --success: oklch(0.66 0.14 155);
-  --success-foreground: oklch(0.17 0.028 252);
-
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.70 0.130 255.8 / 50%);
-
-  /* Cor de logotipo: idêntica ao tema claro, por definição */
-  --brand-ink: oklch(0.344 0.090 252);
-  --brand-blue: oklch(0.70 0.130 255.8);
-  --brand-blue-strong: oklch(0.63 0.135 256);
-
-  --brand-orange: oklch(0.780 0.170 57.4);        /* #FF9732 — 8.9:1 sobre o fundo */
-  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F — 4.83:1 com #333 */
-  --brand-orange-ink: oklch(0.780 0.170 57.4);    /* no escuro o laranja puro já passa */
-  --brand-orange-foreground: oklch(0.321 0 0);
-}
 
 @theme inline {
   --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -430,7 +392,7 @@ Depois disso, estas classes ficam disponíveis: `bg-brand-orange`, `text-brand-o
 
 - **Nunca escreva hex, `rgb()` ou cor crua do Tailwind em componente.** Hoje o projeto é quase perfeito nisso: as únicas cores fora do sistema estão em `src/components/StatusBadge.tsx:27` (`violet-500/600/400`). Essa é a única exceção a eliminar.
 - Tints e tons se fazem com sufixo de opacidade sobre o token (`bg-brand-orange/15`, `text-primary/70`), não com cor nova. É o padrão já adotado em `VagaCard`, `AutonomoCard` e `InitialsAvatar`.
-- `--brand-ink` é cor de **logotipo**, não de texto. Não muda entre claro e escuro, por definição.
+- `--brand-ink` é cor de **logotipo**, não de texto. É constante no modo claro.
 
 ---
 
@@ -696,7 +658,7 @@ Auditoria completa pós-Bloco 3, disparada por revisão explícita de "todas as 
 
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 
-- **Não há alternador de tema.** O bloco `.dark` existe, é completo e está validado — mas nenhum controle na UI o ativa. O site sempre abre claro. Já registrado em `docs/PRD.md` §8.1.
+- **Modo claro obrigatório (20/10/2026).** Site público e todos os painéis usam superfícies claras. Não há alternador nem mudança pelo tema do sistema operacional. O bloco `.dark` foi removido; `color-scheme: only light` fixa também os controles nativos.
 - **Escalas implícitas.** Só cor e raio são tokenizados. Espaçamento, sombra e tipografia são utilitários Tailwind repetidos à mão pelos arquivos. A §4.3 desta doc é o primeiro passo para tokenizar a tipografia.
 - **Áreas logadas nunca passaram por revisão de *layout*** (painel de empresa, admin, onboarding). A migração de tokens as alcança automaticamente, e o Bloco 4 corrigiu a tipografia (título de card em Montserrat, `<h1>` unificado) — mas o layout em si (densidade, grid, hierarquia visual além de cor/fonte) não foi desenhado.
 
@@ -746,3 +708,22 @@ Conversões hex↔OKLCH e contrastes desta doc foram calculados pelas fórmulas 
 - Contraste: WebAIM Contrast Checker, ou a aba Accessibility do DevTools.
 
 Os pares críticos a revalidar em qualquer mudança de cor são os da tabela §3.4 — especialmente qualquer combinação que envolva `#FF8A00`.
+
+
+## 10. Direção confirmada em 20/10/2026
+
+Todo o site e sistema operam em **modo claro**, incluindo candidato, autônomo, empresa e administração. Página em `#F8F8F8`, cards e popovers brancos, apoio em `#F2F2F2`, texto em `#333333`; azul e laranja preservam seus papéis oficiais. Evitar grandes superfícies escuras na interface. O azul profundo continua disponível para títulos e elementos de marca. O tema escuro do dispositivo não altera a aplicação.
+
+As referências de mercado e propostas de evolução estão em [Referências de UX](REFERENCIAS_UX.md). Elas respeitam esta identidade e não autorizam trocar paleta, fontes ou logotipo.
+
+
+### 10.1 Composição responsiva e navegação do painel
+
+Todas as áreas seguem layout fluido e modo claro. O menu do site permanece no topo; na área logada, as opções do usuário ficam em uma lateral esquerda. Em telas pequenas, a lateral se torna uma gaveta identificada como Meu painel, separada do menu global. Conteúdo, formulários, tabelas, editores e blog devem reorganizar-se conforme o espaço, sem depender de hover ou provocar rolagem horizontal da página.
+
+O [estudo de Gupy e Infojobs](ANALISE_GUPY_INFOJOBS.md) define aplicações por tela e matriz de validação. Os padrões são propostas para evolução; a marca e os tokens oficiais permanecem a fonte de verdade.
+
+
+## 10. Decisão de navegação administrativa — 20/10/2026
+
+O responsável solicitou menu lateral azul escuro no admin e autorizou a mesma aplicação nos painéis dos usuários. O conteúdo e os formulários permanecem claros. Usar azul profundo da marca na lateral, branco/azul claro para texto, seleção por fundo mais claro e foco visível. A administração não tem cabeçalho ou rodapé público; o acesso ao site fica na navegação. A estrutura de menus é inspirada no WordPress e preserva a identidade do EmpregaSantana. Aparência oferece opções controladas da paleta, tamanho de texto e formato de botões, sem modo escuro global.
