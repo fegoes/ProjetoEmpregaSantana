@@ -77,6 +77,31 @@ describe('isolamento da sessão administrativa', () => {
     expect(controls.signUp).not.toHaveBeenCalled()
     expect(controls.from.mock.calls.length).toBe(previousCalls)
   })
+  it('não reinicia o painel em notificações repetidas da mesma sessão validada', async () => {
+    controls.profiles.set('admin-a', Promise.resolve(profile('admin-a', true)))
+    const signedIn = { ...session('admin-a'), access_token: 'same-token' }
+    controls.getSession.mockResolvedValue({ data: { session: signedIn } })
+    render(<AuthProvider><Probe /></AuthProvider>)
+    await waitFor(() => expect(read()).toMatchObject({ admin: true, loading: false }))
+    const previousCalls = controls.from.mock.calls.length
+    act(() => controls.listener?.('SIGNED_IN', signedIn))
+    expect(read()).toMatchObject({ admin: true, loading: false })
+    expect(controls.from.mock.calls.length).toBe(previousCalls)
+    act(() => controls.listener?.('SIGNED_OUT', null))
+    await waitFor(() => expect(read()).toMatchObject({ admin: false, loading: false }))
+  })
+  it('revalida acesso quando o mesmo usuário recebe um token diferente', async () => {
+    controls.profiles.set('admin-a', Promise.resolve(profile('admin-a', true)))
+    controls.getSession.mockResolvedValue({ data: { session: { ...session('admin-a'), access_token: 'old-token' } } })
+    render(<AuthProvider><Probe /></AuthProvider>)
+    await waitFor(() => expect(read().admin).toBe(true))
+    const revalidation = deferred()
+    controls.profiles.set('admin-a', revalidation.promise)
+    act(() => controls.listener?.('SIGNED_IN', { ...session('admin-a'), access_token: 'new-token' }))
+    expect(read()).toMatchObject({ admin: false, loading: true })
+    await act(async () => revalidation.resolve(profile('admin-a', false)))
+    await waitFor(() => expect(read()).toMatchObject({ admin: false, loading: false }))
+  })
   it('falha fechada quando a sessão não pode ser recuperada', async () => {
     controls.getSession.mockRejectedValue(new Error('falha de sessão simulada'))
     render(<AuthProvider><Probe /></AuthProvider>)

@@ -1,3 +1,4 @@
+import { useEmploymentLabels } from '@/hooks/useRecordTypes'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { Clock3, MapPin, Wallet } from 'lucide-react'
 import { useVaga } from '@/hooks/useVagas'
@@ -14,12 +15,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
-const EMPLOYMENT_LABELS: Record<string, string> = {
-  clt: 'CLT',
-  pj: 'PJ',
-  temporario: 'Temporário',
-  freelance: 'Freelance',
-}
+
 const PRICING_LABELS: Record<string, string> = {
   fixed_salary: 'Salário fixo',
   hourly: 'Por hora',
@@ -34,6 +30,7 @@ const SCHEMA_EMPLOYMENT_TYPE: Record<string, string> = {
 }
 
 export default function VagaDetailPage() {
+  const employmentLabels = useEmploymentLabels()
   const { id } = useParams<{ id: string }>()
   const { data: vaga, isLoading } = useVaga(id)
   const { user } = useAuth()
@@ -164,7 +161,7 @@ export default function VagaDetailPage() {
         <div className="flex flex-wrap gap-2">
           <StatusBadge status={vaga.status} />
           <Badge variant="secondary" className="rounded-full">
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
+            {employmentLabels[vaga.employment_type] ?? vaga.employment_type}
           </Badge>
           <Badge variant="outline" className="rounded-full">
             {PRICING_LABELS[vaga.pricing_model]}
@@ -197,7 +194,7 @@ export default function VagaDetailPage() {
           </div>
           <div className="flex items-center gap-2.5 text-sm">
             <Clock3 className="size-4 shrink-0 text-muted-foreground" />
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
+            {employmentLabels[vaga.employment_type] ?? vaga.employment_type}
           </div>
 
           {vaga.empresas && (

@@ -1,3 +1,5 @@
+import { RecordTypeSelect } from '@/components/RecordTypeSelect'
+import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
@@ -36,6 +38,7 @@ export default function VagaFormPage() {
   const navigate = useNavigate()
   const { data: existing, isLoading: loadingExisting, isError: loadError } = useVagaToEdit(id)
   const saveVaga = useSaveVaga()
+  const types = useRecordTypes()
 
   const [saveError, setSaveError] = React.useState('')
   const [saved, setSaved] = React.useState(false)
@@ -72,6 +75,7 @@ export default function VagaFormPage() {
 
   const handleSave = async (status: VagaStatus) => {
     if (!user || !empresa) return
+    if (types.isLoading || types.isError) { setSaveError('Aguarde o carregamento dos tipos de contratação ou recarregue a página.'); return }
     setSaveError('')
     setSaved(false)
     if (!title.trim()) { setSaveError('Informe o título da vaga.'); return }
@@ -143,17 +147,7 @@ export default function VagaFormPage() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="employmentType">Tipo de contratação</Label>
-            <select
-              id="employmentType"
-              className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-              value={employmentType}
-              onChange={(e) => setEmploymentType(e.target.value as EmploymentType)}
-            >
-              <option value="clt">CLT</option>
-              <option value="pj">PJ</option>
-              <option value="temporario">Temporário</option>
-              <option value="freelance">Freelance</option>
-            </select>
+            <RecordTypeSelect id="employmentType" kind="vaga" value={employmentType} onChange={setEmploymentType} required />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="pricingModel">Modelo de pagamento</Label>

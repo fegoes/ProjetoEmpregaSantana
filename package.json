@@ -15,7 +15,7 @@
     "browser": "playwright-cli",
     "prototype": "vite prototipos --host 127.0.0.1 --port 4174",
     "prototype:build": "vite build prototipos",
-    "test:database": "node tests/database/admin-access.mjs",
+    "test:database": "node tests/database/admin-access.mjs && node tests/database/taxonomies.mjs",
     "verify:deploy": "node scripts/verify-deploy.mjs"
   },
   "dependencies": {

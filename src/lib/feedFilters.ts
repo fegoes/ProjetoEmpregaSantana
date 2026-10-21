@@ -108,7 +108,7 @@ export function readFeedFilters(params: URLSearchParams): FeedFilters {
     showVagas: kind !== 'autonomos' && kind !== 'nenhum',
     showAutonomos: kind !== 'vagas' && kind !== 'nenhum',
     categories: params.getAll('categoria'),
-    employmentTypes: params.getAll('contratacao').filter(v => EMPLOYMENT_TYPE_OPTIONS.some(o => o.value === v)),
+    employmentTypes: params.getAll('contratacao').filter(v => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(v)),
     pricingModels: params.getAll('pagamento').filter(v => PRICING_MODEL_OPTIONS.some(o => o.value === v)),
     remoteOnly: params.get('remoto') === '1',
   }

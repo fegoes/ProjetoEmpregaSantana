@@ -1,3 +1,4 @@
+import { useEmploymentLabels } from '@/hooks/useRecordTypes'
 import { Link } from 'react-router-dom'
 import { MapPin, Sparkles } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -6,12 +7,7 @@ import { ImageCarousel } from '@/components/ImageCarousel'
 import { iconForVaga } from '@/lib/categoryIcons'
 import { stripHtml } from '@/lib/utils'
 
-const EMPLOYMENT_LABELS: Record<string, string> = {
-  clt: 'CLT',
-  pj: 'PJ',
-  temporario: 'Temporário',
-  freelance: 'Freelance',
-}
+
 
 const PRICING_LABELS: Record<string, string> = {
   fixed_salary: 'Salário fixo',
@@ -42,6 +38,7 @@ export interface VagaCardData {
 }
 
 export function VagaCard({ vaga }: { vaga: VagaCardData }) {
+  const employmentLabels = useEmploymentLabels()
   const local = vaga.is_remote
     ? 'Remoto'
     : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
@@ -81,7 +78,7 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-1.5">
           <Badge variant="secondary" className="rounded-full font-medium">
-            {EMPLOYMENT_LABELS[vaga.employment_type]}
+            {employmentLabels[vaga.employment_type] ?? vaga.employment_type}
           </Badge>
           <Badge variant="outline" className="rounded-full font-medium">
             {PRICING_LABELS[vaga.pricing_model]}

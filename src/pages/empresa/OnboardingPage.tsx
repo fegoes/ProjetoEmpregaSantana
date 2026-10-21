@@ -1,3 +1,5 @@
+import { CategorySelect } from '@/components/CategorySelect'
+import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
@@ -12,6 +14,8 @@ export default function EmpresaOnboardingPage() {
   const navigate = useNavigate()
   const [nomeFantasia, setNomeFantasia] = React.useState('')
   const [cnpj, setCnpj] = React.useState('')
+  const [category, setCategory] = React.useState('')
+  const [typeSlug, setTypeSlug] = React.useState('')
   const [sector, setSector] = React.useState('')
   const [loading, setLoading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -27,6 +31,8 @@ export default function EmpresaOnboardingPage() {
       nome_fantasia: nomeFantasia,
       cnpj: cnpj || null,
       sector: sector || null,
+      category: category || null,
+      type_slug: typeSlug || null,
     })
 
     setLoading(false)
@@ -55,6 +61,8 @@ export default function EmpresaOnboardingPage() {
             <Label htmlFor="cnpj">CNPJ</Label>
             <Input id="cnpj" value={cnpj} onChange={(e) => setCnpj(e.target.value)} />
           </div>
+          <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
+          <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="sector">Setor</Label>
             <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />

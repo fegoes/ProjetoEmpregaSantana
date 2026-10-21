@@ -1,10 +1,10 @@
+import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
 import type { ReactNode } from 'react'
 import { ChevronDown, SlidersHorizontal } from 'lucide-react'
 import { useCategories } from '@/hooks/useCategories'
 import {
   DEFAULT_FEED_FILTERS,
-  EMPLOYMENT_TYPE_OPTIONS,
   PRICING_MODEL_OPTIONS,
   hasActiveFilters,
   toggleInList,
@@ -62,7 +62,10 @@ function CheckboxRow({
 }
 
 export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
-  const { data: categories } = useCategories()
+  const { data: allCategories } = useCategories()
+  const categories = allCategories?.filter(c => c.kind !== 'empresa' && (c.is_active !== false || value.categories.includes(c.slug)))
+  const { data: types, isError: typesError } = useRecordTypes()
+  const employmentOptions = (types ?? []).filter(t => t.kind === 'vaga' && (t.is_active !== false || value.employmentTypes.includes(t.slug))).map(t => ({ value: t.slug, label: t.label }))
   const inline = layout === 'inline'
   const [expanded, setExpanded] = React.useState(false)
   const activeCount =
@@ -140,8 +143,9 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
 
       <div className={sectionClass}>
         <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Contratação</p>
+        {typesError && <p role="status" className="text-xs text-muted-foreground">Tipos indisponíveis. Recarregue para tentar novamente.</p>}
         <div className={optionsClass}>
-          {EMPLOYMENT_TYPE_OPTIONS.map((option) =>
+          {employmentOptions.map((option) =>
             inline ? (
               <Pill
                 key={option.value}

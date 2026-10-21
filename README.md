@@ -70,3 +70,5 @@ Administração, CRUDs e aparência: [ADMINISTRACAO.md](docs/ADMINISTRACAO.md). 
 Modelos e permissões: [MODELOS_E_ACESSOS.md](docs/MODELOS_E_ACESSOS.md). Testes isolados de autorização: `npm run test:database`.
 
 Publicação e diagnóstico de versões: [DEPLOY.md](docs/DEPLOY.md). O build gera `version.json`; compare a publicação com `npm run verify:deploy -- https://emprega-santana.vercel.app`. Alterações locais precisam estar no commit enviado ao GitHub para entrar no deploy.
+
+Configurações de categorias e tipos dos três cadastros e melhorias nos formulários: [CATEGORIAS_E_TIPOS.md](docs/CATEGORIAS_E_TIPOS.md). Esta etapa exige a migration 0024 depois das anteriores.

@@ -13,7 +13,11 @@ describe('filtros públicos', () => {
   })
   it('restaura inclusive a seleção sem tipos e ignora contratos inválidos', () => {
     expect(readFeedFilters(writeFeedFilters(new URLSearchParams(), { ...DEFAULT_FEED_FILTERS, showVagas: false, showAutonomos: false }))).toMatchObject({ showVagas: false, showAutonomos: false })
-    expect(readFeedFilters(new URLSearchParams('contratacao=desconhecido')).employmentTypes).toEqual([])
+    expect(readFeedFilters(new URLSearchParams('contratacao=invalido%20com%20espaco')).employmentTypes).toEqual([])
+  })
+  it('preserva tipos de contratação configurados pelo administrador na URL', () => {
+    const filters = { ...DEFAULT_FEED_FILTERS, employmentTypes: ['aprendiz', 'estagio-supervisionado'] }
+    expect(readFeedFilters(writeFeedFilters(new URLSearchParams(), filters))).toEqual(filters)
   })
   it('aplica remoto a autônomos e mantém formas de cobrança compatíveis', () => {
     const remote = { ...professional, id: '2', serves_remote: true, pricing_model: 'both' }
