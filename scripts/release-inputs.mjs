@@ -21,4 +21,3 @@ export async function releaseFingerprint() {
   }
   return hash.digest('hex')
 }
-
