@@ -2,7 +2,8 @@
 // Quando o projeto Supabase real existir, substituir por:
 //   npx supabase gen types typescript --project-id <id> > src/types/database.ts
 
-export type EmploymentType = 'clt' | 'pj' | 'temporario' | 'freelance'
+export type EmploymentType = string
+export type TaxonomyKind = 'vaga' | 'autonomo' | 'empresa'
 export type PricingModelVaga = 'fixed_salary' | 'hourly' | 'per_delivery'
 export type PricingModelAutonomo = 'hourly' | 'per_delivery' | 'both'
 export type VagaStatus = 'draft' | 'published' | 'paused' | 'closed'
@@ -110,13 +111,20 @@ export interface Database {
           id: string
           slug: string
           label: string
-          kind: 'vaga' | 'autonomo' | 'both'
+          kind: TaxonomyKind | 'both'
+          is_active: boolean
         }
         Insert: Partial<Database['public']['Tables']['categories']['Row']> & {
           slug: string
           label: string
         }
         Update: Partial<Database['public']['Tables']['categories']['Row']>
+        Relationships: []
+      }
+      record_types: {
+        Row: { id: string; slug: string; label: string; kind: TaxonomyKind; is_active: boolean }
+        Insert: { id?: string; slug: string; label: string; kind: TaxonomyKind; is_active?: boolean }
+        Update: Partial<Database['public']['Tables']['record_types']['Row']>
         Relationships: []
       }
       empresas: {
@@ -127,6 +135,8 @@ export interface Database {
           nome_fantasia: string
           cnpj: string | null
           sector: string | null
+          category: string | null
+          type_slug: string | null
           description_html: string | null
           logo_url: string | null
           cover_url: string | null
@@ -316,6 +326,7 @@ export interface Database {
         Row: {
           id: string
           headline: string | null
+          type_slug: string | null
           category: string | null
           description_html: string | null
           pricing_model: PricingModelAutonomo

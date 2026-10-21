@@ -52,3 +52,7 @@ Essas verificações não certificam todas as telas/estados ou dispositivos reai
 ## Acesso administrativo reservado
 
 Somente contas explicitamente provisionadas recebem administração. O cadastro público nunca concede esse acesso; o painel de usuários não oferece promoção a admin. A migration0023 reforça a proteção no banco e retira o privilégio da fixture administrativa antiga. Modelos, regras, testes e provisionamento por UUID estão em [MODELOS_E_ACESSOS.md](MODELOS_E_ACESSOS.md). A migração ainda precisa ser aplicada no ambiente real.
+
+## Configurações de categorias e tipos
+
+`/admin/configuracoes/categorias` e `/admin/configuracoes/tipos` permitem cadastrar, renomear, desativar e excluir classificações sem vínculos. Vagas, empresas e profissionais usam essas opções nos formulários. A contratação das vagas deixa de ter lista fechada no banco, preservando os códigos existentes. Regras, campos e necessidade da migration0024: [CATEGORIAS_E_TIPOS.md](CATEGORIAS_E_TIPOS.md).

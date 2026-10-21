@@ -1,3 +1,4 @@
+import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
@@ -35,6 +36,7 @@ export default function AutonomoPerfilPage() {
   const { data: autonomo, isLoading, isError, refetch } = useOwnAutonomoProfile(user?.id)
 
   const [headline, setHeadline] = React.useState('')
+  const [typeSlug, setTypeSlug] = React.useState('')
   const [category, setCategory] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
@@ -50,6 +52,7 @@ export default function AutonomoPerfilPage() {
     if (!autonomo) return
     setHeadline(autonomo.headline ?? '')
     setCategory(autonomo.category ?? '')
+    setTypeSlug(autonomo.type_slug ?? '')
     setDescriptionHtml(autonomo.description_html ?? '')
     setPricingModel(autonomo.pricing_model)
     setHourlyRate(autonomo.hourly_rate?.toString() ?? '')
@@ -73,6 +76,7 @@ export default function AutonomoPerfilPage() {
       .update({
         headline,
         category: category || null,
+        type_slug: typeSlug || null,
         description_html: descriptionHtml,
         pricing_model: pricingModel,
         hourly_rate: hourlyRate ? Number(hourlyRate) : null,
@@ -93,6 +97,7 @@ export default function AutonomoPerfilPage() {
         <CardTitle>Meu perfil de autônomo</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
+        <div className="space-y-2"><Label htmlFor="professional-type">Tipo de profissional</Label><RecordTypeSelect id="professional-type" kind="autonomo" value={typeSlug} onChange={setTypeSlug} /></div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="headline">Título</Label>
           <Input id="headline" value={headline} onChange={(e) => setHeadline(e.target.value)} />

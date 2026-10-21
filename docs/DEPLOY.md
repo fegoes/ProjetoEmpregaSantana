@@ -37,3 +37,7 @@ Nenhuma conta real foi utilizada nesta investigação. O banco remoto não foi a
 ## Validação da integração
 
 Build TypeScript/Vite aprovado; 18 testes Vitest e 15 verificações PostgreSQL isoladas aprovados; lint sem erros, com quatro avisos preexistentes. O build de produção foi servido localmente e verificado no Chrome em 390 e 1440px: nove rotas administrativas e duas verificações adicionais de conta comum/bloqueio do admin, total de 20, com API e sessão simuladas. Não houve erro de execução ou transbordamento horizontal detectado nessas verificações. A lateral retornou o token azul profundo, e o admin não exibiu cabeçalho ou rodapé público. O comparador aceitou o build local e recusou o deploy antigo sem identificação. Isso não valida persistência ou RLS do projeto remoto.
+
+## Etapa de categorias e tipos
+
+A extensão posterior de Configurações requer também `0024_admin_taxonomies.sql`. O manifesto de build inclui essa dependência; publicar o frontend não aplica a migration. Campos e regras estão em [CATEGORIAS_E_TIPOS.md](CATEGORIAS_E_TIPOS.md).

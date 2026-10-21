@@ -1,3 +1,5 @@
+import { CategorySelect } from '@/components/CategorySelect'
+import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { useEmpresa } from '@/contexts/EmpresaContext'
@@ -29,6 +31,8 @@ function VisibilityToggle({
 export default function EmpresaPerfilPage() {
   const { empresa, refresh } = useEmpresa()
   const [nomeFantasia, setNomeFantasia] = React.useState(empresa?.nome_fantasia ?? '')
+  const [category, setCategory] = React.useState(empresa?.category ?? '')
+  const [typeSlug, setTypeSlug] = React.useState(empresa?.type_slug ?? '')
   const [sector, setSector] = React.useState(empresa?.sector ?? '')
   const [website, setWebsite] = React.useState(empresa?.website ?? '')
   const [descriptionHtml, setDescriptionHtml] = React.useState(empresa?.description_html ?? '')
@@ -58,6 +62,8 @@ export default function EmpresaPerfilPage() {
     if (!empresa) return
     setNomeFantasia(empresa.nome_fantasia)
     setSector(empresa.sector ?? '')
+    setCategory(empresa.category ?? '')
+    setTypeSlug(empresa.type_slug ?? '')
     setWebsite(empresa.website ?? '')
     setDescriptionHtml(empresa.description_html ?? '')
     setLogoUrl(empresa.logo_url)
@@ -85,6 +91,8 @@ export default function EmpresaPerfilPage() {
       .update({
         nome_fantasia: nomeFantasia,
         sector,
+        category: category || null,
+        type_slug: typeSlug || null,
         website,
         description_html: descriptionHtml,
         logo_url: logoUrl,
@@ -126,6 +134,8 @@ export default function EmpresaPerfilPage() {
             <Label htmlFor="nomeFantasia">Nome</Label>
             <Input id="nomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
           </div>
+          <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
+          <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="sector">Setor</Label>
             <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />

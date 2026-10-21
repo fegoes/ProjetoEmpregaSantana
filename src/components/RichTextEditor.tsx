@@ -5,6 +5,7 @@ import Link from '@tiptap/extension-link'
 import { cn } from '@/lib/utils'
 
 interface RichTextEditorProps {
+  disabled?: boolean
   ariaLabel?: string
   value: string
   onChange: (html: string) => void
@@ -14,7 +15,7 @@ interface RichTextEditorProps {
 
 // Wrapper Tiptap usado em descrições de vaga/empresa/autônomo e resumo de currículo.
 // A saída HTML é sempre sanitizada no render via <RichTextRenderer /> (nunca aqui).
-export function RichTextEditor({ ariaLabel, value, onChange, placeholder, className }: RichTextEditorProps) {
+export function RichTextEditor({ disabled = false, ariaLabel, value, onChange, placeholder, className }: RichTextEditorProps) {
   const editor = useEditor({
     extensions: [StarterKit, Link.configure({ openOnClick: false, autolink: true })],
     content: value,
@@ -32,6 +33,8 @@ export function RichTextEditor({ ariaLabel, value, onChange, placeholder, classN
       },
     },
   })
+
+  useEffect(() => { editor?.setEditable(!disabled) }, [editor, disabled])
 
   useEffect(() => {
     if (editor && editor.getHTML() !== value) editor.commands.setContent(value, false)

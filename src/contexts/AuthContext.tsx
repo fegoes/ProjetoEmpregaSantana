@@ -50,8 +50,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const hydrationVersion = React.useRef(0)
   const sessionUserId = React.useRef<string | null>(null)
+  const validatedSession = React.useRef<{ userId: string; token: string } | null>(null)
   const hydrate = React.useCallback(async (nextSession: Session | null) => {
     const version = ++hydrationVersion.current
+    validatedSession.current = null
     const nextUserId = nextSession?.user.id ?? null
     setLoading(true)
     setSession(nextSession)
@@ -72,6 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       }
       setProfile(nextProfile)
       setRoles(nextRoles)
+      validatedSession.current = { userId: nextSession.user.id, token: nextSession.access_token }
     } catch {
       if (version === hydrationVersion.current) setSession(null)
     } finally {
@@ -89,7 +92,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (isMounted) hydrate(null)
     })
 
-    const { data: subscription } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+    const { data: subscription } = supabase.auth.onAuthStateChange((event, nextSession) => {
+      // Supabase can repeat SIGNED_IN on focus or across tabs. A session already
+      // validated with this exact token must not unmount in-progress forms.
+      // New tokens, account changes, explicit refreshes and sign-out still hydrate.
+      if (event === 'SIGNED_IN' && nextSession?.access_token && validatedSession.current?.userId === nextSession.user.id && validatedSession.current.token === nextSession.access_token) return
       hydrate(nextSession)
     })
 

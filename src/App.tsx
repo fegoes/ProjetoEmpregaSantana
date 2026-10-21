@@ -46,6 +46,7 @@ const EmpresaPlanoPage = lazy(() => import('@/pages/empresa/PlanoPage'))
 const BancoCurriculosPage = lazy(() => import('@/pages/empresa/BancoCurriculosPage'))
 
 const AdminResourcePage = lazy(() => import('@/pages/admin/ResourcePage'))
+const TaxonomiesPage = lazy(() => import('@/pages/admin/TaxonomiesPage'))
 const AparenciaPage = lazy(() => import('@/pages/admin/AparenciaPage'))
 const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
 const AdminDashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
@@ -140,6 +141,8 @@ export default function App() {
               <Route path="admin/profissionais" element={<AdminResourcePage resource="profissionais" />} />
               <Route path="admin/profissionais/novo" element={<AdminResourcePage resource="profissionais" />} />
               <Route path="admin/profissionais/:id/editar" element={<AdminResourcePage resource="profissionais" />} />
+              <Route path="admin/configuracoes/categorias" element={<TaxonomiesPage key="categories" mode="categories" />} />
+              <Route path="admin/configuracoes/tipos" element={<TaxonomiesPage key="types" mode="types" />} />
               <Route path="admin/aparencia" element={<AparenciaPage />} />
               <Route path="admin/empresas/:id" element={<AdminEmpresaDetailPage />} />
               <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
