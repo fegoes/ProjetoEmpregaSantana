@@ -14,7 +14,7 @@ import { CategorySelect } from '@/components/CategorySelect'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 function useVagaToEdit(id: string | undefined) {
   return useQuery({
@@ -34,9 +34,15 @@ export default function VagaFormPage() {
   const { user } = useAuth()
   const { empresa } = useEmpresa()
   const navigate = useNavigate()
-  const { data: existing } = useVagaToEdit(id)
+  const { data: existing, isLoading: loadingExisting, isError: loadError } = useVagaToEdit(id)
   const saveVaga = useSaveVaga()
 
+  const [saveError, setSaveError] = React.useState('')
+  const [saved, setSaved] = React.useState(false)
+  const [salaryMin, setSalaryMin] = React.useState('')
+  const [salaryMax, setSalaryMax] = React.useState('')
+  const [hourlyRate, setHourlyRate] = React.useState('')
+  const [salaryVisible, setSalaryVisible] = React.useState(true)
   const [title, setTitle] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [employmentType, setEmploymentType] = React.useState<EmploymentType>('clt')
@@ -49,6 +55,10 @@ export default function VagaFormPage() {
 
   React.useEffect(() => {
     if (!existing) return
+    setSalaryMin(existing.salary_min?.toString() ?? '')
+    setSalaryMax(existing.salary_max?.toString() ?? '')
+    setHourlyRate(existing.hourly_rate?.toString() ?? '')
+    setSalaryVisible(existing.salary_visible)
     setTitle(existing.title)
     setDescriptionHtml(existing.description_html ?? '')
     setEmploymentType(existing.employment_type)
@@ -62,11 +72,21 @@ export default function VagaFormPage() {
 
   const handleSave = async (status: VagaStatus) => {
     if (!user || !empresa) return
+    setSaveError('')
+    setSaved(false)
+    if (!title.trim()) { setSaveError('Informe o título da vaga.'); return }
+    const amounts = [salaryMin, salaryMax, hourlyRate].filter(Boolean).map(Number)
+    if (amounts.some(v => !Number.isFinite(v) || v < 0) || (salaryMin && salaryMax && Number(salaryMax) < Number(salaryMin))) { setSaveError('Confira os valores: use números positivos e um máximo maior ou igual ao mínimo.'); return }
+    try {
     const saved = await saveVaga.mutateAsync({
       id,
       empresa_id: empresa.id,
       created_by: user.id,
-      title,
+      title: title.trim(),
+      salary_min: salaryMin ? Number(salaryMin) : null,
+      salary_max: salaryMax ? Number(salaryMax) : null,
+      hourly_rate: hourlyRate ? Number(hourlyRate) : null,
+      salary_visible: salaryVisible,
       description_html: descriptionHtml,
       employment_type: employmentType,
       pricing_model: pricingModel,
@@ -77,13 +97,18 @@ export default function VagaFormPage() {
       icon_key: iconKey,
       status,
     })
+    setSaved(true)
     navigate(`/empresa/vagas/${saved.id}/editar`)
+    } catch { setSaveError('Não foi possível salvar a vaga. Confira os dados e tente novamente.') }
   }
+
+  if (isEditing && loadingExisting) return <p role="status">Carregando vaga…</p>
+  if (isEditing && loadError) return <p role="alert">Não foi possível abrir a vaga. Volte à lista e tente novamente.</p>
 
   return (
     <Card className="mx-auto max-w-2xl">
       <CardHeader>
-        <CardTitle>{isEditing ? 'Editar vaga' : 'Nova vaga'}</CardTitle>
+        <h1 className="font-display text-xl font-semibold">{isEditing ? 'Editar vaga' : 'Nova vaga'}</h1>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
@@ -160,13 +185,20 @@ export default function VagaFormPage() {
           Vaga remota
         </label>
 
-        <div className="flex gap-2">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {pricingModel === 'hourly' ? <div className="space-y-2"><Label htmlFor="hourly-value">Valor por hora (R$)</Label><Input id="hourly-value" type="number" min="0" step="0.01" value={hourlyRate} onChange={e => setHourlyRate(e.target.value)} /></div> : pricingModel === 'fixed_salary' ? <><div className="space-y-2"><Label htmlFor="salary-min">Salário mínimo (R$)</Label><Input id="salary-min" type="number" min="0" step="0.01" value={salaryMin} onChange={e => setSalaryMin(e.target.value)} /></div><div className="space-y-2"><Label htmlFor="salary-max">Salário máximo (R$)</Label><Input id="salary-max" type="number" min="0" step="0.01" value={salaryMax} onChange={e => setSalaryMax(e.target.value)} /></div></> : <p className="text-sm text-muted-foreground">Descreva as condições de pagamento por entrega no conteúdo da vaga.</p>}
+        </div>
+        <label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={salaryVisible} onChange={e => setSalaryVisible(e.target.checked)} />Divulgar remuneração na vaga</label>
+        {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
+        {saved && <p role="status" className="text-sm text-primary">Vaga salva.</p>}
+        <div className="flex flex-wrap gap-2">
           <Button variant="outline" onClick={() => handleSave('draft')} disabled={saveVaga.isPending}>
             Salvar rascunho
           </Button>
           <Button variant="cta" onClick={() => handleSave('published')} disabled={saveVaga.isPending}>
             Publicar vaga
           </Button>
+          {isEditing && <><Button variant="outline" onClick={() => handleSave('paused')} disabled={saveVaga.isPending}>Pausar vaga</Button><Button variant="outline" onClick={() => handleSave('closed')} disabled={saveVaga.isPending}>Encerrar vaga</Button></>}
         </div>
       </CardContent>
     </Card>

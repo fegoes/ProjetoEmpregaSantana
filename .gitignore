@@ -26,3 +26,15 @@ dist-ssr
 
 # Supabase CLI local cache
 supabase/.temp/
+
+# Evidências locais de navegação e binários baixados de ferramentas
+.playwright-cli/
+output/playwright/
+.agents/skills/impeccable/scripts/bin/
+
+# Capturas e estado transitório da revisão visual
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/build/
+
+.impeccable/questions/

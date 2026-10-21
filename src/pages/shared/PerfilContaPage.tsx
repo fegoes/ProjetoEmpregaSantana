@@ -4,13 +4,14 @@ import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 export default function PerfilContaPage() {
   const { profile, refreshProfile, updatePassword } = useAuth()
   const [fullName, setFullName] = React.useState(profile?.full_name ?? '')
   const [phone, setPhone] = React.useState(profile?.phone ?? '')
   const [saving, setSaving] = React.useState(false)
+  const [saveError, setSaveError] = React.useState('')
   const [saved, setSaved] = React.useState(false)
 
   const [newPassword, setNewPassword] = React.useState('')
@@ -24,10 +25,13 @@ export default function PerfilContaPage() {
     if (!profile) return
     setSaving(true)
     setSaved(false)
-    await supabase.from('profiles').update({ full_name: fullName, phone }).eq('id', profile.id)
-    await refreshProfile()
-    setSaving(false)
-    setSaved(true)
+    setSaveError('')
+    try {
+      const { error } = await supabase.from('profiles').update({ full_name: fullName, phone }).eq('id', profile.id).select('id').single()
+      if (error) throw error
+      await refreshProfile()
+      setSaved(true)
+    } catch { setSaveError('Não foi possível salvar sua conta. Tente novamente.') } finally { setSaving(false) }
   }
 
   const handlePasswordChange = async (e: React.FormEvent) => {
@@ -54,7 +58,7 @@ export default function PerfilContaPage() {
     <div className="mx-auto flex max-w-md flex-col gap-6">
       <Card>
         <CardHeader>
-          <CardTitle>Configurações de conta</CardTitle>
+          <h1 className="font-display text-xl font-semibold">Configurações de conta</h1>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSave} className="flex flex-col gap-4">
@@ -69,6 +73,7 @@ export default function PerfilContaPage() {
             <Button type="submit" disabled={saving}>
               {saving ? 'Salvando…' : 'Salvar'}
             </Button>
+            {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
             {saved && <p className="text-sm text-muted-foreground">Alterações salvas.</p>}
           </form>
         </CardContent>
@@ -76,7 +81,7 @@ export default function PerfilContaPage() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-base">Alterar senha</CardTitle>
+          <h2 className="font-display text-base font-semibold">Alterar senha</h2>
         </CardHeader>
         <CardContent>
           <form onSubmit={handlePasswordChange} className="flex flex-col gap-4">

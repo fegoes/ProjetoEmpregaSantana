@@ -1,109 +1,58 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
+  color-scheme: only light;
   --radius: 0.85rem;
 
-  /* Paleta Fingestão. Substitui a do manual da marca (#1E63B6/#FF8A00) por
-     decisão do cliente — ver docs/IDENTIDADE_VISUAL.md §3.
-     Os dois tons médios do original (#1E90FF e #FF5A2A) têm quase a mesma
-     luminosidade (OKLCH L 0.652 e 0.683), então nenhum serve de texto e
-     nenhum aceita label branco. Daí os três derivados: primary, orange-strong
-     e orange-ink carregam o texto; os vivos ficam só em preenchimento. */
-
-  /* Neutros quentes: off-white #F7F3EE no lugar de cinza frio.
-     Rampa de três degraus — página → card branco → superfície de apoio. */
-  --background: oklch(0.966 0.008 73.7);   /* #F7F3EE */
-  --foreground: oklch(0.233 0.059 259);    /* #0B1D39 — 15.2:1 sobre o fundo */
+  /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
+     Rampa de três degraus para dar elevação sem sombra pesada —
+     página #F8F8F8 → card #FFFFFF → superfície de apoio #F2F2F2 */
+  --background: oklch(0.98 0 0);           /* #F8F8F8 */
+  --foreground: oklch(0.321 0 0);          /* #333333 — 11.9:1 sobre o fundo */
   --card: oklch(1 0 0);                    /* #FFFFFF */
-  --card-foreground: oklch(0.233 0.059 259);
+  --card-foreground: oklch(0.321 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.233 0.059 259);
+  --popover-foreground: oklch(0.321 0 0);
 
-  /* Azul de trabalho: link, foco, navegação, botão cheio.
-     Escurecido em relação ao #1E90FF para poder ser texto. */
-  --primary: oklch(0.500 0.170 253.2);     /* #0062C0 — 5.42 no fundo */
-  --primary-foreground: oklch(1 0 0);      /* branco — 5.99 sobre o azul */
+  /* Azul da marca — navegação, links, foco, estado ativo, verificação */
+  --primary: oklch(0.504 0.148 255.8);     /* #1E63B6 */
+  --primary-foreground: oklch(1 0 0);      /* branco — 5.97:1 sobre o azul */
 
-  --secondary: oklch(0.945 0.010 73.7);    /* #F1ECE6 */
-  --secondary-foreground: oklch(0.233 0.059 259);
-  --muted: oklch(0.945 0.010 73.7);        /* #F1ECE6 */
-  --muted-foreground: oklch(0.505 0.022 259); /* #5D6572 — 5.01 na pior superfície */
-  --accent: oklch(0.925 0.040 243);        /* #D0EAFF — tinta de céu, hover de menu */
-  --accent-foreground: oklch(0.300 0.070 257);
+  --secondary: oklch(0.961 0 0);           /* #F2F2F2 */
+  --secondary-foreground: oklch(0.321 0 0);
+  --muted: oklch(0.961 0 0);               /* #F2F2F2 */
+  --muted-foreground: oklch(0.50 0 0);     /* #636363 — 5.4:1 na superfície mais escura */
+  --accent: oklch(0.94 0.012 255.8);       /* #E6ECF3 — azul lavado, hover de menu */
+  --accent-foreground: oklch(0.344 0.09 252);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
   --success: oklch(0.58 0.13 155);
   --success-foreground: oklch(1 0 0);
 
-  --border: oklch(0.895 0.012 73.7);       /* #E1DBD4 */
-  --input: oklch(0.895 0.012 73.7);
-  --ring: oklch(0.500 0.170 253.2 / 45%);
+  --border: oklch(0.90 0 0);               /* #DEDEDE */
+  --input: oklch(0.90 0 0);
+  --ring: oklch(0.504 0.148 255.8 / 40%);
 
-  /* Marca: tinta fixa do logotipo, não muda entre claro e escuro */
-  --brand-ink: oklch(0.233 0.059 259);            /* #0B1D39 */
-  --brand-blue: oklch(0.500 0.170 253.2);         /* #0062C0 — azul que pode ser texto */
-  --brand-blue-strong: oklch(0.440 0.165 253.2);  /* hover do azul */
-  --brand-blue-bright: oklch(0.652 0.190 253.2);  /* #1E90FF — preenchimento, NUNCA texto */
-  --brand-sky: oklch(0.861 0.075 242.7);          /* #A7D8FF — superfície, NUNCA texto */
+  /* Marca fixa (logotipo) — azul profundo constante no modo claro */
+  --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
+  --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
+  --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
 
-  /* Laranja: cor de AÇÃO, reservada a CTA e destaque.
-     Nunca recebe texto branco (3.11:1) — o label é sempre a tinta navy.
-     Os três tons não são intercambiáveis:
-       -orange        → fundo de CTA          (navy sobre ele: 5.40)
-       -orange-strong → fundo de hover        (navy sobre ele: 4.55)
-       -orange-ink    → laranja como TEXTO    (4.56 no fundo) */
-  --brand-orange: oklch(0.683 0.209 36.1);        /* #FF5A2A */
-  --brand-orange-strong: oklch(0.640 0.209 36.1); /* #EF4B16 */
-  --brand-orange-ink: oklch(0.560 0.170 36.1);    /* #C3441F */
-  --brand-orange-foreground: oklch(0.233 0.059 259); /* navy sobre laranja */
-
+  /* Laranja: cor de AÇÃO. Reservada a CTA de alta prioridade e destaque.
+     Nunca recebe texto branco (2.36:1) — ver docs/IDENTIDADE_VISUAL.md §3.4
+     Os três tons têm papéis distintos e NÃO são intercambiáveis:
+       -orange        → fundo de CTA
+       -orange-strong → fundo de hover do CTA (claro demais para texto)
+       -orange-ink    → laranja como texto, calibrado para o pior fundo claro
+                        do projeto (badge em bg-brand-orange/18): 4.75:1 */
+  --brand-orange: oklch(0.747 0.180 57.4);        /* #FF8A00 — só como fundo */
+  --brand-orange-strong: oklch(0.720 0.180 55);   /* #F77F00 — hover, 4.81:1 com #333 */
+  --brand-orange-ink: oklch(0.530 0.143 52.5);    /* #A94E00 — laranja como TEXTO */
+  --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
 }
 
-.dark {
-
-  --background: oklch(0.190 0.040 259);    /* #081425 */
-  --foreground: oklch(0.960 0.006 74);     /* #F4F1ED — 16.4:1 */
-  --card: oklch(0.245 0.042 259);          /* #142134 */
-  --card-foreground: oklch(0.960 0.006 74);
-  --popover: oklch(0.245 0.042 259);
-  --popover-foreground: oklch(0.960 0.006 74);
-
-  --primary: oklch(0.720 0.150 253.2);     /* #5AA8FF — 7.46 sobre o fundo */
-  --primary-foreground: oklch(0.190 0.040 259);
-
-  --secondary: oklch(0.300 0.040 259);     /* #222E42 */
-  --secondary-foreground: oklch(0.960 0.006 74);
-  --muted: oklch(0.285 0.038 259);         /* #1F2A3D */
-  --muted-foreground: oklch(0.730 0.025 259); /* #9EA8B8 — 6.74 no card */
-  --accent: oklch(0.330 0.055 253);
-  --accent-foreground: oklch(0.960 0.006 74);
-
-  --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.190 0.040 259);
-  --success: oklch(0.66 0.14 155);
-  --success-foreground: oklch(0.190 0.040 259);
-
-  --border: oklch(1 0 0 / 13%);
-  --input: oklch(1 0 0 / 17%);
-  --ring: oklch(0.720 0.150 253.2 / 50%);
-
-  /* Tinta do logotipo: idêntica ao tema claro, por definição */
-  --brand-ink: oklch(0.233 0.059 259);
-  --brand-blue: oklch(0.720 0.150 253.2);
-  --brand-blue-strong: oklch(0.650 0.160 253.2);
-  --brand-blue-bright: oklch(0.720 0.170 253.2);
-  --brand-sky: oklch(0.861 0.075 242.7);
-
-  --brand-orange: oklch(0.683 0.209 36.1);
-  --brand-orange-strong: oklch(0.640 0.209 36.1);
-  --brand-orange-ink: oklch(0.760 0.170 40);      /* #FF8657 — 6.79 no card escuro */
-  --brand-orange-foreground: oklch(0.233 0.059 259);
-
-}
 
 @theme inline {
   --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -134,8 +83,6 @@
   --color-brand-ink: var(--brand-ink);
   --color-brand-blue: var(--brand-blue);
   --color-brand-blue-strong: var(--brand-blue-strong);
-  --color-brand-blue-bright: var(--brand-blue-bright);
-  --color-brand-sky: var(--brand-sky);
   --color-brand-orange: var(--brand-orange);
   --color-brand-orange-strong: var(--brand-orange-strong);
   --color-brand-orange-ink: var(--brand-orange-ink);
@@ -163,15 +110,27 @@
 }
 
 @layer utilities {
-  /* Faixa de marca para o topo de hero. Discreta de propósito: a mancha
-     radial em dois cantos é assinatura de template, então aqui vira uma
-     borda superior de cor sobre o fundo quente, sem degradê no miolo. */
-  .brand-edge {
-    border-top: 3px solid var(--brand-blue-bright);
-    background-image: linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--brand-sky) 18%, transparent) 0%,
-      transparent 42%
-    );
+  /* Mancha de fundo discreta para heros e cabeçalhos — laranja + azul da marca */
+  .brand-mesh {
+    background-image:
+      radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
+      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 10%, transparent) 0%, transparent 100%);
   }
 }
+
+/* Reflow comum às páginas públicas, editores e áreas de gestão. */
+@layer base {
+  h1, h2, h3 { overflow-wrap: anywhere; }
+  :focus-visible { scroll-margin-block: 6rem; }
+  input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-width: 0; }
+  .tiptap { overflow-wrap: anywhere; }
+}
+@media (pointer: coarse) {
+  [data-slot="button"], summary { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+:root { --button-radius: 9999px; }
+[data-slot="button"] { border-radius: var(--button-radius); }

@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Star } from 'lucide-react'
+import { MapPin, Sparkles } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { iconForVaga } from '@/lib/categoryIcons'
-import { publicadaHa, stripHtml } from '@/lib/utils'
+import { stripHtml } from '@/lib/utils'
 
 const EMPLOYMENT_LABELS: Record<string, string> = {
   clt: 'CLT',
@@ -24,6 +24,10 @@ export interface VagaCardData {
   title: string
   employment_type: string
   pricing_model: string
+  salary_min?: number | null
+  salary_max?: number | null
+  salary_visible?: boolean
+  hourly_rate?: number | null
   category?: string | null
   icon_key?: string | null
   location_city: string | null
@@ -42,17 +46,16 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
     ? 'Remoto'
     : [vaga.location_city, vaga.location_state].filter(Boolean).join(' — ') || 'A combinar'
   const Icon = iconForVaga(vaga.icon_key, vaga.category)
-  const empresaNome = vaga.empresas?.nome_fantasia ?? 'Empresa não informada'
+  const empresaNome = vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'
   const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
   const excerpt = stripHtml(vaga.description_html, 140)
-  const publicada = publicadaHa(vaga.created_at)
 
   return (
     <Link to={`/vagas/${vaga.id}`} className="group block h-full">
-      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-[border-color,box-shadow] duration-200 group-hover:border-primary/50 group-hover:shadow-md">
+      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         {vaga.is_featured && (
-          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink backdrop-blur-sm">
-            <Star className="size-3" fill="currentColor" /> Destaque
+          <span className="absolute top-4 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-xs font-semibold text-brand-orange-ink backdrop-blur-sm">
+            <Sparkles className="size-3" /> Destaque
           </span>
         )}
         {photos.length > 0 && <ImageCarousel images={photos} alt={vaga.title} className="-mt-5 mb-1 aspect-video w-full" />}
@@ -77,26 +80,22 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
           </div>
         </CardHeader>
         <CardContent className="flex flex-wrap items-center gap-1.5">
-          {EMPLOYMENT_LABELS[vaga.employment_type] && (
-            <Badge variant="secondary" className="rounded-full font-medium">
-              {EMPLOYMENT_LABELS[vaga.employment_type]}
-            </Badge>
-          )}
-          {PRICING_LABELS[vaga.pricing_model] && (
-            <Badge variant="outline" className="rounded-full font-medium">
-              {PRICING_LABELS[vaga.pricing_model]}
-            </Badge>
-          )}
+          <Badge variant="secondary" className="rounded-full font-medium">
+            {EMPLOYMENT_LABELS[vaga.employment_type]}
+          </Badge>
+          <Badge variant="outline" className="rounded-full font-medium">
+            {PRICING_LABELS[vaga.pricing_model]}
+          </Badge>
           <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="size-3.5" />
             {local}
           </span>
-          {publicada && (
-            <span className="w-full text-xs text-muted-foreground">Publicada {publicada}</span>
-          )}
+        </CardContent>
+        <CardContent className="text-sm font-semibold">
+          {vaga.salary_visible === false ? 'Remuneração não divulgada' : vaga.pricing_model === 'hourly' && vaga.hourly_rate != null ? `${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.hourly_rate)} / hora` : vaga.pricing_model === 'fixed_salary' && vaga.salary_min != null ? `${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.salary_min)}${vaga.salary_max != null ? ` a ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(vaga.salary_max)}` : ''}` : 'A combinar'}
         </CardContent>
         {excerpt && (
-          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+          <CardContent className="block">
             <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
           </CardContent>
         )}

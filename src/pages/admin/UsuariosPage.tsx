@@ -20,17 +20,6 @@ function useAllUsers() {
   })
 }
 
-function useToggleAdmin() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async ({ id, isAdmin }: { id: string; isAdmin: boolean }) => {
-      const { error } = await supabase.from('profiles').update({ is_admin: isAdmin }).eq('id', id)
-      if (error) throw error
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'usuarios'] }),
-  })
-}
-
 function useToggleActive() {
   const queryClient = useQueryClient()
   return useMutation({
@@ -56,7 +45,6 @@ function useDeleteUser() {
 export default function AdminUsuariosPage() {
   const { data: usuarios, isLoading } = useAllUsers()
   const { requestPasswordReset } = useAuth()
-  const toggleAdmin = useToggleAdmin()
   const toggleActive = useToggleActive()
   const deleteUser = useDeleteUser()
   const [deleteError, setDeleteError] = React.useState<string | null>(null)
@@ -100,6 +88,7 @@ export default function AdminUsuariosPage() {
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de usuários</h1>
+      <p className="text-sm text-muted-foreground">Contas criadas pela plataforma não recebem acesso administrativo. Essa permissão é definida fora deste cadastro, apenas para operadores autorizados.</p>
       {deleteError && <p className="text-sm text-destructive">{deleteError}</p>}
       {resetError && <p className="text-sm text-destructive">{resetError}</p>}
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
@@ -131,13 +120,7 @@ export default function AdminUsuariosPage() {
                 >
                   {u.is_active ? 'Desativar' : 'Ativar'}
                 </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => toggleAdmin.mutate({ id: u.id, isAdmin: !u.is_admin })}
-                >
-                  {u.is_admin ? 'Remover admin' : 'Tornar admin'}
-                </Button>
+
                 <Button
                   size="sm"
                   variant="outline"

@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEmpresaAdmin } from '@/hooks/useEmpresas'
 import { supabase } from '@/lib/supabase'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 
 export default function AdminEmpresaDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { data: empresa, isLoading } = useEmpresaAdmin(id)
+  const { data: empresa, isLoading, isError, refetch } = useEmpresaAdmin(id)
   const queryClient = useQueryClient()
 
   const toggleVerified = useMutation({
@@ -18,13 +18,14 @@ export default function AdminEmpresaDetailPage() {
       const { error } = await supabase
         .from('empresas')
         .update({ is_verified: !empresa.is_verified })
-        .eq('id', empresa.id)
+        .eq('id', empresa.id).select('id').single()
       if (error) throw error
     },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['empresas', 'detail', id] }),
+    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['empresas'] }); queryClient.invalidateQueries({ queryKey: ['admin', 'empresas'] }) },
   })
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
+  if (isError) return <p role="alert">Não foi possível carregar a empresa. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
   if (!empresa) return <p className="text-sm text-muted-foreground">Empresa não encontrada.</p>
 
   const visibilityNote = (visible: boolean) => (visible ? '' : ' (oculto no perfil público)')
@@ -37,15 +38,17 @@ export default function AdminEmpresaDetailPage() {
         )}
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>
-          <div className="mt-2 flex items-center gap-2">
+          <div className="mt-2 flex flex-wrap items-center gap-2">
             <StatusBadge status={empresa.status} />
-            <Button size="sm" variant="outline" onClick={() => toggleVerified.mutate()}>
+            <Button asChild size="sm" variant="outline"><Link to={`/admin/empresas/${empresa.id}/editar`}>Editar cadastro</Link></Button>
+            <Button size="sm" variant="outline" disabled={toggleVerified.isPending} onClick={() => toggleVerified.mutate()}>
               {empresa.is_verified ? 'Remover verificação' : 'Marcar como verificada'}
             </Button>
           </div>
         </div>
       </div>
 
+      {toggleVerified.isError && <p role="alert" className="text-sm text-destructive">Não foi possível atualizar a verificação. Tente novamente.</p>}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Dados da empresa</CardTitle>

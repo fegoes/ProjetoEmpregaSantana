@@ -64,7 +64,7 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
           className="flex size-24 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-dashed text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:opacity-50"
         >
           {uploading ? <Loader2 className="size-5 animate-spin" /> : <ImagePlus className="size-5" />}
-          <span className="text-[11px]">Adicionar</span>
+          <span className="text-xs">Adicionar</span>
         </button>
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}

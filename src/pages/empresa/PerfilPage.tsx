@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { supabase } from '@/lib/supabase'
 import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo } from '@/lib/storage'
@@ -48,6 +49,8 @@ export default function EmpresaPerfilPage() {
     empresa?.employee_count_visible ?? true,
   )
 
+  const queryClient = useQueryClient()
+  const [saveError, setSaveError] = React.useState('')
   const [saving, setSaving] = React.useState(false)
   const [saved, setSaved] = React.useState(false)
 
@@ -74,8 +77,10 @@ export default function EmpresaPerfilPage() {
 
   const handleSave = async () => {
     setSaving(true)
+    setSaveError('')
     setSaved(false)
-    await supabase
+    try {
+    const { error } = await supabase
       .from('empresas')
       .update({
         nome_fantasia: nomeFantasia,
@@ -94,10 +99,12 @@ export default function EmpresaPerfilPage() {
         employee_count: employeeCount,
         employee_count_visible: employeeCountVisible,
       })
-      .eq('id', empresa.id)
+      .eq('id', empresa.id).select('id').single()
+    if (error) throw error
     await refresh()
-    setSaving(false)
+    queryClient.invalidateQueries({ queryKey: ['empresas'] })
     setSaved(true)
+    } catch { setSaveError('Não foi possível salvar o perfil. Tente novamente.') } finally { setSaving(false) }
   }
 
   return (
@@ -204,6 +211,7 @@ export default function EmpresaPerfilPage() {
         </CardContent>
       </Card>
 
+      {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
       <div className="flex items-center gap-3">
         <Button onClick={handleSave} variant="cta" disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar alterações'}

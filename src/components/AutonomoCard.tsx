@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Star } from 'lucide-react'
+import { MapPin, Sparkles } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
@@ -17,6 +17,7 @@ export interface AutonomoCardData {
   headline: string | null
   category: string | null
   pricing_model: string
+  serves_remote?: boolean
   hourly_rate: number | null
   service_area_city: string | null
   service_area_state: string | null
@@ -38,17 +39,17 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
 
   return (
     <Link to={`/autonomos/${autonomo.id}`} className="group block h-full">
-      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-[border-color,box-shadow] duration-200 group-hover:border-primary/50 group-hover:shadow-md">
+      <Card className="relative h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
         {autonomo.is_featured && (
-          <span className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-[11px] font-semibold text-brand-orange-ink">
-            <Star className="size-3" fill="currentColor" /> Destaque
+          <span className="absolute top-4 right-4 inline-flex items-center gap-1 rounded-full bg-brand-orange/15 px-2.5 py-0.5 text-xs font-semibold text-brand-orange-ink">
+            <Sparkles className="size-3" /> Destaque
           </span>
         )}
         {photos.length > 0 && <ImageCarousel images={photos} alt={name} className="-mt-5 mb-1 aspect-video w-full" />}
         <CardHeader className="flex-row items-start gap-3">
           <InitialsAvatar name={name} size="md" />
           <div className="min-w-0 pt-0.5">
-            <h3 className="truncate pr-16 text-[15px] leading-snug font-semibold">{name}</h3>
+            <h3 className="break-words pr-10 text-[15px] leading-snug font-semibold">{name}</h3>
             <p className="truncate text-sm text-muted-foreground">{autonomo.headline}</p>
           </div>
         </CardHeader>
@@ -58,18 +59,17 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
               {autonomo.categories.label}
             </Badge>
           )}
-          {PRICING_LABELS[autonomo.pricing_model] && (
-            <Badge variant="outline" className="rounded-full font-medium">
-              {PRICING_LABELS[autonomo.pricing_model]}
-            </Badge>
-          )}
+          <Badge variant="outline" className="rounded-full font-medium">
+            {PRICING_LABELS[autonomo.pricing_model]}
+          </Badge>
           <span className="ml-auto flex items-center gap-1 text-xs text-muted-foreground">
             <MapPin className="size-3.5" />
             {local}
           </span>
         </CardContent>
+        {autonomo.pricing_model !== 'per_delivery' && autonomo.hourly_rate != null && <CardContent className="text-sm font-semibold">{new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(autonomo.hourly_rate)} / hora</CardContent>}
         {excerpt && (
-          <CardContent className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-300 ease-out group-hover:grid-rows-[1fr]">
+          <CardContent className="block">
             <p className="overflow-hidden text-xs text-muted-foreground">{excerpt}</p>
           </CardContent>
         )}

@@ -3,6 +3,9 @@ import { Routes, Route } from 'react-router-dom'
 import { RootLayout } from '@/components/layout/RootLayout'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 
+const BlogPage = lazy(() => import('@/pages/public/BlogPage'))
+const BlogArticlePage = lazy(() => import('@/pages/public/BlogPage').then(m => ({ default: m.BlogArticlePage })))
+const ArtigosPage = lazy(() => import('@/pages/admin/ArtigosPage'))
 const HomePage = lazy(() => import('@/pages/public/HomePage'))
 const VagaDetailPage = lazy(() => import('@/pages/public/VagaDetailPage'))
 const AutonomoDetailPage = lazy(() => import('@/pages/public/AutonomoDetailPage'))
@@ -42,13 +45,13 @@ const EmpresaPerfilPage = lazy(() => import('@/pages/empresa/PerfilPage'))
 const EmpresaPlanoPage = lazy(() => import('@/pages/empresa/PlanoPage'))
 const BancoCurriculosPage = lazy(() => import('@/pages/empresa/BancoCurriculosPage'))
 
+const AdminResourcePage = lazy(() => import('@/pages/admin/ResourcePage'))
+const AparenciaPage = lazy(() => import('@/pages/admin/AparenciaPage'))
 const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
 const AdminDashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
-const AdminEmpresasPage = lazy(() => import('@/pages/admin/EmpresasPage'))
 const AdminEmpresaDetailPage = lazy(() => import('@/pages/admin/EmpresaDetailPage'))
 const AdminUsuariosPage = lazy(() => import('@/pages/admin/UsuariosPage'))
 const AdminPlanosPage = lazy(() => import('@/pages/admin/PlanosPage'))
-const AdminVagasPage = lazy(() => import('@/pages/admin/VagasPage'))
 const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
 
@@ -67,6 +70,8 @@ export default function App() {
         <Route element={<RootLayout />}>
           {/* Públicas */}
           <Route index element={<HomePage />} />
+          <Route path="blog" element={<BlogPage />} />
+          <Route path="blog/:slug" element={<BlogArticlePage />} />
           <Route path="vagas/:id" element={<VagaDetailPage />} />
           <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
           <Route path="empresas/:id" element={<EmpresaDetailPagePublic />} />
@@ -129,11 +134,20 @@ export default function App() {
           <Route element={<ProtectedRoute adminOnly />}>
             <Route element={<AdminLayout />}>
               <Route path="admin" element={<AdminDashboardPage />} />
-              <Route path="admin/empresas" element={<AdminEmpresasPage />} />
+              <Route path="admin/empresas" element={<AdminResourcePage resource="empresas" />} />
+              <Route path="admin/empresas/nova" element={<AdminResourcePage resource="empresas" />} />
+              <Route path="admin/empresas/:id/editar" element={<AdminResourcePage resource="empresas" />} />
+              <Route path="admin/profissionais" element={<AdminResourcePage resource="profissionais" />} />
+              <Route path="admin/profissionais/novo" element={<AdminResourcePage resource="profissionais" />} />
+              <Route path="admin/profissionais/:id/editar" element={<AdminResourcePage resource="profissionais" />} />
+              <Route path="admin/aparencia" element={<AparenciaPage />} />
               <Route path="admin/empresas/:id" element={<AdminEmpresaDetailPage />} />
               <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
               <Route path="admin/planos" element={<AdminPlanosPage />} />
-              <Route path="admin/vagas" element={<AdminVagasPage />} />
+              <Route path="admin/vagas" element={<AdminResourcePage resource="vagas" />} />
+              <Route path="admin/vagas/nova" element={<AdminResourcePage resource="vagas" />} />
+              <Route path="admin/vagas/:id/editar" element={<AdminResourcePage resource="vagas" />} />
+              <Route path="admin/artigos" element={<ArtigosPage />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
               <Route path="admin/ads" element={<AdminAdsPage />} />
             </Route>

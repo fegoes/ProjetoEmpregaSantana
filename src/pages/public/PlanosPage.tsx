@@ -36,8 +36,7 @@ export default function PlanosPage() {
       <div>
         <h1 className="text-2xl font-extrabold tracking-tight">Planos</h1>
         <p className="text-sm text-muted-foreground">
-          Publicar vaga e criar perfil de autônomo é gratuito. Os planos pagos existem para
-          quem quer mais alcance — destaque nos resultados e mais vagas abertas ao mesmo tempo.
+          Conheça os recursos disponíveis para empresas e profissionais autônomos.
         </p>
       </div>
 

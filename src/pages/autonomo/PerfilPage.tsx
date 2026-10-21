@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
@@ -31,7 +32,7 @@ function useOwnAutonomoProfile(userId: string | undefined) {
 
 export default function AutonomoPerfilPage() {
   const { user } = useAuth()
-  const { data: autonomo, isLoading, refetch } = useOwnAutonomoProfile(user?.id)
+  const { data: autonomo, isLoading, isError, refetch } = useOwnAutonomoProfile(user?.id)
 
   const [headline, setHeadline] = React.useState('')
   const [category, setCategory] = React.useState('')
@@ -40,6 +41,9 @@ export default function AutonomoPerfilPage() {
   const [hourlyRate, setHourlyRate] = React.useState('')
   const [status, setStatus] = React.useState<'active' | 'paused'>('active')
   const [portfolioUrls, setPortfolioUrls] = React.useState<string[]>([])
+  const queryClient = useQueryClient()
+  const [saveError, setSaveError] = React.useState('')
+  const [saved, setSaved] = React.useState(false)
   const [saving, setSaving] = React.useState(false)
 
   React.useEffect(() => {
@@ -54,12 +58,17 @@ export default function AutonomoPerfilPage() {
   }, [autonomo])
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
+  if (isError) return <p role="alert">Não foi possível carregar seu perfil. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
   if (!autonomo) return <Navigate to="/autonomo/onboarding" replace />
 
   const handleSave = async () => {
     if (!user) return
+    if (hourlyRate && (!Number.isFinite(Number(hourlyRate)) || Number(hourlyRate) < 0)) { setSaveError('Informe um valor por hora válido.'); return }
     setSaving(true)
-    await supabase
+    setSaveError('')
+    setSaved(false)
+    try {
+    const { error } = await supabase
       .from('autonomo_profiles')
       .update({
         headline,
@@ -70,9 +79,12 @@ export default function AutonomoPerfilPage() {
         status,
         portfolio_urls: portfolioUrls,
       })
-      .eq('id', user.id)
+      .eq('id', user.id).select('id').single()
+    if (error) throw error
     await refetch()
-    setSaving(false)
+    queryClient.invalidateQueries({ queryKey: ['autonomos'] })
+    setSaved(true)
+    } catch { setSaveError('Não foi possível salvar o perfil. Tente novamente.') } finally { setSaving(false) }
   }
 
   return (
@@ -127,6 +139,8 @@ export default function AutonomoPerfilPage() {
           />
           Visível publicamente
         </label>
+        {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
+        {saved && <p role="status" className="text-sm text-primary">Perfil atualizado.</p>}
         <Button onClick={handleSave} disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar'}
         </Button>
