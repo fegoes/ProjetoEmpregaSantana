@@ -1,11 +1,10 @@
 # EmpregaSantana — Identidade Visual & Design System
 
-> Versão 1.3 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
-> Fonte de verdade: **o manual de marca**. Onde o código diverge, o código é que muda (ver §9).
-> Estado: **Blocos 1, 2, 3 e 4 aplicados** (§9.1) — paleta, logo/favicon, correções pontuais e
-> tipografia consistente em toda tela autenticada. Pendência real remanescente: os assets vetoriais
-> do selo oficial (§7) — o produto usa o fallback tile+ícone documentado em §6.2 até o logo em SVG
-> existir em `public/brand/`.
+> Versão 2.0 — Paleta Fingestão aplicada; selo da marca vetorizado e em produção.
+> **Fonte de verdade da paleta: a paleta Fingestão**, por decisão do cliente.
+> Ela substitui o `#1E63B6`/`#FF8A00` do manual de marca, que foi a referência das
+> versões 1.x. O restante do manual (tagline, verbos, praça, fundação, regras de
+> logotipo) continua valendo.
 > Os blocos de código deste documento refletem o que está em `src/index.css` hoje.
 
 ---
@@ -73,9 +72,9 @@ O logo é um **selo circular** composto por quatro elementos, cada um com signif
 
 | Elemento | Cor | Leitura |
 |---|---|---|
-| **Anel externo** | azul `#1E63B6` | comunidade e ciclo — o mercado de trabalho local que se fecha e se retroalimenta |
-| **Figura humana de braços abertos** | laranja `#FF8A00` | **a pessoa é o centro da marca, não a vaga.** Braços erguidos = conquista, não súplica |
-| **Dois currículos/documentos** | azul, segurados pela figura | os dois lados do marketplace: quem oferece e quem procura |
+| **Anel externo** | tinta `#0B1D39` | comunidade e ciclo — o mercado de trabalho local que se fecha e se retroalimenta |
+| **Figura humana de braços abertos** | laranja `#FF5A2A` | **a pessoa é o centro da marca, não a vaga.** Braços erguidos = conquista, não súplica |
+| **Dois currículos/documentos** | azul vivo `#1E90FF`, segurados pela figura | os dois lados do marketplace: quem oferece e quem procura |
 | **Wordmark** | `EMPREGA` azul em bloco + `Santana!` laranja em script | o institucional e o afetivo, na mesma assinatura |
 
 A exclamação em `Santana!` é parte do logotipo. Não remova.
@@ -84,18 +83,19 @@ A exclamação em `Santana!` é parte do logotipo. Não remova.
 
 | Versão | Quando usar |
 |---|---|
+| **Selo flat em SVG** | **é o que o produto usa** — `public/brand/logo-mark.svg`, via `<Logo />` |
 | **Selo completo 3D** | peças de destaque, capa de rede social, brinde, apresentação — a partir de 96px |
 | **Selo flat (2D)** | interface, favicon, qualquer aplicação abaixo de 48px. O 3D some/embola em tamanho pequeno |
 | **Lockup horizontal** (selo + wordmark ao lado) | cabeçalho de site, assinatura de e-mail, rodapé de peça |
-| **Monocromático branco** | sobre fundo `#0D3A66`, fotografia escura ou impressão em uma cor |
+| **Monocromático branco** | sobre fundo `#0B1D39`, fotografia escura ou impressão em uma cor |
 | **Símbolo isolado** (só o anel + figura) | avatar de rede social, favicon, app icon |
 
 ### 2.3 Regras de aplicação
 
 - **Área de respiro:** margem livre em todos os lados equivalente a **25% do diâmetro do anel**. Nada entra nessa área — nem texto, nem borda, nem outro logo.
 - **Tamanho mínimo:** 32px para o símbolo isolado, 120px de largura para o lockup com wordmark.
-- **Fundos permitidos:** branco, `#F2F2F2` e `#0D3A66` (nesta última, use a versão monocromática branca ou o selo com anel claro).
-- **Sobre fotografia:** só com chapado de cor ou overlay escuro (≥ 55% de `#0D3A66`) por baixo.
+- **Fundos permitidos:** branco, `#F7F3EE` e `#0B1D39` (nesta última, use a versão monocromática branca ou o selo com anel claro).
+- **Sobre fotografia:** só com chapado de cor ou overlay escuro (≥ 55% de `#0B1D39`) por baixo.
 
 ### 2.4 Usos proibidos
 
@@ -104,100 +104,107 @@ A exclamação em `Santana!` é parte do logotipo. Não remova.
 - Trocar a tipografia do wordmark ou redigitar `EMPREGA Santana!` com outra fonte.
 - Separar a figura laranja do anel para usar como ícone solto.
 - Usar a versão 3D abaixo de 48px.
-- Aplicar sobre fundo laranja `#FF8A00` — o símbolo laranja desaparece.
+- Aplicar sobre fundo laranja `#FF5A2A` — o símbolo laranja desaparece.
 
 ---
 
 ## 3. Paleta
 
-Cinco cores oficiais. Os valores OKLCH abaixo foram convertidos a partir dos hex do manual e são o que entra em `src/index.css` — o projeto usa **Tailwind v4**, cujos tokens são OKLCH.
+Cinco cores vindas da paleta Fingestão, mais três tons derivados que existem por
+necessidade de acessibilidade. Os valores OKLCH são o que entra em `src/index.css` —
+o projeto usa Tailwind v4, cujos tokens são OKLCH.
 
-### 3.1 Cores oficiais
+### 3.1 Cores da paleta
 
 | Papel | Hex | OKLCH | Onde entra |
 |---|---|---|---|
-| **Azul marca** | `#1E63B6` | `oklch(0.504 0.148 255.8)` | `--primary` — links, foco, estado ativo, chips, anel do logo |
-| **Azul profundo** | `#0D3A66` | `oklch(0.344 0.090 252)` | `--brand-ink` — títulos, fundos chapados, cor fixa do logotipo |
-| **Laranja ação** | `#FF8A00` | `oklch(0.747 0.180 57.4)` | `--brand-orange` — fundo de CTA, ribbon de destaque, figura do logo |
-| **Neutro claro** | `#F2F2F2` | `oklch(0.961 0 0)` | `--secondary` / `--muted` — fundos de seção, superfícies de apoio |
-| **Neutro escuro** | `#333333` | `oklch(0.321 0 0)` | `--foreground` — texto corrido |
+| **Tinta** | `#0B1D39` | `oklch(0.233 0.059 259)` | `--foreground` e `--brand-ink` — texto, anel do selo, âncora de autoridade |
+| **Off-white quente** | `#F7F3EE` | `oklch(0.966 0.008 73.7)` | `--background` |
+| **Azul vivo** | `#1E90FF` | `oklch(0.652 0.190 253.2)` | `--brand-blue-bright` — preenchimento, ilustração, borda de hero |
+| **Azul claro** | `#A7D8FF` | `oklch(0.861 0.075 242.7)` | `--brand-sky` — superfície, tinta de fundo |
+| **Laranja** | `#FF5A2A` | `oklch(0.683 0.209 36.1)` | `--brand-orange` — fundo de CTA e de destaque |
 
-### 3.2 Cores de sistema derivadas
+**A rampa de neutros tem três degraus.** A diferença entre eles é o que dá elevação
+ao card sem sombra pesada; não colapse os dois primeiros:
 
-Não estão no manual, mas são **obrigatórias** para a interface funcionar (estado de hover e texto acessível). Derivam das oficiais e não são cores novas de marca — não use em peça gráfica.
+| Superfície | Valor |
+|---|---|
+| Página | `#F7F3EE` |
+| Card | `#FFFFFF` |
+| Apoio (`--muted`, `--secondary`) | `#F1ECE6` |
+
+O off-white quente é um ativo deliberado: cinza frio é o padrão de todo template,
+neutro quente lê como editorial.
+
+### 3.2 Os três derivados, e por que existem
+
+Os dois tons médios da paleta original têm quase a mesma luminosidade — azul em
+OKLCH L **0.652**, laranja L **0.683**. São gêmeos de peso, diferentes só em matiz.
+Disso decorre que **nenhum dos dois pode ser texto** e **nenhum aceita label branco**:
+
+| | sobre branco | sobre o fundo | branco sobre ele |
+|---|---|---|---|
+| `#1E90FF` | 3.24 ❌ | 2.93 ❌ | 3.24 ❌ |
+| `#FF5A2A` | 3.11 ❌ | 2.82 ❌ | 3.11 ❌ |
+| `#A7D8FF` | 1.51 ❌ | — | — |
+
+Daí os três tons derivados. Não são cores novas de marca — não use em peça gráfica.
 
 | Token | Hex | OKLCH | Por que existe |
 |---|---|---|---|
-| `--brand-blue-strong` | `#17539C` | `oklch(0.447 0.133 256)` | `:hover` do azul marca — `#1E63B6` sem escurecer não dá feedback |
-| `--brand-orange-strong` | `#F77F00` | `oklch(0.720 0.180 55)` | `:hover` do CTA laranja. Não escurecer além disso (ver §3.4) |
-| `--brand-orange-ink` | `#A94E00` | `oklch(0.530 0.143 52.5)` | laranja **como texto** sobre fundo claro; `#FF8A00` reprova em contraste |
+| `--primary` / `--brand-blue` | `#0062C0` | `oklch(0.500 0.170 253.2)` | o azul que **pode ser texto**: link, foco, navegação, e botão cheio com label branco |
+| `--brand-orange-strong` | `#EF4B16` | `oklch(0.640 0.209 36.1)` | hover do CTA |
+| `--brand-orange-ink` | `#C3441F` | `oklch(0.560 0.170 36.1)` | laranja **como texto** sobre fundo claro |
 
-**A rampa de neutros tem três degraus**, e a diferença entre eles é o que dá elevação aos cards sem sombra pesada. Não colapse os dois primeiros:
+### 3.3 Papéis não são intercambiáveis
 
-| Superfície | Valor | Uso |
-|---|---|---|
-| Página | `#F8F8F8` `oklch(0.98 0 0)` | `--background` |
-| Card | `#FFFFFF` `oklch(1 0 0)` | `--card` / `--popover` |
-| Apoio | `#F2F2F2` `oklch(0.961 0 0)` | `--secondary` / `--muted` |
-
-### 3.2.1 Os três laranjas não são intercambiáveis
-
-Erro fácil de cometer e difícil de enxergar: usar o mesmo token para pintar fundo e texto. Cada tom tem um papel só.
+Erro fácil de cometer e difícil de enxergar: usar o mesmo tom para pintar fundo e texto.
 
 | Token | Papel | Nunca use para |
 |---|---|---|
-| `--brand-orange` `#FF8A00` | fundo de CTA e de destaque | texto (2.36:1 no branco) |
-| `--brand-orange-strong` `#F77F00` | **fundo** de hover do CTA | texto (2.63:1 no branco) |
-| `--brand-orange-ink` `#A94E00` | **texto** laranja sobre fundo claro | fundo de CTA (escuro demais, some a hierarquia) |
+| `--brand-orange` `#FF5A2A` | fundo de CTA e destaque | texto |
+| `--brand-orange-strong` `#EF4B16` | **fundo** de hover do CTA | texto |
+| `--brand-orange-ink` `#C3441F` | **texto** laranja | fundo de CTA |
+| `--brand-blue-bright` `#1E90FF` | preenchimento, ilustração | texto |
+| `--brand-sky` `#A7D8FF` | superfície, badge | texto |
+| `--primary` `#0062C0` | link, foco, botão cheio | — |
 
-`--brand-orange-ink` foi calibrado para o **pior fundo claro do projeto** — o badge com `bg-brand-orange/18`, que é branco puxado para creme (`#FFEAD1`). Ali ele entrega 4.75:1. Nos fundos mais claros sobra margem (5.56:1 no branco).
-
-### 3.3 Proporção de uso
-
-A regra que evita o site virar um carnaval — e que já está codificada nos comentários do `src/index.css` atual (linhas 9, 17 e 41), que continuam válidos:
+### 3.4 Proporção de uso
 
 ```
-60%  neutros (#F2F2F2, branco, #333333)  → estrutura, texto, superfícies
-30%  azul (#1E63B6 / #0D3A66)            → navegação, links, foco, confiança
-10%  laranja (#FF8A00)                   → ação. CTA principal e destaque, nada mais
+60%  neutros (#F7F3EE, branco, #0B1D39)   → estrutura, texto, superfícies
+30%  azul (#0062C0 / #1E90FF / #A7D8FF)   → navegação, links, foco, confiança
+10%  laranja (#FF5A2A)                    → ação. CTA principal e destaque, nada mais
 ```
 
-**O laranja é a cor mais cara da paleta.** Se tudo é laranja, nada é. Numa tela, no máximo um CTA laranja — o resto é `variant="default"` (azul) ou `outline`.
+**O laranja é a cor mais cara da paleta.** Numa tela, no máximo um CTA laranja.
 
-### 3.4 Acessibilidade — leia antes de usar o laranja
+### 3.5 Acessibilidade — valores conferidos
 
-Todos os valores abaixo foram verificados. Contraste WCAG AA exige **4.5:1** para texto normal e **3:1** para texto grande (≥ 24px, ou ≥ 18.7px em negrito).
+AA exige **4.5:1** para texto normal e **3:1** para texto grande (≥24px, ou ≥18.7px
+em negrito). Todos os pares abaixo foram calculados, não estimados.
 
-| Combinação | Contraste | Veredito |
+| Combinação | Contraste | |
 |---|---|---|
-| **branco sobre `#FF8A00`** | **2.36:1** | ❌ **reprova até para texto grande** |
-| `#333333` sobre `#FF8A00` | 5.35:1 | ✅ aprovado |
-| `#0D3A66` sobre `#FF8A00` | 4.90:1 | ✅ aprovado |
-| `#A94E00` sobre branco | 5.56:1 | ✅ aprovado — é o laranja de texto |
-| `#A94E00` sobre `#F8F8F8` | 5.24:1 | ✅ aprovado |
-| `#A94E00` sobre badge `orange/18` | 4.75:1 | ✅ aprovado — é o pior caso, calibrado por ele |
-| `#F77F00` sobre branco | 2.63:1 | ❌ é tom de **fundo**, nunca de texto |
-| `#FF8A00` sobre branco | 2.36:1 | ❌ nunca como texto em fundo claro |
-| `#1E63B6` sobre branco | 5.97:1 | ✅ aprovado |
-| `#0D3A66` sobre branco | 11.58:1 | ✅ aprovado |
-| `#333333` sobre branco | 12.63:1 | ✅ aprovado |
-| `#333333` sobre `#F2F2F2` | 11.29:1 | ✅ aprovado |
-| `#1E63B6` sobre `#F2F2F2` | 5.34:1 | ✅ aprovado |
-| `#0D3A66` sobre `#F2F2F2` | 10.34:1 | ✅ aprovado |
-| `#333333` sobre `#F77F00` (hover do CTA) | 4.81:1 | ✅ aprovado |
-| `#0D3A66` sobre `#F77F00` (hover do CTA) | 4.40:1 | ❌ reprova por pouco |
+| tinta `#0B1D39` sobre o fundo | 15.22:1 | ✅ |
+| tinta sobre card branco | 16.81:1 | ✅ |
+| `--muted-foreground` `#5D6572` sobre apoio | 5.01:1 | ✅ |
+| `--primary` `#0062C0` sobre o fundo | 5.42:1 | ✅ |
+| branco sobre `--primary` | 5.99:1 | ✅ |
+| `--brand-orange-ink` sobre o fundo | 4.56:1 | ✅ |
+| **tinta sobre `#FF5A2A`** (label do CTA) | 5.40:1 | ✅ |
+| tinta sobre `#EF4B16` (hover do CTA) | 4.55:1 | ✅ |
+| tinta sobre `#A7D8FF` | 11.14:1 | ✅ |
+| **branco sobre `#FF5A2A`** | 2.36:1 | ❌ **nunca** |
+| **branco sobre `#1E90FF`** | 3.24:1 | ❌ **nunca** |
 
-⚠️ **Conflito conhecido com o board de identidade.** O card institucional "CONECTAMOS PESSOAS ÀS OPORTUNIDADES" no board usa **texto branco sobre laranja**. Em peça impressa e em post de Instagram isso é uma escolha estética aceitável. **Na interface do produto é uma violação de acessibilidade e não deve ser replicada.**
+Regras que saem disso:
 
-Regras práticas:
-
-- Sobre `#FF8A00` só entra `#333333` ou `#0D3A66`. Nunca branco.
-- **`#333333` é o único texto seguro no CTA laranja**, porque o hover escurece o fundo para `#F77F00` e ali o `#0D3A66` cai para 4.40:1. `#0D3A66` sobre laranja só em peça estática, no tom base.
-- Cuidado ao escurecer o laranja: como o texto de apoio também é escuro, **escurecer o fundo *reduz* o contraste**. O hover não pode passar de `oklch(0.72 …)`.
-- Laranja como *texto* sobre fundo claro é sempre `#A94E00` (`--brand-orange-ink`), nunca `#FF8A00` nem `#F77F00`.
-- Isso já está correto no código atual: `src/components/ui/button.tsx:13` usa `text-brand-orange-foreground` (escuro) na variante `cta`. Mantenha assim.
-
----
+- **Label de CTA laranja é a tinta navy, nunca branco.**
+- Laranja como texto é sempre `--brand-orange-ink`.
+- `#1E90FF` e `#A7D8FF` não recebem texto. São preenchimento.
+- Cuidado ao escurecer o laranja: como o label também é escuro, **escurecer o fundo
+  reduz o contraste**. O hover não pode passar de `oklch(0.64 …)`.
 
 ## 4. Tipografia
 
@@ -273,90 +280,103 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
 :root {
   --radius: 0.85rem;
 
-  /* Neutros do manual (#F2F2F2 / #333333): cinza puro, sem viés de temperatura.
-     Rampa de três degraus para dar elevação sem sombra pesada —
-     página #F8F8F8 → card #FFFFFF → superfície de apoio #F2F2F2 */
-  --background: oklch(0.98 0 0);           /* #F8F8F8 */
-  --foreground: oklch(0.321 0 0);          /* #333333 — 11.9:1 sobre o fundo */
+  /* Paleta Fingestão. Substitui a do manual da marca (#1E63B6/#FF8A00) por
+     decisão do cliente — ver docs/IDENTIDADE_VISUAL.md §3.
+     Os dois tons médios do original (#1E90FF e #FF5A2A) têm quase a mesma
+     luminosidade (OKLCH L 0.652 e 0.683), então nenhum serve de texto e
+     nenhum aceita label branco. Daí os três derivados: primary, orange-strong
+     e orange-ink carregam o texto; os vivos ficam só em preenchimento. */
+
+  /* Neutros quentes: off-white #F7F3EE no lugar de cinza frio.
+     Rampa de três degraus — página → card branco → superfície de apoio. */
+  --background: oklch(0.966 0.008 73.7);   /* #F7F3EE */
+  --foreground: oklch(0.233 0.059 259);    /* #0B1D39 — 15.2:1 sobre o fundo */
   --card: oklch(1 0 0);                    /* #FFFFFF */
-  --card-foreground: oklch(0.321 0 0);
+  --card-foreground: oklch(0.233 0.059 259);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.321 0 0);
+  --popover-foreground: oklch(0.233 0.059 259);
 
-  /* Azul da marca — navegação, links, foco, estado ativo, verificação */
-  --primary: oklch(0.504 0.148 255.8);     /* #1E63B6 */
-  --primary-foreground: oklch(1 0 0);      /* branco — 5.97:1 sobre o azul */
+  /* Azul de trabalho: link, foco, navegação, botão cheio.
+     Escurecido em relação ao #1E90FF para poder ser texto. */
+  --primary: oklch(0.500 0.170 253.2);     /* #0062C0 — 5.42 no fundo */
+  --primary-foreground: oklch(1 0 0);      /* branco — 5.99 sobre o azul */
 
-  --secondary: oklch(0.961 0 0);           /* #F2F2F2 */
-  --secondary-foreground: oklch(0.321 0 0);
-  --muted: oklch(0.961 0 0);               /* #F2F2F2 */
-  --muted-foreground: oklch(0.50 0 0);     /* #636363 — 5.4:1 na superfície mais escura */
-  --accent: oklch(0.94 0.012 255.8);       /* #E6ECF3 — azul lavado, hover de menu */
-  --accent-foreground: oklch(0.344 0.09 252);
+  --secondary: oklch(0.945 0.010 73.7);    /* #F1ECE6 */
+  --secondary-foreground: oklch(0.233 0.059 259);
+  --muted: oklch(0.945 0.010 73.7);        /* #F1ECE6 */
+  --muted-foreground: oklch(0.505 0.022 259); /* #5D6572 — 5.01 na pior superfície */
+  --accent: oklch(0.925 0.040 243);        /* #D0EAFF — tinta de céu, hover de menu */
+  --accent-foreground: oklch(0.300 0.070 257);
 
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(1 0 0);
   --success: oklch(0.58 0.13 155);
   --success-foreground: oklch(1 0 0);
 
-  --border: oklch(0.90 0 0);               /* #DEDEDE */
-  --input: oklch(0.90 0 0);
-  --ring: oklch(0.504 0.148 255.8 / 40%);
+  --border: oklch(0.895 0.012 73.7);       /* #E1DBD4 */
+  --input: oklch(0.895 0.012 73.7);
+  --ring: oklch(0.500 0.170 253.2 / 45%);
 
-  /* Marca fixa (logotipo) — azul profundo constante, não muda entre claro/escuro */
-  --brand-ink: oklch(0.344 0.090 252);            /* #0D3A66 */
-  --brand-blue: oklch(0.504 0.148 255.8);         /* #1E63B6 */
-  --brand-blue-strong: oklch(0.447 0.133 256);    /* #17539C — hover do azul */
+  /* Marca: tinta fixa do logotipo, não muda entre claro e escuro */
+  --brand-ink: oklch(0.233 0.059 259);            /* #0B1D39 */
+  --brand-blue: oklch(0.500 0.170 253.2);         /* #0062C0 — azul que pode ser texto */
+  --brand-blue-strong: oklch(0.440 0.165 253.2);  /* hover do azul */
+  --brand-blue-bright: oklch(0.652 0.190 253.2);  /* #1E90FF — preenchimento, NUNCA texto */
+  --brand-sky: oklch(0.861 0.075 242.7);          /* #A7D8FF — superfície, NUNCA texto */
 
-  /* Laranja: cor de AÇÃO. Reservada a CTA de alta prioridade e destaque.
-     Nunca recebe texto branco (2.36:1) — ver docs/IDENTIDADE_VISUAL.md §3.4
-     Os três tons têm papéis distintos e NÃO são intercambiáveis:
-       -orange        → fundo de CTA
-       -orange-strong → fundo de hover do CTA (claro demais para texto)
-       -orange-ink    → laranja como texto, calibrado para o pior fundo claro
-                        do projeto (badge em bg-brand-orange/18): 4.75:1 */
-  --brand-orange: oklch(0.747 0.180 57.4);        /* #FF8A00 — só como fundo */
-  --brand-orange-strong: oklch(0.720 0.180 55);   /* #F77F00 — hover, 4.81:1 com #333 */
-  --brand-orange-ink: oklch(0.530 0.143 52.5);    /* #A94E00 — laranja como TEXTO */
-  --brand-orange-foreground: oklch(0.321 0 0);    /* #333333 sobre laranja: 5.35:1 */
+  /* Laranja: cor de AÇÃO, reservada a CTA e destaque.
+     Nunca recebe texto branco (3.11:1) — o label é sempre a tinta navy.
+     Os três tons não são intercambiáveis:
+       -orange        → fundo de CTA          (navy sobre ele: 5.40)
+       -orange-strong → fundo de hover        (navy sobre ele: 4.55)
+       -orange-ink    → laranja como TEXTO    (4.56 no fundo) */
+  --brand-orange: oklch(0.683 0.209 36.1);        /* #FF5A2A */
+  --brand-orange-strong: oklch(0.640 0.209 36.1); /* #EF4B16 */
+  --brand-orange-ink: oklch(0.560 0.170 36.1);    /* #C3441F */
+  --brand-orange-foreground: oklch(0.233 0.059 259); /* navy sobre laranja */
+
 }
 
 .dark {
-  --background: oklch(0.17 0.028 252);     /* #06101B */
-  --foreground: oklch(0.96 0.004 90);      /* #F3F2EF — 17.1:1 */
-  --card: oklch(0.22 0.030 252);           /* #101B28 */
-  --card-foreground: oklch(0.96 0.004 90);
-  --popover: oklch(0.22 0.030 252);
-  --popover-foreground: oklch(0.96 0.004 90);
 
-  --primary: oklch(0.70 0.130 255.8);      /* #66A0EE — 7.1:1 sobre o fundo */
-  --primary-foreground: oklch(0.17 0.028 252);
+  --background: oklch(0.190 0.040 259);    /* #081425 */
+  --foreground: oklch(0.960 0.006 74);     /* #F4F1ED — 16.4:1 */
+  --card: oklch(0.245 0.042 259);          /* #142134 */
+  --card-foreground: oklch(0.960 0.006 74);
+  --popover: oklch(0.245 0.042 259);
+  --popover-foreground: oklch(0.960 0.006 74);
 
-  --secondary: oklch(0.27 0.026 252);      /* #1D2733 */
-  --secondary-foreground: oklch(0.96 0.004 90);
-  --muted: oklch(0.26 0.024 252);
-  --muted-foreground: oklch(0.70 0.020 252);  /* #96A0AB — 7.2:1 */
-  --accent: oklch(0.30 0.030 252);
-  --accent-foreground: oklch(0.96 0.004 90);
+  --primary: oklch(0.720 0.150 253.2);     /* #5AA8FF — 7.46 sobre o fundo */
+  --primary-foreground: oklch(0.190 0.040 259);
+
+  --secondary: oklch(0.300 0.040 259);     /* #222E42 */
+  --secondary-foreground: oklch(0.960 0.006 74);
+  --muted: oklch(0.285 0.038 259);         /* #1F2A3D */
+  --muted-foreground: oklch(0.730 0.025 259); /* #9EA8B8 — 6.74 no card */
+  --accent: oklch(0.330 0.055 253);
+  --accent-foreground: oklch(0.960 0.006 74);
 
   --destructive: oklch(0.704 0.191 22.216);
-  --destructive-foreground: oklch(0.17 0.028 252);
+  --destructive-foreground: oklch(0.190 0.040 259);
   --success: oklch(0.66 0.14 155);
-  --success-foreground: oklch(0.17 0.028 252);
+  --success-foreground: oklch(0.190 0.040 259);
 
-  --border: oklch(1 0 0 / 12%);
-  --input: oklch(1 0 0 / 16%);
-  --ring: oklch(0.70 0.130 255.8 / 50%);
+  --border: oklch(1 0 0 / 13%);
+  --input: oklch(1 0 0 / 17%);
+  --ring: oklch(0.720 0.150 253.2 / 50%);
 
-  /* Cor de logotipo: idêntica ao tema claro, por definição */
-  --brand-ink: oklch(0.344 0.090 252);
-  --brand-blue: oklch(0.70 0.130 255.8);
-  --brand-blue-strong: oklch(0.63 0.135 256);
+  /* Tinta do logotipo: idêntica ao tema claro, por definição */
+  --brand-ink: oklch(0.233 0.059 259);
+  --brand-blue: oklch(0.720 0.150 253.2);
+  --brand-blue-strong: oklch(0.650 0.160 253.2);
+  --brand-blue-bright: oklch(0.720 0.170 253.2);
+  --brand-sky: oklch(0.861 0.075 242.7);
 
-  --brand-orange: oklch(0.780 0.170 57.4);        /* #FF9732 — 8.9:1 sobre o fundo */
-  --brand-orange-strong: oklch(0.720 0.175 55);   /* #F5810F — 4.83:1 com #333 */
-  --brand-orange-ink: oklch(0.780 0.170 57.4);    /* no escuro o laranja puro já passa */
-  --brand-orange-foreground: oklch(0.321 0 0);
+  --brand-orange: oklch(0.683 0.209 36.1);
+  --brand-orange-strong: oklch(0.640 0.209 36.1);
+  --brand-orange-ink: oklch(0.760 0.170 40);      /* #FF8657 — 6.79 no card escuro */
+  --brand-orange-foreground: oklch(0.233 0.059 259);
+
 }
 
 @theme inline {
@@ -388,6 +408,8 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
   --color-brand-ink: var(--brand-ink);
   --color-brand-blue: var(--brand-blue);
   --color-brand-blue-strong: var(--brand-blue-strong);
+  --color-brand-blue-bright: var(--brand-blue-bright);
+  --color-brand-sky: var(--brand-sky);
   --color-brand-orange: var(--brand-orange);
   --color-brand-orange-strong: var(--brand-orange-strong);
   --color-brand-orange-ink: var(--brand-orange-ink);
@@ -415,11 +437,16 @@ A arquitetura atual está correta e é preservada — mesmos nomes de token, mes
 }
 
 @layer utilities {
-  /* Mancha de fundo discreta para heros e cabeçalhos — laranja + azul da marca */
-  .brand-mesh {
-    background-image:
-      radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
-      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 10%, transparent) 0%, transparent 100%);
+  /* Faixa de marca para o topo de hero. Discreta de propósito: a mancha
+     radial em dois cantos é assinatura de template, então aqui vira uma
+     borda superior de cor sobre o fundo quente, sem degradê no miolo. */
+  .brand-edge {
+    border-top: 3px solid var(--brand-blue-bright);
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--brand-sky) 18%, transparent) 0%,
+      transparent 42%
+    );
   }
 }
 ```
@@ -445,63 +472,25 @@ O componente já está estruturalmente certo (pill `rounded-full`, variante `cta
 | Variante | Uso | Resultado com os tokens novos |
 |---|---|---|
 | `cta` (linha 13) | **Ação principal da tela.** Uma por tela. "Candidatar-se", "Publicar vaga", "Criar conta" | `bg-brand-orange` + `text-brand-orange-foreground` (escuro — nunca branco) |
-| `default` (linha 12) | Ação secundária, confirmação de formulário | azul `#1E63B6` com texto branco |
+| `default` (linha 12) | Ação secundária, confirmação de formulário | azul `#0062C0` com texto branco |
 | `outline` | Ação terciária, filtros | borda neutra, `hover:border-primary` |
 | `ghost` / `link` | Navegação, ações destrutivas leves | texto `--primary` |
 
-### 6.2 Logotipo — extrair para componente
+### 6.2 Logotipo — `src/components/brand/Logo.tsx`
 
-O lockup está **duplicado em três arquivos**, cada um com medidas próprias:
-
-- `src/components/layout/Navbar.tsx:34-41` — tile `size-9 rounded-2xl bg-brand-ink` + `<Briefcase>` + wordmark
-- `src/components/layout/RootLayout.tsx:20-25` — mesma coisa em `size-7 rounded-xl`
-- `src/pages/public/LoginPage.tsx:37` — mesma coisa em `size-11 rounded-2xl`
-
-Criar `src/components/brand/Logo.tsx` como fonte única e substituir os três usos:
+Fonte única do lockup, consumida por `Navbar`, `RootLayout` e `LoginPage`. O selo é
+carregado de `public/brand/logo-mark.svg`, então trocar a arte não exige tocar em
+nenhum chamador.
 
 ```tsx
-import { Link } from 'react-router-dom'
-import { cn } from '@/lib/utils'
-
-type LogoProps = {
-  /** 'mark' = só o selo; 'full' = selo + wordmark */
-  variant?: 'mark' | 'full'
-  size?: 'sm' | 'md' | 'lg'
-  asLink?: boolean
-  className?: string
-}
-
-const MARK_SIZE = { sm: 'size-7', md: 'size-9', lg: 'size-11' }
-const TEXT_SIZE = { sm: 'text-base', md: 'text-lg', lg: 'text-xl' }
-
-export function Logo({ variant = 'full', size = 'md', asLink = true, className }: LogoProps) {
-  const content = (
-    <span className={cn('flex items-center gap-2.5', className)}>
-      <img
-        src="/brand/logo-mark.svg"
-        alt=""
-        aria-hidden
-        className={cn(MARK_SIZE[size], 'shrink-0')}
-      />
-      {variant === 'full' && (
-        <span className={cn('font-display font-extrabold tracking-tight', TEXT_SIZE[size])}>
-          Emprega<span className="text-brand-orange-ink">Santana</span>
-        </span>
-      )}
-    </span>
-  )
-
-  return asLink ? (
-    <Link to="/" aria-label="EmpregaSantana — página inicial">{content}</Link>
-  ) : (
-    content
-  )
-}
+<Logo />                                          // selo + wordmark
+<Logo size="sm" />                                // rodapé
+<Logo variant="mark" size="lg" asLink={false} />  // só o selo, em telas de auth
 ```
 
-Observe: o `<img>` é `aria-hidden` porque o texto ao lado já nomeia a marca; no `variant="mark"` o nome acessível vem do `aria-label` do link. Isso evita o logo ser anunciado duas vezes por leitor de tela.
-
-> Enquanto `public/brand/logo-mark.svg` não existir (§7), o componente pode manter o fallback atual — tile `bg-brand-ink` com `<Briefcase>` do lucide. A extração para componente único vale a pena **antes** mesmo do asset existir, porque troca 3 edições por 1.
+O `<img>` é `aria-hidden` porque o wordmark ao lado já nomeia a marca; em
+`variant="mark"` o nome acessível vem do `aria-label` do link. Isso evita o logo ser
+anunciado duas vezes por leitor de tela.
 
 ### 6.3 Correções pontuais
 
@@ -552,27 +541,28 @@ Regra: ícone sempre `strokeWidth={2}` (2.4 quando dentro de tile chapado, como 
 
 ---
 
-## 7. Assets a produzir
+## 7. Assets
 
-⚠️ **Nenhum arquivo de imagem pôde ser gerado nesta rodada** — o logo chegou como imagem de referência, não como arquivo vetorial no repositório. Esta seção especifica o que precisa ser exportado e onde depositar.
-
-### 7.1 Estrutura alvo
+### 7.1 O que existe
 
 ```
 public/
   brand/
-    logo-mark.svg          # selo flat, sem wordmark, 512×512 viewBox quadrado
-    logo-full.svg          # lockup horizontal selo + wordmark
-    logo-mono-white.svg    # versão de uma cor, para fundo #0D3A66
-    logo-3d.png            # selo 3D, 1024×1024, fundo transparente (peças/apresentação)
-  favicon.svg              # selo flat simplificado, legível a 16px
-  favicon-96.png           # fallback raster
-  apple-touch-icon.png     # 180×180, fundo #FFFFFF chapado (iOS não respeita transparência)
-  og-image.png             # ✅ JÁ EXISTE — revisar quando o logo oficial chegar
+    logo-mark.svg          selo completo — anel, figura, dois currículos
+    logo-mono-white.svg    uma cor, para fundo #0B1D39
+  favicon.svg              sem os currículos, que somem a 16px; fundo chapado
+  favicon-96.png           fallback raster
+  apple-touch-icon.png     180×180
+  og-image.png             1200×630
   site.webmanifest
 ```
 
-> **Atualização:** a `main` trouxe SEO (`og-image.png`, `robots.txt`, sitemap, meta tags OG/Twitter em `index.html`) depois que este documento foi escrito. O `og-image.png` existe e as meta tags OG/Twitter já estão no lugar — o que resta da §7.3 é `favicon`, `apple-touch-icon`, `manifest` e `theme-color`. Quando o logo oficial chegar, o `og-image.png` deve ser refeito com o selo e a tagline.
+O selo foi vetorizado à mão, não exportado de render 3D: precisa ler a 16px, e o 3D
+embola nesse tamanho. Validado por renderização em 16/24/32/48/96/160px sobre branco,
+off-white e tinta.
+
+**Regra de tamanho:** o selo completo leva os currículos a partir de 48px. Abaixo
+disso use o favicon, que os remove.
 
 ### 7.2 Limpeza obrigatória
 
@@ -588,7 +578,7 @@ public/
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png" />
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<meta name="theme-color" content="#1E63B6" />
+<meta name="theme-color" content="#0B1D39" />
 <meta property="og:title" content="EmpregaSantana" />
 <meta property="og:description" content="Somos muito mais que uma página, somos a sua conexão de empregabilidade no sertão." />
 <meta property="og:image" content="/og-image.png" />
@@ -606,7 +596,7 @@ public/
   "start_url": "/",
   "display": "standalone",
   "background_color": "#FFFFFF",
-  "theme_color": "#1E63B6",
+  "theme_color": "#0B1D39",
   "icons": [
     { "src": "/brand/logo-mark.svg", "sizes": "any", "type": "image/svg+xml" },
     { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
@@ -624,12 +614,12 @@ O board já define as peças. Registrado aqui para a marca não se desviar quand
 
 | Peça | Especificação |
 |---|---|
-| **Cartão de visita** (frente) | fundo branco, selo à esquerda, tagline em Montserrat com "somos a sua conexão de empregabilidade" em laranja, contatos em Poppins, tarja `#0D3A66` no rodapé com "Fundado em agosto de 2022" |
-| **Cartão** (verso) | fundo `#1E63B6` chapado, selo centralizado, as três linhas "Conectamos/Orientamos/Transformamos" com os substantivos em laranja |
+| **Cartão de visita** (frente) | fundo branco, selo à esquerda, tagline em Montserrat com "somos a sua conexão de empregabilidade" em laranja, contatos em Poppins, tarja `#0B1D39` no rodapé com "Fundado em agosto de 2022" |
+| **Cartão** (verso) | fundo `#0062C0` chapado, selo centralizado, as três linhas "Conectamos/Orientamos/Transformamos" com os substantivos em laranja |
 | **Crachá** | fundo branco, selo, nome em Montserrat 700, cargo em Poppins 500 caixa alta, cordão azul |
-| **Camiseta** | fundo `#1E63B6`, selo + wordmark centralizados no peito, tagline abaixo em corpo pequeno |
+| **Camiseta** | fundo `#0B1D39`, selo + wordmark centralizados no peito, tagline abaixo em corpo pequeno |
 | **Ecobag** | cru/natural, selo em uma cor no centro |
-| **Caderno** | capa `#0D3A66`, selo centralizado, "Fundado em agosto de 2022" abaixo |
+| **Caderno** | capa `#0B1D39`, selo centralizado, "Fundado em agosto de 2022" abaixo |
 | **Caneca** | branca, selo de um lado, wordmark do outro |
 | **Caneta** | corpo azul, wordmark em laranja ao longo do corpo |
 
@@ -637,9 +627,9 @@ O board já define as peças. Registrado aqui para a marca não se desviar quand
 
 | Template | Fundo | Uso |
 |---|---|---|
-| **Vaga Nova** | `#0D3A66` com formas geométricas laranja | anúncio de vaga. Título em Montserrat 800 caixa alta, "CONFIRA NA LEGENDA" + `#empregasantana` |
-| **Dica de Carreira** | branco / `#F2F2F2` | conteúdo educativo. "DICA" em azul, "DE CARREIRA" em laranja, corpo em Poppins, logo no canto inferior |
-| **Institucional** | `#FF8A00` chapado | frases de posicionamento. **Texto em `#333333` ou `#0D3A66`, não branco** (§3.4) |
+| **Vaga Nova** | `#0B1D39` com formas geométricas laranja | anúncio de vaga. Título em Montserrat 800 caixa alta, "CONFIRA NA LEGENDA" + `#empregasantana` |
+| **Dica de Carreira** | branco / `#F7F3EE` | conteúdo educativo. "DICA" em azul, "DE CARREIRA" em laranja, corpo em Poppins, logo no canto inferior |
+| **Institucional** | `#FF5A2A` chapado | frases de posicionamento. **Texto na tinta `#0B1D39`, nunca branco** (§3.5) |
 
 Constantes em todos: onda/curva de transição entre os blocos de cor, selo sempre presente (canto inferior direito ou centralizado), nunca mais de duas cores de fundo por peça.
 
@@ -649,58 +639,29 @@ O board traz uma faixa de pontos e traços (`•••——figura——••`)
 
 ---
 
-## 9. Divergências entre o manual e o código, e plano de migração
+## 9. Histórico de decisões de paleta
 
-Estado em `HEAD` (`6bfa705`). **O manual é a fonte de verdade em todas as linhas abaixo.**
+| Quando | Decisão | Motivo |
+|---|---|---|
+| v1.0 | Manual da marca (`#1E63B6` / `#FF8A00`) vira fonte de verdade | o código rodava uma paleta anterior ao manual |
+| v1.1 | Laranja usado como texto migra para um tom próprio | o laranja do manual é claro demais para texto: reprovava em AA |
+| **v2.0** | **Paleta Fingestão substitui a do manual** | decisão do cliente. A tinta `#0B1D39` e o off-white quente `#F7F3EE` são ganho claro; os dois tons médios precisaram de derivados para passar em AA (§3.2) |
 
-| # | Item | Manual | Código hoje | Veredito |
-|---|---|---|---|---|
-| 1 | Azul primário | `#1E63B6` | `oklch(0.4 0.09 255)` ≈ `#234877` | Código muda. O navy atual é mais escuro e dessaturado que o azul da marca |
-| 2 | Azul profundo | `#0D3A66` | `--brand-ink` `oklch(0.2 0.03 258)` ≈ `#0D1624` | Código muda. O atual é quase preto, perde o azul |
-| 3 | Laranja | `#FF8A00` | `oklch(0.705 0.191 41.6)` ≈ `#FE6D2E` | Código muda. O atual puxa para o vermelho; o da marca é âmbar |
-| 4 | Neutros | `#F2F2F2` / `#333333` | cinzas frios (`0.99 0.002 260`) | Código muda para cinza puro |
-| 5 | Tipografia | Montserrat + Poppins | Plus Jakarta Sans | Código muda. Duas famílias, com hierarquia título/corpo |
-| 6 | Logo | selo circular | `<Briefcase>` + wordmark em JSX, 3 cópias | Código muda + depende de asset (§7) |
-| 7 | Fundação | agosto de **2022** | footer diz "desde **2026**" | **Erro factual no código.** `RootLayout.tsx:40` |
-| 8 | Favicon | — | raio roxo `#863bff` do scaffold Vite | Descartar |
-| 9 | Tagline | definida | não aparece em lugar nenhum | Adicionar em `<meta>`, hero e footer |
+O que **não** mudou e segue do manual: tagline, os quatro verbos, praça, data de
+fundação, regras de aplicação do logotipo e a dupla tipográfica Montserrat + Poppins.
 
-**O que NÃO muda** (a arquitetura atual está certa e o manual não a contradiz): Tailwind v4 CSS-first sem `tailwind.config.js`; tokens em OKLCH; `--radius: 0.85rem`; botão pill com variante `cta`; cards `rounded-2xl`; `InitialsAvatar` com paleta restrita; `.brand-mesh`; `iconForCategory()`.
+### 9.1 Dívidas conhecidas
 
-### 9.1 Ordem de execução sugerida
-
-**Bloco 1 — Tokens e tipografia** ✅ **APLICADO** (`src/index.css`, `index.html`)
-Paleta da §5, fontes da §4.1, `font-feature-settings` removido. Mudou a aparência do site inteiro de uma vez.
-
-A previsão de "sem tocar em nenhum componente" **não se confirmou**, e vale registrar o porquê. `--brand-orange-strong` acumulava dois papéis incompatíveis: fundo de hover do CTA (1 uso) e cor de texto (8 usos). Como o laranja do manual é mais claro que o antigo, trocar só o token teria piorado o contraste do laranja-texto de 3.72:1 para 2.63:1 — uma regressão de acessibilidade. Os 8 usos de texto migraram para `--brand-orange-ink` em 7 arquivos (`InitialsAvatar`, `AutonomoCard`, `VagaCard`, `StatusBadge`, `Navbar`, `RootLayout`, `HomePage`); `hover:bg-brand-orange-strong` em `button.tsx:13` ficou como estava.
-
-*Visível para o usuário final: sim, integralmente.*
-
-**Bloco 2 — Logotipo e assets** ✅ **APLICADO** (`src/components/brand/Logo.tsx`, `public/`, `index.html`)
-`<Logo>` extraído e as 3 cópias (`Navbar`, `RootLayout`, `LoginPage`) substituídas — com o fallback tile+ícone da §6.2, não o selo oficial, que ainda depende de export do usuário (§7). `favicon.svg` trocado (era o raio roxo do scaffold Vite); `favicon-96.png` e `apple-touch-icon.png` gerados a partir do mesmo tile provisório; `site.webmanifest` criado apontando pra esses três arquivos; `public/icons.svg` deletado; `index.html` com as tags da §7.3 (favicon, manifest, `theme-color`, OG/Twitter já existiam da rodada de SEO anterior).
-*`public/brand/logo-mark.svg`, `logo-full.svg`, `logo-mono-white.svg` e `logo-3d.png` — não criados. Continuam dependendo do export do selo oficial pelo usuário; nenhuma tentativa de redesenhar o selo a partir só da descrição textual da §2, para não arriscar publicar uma versão que não bate com o board real.*
-
-**Bloco 3 — Varredura de conformidade** ✅ **APLICADO**
-`violet` removido de `StatusBadge.tsx:27` (→ `bg-primary/12 text-primary border-primary/25`, unificando com `em_analise`/`enviada` — a paleta oficial não tem uma sexta cor pra status "entrevista" ficar distinto); ano corrigido em `RootLayout.tsx` (era "desde 2026", virou "desde agosto de 2022"); tagline oficial aplicada em `<meta description>`/`og:description`/`twitter:description`, no eyebrow+subtítulo do hero da Home ("Conecta · Orienta · Transforma" + o texto completo) e no footer; `docs/PRD.md` (§8.1 e novo §8.2) e `README.md` (era o boilerplate em inglês do Vite) atualizados.
-*Visível para o usuário final: sim — footer, hero, badge de entrevista, favicon da aba do navegador.*
-
-**Bloco 4 — Tipografia em todas as telas (painéis autenticados)** ✅ **APLICADO**
-Auditoria completa pós-Bloco 3, disparada por revisão explícita de "todas as telas do sistema". Repetido o grep de cores cru (`#hex`/`rgb(`/`hsl(`/utilitário Tailwind cru tipo `bg-blue-500`) em todo `src/` — **zero ocorrências fora de `src/index.css`**, a paleta já estava 100% tokenizada. O que a varredura por cor não pega — e esta rodada corrigiu:
-
-- **`CardTitle` (`src/components/ui/card.tsx`) não tinha `font-display`.** É um `<div>` do shadcn, não um `<h1>`/`<h2>`, então a regra do `@layer base` (§5, `h1, h2 { @apply font-display }`) nunca alcançava. Resultado prático: os 29 arquivos que usam `<CardTitle>` — onboarding de candidato/autônomo/empresa, login, cadastro, `CvEditPage`, `VagaFormPage`, perfil de empresa/autônomo, números de destaque dos dashboards (`PainelPage`, `admin/DashboardPage`) — renderizavam o título em Poppins (corpo), não Montserrat. É justamente a "área logada nunca revisada" apontada em §9.2. Corrigido com uma linha em `card.tsx` (`font-display` na classe base do `CardTitle`), sem tocar nos 29 usos. Não conflita com a regra dos `<h3>` de `VagaCard`/`AutonomoCard`/`EmpresaCard` (§4.3): aqueles são `<h3>` cru, um componente arquiteturalmente diferente do `CardTitle`.
-- **`<h1>` de página com dois pesos concorrentes.** Todas as páginas públicas de destino (`EmpresasDirectoryPage`, `EmpresaDetailPage`, `AutonomoDetailPage`, `VagaDetailPage`, `StaticPage`, `ExplorarPage`, `HomePage`) já usavam `font-extrabold tracking-tight`; 15 páginas internas (`admin/*`, `empresa/VagasListPage`, `empresa/VagaCandidatosPage`, `empresa/PainelPage`, `candidato/CvListPage`, `candidato/CandidaturasPage`, `shared/PerfilPage`, `public/PlanosPage`) ficaram para trás em `font-semibold` — peso mais leve, sem `tracking-tight`, contradizendo a própria razão de ser da Montserrat no manual ("ganha peso e autoridade em título", §4). Unificado para `font-extrabold tracking-tight` nas 15.
-- Verificado com Playwright autenticado como cada persona (admin, empresa, candidato, autônomo) nas telas internas principais — `getComputedStyle` confirma `font-family: Montserrat` e `font-weight: 800` no `<h1>` de cada uma, zero erros de console.
-- Variantes de botão (`cta` vs `default`) já estavam corretas em toda a área logada (ex.: "Nova vaga" no painel é navegação → `default`; "Publicar vaga" no formulário é a ação real → `cta`) — nada a mudar ali.
-
-*Visível para o usuário final: sim — todo título de card em toda tela autenticada (antes em Poppins, agora Montserrat) e o `<h1>` de 15 páginas internas.*
-
-### 9.2 Dívidas conhecidas que a migração deveria resolver junto
-
-- **Não há alternador de tema.** O bloco `.dark` existe, é completo e está validado — mas nenhum controle na UI o ativa. O site sempre abre claro. Já registrado em `docs/PRD.md` §8.1.
-- **Escalas implícitas.** Só cor e raio são tokenizados. Espaçamento, sombra e tipografia são utilitários Tailwind repetidos à mão pelos arquivos. A §4.3 desta doc é o primeiro passo para tokenizar a tipografia.
-- **Áreas logadas nunca passaram por revisão de *layout*** (painel de empresa, admin, onboarding). A migração de tokens as alcança automaticamente, e o Bloco 4 corrigiu a tipografia (título de card em Montserrat, `<h1>` unificado) — mas o layout em si (densidade, grid, hierarquia visual além de cor/fonte) não foi desenhado.
-
----
+- **Não há alternador de tema.** O bloco `.dark` existe, está completo e validado,
+  mas nenhum controle na UI o ativa.
+- **Escalas implícitas.** Só cor e raio são tokenizados; espaçamento, sombra e
+  tipografia são utilitários repetidos à mão.
+- **Áreas logadas nunca passaram por revisão visual** (painel de empresa, admin,
+  onboarding). Herdam os tokens, mas o layout não foi desenhado.
+- **`empresas` não tem coluna de telefone nem e-mail**, então o perfil público de
+  empresa estruturalmente não exibe contato.
+- **`autonomo_profiles` não tem verificação nem avaliação** — ver
+  [BANCO_DE_DADOS.md](./BANCO_DE_DADOS.md).
 
 ## 10. Checklist de conformidade
 
@@ -728,7 +689,7 @@ Marcar conforme a implementação avançar.
 - [x] `grep -rE "#[0-9a-fA-F]{6}|rgb\(|hsl\(" src/` retorna só `src/index.css`
 - [x] Ano da fundação corrigido para agosto de 2022 (`RootLayout.tsx`)
 - [x] Tagline oficial no `<meta description>`, no hero e no footer
-- [x] Nenhum texto branco sobre `#FF8A00` na interface (§3.4)
+- [x] Nenhum texto branco sobre `#FF5A2A` nem sobre `#1E90FF` na interface (§3.5)
 - [x] `.brand-mesh` usando `--brand-blue`
 - [x] Laranja usado como texto migrado para `--brand-orange-ink` (8 usos, 7 arquivos)
 
@@ -745,4 +706,4 @@ Conversões hex↔OKLCH e contrastes desta doc foram calculados pelas fórmulas 
 - OKLCH: qualquer conversor que implemente OKLab, ou `oklch()` direto no DevTools do Chrome.
 - Contraste: WebAIM Contrast Checker, ou a aba Accessibility do DevTools.
 
-Os pares críticos a revalidar em qualquer mudança de cor são os da tabela §3.4 — especialmente qualquer combinação que envolva `#FF8A00`.
+Os pares críticos a revalidar em qualquer mudança de cor são os da tabela §3.5 — especialmente qualquer combinação que envolva `#FF5A2A` ou `#1E90FF`.

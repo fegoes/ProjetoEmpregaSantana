@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Briefcase } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface LogoProps {
@@ -10,36 +9,27 @@ interface LogoProps {
   className?: string
 }
 
-const MARK_SIZE = { sm: 'size-7', md: 'size-9', lg: 'size-11' }
-const ICON_SIZE = { sm: 'size-3.5', md: 'size-4.5', lg: 'size-5.5' }
+const MARK_SIZE = { sm: 'size-8', md: 'size-10', lg: 'size-12' }
 const TEXT_SIZE = { sm: 'text-base', md: 'text-lg', lg: 'text-xl' }
 
-// Fonte única do lockup — antes duplicado em Navbar/RootLayout/LoginPage.
-// Provisório: tile + ícone lucide no lugar do selo oficial (ver
-// docs/IDENTIDADE_VISUAL.md §6.2/§7). Quando o selo em SVG existir em
-// public/brand/logo-mark.svg, troca-se só o miolo deste componente — quem
-// chama <Logo /> não muda.
+// Fonte única do lockup. O selo vive em public/brand/logo-mark.svg — anel,
+// figura de braços erguidos e os dois currículos. Ver docs/IDENTIDADE_VISUAL.md §2.
 export function Logo({ variant = 'full', size = 'md', asLink = true, className }: LogoProps) {
   const isMarkOnly = variant === 'mark'
-
-  const mark = (
-    <span
-      aria-hidden={!isMarkOnly || asLink ? true : undefined}
-      className={cn(
-        MARK_SIZE[size],
-        'flex shrink-0 items-center justify-center rounded-2xl bg-brand-ink text-white shadow-sm',
-      )}
-    >
-      <Briefcase className={ICON_SIZE[size]} strokeWidth={2.4} />
-    </span>
-  )
 
   const content = (
     <span
       className={cn('flex items-center gap-2.5', className)}
       {...(isMarkOnly && !asLink ? { role: 'img', 'aria-label': 'EmpregaSantana' } : {})}
     >
-      {mark}
+      <img
+        src="/brand/logo-mark.svg"
+        alt=""
+        aria-hidden
+        width={48}
+        height={48}
+        className={cn(MARK_SIZE[size], 'shrink-0')}
+      />
       {variant === 'full' && (
         <span className={cn('font-display font-extrabold tracking-tight', TEXT_SIZE[size])}>
           Emprega<span className="text-brand-orange-ink">Santana</span>

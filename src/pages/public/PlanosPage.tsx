@@ -36,7 +36,8 @@ export default function PlanosPage() {
       <div>
         <h1 className="text-2xl font-extrabold tracking-tight">Planos</h1>
         <p className="text-sm text-muted-foreground">
-          Checkout via Stripe chega na Fase 3 — por enquanto esta é a vitrine de planos.
+          Publicar vaga e criar perfil de autônomo é gratuito. Os planos pagos existem para
+          quem quer mais alcance — destaque nos resultados e mais vagas abertas ao mesmo tempo.
         </p>
       </div>
 

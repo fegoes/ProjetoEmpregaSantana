@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="EmpregaSantana">
+  <title>EmpregaSantana</title>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="#FFFFFF" stroke-width="9" />
+  <!-- Currículos em contorno: vazados pra não virar massa branca sobre o anel -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="3">
+    <rect x="20" y="30" width="20" height="26" rx="3" transform="rotate(-15 30 43)" />
+    <rect x="60" y="30" width="20" height="26" rx="3" transform="rotate(15 70 43)" />
+  </g>
+  <g stroke="#FFFFFF" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M31 45 L50 58 L69 45" stroke-width="10" />
+    <path d="M50 57 L50 71" stroke-width="12" />
+    <path d="M50 70 L42 82" stroke-width="8" />
+    <path d="M50 70 L58 82" stroke-width="8" />
+  </g>
+  <circle cx="50" cy="39" r="8.5" fill="#FFFFFF" />
+</svg>
