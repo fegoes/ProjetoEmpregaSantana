@@ -20,7 +20,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
 
   return (
     <Link to={`/empresas/${empresa.id}`} className="group block h-full">
-      <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 transition-all duration-200 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:shadow-lg">
+      <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 transition-[border-color,box-shadow] duration-200 group-hover:border-primary/50 group-hover:shadow-md">
         <CardHeader className="flex-row items-start gap-3">
           {empresa.logo_url ? (
             <img

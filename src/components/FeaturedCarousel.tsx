@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChevronLeft, ChevronRight, Sparkles } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 import { VagaCard } from '@/components/VagaCard'
 import { AutonomoCard } from '@/components/AutonomoCard'
 import type { FeedItem } from '@/lib/feedFilters'
@@ -24,7 +24,7 @@ export function FeaturedCarousel({ items }: FeaturedCarouselProps) {
     <section className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <h2 className="flex items-center gap-1.5 text-lg font-semibold">
-          <Sparkles className="size-4 text-brand-orange-ink" /> Destaques
+          <Star className="size-4 text-brand-orange-ink" fill="currentColor" /> Destaques
         </h2>
         <div className="hidden items-center gap-1.5 sm:flex">
           <button

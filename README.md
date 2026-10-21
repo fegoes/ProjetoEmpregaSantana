@@ -68,3 +68,5 @@ A aplicação principal recebeu home de apresentação, painel com menu lateral,
 Administração, CRUDs e aparência: [ADMINISTRACAO.md](docs/ADMINISTRACAO.md). A prévia navegável da administração fica em `/#admin` no servidor de protótipos.
 
 Modelos e permissões: [MODELOS_E_ACESSOS.md](docs/MODELOS_E_ACESSOS.md). Testes isolados de autorização: `npm run test:database`.
+
+Publicação e diagnóstico de versões: [DEPLOY.md](docs/DEPLOY.md). O build gera `version.json`; compare a publicação com `npm run verify:deploy -- https://emprega-santana.vercel.app`. Alterações locais precisam estar no commit enviado ao GitHub para entrar no deploy.

@@ -1,4 +1,5 @@
 import { readFile } from 'node:fs/promises'
+import { releaseFingerprint } from './release-inputs.mjs'
 
 try {
   const target = process.argv[2]
@@ -7,6 +8,7 @@ try {
   if (!['http:', 'https:'].includes(url.protocol)) throw new Error('Use uma URL HTTP ou HTTPS.')
   url.searchParams.set('check', String(Date.now()))
   const expected = JSON.parse(await readFile('dist/version.json', 'utf8'))
+  if (expected.sourceFingerprint !== await releaseFingerprint()) throw new Error('O build local está desatualizado. Execute npm run build antes de comparar o deploy.')
   const response = await fetch(url, { headers: { 'cache-control': 'no-cache' }, signal: AbortSignal.timeout(15_000) })
   if (!response.ok) throw new Error(`A versão publicada respondeu HTTP ${response.status}.`)
   let actual
