@@ -15,7 +15,7 @@
     "browser": "playwright-cli",
     "prototype": "vite prototipos --host 127.0.0.1 --port 4174",
     "prototype:build": "vite build prototipos",
-    "test:database": "node tests/database/admin-access.mjs && node tests/database/taxonomies.mjs",
+    "test:database": "node tests/database/admin-access.mjs && node tests/database/taxonomies.mjs && node tests/database/article-seo.mjs && node tests/database/password-audit.mjs",
     "verify:deploy": "node scripts/verify-deploy.mjs"
   },
   "dependencies": {
@@ -29,6 +29,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@supabase/supabase-js": "^2.47.10",
     "@tanstack/react-query": "^5.62.11",
+    "@tiptap/extension-image": "2.27.2",
     "@tiptap/extension-link": "^2.27.2",
     "@tiptap/pm": "^2.11.2",
     "@tiptap/react": "^2.11.2",

@@ -30,7 +30,7 @@ Deno.serve(async () => {
     supabase.from('vagas').select('id, updated_at').eq('status', 'published'),
     supabase.from('autonomo_profiles').select('id, updated_at').eq('status', 'active'),
     supabase.from('empresas').select('id, updated_at').eq('status', 'active'),
-    supabase.from('artigos').select('slug, updated_at').eq('status', 'published').lte('published_at', new Date().toISOString()),
+    supabase.from('artigos').select('slug, updated_at').eq('status', 'published').eq('noindex', false).lte('published_at', new Date().toISOString()),
   ])
 
   const entries = [

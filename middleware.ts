@@ -17,9 +17,6 @@
 
 import { next } from '@vercel/edge'
 
-const SUPABASE_URL = 'https://poxqrdbzlsvcoskqugrm.supabase.co'
-const SUPABASE_ANON_KEY =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBveHFyZGJ6bHN2Y29za3F1Z3JtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY2NDQzNDAsImV4cCI6MjEwMjIyMDM0MH0.6_pRgEVfHeotwoav-rojqfariFpKm106qy2BGeLPd3c'
 
 export const config = {
   matcher: ['/((?!assets|.*\\..*).*)'],
@@ -70,11 +67,18 @@ interface RenderPageOptions {
   image?: string | null
   jsonLd?: Record<string, unknown> | null
   bodyHtml: string
+  socialTitle?: string
+  socialDescription?: string
+  imageAlt?: string
+  canonicalUrl?: string | null
+  noindex?: boolean
+  keywords?: string[]
+  article?: boolean
 }
 
 function renderPage(options: RenderPageOptions): string {
   const { siteUrl, title, description, path, image, jsonLd, bodyHtml } = options
-  const canonical = `${siteUrl}${path}`
+  const canonical = escapeHtml(options.canonicalUrl || `${siteUrl}${path}`)
   const safeTitle = escapeHtml(title)
   const safeDescription = escapeHtml(description)
   const safeImage = image ? escapeHtml(image) : `${siteUrl}/og-image.png`
@@ -87,14 +91,19 @@ function renderPage(options: RenderPageOptions): string {
 <title>${safeTitle}</title>
 <meta name="description" content="${safeDescription}" />
 <link rel="canonical" href="${canonical}" />
-<meta name="robots" content="index, follow" />
+<meta name="robots" content="${options.noindex ? 'noindex, follow' : 'index, follow'}" />
+<meta name="keywords" content="${escapeHtml((options.keywords ?? []).join(', '))}" />
 <meta property="og:site_name" content="EmpregaSantana" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="${safeTitle}" />
-<meta property="og:description" content="${safeDescription}" />
+<meta property="og:type" content="${options.article ? 'article' : 'website'}" />
+<meta property="og:title" content="${escapeHtml(options.socialTitle || title)}" />
+<meta property="og:description" content="${escapeHtml(options.socialDescription || description)}" />
 <meta property="og:image" content="${safeImage}" />
 <meta property="og:url" content="${canonical}" />
+<meta property="og:image:alt" content="${escapeHtml(options.imageAlt || '')}" />
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="${escapeHtml(options.socialTitle || title)}" />
+<meta name="twitter:description" content="${escapeHtml(options.socialDescription || description)}" />
+<meta name="twitter:image" content="${safeImage}" />
 ${jsonLd ? jsonLdScript(jsonLd) : ''}
 </head>
 <body>
@@ -108,8 +117,11 @@ ${bodyHtml}
 }
 
 async function supabaseSelect<T>(path: string): Promise<T[]> {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
-    headers: { apikey: SUPABASE_ANON_KEY },
+  const projectUrl = process.env.VITE_SUPABASE_URL
+  const publicKey = process.env.VITE_SUPABASE_ANON_KEY
+  if (!projectUrl || !publicKey) return []
+  const res = await fetch(`${projectUrl}/rest/v1/${path}`, {
+    headers: { apikey: publicKey },
   })
   if (!res.ok) return []
   return res.json()
@@ -372,6 +384,8 @@ async function renderStaticPage(slug: string, path: string, siteUrl: string, fal
 }
 
 interface BlogRow {
+  cover_alt: string;
+  seo_title: string; seo_description: string; social_title: string; social_description: string; social_image_url: string | null; social_image_alt: string; canonical_url: string | null; noindex: boolean; keywords: string[];
   slug: string
   title: string
   excerpt: string
@@ -383,7 +397,7 @@ interface BlogRow {
 }
 
 async function renderBlog(path: string, siteUrl: string, slug?: string): Promise<Response | null> {
-  const params = new URLSearchParams({ status: 'eq.published', published_at: `lte.${new Date().toISOString()}`, select: 'slug,title,excerpt,content_html,author_name,cover_url,published_at,updated_at', order: 'published_at.desc' })
+  const params = new URLSearchParams({ status: 'eq.published', published_at: `lte.${new Date().toISOString()}`, select: '*', order: 'published_at.desc' })
   if (slug) params.set('slug', `eq.${slug}`)
   const rows = await supabaseSelect<BlogRow>(`artigos?${params}`)
   const article = slug ? rows[0] : undefined
@@ -394,10 +408,13 @@ async function renderBlog(path: string, siteUrl: string, slug?: string): Promise
     ? `<article><h1>${escapeHtml(article.title)}</h1><p>${escapeHtml(article.author_name)}</p><p>${escapeHtml(article.excerpt)}</p><div>${escapeHtml(stripHtml(article.content_html, 30000))}</div></article>`
     : `<main><h1>Orientação para o seu próximo passo.</h1><ul>${rows.map(a => `<li><a href="/blog/${escapeHtml(a.slug)}">${escapeHtml(a.title)}</a><p>${escapeHtml(a.excerpt)}</p></li>`).join('')}</ul></main>`
   const jsonLd = article ? { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: article.title, description, author: { '@type': 'Person', name: article.author_name }, datePublished: article.published_at, dateModified: article.updated_at } : undefined
-  return new Response(renderPage({ siteUrl, title: `${title} | EmpregaSantana`, description, path, image: article?.cover_url, jsonLd, bodyHtml }), { headers: { 'content-type': 'text/html; charset=utf-8' } })
+  return new Response(renderPage({ siteUrl, title: `${article?.seo_title || title} | EmpregaSantana`, description: article?.seo_description || description, path, image: article?.social_image_url || article?.cover_url, socialTitle: article?.social_title || article?.title, socialDescription: article?.social_description || article?.excerpt, imageAlt: article?.social_image_alt || article?.cover_alt, canonicalUrl: article?.canonical_url, noindex: article?.noindex, keywords: article?.keywords, article: Boolean(article), jsonLd, bodyHtml }), { headers: { 'content-type': 'text/html; charset=utf-8' } })
 }
 
 export default async function middleware(request: Request) {
+  if (/^\/(admin|perfil|candidato|autonomo|empresa|login|cadastro|redefinir-senha)(\/|$)/.test(new URL(request.url).pathname)) {
+    const response = next(); response.headers.set('X-Robots-Tag','noindex, nofollow'); return response
+  }
   const userAgent = request.headers.get('user-agent')
   if (!isNoJsBot(userAgent)) return next()
 

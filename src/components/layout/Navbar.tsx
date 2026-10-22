@@ -15,7 +15,7 @@ import {
 import { cn } from '@/lib/utils'
 
 const MOBILE_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
-  cn('flex w-full rounded-md px-2 py-1.5 text-sm', isActive ? 'font-semibold text-primary' : 'text-foreground')
+  cn('flex min-h-11 w-full items-center rounded-md px-2 py-2 text-sm', isActive ? 'font-semibold text-primary' : 'text-foreground')
 
 const NAV_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
   cn(
@@ -24,7 +24,7 @@ const NAV_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
   )
 
 export function Navbar() {
-  const { user, profile, signOut } = useAuth()
+  const { user, profile, roles, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const autonomos = new URLSearchParams(location.search).get('tipo') === 'autonomos'
@@ -39,27 +39,9 @@ export function Navbar() {
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 sm:gap-4 py-3">
         <Logo className="max-sm:gap-1.5 max-sm:[&>span:first-child]:size-7 max-sm:[&>span:last-child]:text-sm" />
 
-        <nav className="hidden items-center gap-1 lg:flex">
-          <NavLink to="/" end className={NAV_LINK_CLASS}>
-            O projeto
-          </NavLink>
-          <NavLink to="/explorar" className={NAV_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>
-            Vagas
-          </NavLink>
-          <NavLink to="/explorar?tipo=autonomos" className={NAV_LINK_CLASS({ isActive: location.pathname === '/explorar' && autonomos })}>Autônomos</NavLink>
-          <NavLink to="/blog" className={NAV_LINK_CLASS}>Dicas de carreira</NavLink>
-          <NavLink to="/planos" className={NAV_LINK_CLASS}>
-            Planos
-          </NavLink>
-          <NavLink to="/sobre" className={NAV_LINK_CLASS}>
-            Sobre
-          </NavLink>
-          {user && (
-            <NavLink to="/empresas" className={NAV_LINK_CLASS}>
-              Empresas
-            </NavLink>
-          )}
-
+        <nav aria-label="Menu principal" className="hidden items-center gap-2 lg:flex">
+          <NavLink to="/explorar?tipo=vagas" className={NAV_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>Encontrar trabalho</NavLink>
+          <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" aria-label="Contratar: ver opções">Contratar</Button></DropdownMenuTrigger><DropdownMenuContent align="start"><DropdownMenuItem asChild><Link to="/explorar?tipo=autonomos">Encontrar profissionais</Link></DropdownMenuItem><DropdownMenuItem asChild><Link to={user ? roles.includes('empresa_owner') ? '/empresa/vagas/nova' : '/empresa/onboarding' : '/cadastro'}>Publicar uma vaga</Link></DropdownMenuItem></DropdownMenuContent></DropdownMenu>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -73,35 +55,11 @@ export function Navbar() {
               </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="min-w-48">
-              <DropdownMenuItem asChild>
-                <NavLink to="/" end className={MOBILE_LINK_CLASS}>
-                  O projeto
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink to="/explorar" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>
-                  Vagas
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild><NavLink to="/blog" className={MOBILE_LINK_CLASS}>Dicas de carreira</NavLink></DropdownMenuItem>
-              <DropdownMenuItem asChild><NavLink to="/explorar?tipo=autonomos" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && autonomos })}>Autônomos</NavLink></DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink to="/planos" className={MOBILE_LINK_CLASS}>
-                  Planos
-                </NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <NavLink to="/sobre" className={MOBILE_LINK_CLASS}>
-                  Sobre
-                </NavLink>
-              </DropdownMenuItem>
-              {user && (
-                <DropdownMenuItem asChild>
-                  <NavLink to="/empresas" className={MOBILE_LINK_CLASS}>
-                    Empresas
-                  </NavLink>
-                </DropdownMenuItem>
-              )}
+              <DropdownMenuLabel>O que você precisa?</DropdownMenuLabel>
+              <DropdownMenuItem asChild><NavLink to="/explorar?tipo=vagas" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>Encontrar trabalho</NavLink></DropdownMenuItem>
+              <DropdownMenuItem asChild><NavLink to="/explorar?tipo=autonomos" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && autonomos })}>Encontrar profissionais</NavLink></DropdownMenuItem>
+              <DropdownMenuItem asChild><Link to={user ? roles.includes('empresa_owner') ? '/empresa/vagas/nova' : '/empresa/onboarding' : '/cadastro'}>Publicar uma vaga</Link></DropdownMenuItem>
+              <DropdownMenuSeparator />
               {user ? (
                 <DropdownMenuItem asChild>
                   <NavLink to="/perfil" className={MOBILE_LINK_CLASS}>
@@ -110,7 +68,7 @@ export function Navbar() {
                 </DropdownMenuItem>
               ) : (
                 <DropdownMenuItem asChild>
-                  <Link to="/cadastro" className="flex w-full rounded-md px-2 py-1.5 text-sm">
+                  <Link to="/cadastro" className="flex min-h-11 w-full items-center rounded-md px-2 py-2 text-sm">
                     Criar conta
                   </Link>
                 </DropdownMenuItem>

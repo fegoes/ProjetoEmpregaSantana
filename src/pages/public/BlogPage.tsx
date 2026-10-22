@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
 
 function ArticleCover({ article }: { article: Pick<Artigo, 'title' | 'cover_url' | 'cover_alt' | 'category'> }) {
-  return article.cover_url ? <img src={article.cover_url} alt={article.cover_alt} className="aspect-[16/9] w-full rounded-2xl object-cover" loading="lazy" width={800} height={450} /> : <div className="flex aspect-[16/9] flex-col justify-center rounded-2xl bg-accent p-6 text-brand-ink"><span className="max-w-sm font-display text-2xl leading-snug font-extrabold sm:text-3xl">{article.title}</span></div>
+  return article.cover_url ? <img src={article.cover_url} alt={article.cover_alt} className="aspect-[16/9] w-full rounded-2xl bg-accent/30 object-contain" loading="lazy" width={800} height={450} /> : <div className="flex aspect-[16/9] flex-col justify-center rounded-2xl bg-accent p-6 text-brand-ink"><span className="max-w-sm font-display text-2xl leading-snug font-extrabold sm:text-3xl">{article.title}</span></div>
 }
 
 export default function BlogPage() {
@@ -20,7 +20,7 @@ export default function BlogPage() {
   const featured = filtered[0]
   useDocumentMeta({ title: 'Dicas de carreira', description: 'Orientação para procurar trabalho, apresentar seu talento e criar novas oportunidades.', canonical: '/blog' })
   return <div className="flex flex-col gap-8">
-    <section className="rounded-3xl bg-accent/50 px-6 py-10 sm:px-10"><h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">Orientação para<br />o seu próximo passo.</h1><p className="mt-5 max-w-xl text-sm leading-loose text-muted-foreground">Ideias práticas para procurar trabalho, apresentar seu talento e criar novas oportunidades.</p></section>
+    <section className="relative overflow-hidden rounded-3xl bg-accent/50 px-6 py-10 sm:px-10 lg:pr-72"><img src="/illustrations/nossa-gente.png" alt="" width="1536" height="1024" className="right-6 bottom-0 hidden h-52 w-64 object-contain lg:absolute lg:block" /><h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">Orientação para<br />o seu próximo passo.</h1><p className="mt-5 max-w-xl text-sm leading-loose text-muted-foreground">Ideias práticas para procurar trabalho, apresentar seu talento e criar novas oportunidades.</p></section>
     {query.isLoading && <p role="status">Carregando orientações…</p>}
     {query.isError && <div role="alert" className="rounded-xl border p-6"><p>Não foi possível carregar os artigos.</p><Button onClick={() => query.refetch()} variant="outline" className="mt-4">Tentar novamente</Button></div>}
     {!query.isLoading && !query.isError && <>
@@ -34,7 +34,7 @@ export function BlogArticlePage() {
   const { slug } = useParams()
   const query = useArtigo(slug)
   const article = query.data
-  useDocumentMeta({ title: article?.title ?? 'Artigo', description: article?.excerpt, image: article?.cover_url ?? undefined, type: 'article', canonical: slug ? `/blog/${slug}` : '/blog' })
+  useDocumentMeta({ title: article?.seo_title || article?.title || 'Artigo', description: article?.seo_description || article?.excerpt, image: article?.social_image_url || article?.cover_url || undefined, socialTitle: article?.social_title || article?.title, socialDescription: article?.social_description || article?.excerpt, imageAlt: article?.social_image_alt || article?.cover_alt, keywords: article?.keywords, noindex: article?.noindex, type: 'article', canonical: article?.canonical_url || (slug ? `/blog/${slug}` : '/blog') })
   if (query.isLoading) return <p role="status">Carregando artigo…</p>
   if (query.isError) return <div role="alert"><p>Não foi possível carregar este artigo.</p><Button onClick={() => query.refetch()} variant="outline" className="mt-4">Tentar novamente</Button></div>
   if (!article) return <EmptyState icon={BookOpen} title="Artigo não encontrado" description="Este conteúdo pode ter sido retirado do ar." action={<Button asChild variant="outline"><Link to="/blog">Voltar às orientações</Link></Button>} />

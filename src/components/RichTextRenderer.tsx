@@ -17,7 +17,7 @@ export function RichTextRenderer({ html, className }: RichTextRendererProps) {
   return (
     <div
       className={cn(
-        'max-w-none text-sm leading-relaxed [&_a]:underline [&_a]:text-primary [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-semibold',
+        '[&_img]:my-6 [&_img]:h-auto [&_img]:max-w-full [&_img]:rounded-xl max-w-none text-sm leading-relaxed [&_a]:underline [&_a]:text-primary [&_p]:mb-2 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_strong]:font-semibold',
         className,
       )}
       dangerouslySetInnerHTML={{ __html: sanitized }}

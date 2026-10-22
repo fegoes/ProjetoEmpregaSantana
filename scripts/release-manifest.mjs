@@ -16,7 +16,7 @@ const manifest = {
   localChanges,
   sourceFingerprint: await releaseFingerprint(),
   builtAt: new Date().toISOString(),
-  requiredMigrations: ['0021_blog_articles.sql', '0022_site_appearance.sql', '0023_restrict_admin_access.sql', '0024_admin_taxonomies.sql'],
+  requiredMigrations: ['0021_blog_articles.sql', '0022_site_appearance.sql', '0023_restrict_admin_access.sql', '0024_admin_taxonomies.sql', '0025_article_seo.sql', '0026_password_admin_audit.sql'],
 }
 await writeFile('dist/version.json', `${JSON.stringify(manifest, null, 2)}\n`)
 console.log(`Release ${manifest.release}: ${manifest.sourceFingerprint.slice(0, 12)}${localChanges ? ' (alterações locais presentes)' : ''}`)
