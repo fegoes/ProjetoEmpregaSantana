@@ -28,6 +28,16 @@ cp .env.example .env.local   # preencher com as credenciais do Supabase
 npm run dev
 ```
 
+⚠️ **O passo do `.env.local` não é opcional.** Ele está no `.gitignore` (via
+`*.local`), então todo clone novo começa sem ele. Sem `VITE_SUPABASE_URL` e
+`VITE_SUPABASE_ANON_KEY` o app não carrega vaga, perfil nem autenticação — e até
+a correção de outubro/2026 isso aparecia como **página totalmente em branco**,
+com a única pista no console do navegador.
+
+Hoje a falta de credencial avisa em dois lugares: uma linha amarela no terminal
+ao subir o `npm run dev`, e uma tela explicando o que configurar. Em produção as
+variáveis são embutidas no bundle pelo Vite, então mudá-las exige novo deploy.
+
 Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 
 ## Convenções que valem para o projeto inteiro
