@@ -115,6 +115,12 @@ components:
     padding: '0.375rem 0.875rem'
 ---
 
+> ⚠️ Existe outra versão deste arquivo na branch `claude/tender-rubin-eeuyjb`
+> (redesenho "Mural da cidade", sem PR), com os tokens nomeados em português e outra
+> `description`. Antes de editar aqui, veja `docs/ESTADO_DA_IDENTIDADE.md` — as duas
+> versões precisam ser reconciliadas, não sobrescritas uma pela outra.
+
+
 # Design System: EmpregaSantana
 
 ## Overview

@@ -17,6 +17,8 @@ Cadastro só é exigido para **agir** — candidatar-se, contratar, publicar.
 | [COMPONENTES.md](./COMPONENTES.md) | Componentes de domínio, layout e primitivas |
 | [FUNCOES.md](./FUNCOES.md) | Utilitários de `src/lib` |
 | [IDENTIDADE_VISUAL.md](./IDENTIDADE_VISUAL.md) | Marca, paleta, tipografia, tokens e regras de acessibilidade |
+| [ESTADO_DA_IDENTIDADE.md](./ESTADO_DA_IDENTIDADE.md) | **Leia antes de mexer em cor.** As duas linhas de identidade que convivem hoje, os conflitos entre elas e o que depende de decisão |
+| [DEBITO_DE_DESIGN.md](./DEBITO_DE_DESIGN.md) | Crítica de design de 2026-10-16 (17/40) como lista acompanhável, com o status de cada item |
 
 ## Começando
 
