@@ -6,6 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import type { PricingModelAutonomo } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
+import { FieldHint } from '@/components/FieldHint'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -100,15 +101,31 @@ export default function AutonomoPerfilPage() {
         <div className="space-y-2"><Label htmlFor="professional-type">Tipo de profissional</Label><RecordTypeSelect id="professional-type" kind="autonomo" value={typeSlug} onChange={setTypeSlug} /></div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="headline">Título</Label>
-          <Input id="headline" value={headline} onChange={(e) => setHeadline(e.target.value)} />
+          <FieldHint>
+            É a primeira linha que aparece no seu card. Diga o que você faz e onde atende.
+          </FieldHint>
+          <Input
+            id="headline"
+            placeholder="Ex.: Eletricista predial e residencial em Santana do Ipanema"
+            value={headline}
+            onChange={(e) => setHeadline(e.target.value)}
+          />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="category">Categoria</Label>
           <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label>Descrição dos serviços</Label>
-          <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} />
+          <Label>O que você faz</Label>
+          <FieldHint>
+            Liste os serviços que você atende, há quanto tempo trabalha com isso e como costuma
+            cobrar. Quem contrata decide por aqui.
+          </FieldHint>
+          <RichTextEditor
+            value={descriptionHtml}
+            onChange={setDescriptionHtml}
+            placeholder="Ex.: Instalação e manutenção elétrica residencial e comercial. Troca de quadro, fiação e chuveiro. 12 anos de experiência. Atendo Santana do Ipanema e cidades vizinhas."
+          />
         </div>
         <PhotoGalleryField
           label="Fotos de trabalhos (opcional)"
@@ -133,7 +150,15 @@ export default function AutonomoPerfilPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="hourlyRate">Valor da hora</Label>
-            <Input id="hourlyRate" type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
+            <FieldHint>Aparece no card como "A partir de R$ …/hora".</FieldHint>
+            <Input
+              id="hourlyRate"
+              type="number"
+              inputMode="decimal"
+              placeholder="Ex.: 45"
+              value={hourlyRate}
+              onChange={(e) => setHourlyRate(e.target.value)}
+            />
           </div>
         </div>
         <label className="flex items-center gap-2 text-sm">

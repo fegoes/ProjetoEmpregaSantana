@@ -10,6 +10,7 @@ import { supabase } from '@/lib/supabase'
 import { uploadVagaGalleryPhoto } from '@/lib/storage'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
+import { FieldHint } from '@/components/FieldHint'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { IconPickerField } from '@/components/IconPickerField'
 import { CategorySelect } from '@/components/CategorySelect'
@@ -117,12 +118,21 @@ export default function VagaFormPage() {
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="title">Título</Label>
+          <FieldHint>O cargo, como a pessoa procuraria. Ex.: "Auxiliar de produção".</FieldHint>
           <Input id="title" required value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-1.5">
           <Label>Descrição</Label>
-          <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} placeholder="Descreva a vaga…" />
+          <FieldHint>
+            Diga o que a pessoa vai fazer no dia a dia, o que é necessário para se candidatar e
+            como é o horário. Vaga sem essas três coisas recebe menos candidatura.
+          </FieldHint>
+          <RichTextEditor
+            value={descriptionHtml}
+            onChange={setDescriptionHtml}
+            placeholder="Ex.: Atuar na linha de envase, conferindo pesagem e validade. Necessário ensino fundamental completo e disponibilidade para turno da tarde. Escala de segunda a sábado, com vale-transporte."
+          />
         </div>
 
         {id ? (

@@ -16,7 +16,7 @@ export function ConfiguracaoAusente() {
       }}
     >
       <div style={{ maxWidth: '34rem' }}>
-        <h1 style={{ fontSize: '1.4rem', fontWeight: 800, margin: 0 }}>
+        <h1 style={{ fontSize: '1.25rem', fontWeight: 800, margin: 0 }}>
           Configuração do servidor ausente
         </h1>
         <p style={{ marginTop: '0.9rem', lineHeight: 1.6 }}>
