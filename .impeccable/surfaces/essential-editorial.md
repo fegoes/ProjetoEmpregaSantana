@@ -8,3 +8,7 @@ STORY: encontrar trabalho ou contratar; escolher perfil na home; editor com rasc
 FIRST VIEWPORT: duas entradas no menu desktop; três ações diretas no menu compacto. Editor e prévia lado a lado em xl, empilhados abaixo. Ilustração estática na home, blog e rodapé público. Sem imagens decorativas no admin.
 FORM: imagem raster gerada pelo image_gen, proveniência embutida em public/illustrations/nossa-gente.png e prompt/origem documentados em docs/NAVEGACAO_ESSENCIAL.md. Sem animação automática. Personagens ilustrativos, sem alegação de usuários reais.
 FINISH: build e testes; capturas home/blog/artigo em 320/390/768/1440 e editor/usuários nas mesmas larguras. API/sessão simuladas. Migration0025 e0026 e função de senha não implantadas. Nenhum PR, push, commit ou dado real alterado nesta rodada.
+
+## Ampliação de imagens e três posts — 23/10/2026
+
+Home preservada com três cenas raster novas nas seções de públicos. Blog com capas temáticas, preservando capas personalizadas. Três guias completos com capa, imagem no corpo e campos sociais. JPEGs comprimidos para entrega, PNGs originais e prompts preservados; proveniência em docs/IMAGENS_E_POSTS.md. Prévia local somente em desenvolvimento, sinalizada e noindex; produção usa artigos do banco. Migration0027 publica apenas os textos iniciais intactos e preserva conteúdo editado. Verificação em 320/390/768/1440: 20 capturas, sem overflow, imagens quebradas ou erros de página; filtro e navegação do blog funcionais. Ajuste final desloca a imagem interna para o meio do conteúdo. Sem publicação remota ou PR.

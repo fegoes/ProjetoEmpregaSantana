@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { editorialImage } from '@/content/editorialImages'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, BookOpen } from 'lucide-react'
 import { useArtigo, useArtigos, type Artigo } from '@/hooks/useArtigos'
@@ -9,7 +10,8 @@ import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
 
 function ArticleCover({ article }: { article: Pick<Artigo, 'title' | 'cover_url' | 'cover_alt' | 'category'> }) {
-  return article.cover_url ? <img src={article.cover_url} alt={article.cover_alt} className="aspect-[16/9] w-full rounded-2xl bg-accent/30 object-contain" loading="lazy" width={800} height={450} /> : <div className="flex aspect-[16/9] flex-col justify-center rounded-2xl bg-accent p-6 text-brand-ink"><span className="max-w-sm font-display text-2xl leading-snug font-extrabold sm:text-3xl">{article.title}</span></div>
+  const fallback = editorialImage(article.category)
+  return <img src={article.cover_url || fallback.src} alt={article.cover_url ? article.cover_alt : fallback.alt} className="aspect-[3/2] w-full rounded-2xl bg-accent/30 object-contain" loading="lazy" decoding="async" width={1536} height={1024} />
 }
 
 export default function BlogPage() {
@@ -40,6 +42,7 @@ export function BlogArticlePage() {
   if (!article) return <EmptyState icon={BookOpen} title="Artigo não encontrado" description="Este conteúdo pode ter sido retirado do ar." action={<Button asChild variant="outline"><Link to="/blog">Voltar às orientações</Link></Button>} />
   return <article className="mx-auto max-w-3xl">
     <JsonLd data={{ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: article.title, description: article.excerpt, datePublished: article.published_at, dateModified: article.updated_at, author: { '@type': 'Person', name: article.author_name }, ...(article.cover_url ? { image: article.cover_url } : {}) }} />
-    <Link to="/blog" className="mb-7 inline-flex min-h-11 items-center gap-2 text-sm text-primary"><ArrowLeft className="size-4" />Voltar às dicas de carreira</Link><h1 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">{article.title}</h1><p className="mt-6 text-lg leading-loose text-muted-foreground">{article.excerpt}</p><p className="my-7 border-y py-4 text-xs text-muted-foreground">{article.author_name} · Publicado em {new Date(article.published_at!).toLocaleDateString('pt-BR')}</p>{article.cover_url && <ArticleCover article={article} />}<RichTextRenderer html={article.content_html} className="mt-9 text-base leading-loose [&_h2]:mt-9 [&_h2]:mb-4 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-xl [&_p]:mb-5" /><div className="mt-10 rounded-2xl border bg-card p-6"><h2 className="text-xl font-bold">Vamos dar o próximo passo?</h2><p className="mt-3 text-sm text-muted-foreground">Encontre oportunidades e profissionais da região.</p><Button asChild variant="cta" className="mt-5"><Link to="/explorar">Explorar oportunidades<ArrowRight /></Link></Button></div>
+    {article.id.startsWith('local-editorial-') && <p className="mb-6 rounded-lg bg-accent px-4 py-3 text-sm text-brand-ink">Prévia local do conteúdo inicial. Este post ainda não foi publicado no banco do site.</p>}
+    <Link to="/blog" className="mb-7 inline-flex min-h-11 items-center gap-2 text-sm text-primary"><ArrowLeft className="size-4" />Voltar às dicas de carreira</Link><h1 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">{article.title}</h1><p className="mt-6 text-lg leading-loose text-muted-foreground">{article.excerpt}</p><p className="my-7 border-y py-4 text-xs text-muted-foreground">{article.author_name} · Publicado em {new Date(article.published_at!).toLocaleDateString('pt-BR')}</p><ArticleCover article={article} /><RichTextRenderer html={article.content_html} className="mt-9 text-base leading-loose [&_h2]:mt-9 [&_h2]:mb-4 [&_h2]:font-display [&_h2]:text-2xl [&_h2]:font-bold [&_h3]:mt-6 [&_h3]:mb-3 [&_h3]:text-xl [&_p]:mb-5" /><div className="mt-10 rounded-2xl border bg-card p-6"><h2 className="text-xl font-bold">Vamos dar o próximo passo?</h2><p className="mt-3 text-sm text-muted-foreground">Encontre oportunidades e profissionais da região.</p><Button asChild variant="cta" className="mt-5"><Link to="/explorar">Explorar oportunidades<ArrowRight /></Link></Button></div>
   </article>
 }
