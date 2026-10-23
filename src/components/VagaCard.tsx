@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { CompanyLogo } from '@/components/CompanyLogo'
+import { VagaCover } from '@/components/VagaCover'
 import { iconForVaga } from '@/lib/categoryIcons'
 import { stripHtml } from '@/lib/utils'
 import { formatLocal, formatVagaPay, hasVagaPayValue, timeAgo } from '@/lib/format'
@@ -58,7 +59,11 @@ export function VagaCard({ vaga }: { vaga: VagaCardData }) {
             <Star className="size-3" fill="currentColor" /> Destaque
           </span>
         )}
-        {photos.length > 0 && <ImageCarousel images={photos} alt={vaga.title} className="-mt-5 mb-1 aspect-video w-full" />}
+        {photos.length > 0 ? (
+          <ImageCarousel images={photos} alt={vaga.title} className="-mt-5 mb-1 aspect-video w-full" />
+        ) : (
+          <VagaCover seed={vaga.category ?? vaga.id} icon={Icon} className="-mt-5 mb-1" />
+        )}
         <CardHeader className="flex-row items-start gap-3">
           <CompanyLogo name={empresaNome} logoUrl={vaga.empresas?.logo_url} size="md" />
           <div className="min-w-0 pt-0.5">

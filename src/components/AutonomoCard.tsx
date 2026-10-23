@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { ImageCarousel } from '@/components/ImageCarousel'
+import { VagaCover } from '@/components/VagaCover'
+import { iconForCategory } from '@/lib/categoryIcons'
 import { stripHtml } from '@/lib/utils'
 import { formatAutonomoPay, formatLocal, timeAgo } from '@/lib/format'
 
@@ -46,7 +48,11 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
             <Star className="size-3" fill="currentColor" /> Destaque
           </span>
         )}
-        {photos.length > 0 && <ImageCarousel images={photos} alt={name} className="-mt-5 mb-1 aspect-video w-full" />}
+        {photos.length > 0 ? (
+          <ImageCarousel images={photos} alt={name} className="-mt-5 mb-1 aspect-video w-full" />
+        ) : (
+          <VagaCover seed={autonomo.category ?? autonomo.id} icon={iconForCategory(autonomo.category)} className="-mt-5 mb-1" />
+        )}
         <CardHeader className="flex-row items-start gap-3">
           <InitialsAvatar name={name} size="md" />
           <div className="min-w-0 pt-0.5">
