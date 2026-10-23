@@ -1,12 +1,13 @@
 # EmpregaSantana — Identidade Visual & Design System
 
-> Versão 1.3 — Leitura do manual de marca oficial e especificação de como aplicá-lo no produto.
-> Fonte de verdade: **o manual de marca**. Onde o código diverge, o código é que muda (ver §9).
-> Estado: **Blocos 1, 2, 3 e 4 aplicados** (§9.1) — paleta, logo/favicon, correções pontuais e
-> tipografia consistente em toda tela autenticada. Pendência real remanescente: os assets vetoriais
-> do selo oficial (§7) — o produto usa o fallback tile+ícone documentado em §6.2 até o logo em SVG
-> existir em `public/brand/`.
-> Os blocos de código deste documento refletem o que está em `src/index.css` hoje.
+> Versão 1.4 — Estado real conferido contra `main` em `c0b1d6a` (2026-10-22).
+> Fonte de verdade do **manual**: tagline, verbos, praça, fundação e regras do
+> logotipo. A **paleta**, porém, está em disputa: o CSS usa a do manual e os
+> arquivos do selo usam a Fingestão. Isso é um conflito aberto, não uma escolha —
+> ver [ESTADO_DA_IDENTIDADE.md](./ESTADO_DA_IDENTIDADE.md).
+> Existe ainda um redesenho inteiro parado em branch sem PR
+> (`claude/tender-rubin-eeuyjb`), descrito no mesmo documento.
+> Os blocos de código abaixo refletem `src/index.css` da `main`.
 
 ---
 
@@ -110,9 +111,30 @@ A exclamação em `Santana!` é parte do logotipo. Não remova.
 
 ## 3. Paleta
 
-Cinco cores oficiais. Os valores OKLCH abaixo foram convertidos a partir dos hex do manual e são o que entra em `src/index.css` — o projeto usa **Tailwind v4**, cujos tokens são OKLCH.
+⚠️ **Duas paletas convivem no repositório.** A do manual, descrita nesta seção, é a
+que `src/index.css` aplica. A Fingestão, na §3.0, é a que os arquivos do selo usam.
+Escolher uma e alinhar a outra é decisão pendente — ver §7.1.1.
 
-### 3.1 Cores oficiais
+### 3.0 A paleta Fingestão (hoje só nos arquivos do selo)
+
+Entrou pela PR #2 e foi revertida do CSS pelo commit `33caeda`, mas permaneceu nos
+SVGs. Valores conferidos por contraste quando foi aplicada:
+
+| Papel | Hex | OKLCH | Nota |
+|---|---|---|---|
+| Tinta | `#0B1D39` | `oklch(0.233 0.059 259)` | 15.2:1 sobre o off-white |
+| Off-white quente | `#F7F3EE` | `oklch(0.966 0.008 73.7)` | neutro quente, não cinza frio |
+| Azul de texto | `#0062C0` | `oklch(0.500 0.170 253.2)` | derivado: o `#1E90FF` reprova como texto (3.24:1) |
+| Azul vivo | `#1E90FF` | `oklch(0.652 0.190 253.2)` | só preenchimento |
+| Azul claro | `#A7D8FF` | `oklch(0.861 0.075 242.7)` | só superfície |
+| Laranja | `#FF5A2A` | `oklch(0.683 0.209 36.1)` | fundo de CTA, label na tinta |
+| Laranja de texto | `#C3441F` | `oklch(0.560 0.170 36.1)` | derivado |
+
+A razão dos derivados: no original, azul e laranja têm quase a mesma luminosidade
+(OKLCH L 0.652 e 0.683), então **nenhum dos dois pode ser texto nem aceita label
+branco** — e, pesando igual, não criam hierarquia entre "navegar" e "agir".
+
+### 3.1 Cores oficiais do manual (as que o CSS aplica hoje)
 
 | Papel | Hex | OKLCH | Onde entra |
 |---|---|---|---|
@@ -121,6 +143,13 @@ Cinco cores oficiais. Os valores OKLCH abaixo foram convertidos a partir dos hex
 | **Laranja ação** | `#FF8A00` | `oklch(0.747 0.180 57.4)` | `--brand-orange` — fundo de CTA, ribbon de destaque, figura do logo |
 | **Neutro claro** | `#F2F2F2` | `oklch(0.961 0 0)` | `--secondary` / `--muted` — fundos de seção, superfícies de apoio |
 | **Neutro escuro** | `#333333` | `oklch(0.321 0 0)` | `--foreground` — texto corrido |
+
+> **O azul deixou de ser constante.** A página de Aparência
+> (`src/pages/admin/AparenciaPage.tsx:25`) permite ao admin escolher entre
+> `#1E63B6`, `#16529A` e `#0D3A66`, além de fundo, escala de texto e forma de botão.
+> Qualquer peça gráfica que dependa de o azul ser um valor fixo precisa levar isso em
+> conta, e a decisão de paleta (§3.0) tem de dizer o que acontece com essas três
+> opções.
 
 ### 3.2 Cores de sistema derivadas
 
@@ -390,7 +419,7 @@ Depois disso, estas classes ficam disponíveis: `bg-brand-orange`, `text-brand-o
 
 ### 5.1 Regras de uso dos tokens
 
-- **Nunca escreva hex, `rgb()` ou cor crua do Tailwind em componente.** Hoje o projeto é quase perfeito nisso: as únicas cores fora do sistema estão em `src/components/StatusBadge.tsx:27` (`violet-500/600/400`). Essa é a única exceção a eliminar.
+- **Nunca escreva hex, `rgb()` ou cor crua do Tailwind em componente.** O projeto cumpre isso: `grep -rE "#[0-9a-fA-F]{6}|rgb\(|hsl\(" src/` retorna apenas `src/index.css`. O último vazamento (`violet-*` em `StatusBadge`) foi eliminado no Bloco 3.
 - Tints e tons se fazem com sufixo de opacidade sobre o token (`bg-brand-orange/15`, `text-primary/70`), não com cor nova. É o padrão já adotado em `VagaCard`, `AutonomoCard` e `InitialsAvatar`.
 - `--brand-ink` é cor de **logotipo**, não de texto. É constante no modo claro.
 
@@ -411,69 +440,35 @@ O componente já está estruturalmente certo (pill `rounded-full`, variante `cta
 | `outline` | Ação terciária, filtros | borda neutra, `hover:border-primary` |
 | `ghost` / `link` | Navegação, ações destrutivas leves | texto `--primary` |
 
-### 6.2 Logotipo — extrair para componente
+### 6.2 Logotipo — `src/components/brand/Logo.tsx`
 
-O lockup está **duplicado em três arquivos**, cada um com medidas próprias:
-
-- `src/components/layout/Navbar.tsx:34-41` — tile `size-9 rounded-2xl bg-brand-ink` + `<Briefcase>` + wordmark
-- `src/components/layout/RootLayout.tsx:20-25` — mesma coisa em `size-7 rounded-xl`
-- `src/pages/public/LoginPage.tsx:37` — mesma coisa em `size-11 rounded-2xl`
-
-Criar `src/components/brand/Logo.tsx` como fonte única e substituir os três usos:
+Fonte única do lockup, consumida por `Navbar`, `RootLayout` e `LoginPage`; antes o
+lockup estava duplicado nos três, cada um com medidas próprias. O selo é carregado
+de `public/brand/logo-mark.svg` (`Logo.tsx:26`), então trocar a arte não exige tocar
+em nenhum chamador.
 
 ```tsx
-import { Link } from 'react-router-dom'
-import { cn } from '@/lib/utils'
-
-type LogoProps = {
-  /** 'mark' = só o selo; 'full' = selo + wordmark */
-  variant?: 'mark' | 'full'
-  size?: 'sm' | 'md' | 'lg'
-  asLink?: boolean
-  className?: string
-}
-
-const MARK_SIZE = { sm: 'size-7', md: 'size-9', lg: 'size-11' }
-const TEXT_SIZE = { sm: 'text-base', md: 'text-lg', lg: 'text-xl' }
-
-export function Logo({ variant = 'full', size = 'md', asLink = true, className }: LogoProps) {
-  const content = (
-    <span className={cn('flex items-center gap-2.5', className)}>
-      <img
-        src="/brand/logo-mark.svg"
-        alt=""
-        aria-hidden
-        className={cn(MARK_SIZE[size], 'shrink-0')}
-      />
-      {variant === 'full' && (
-        <span className={cn('font-display font-extrabold tracking-tight', TEXT_SIZE[size])}>
-          Emprega<span className="text-brand-orange-ink">Santana</span>
-        </span>
-      )}
-    </span>
-  )
-
-  return asLink ? (
-    <Link to="/" aria-label="EmpregaSantana — página inicial">{content}</Link>
-  ) : (
-    content
-  )
-}
+<Logo />                                          // selo + wordmark
+<Logo size="sm" />                                // rodapé
+<Logo variant="mark" size="lg" asLink={false} />  // só o selo, em telas de auth
 ```
 
-Observe: o `<img>` é `aria-hidden` porque o texto ao lado já nomeia a marca; no `variant="mark"` o nome acessível vem do `aria-label` do link. Isso evita o logo ser anunciado duas vezes por leitor de tela.
+O `<img>` é `aria-hidden` porque o wordmark ao lado já nomeia a marca; em
+`variant="mark"` o nome acessível vem do `aria-label` do link, evitando que o leitor
+de tela anuncie a marca duas vezes.
 
-> Enquanto `public/brand/logo-mark.svg` não existir (§7), o componente pode manter o fallback atual — tile `bg-brand-ink` com `<Briefcase>` do lucide. A extração para componente único vale a pena **antes** mesmo do asset existir, porque troca 3 edições por 1.
+⚠️ O arquivo do selo está numa paleta diferente da do CSS — ver §7.1.1.
 
 ### 6.3 Correções pontuais
 
-| Arquivo | Situação hoje | Ação |
+| Alvo | Situação | Estado |
 |---|---|---|
-| `src/components/layout/RootLayout.tsx:40` | "Conectando pessoas e oportunidades desde 2026." | ❌ **Ano errado.** Trocar para "desde agosto de 2022" |
-| `src/components/StatusBadge.tsx:27` | `bg-violet-500/12 text-violet-600 …` no status `entrevista` | Único vazamento fora dos tokens. Trocar por `bg-primary/12 text-primary border-primary/25` |
-| `src/index.css` `font-feature-settings` | features da Plus Jakarta Sans | ✅ removido no Bloco 1 |
-| `src/index.css` `.brand-mesh` | só laranja + tinta | ✅ usa `--brand-blue` desde o Bloco 1 |
-| `index.html:9` | `<meta description>` sem a tagline | Usar a tagline oficial da §1 |
+| Ano no rodapé | era "desde 2026", a marca é de agosto de 2022 | ✅ corrigido no Bloco 3 |
+| `StatusBadge` status `entrevista` | usava `violet-*`, fora do sistema de tokens | ✅ corrigido no Bloco 3 |
+| `font-feature-settings` | features da Plus Jakarta Sans | ✅ removido no Bloco 1 |
+| `<meta description>` | sem a tagline oficial | ✅ aplicada no Bloco 3 |
+| `.brand-edge` em 4 telas de auth | classe referenciada e **inexistente no CSS** | ❌ **aberto** — ver §9 e `ESTADO_DA_IDENTIDADE.md` |
+| Recência nos cards | `publicadaHa`/`contarRecentes` sem consumidor | ❌ **aberto** |
 
 ### 6.4 Laranja como texto — a migração que o Bloco 1 obrigou
 
@@ -505,7 +500,7 @@ O board define cinco ícones conceituais. **Eles não viram um icon set novo** �
 | Conceito do board | Equivalente lucide | Onde já aparece |
 |---|---|---|
 | Conexão | `Handshake` | `vendas`, `consultor` em `categoryIcons.tsx:29,44` |
-| Trabalho | `Briefcase` | fallback de `iconForCategory()` (`categoryIcons.tsx:61-62`) |
+| Trabalho | `Briefcase` | fallback de `iconForCategory()` em `src/lib/categoryIcons.tsx` |
 | Crescimento | `TrendingUp` | a adicionar — usar em estatísticas do hero |
 | Potencial | `Star` | a adicionar — usar em "Destaque"/plano premium |
 | Orientação | `FileText` | a adicionar — usar em currículo/dica de carreira |
@@ -514,27 +509,51 @@ Regra: ícone sempre `strokeWidth={2}` (2.4 quando dentro de tile chapado, como 
 
 ---
 
-## 7. Assets a produzir
+## 7. Assets
 
-⚠️ **Nenhum arquivo de imagem pôde ser gerado nesta rodada** — o logo chegou como imagem de referência, não como arquivo vetorial no repositório. Esta seção especifica o que precisa ser exportado e onde depositar.
+### 7.1 O que existe hoje
 
-### 7.1 Estrutura alvo
+Os arquivos do selo **existem** e estão em produção — `src/components/brand/Logo.tsx:26`
+carrega `/brand/logo-mark.svg`. Versões anteriores deste documento afirmavam que o
+produto ainda usava um fallback de tile + ícone lucide; isso deixou de ser verdade
+na PR #2.
 
 ```
 public/
   brand/
-    logo-mark.svg          # selo flat, sem wordmark, 512×512 viewBox quadrado
-    logo-full.svg          # lockup horizontal selo + wordmark
-    logo-mono-white.svg    # versão de uma cor, para fundo #0D3A66
-    logo-3d.png            # selo 3D, 1024×1024, fundo transparente (peças/apresentação)
-  favicon.svg              # selo flat simplificado, legível a 16px
-  favicon-96.png           # fallback raster
-  apple-touch-icon.png     # 180×180, fundo #FFFFFF chapado (iOS não respeita transparência)
-  og-image.png             # ✅ JÁ EXISTE — revisar quando o logo oficial chegar
+    logo-mark.svg          selo: anel, figura de braços erguidos, dois currículos
+    logo-mono-white.svg    uma cor, para fundo escuro
+  favicon.svg              sem os currículos, que somem a 16px; fundo chapado
+  favicon-96.png           fallback raster
+  apple-touch-icon.png     180×180
+  og-image.png             1200×630
   site.webmanifest
 ```
 
-> **Atualização:** a `main` trouxe SEO (`og-image.png`, `robots.txt`, sitemap, meta tags OG/Twitter em `index.html`) depois que este documento foi escrito. O `og-image.png` existe e as meta tags OG/Twitter já estão no lugar — o que resta da §7.3 é `favicon`, `apple-touch-icon`, `manifest` e `theme-color`. Quando o logo oficial chegar, o `og-image.png` deve ser refeito com o selo e a tagline.
+O selo foi vetorizado à mão, não exportado de render 3D: precisa ler a 16px, e o 3D
+embola nesse tamanho. Validado em 16/24/32/48/96/160px. **Regra de tamanho:** o selo
+completo leva os currículos a partir de 48px; abaixo disso use o favicon, que os
+remove.
+
+### 7.1.1 ⚠️ Os assets estão numa paleta diferente da interface
+
+Os SVGs ficaram na paleta Fingestão quando o CSS voltou à do manual. Distância
+perceptual (ΔE OKLab; limiar de percepção ≈ 0.02):
+
+| Par | ΔE | |
+|---|---|---|
+| figura do selo `#FF5A2A` × CTA `#FF8A00` | **0.101** | cores distintas |
+| anel `#0B1D39` × `--brand-ink` `#0D3A66` | **0.116** | cores distintas |
+| currículos `#1E90FF` × `--primary` `#1E63B6` | **0.154** | cores distintas |
+
+Efeito visível: a navbar exibe dois laranjas diferentes lado a lado, em toda página.
+
+Mesma origem, ainda em valores Fingestão:
+`index.html:10` (`theme-color: #0B1D39`) e `public/site.webmanifest:7-8`
+(`background_color: #F7F3EE`, `theme_color: #0B1D39`).
+
+Resolver isso exige decidir qual paleta vence. Enquanto não se decide, não recolorir
+nada pela metade — foi a correção parcial que criou o problema.
 
 ### 7.2 Limpeza obrigatória
 
@@ -623,7 +642,7 @@ Estado em `HEAD` (`6bfa705`). **O manual é a fonte de verdade em todas as linha
 | 4 | Neutros | `#F2F2F2` / `#333333` | cinzas frios (`0.99 0.002 260`) | Código muda para cinza puro |
 | 5 | Tipografia | Montserrat + Poppins | Plus Jakarta Sans | Código muda. Duas famílias, com hierarquia título/corpo |
 | 6 | Logo | selo circular | `<Briefcase>` + wordmark em JSX, 3 cópias | Código muda + depende de asset (§7) |
-| 7 | Fundação | agosto de **2022** | footer diz "desde **2026**" | **Erro factual no código.** `RootLayout.tsx:40` |
+| 7 | Fundação | agosto de **2022** | footer diz "desde **2026**" | **Erro factual no código**, corrigido no Bloco 3. |
 | 8 | Favicon | — | raio roxo `#863bff` do scaffold Vite | Descartar |
 | 9 | Tagline | definida | não aparece em lugar nenhum | Adicionar em `<meta>`, hero e footer |
 
@@ -655,6 +674,28 @@ Auditoria completa pós-Bloco 3, disparada por revisão explícita de "todas as 
 - Variantes de botão (`cta` vs `default`) já estavam corretas em toda a área logada (ex.: "Nova vaga" no painel é navegação → `default`; "Publicar vaga" no formulário é a ação real → `cta`) — nada a mudar ali.
 
 *Visível para o usuário final: sim — todo título de card em toda tela autenticada (antes em Poppins, agora Montserrat) e o `<h1>` de 15 páginas internas.*
+
+**Reversão de paleta (21/10/2026)** ⚠️ **PARCIAL**
+O commit `33caeda` ("Reúne revisões locais com a versão atual do GitHub") devolveu
+`src/index.css` à paleta do manual, desfazendo a Fingestão aplicada na PR #2. A
+reversão **não alcançou** os SVGs do selo, o `theme-color` do `index.html` nem o
+`site.webmanifest`, que seguem em valores Fingestão (§7.1.1). Também removeu a
+utilitária `.brand-edge` sem remover as referências a ela em quatro telas de
+autenticação — `LoginPage.tsx:33`, `CadastroPage.tsx:57`,
+`ForgotPasswordPage.tsx:31`, `ResetPasswordPage.tsx:38` —, que ficaram sem
+tratamento de fundo em silêncio. E tirou a exibição de recência dos cards, deixando
+`publicadaHa` e `contarRecentes` em `src/lib/utils.ts` com testes e sem consumidor.
+
+**Bloco 5 — Redesenho "Mural da cidade"** ⏳ **PENDENTE, em branch sem PR**
+Existe em `claude/tender-rubin-eeuyjb` (commit `5804b69`), partindo de 8 commits
+atrás da `main`. Saída da crítica de design de 2026-10-16 — ver
+[DEBITO_DE_DESIGN.md](./DEBITO_DE_DESIGN.md). Propõe: hero de startup trocado por
+faixa chapada com busca; card virando o cartaz "VAGA NOVA"; `.brand-mesh` removida
+em favor do componente `BrandDivider`; tokens `--success-ink` e `--destructive-ink`
+com contraste medido; marca nas superfícies do navegador (`scrollbar-color`,
+`caret-color`, `accent-color`, `::selection`); barra fixa no celular com
+`safe-area-inset`; alvos de 44px. **Mantém o tema escuro, que a `main` removeu** —
+integrar sem resolver isso reintroduz um tema desligado de propósito.
 
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 
@@ -700,17 +741,7 @@ Marcar conforme a implementação avançar.
 
 ---
 
-## Anexo — verificação dos valores
-
-Conversões hex↔OKLCH e contrastes desta doc foram calculados pelas fórmulas oficiais (sRGB → OKLab, Björn Ottosson) e pela definição de luminância relativa da WCAG 2.1. Para reconferir após qualquer alteração de paleta:
-
-- OKLCH: qualquer conversor que implemente OKLab, ou `oklch()` direto no DevTools do Chrome.
-- Contraste: WebAIM Contrast Checker, ou a aba Accessibility do DevTools.
-
-Os pares críticos a revalidar em qualquer mudança de cor são os da tabela §3.4 — especialmente qualquer combinação que envolva `#FF8A00`.
-
-
-## 10. Direção confirmada em 20/10/2026
+## 11. Direção confirmada em 20/10/2026
 
 Todo o site e sistema operam em **modo claro**, incluindo candidato, autônomo, empresa e administração. Página em `#F8F8F8`, cards e popovers brancos, apoio em `#F2F2F2`, texto em `#333333`; azul e laranja preservam seus papéis oficiais. Evitar grandes superfícies escuras na interface. O azul profundo continua disponível para títulos e elementos de marca. O tema escuro do dispositivo não altera a aplicação.
 
@@ -724,6 +755,17 @@ Todas as áreas seguem layout fluido e modo claro. O menu do site permanece no t
 O [estudo de Gupy e Infojobs](ANALISE_GUPY_INFOJOBS.md) define aplicações por tela e matriz de validação. Os padrões são propostas para evolução; a marca e os tokens oficiais permanecem a fonte de verdade.
 
 
-## 10. Decisão de navegação administrativa — 20/10/2026
+## 12. Decisão de navegação administrativa — 20/10/2026
 
 O responsável solicitou menu lateral azul escuro no admin e autorizou a mesma aplicação nos painéis dos usuários. O conteúdo e os formulários permanecem claros. Usar azul profundo da marca na lateral, branco/azul claro para texto, seleção por fundo mais claro e foco visível. A administração não tem cabeçalho ou rodapé público; o acesso ao site fica na navegação. A estrutura de menus é inspirada no WordPress e preserva a identidade do EmpregaSantana. Aparência oferece opções controladas da paleta, tamanho de texto e formato de botões, sem modo escuro global.
+
+---
+
+## Anexo — verificação dos valores
+
+Conversões hex↔OKLCH e contrastes desta doc foram calculados pelas fórmulas oficiais (sRGB → OKLab, Björn Ottosson) e pela definição de luminância relativa da WCAG 2.1. Para reconferir após qualquer alteração de paleta:
+
+- OKLCH: qualquer conversor que implemente OKLab, ou `oklch()` direto no DevTools do Chrome.
+- Contraste: WebAIM Contrast Checker, ou a aba Accessibility do DevTools.
+
+Os pares críticos a revalidar em qualquer mudança de cor são os da tabela §3.4 — especialmente qualquer combinação que envolva `#FF8A00`.
