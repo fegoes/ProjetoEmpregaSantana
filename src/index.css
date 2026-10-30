@@ -177,3 +177,34 @@
     @apply font-display;
   }
 }
+
+/* Editor de texto rico: o Tailwind zera listas e títulos, então o editor
+   precisa devolver o estilo (marcadores, subtítulo, texto de exemplo). */
+@layer components {
+  .rich-editor .ProseMirror {
+    min-height: 7rem;
+  }
+  .rich-editor .ProseMirror > * + * {
+    margin-top: 0.5rem;
+  }
+  .rich-editor .ProseMirror ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  .rich-editor .ProseMirror li > p {
+    margin: 0;
+  }
+  .rich-editor .ProseMirror h3 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1rem;
+  }
+  .rich-editor .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: var(--muted-foreground);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+}

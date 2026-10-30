@@ -3,6 +3,7 @@ import { useEmpresa } from '@/contexts/EmpresaContext'
 import { supabase } from '@/lib/supabase'
 import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo } from '@/lib/storage'
 import { RichTextEditor } from '@/components/RichTextEditor'
+import { BlocksEditor } from '@/components/BlocksEditor'
 import { ImageUploadField } from '@/components/ImageUploadField'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { Button } from '@/components/ui/button'
@@ -149,7 +150,7 @@ export default function EmpresaPerfilPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label>Sobre a empresa</Label>
-            <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} />
+            <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="empresa" />
           </div>
         </CardContent>
       </Card>

@@ -6,6 +6,8 @@ import { stripHtml } from '@/lib/utils'
 import { formatLocal } from '@/lib/format'
 import { BackLink } from '@/components/BackLink'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { BlocksRenderer } from '@/components/BlocksRenderer'
+import { descriptionToText } from '@/lib/blocks'
 import { VagaCard } from '@/components/VagaCard'
 import { EmptyState } from '@/components/EmptyState'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
@@ -20,7 +22,7 @@ export default function EmpresaDetailPage() {
   useDocumentMeta({
     title: empresa ? empresa.nome_fantasia : 'Empresa',
     description: empresa
-      ? stripHtml(empresa.description_html) || `${empresa.nome_fantasia} no EmpregaSantana.`
+      ? descriptionToText(empresa.description_html).slice(0, 160) || `${empresa.nome_fantasia} no EmpregaSantana.`
       : undefined,
     image: empresa?.logo_url ?? undefined,
     type: 'profile',
@@ -83,7 +85,7 @@ export default function EmpresaDetailPage() {
         </div>
       </div>
 
-      <RichTextRenderer html={empresa.description_html} />
+      <BlocksRenderer html={empresa.description_html} headingLevel={2} />
 
       <div>
         <h2 className="mb-3 text-lg font-bold">Vagas abertas ({vagasPublicadas.length})</h2>

@@ -8,7 +8,7 @@ import { supabase } from '@/lib/supabase'
 import { uploadVagaGalleryPhoto } from '@/lib/storage'
 import { DEFAULT_UF } from '@/lib/masks'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
-import { RichTextEditor } from '@/components/RichTextEditor'
+import { BlocksEditor } from '@/components/BlocksEditor'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { IconPickerField } from '@/components/IconPickerField'
 import { CategorySelect } from '@/components/CategorySelect'
@@ -138,8 +138,11 @@ export default function VagaFormPage() {
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label>Descrição</Label>
-          <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} placeholder="Descreva a vaga…" />
+          <Label>Descrição da vaga</Label>
+          <p className="text-sm text-muted-foreground">
+            Separe em blocos (Sobre a vaga, Requisitos, Benefícios…). Quem lê abre e fecha cada um.
+          </p>
+          <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="vaga" />
         </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

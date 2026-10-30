@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import type { PricingModelAutonomo } from '@/types/database'
-import { RichTextEditor } from '@/components/RichTextEditor'
+import { BlocksEditor } from '@/components/BlocksEditor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -107,8 +107,8 @@ export default function AutonomoPerfilPage() {
           <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label>Descrição dos serviços</Label>
-          <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} />
+          <Label>Sobre o seu trabalho</Label>
+          <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="autonomo" />
         </div>
         <PhotoGalleryField
           label="Fotos de trabalhos (opcional)"

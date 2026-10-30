@@ -3,9 +3,9 @@ import { Clock, MapPin, MessageCircle, SearchX } from 'lucide-react'
 import { useAutonomo } from '@/hooks/useAutonomos'
 import { useAuth } from '@/contexts/AuthContext'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
-import { stripHtml } from '@/lib/utils'
+import { descriptionToText } from '@/lib/blocks'
 import { AUTONOMO_PRICING_LABELS, formatAutonomoPay, formatLocal, toWhatsAppNumber } from '@/lib/format'
-import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { BlocksRenderer } from '@/components/BlocksRenderer'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { EmptyState } from '@/components/EmptyState'
@@ -59,7 +59,7 @@ export default function AutonomoDetailPage() {
       ? `${autonomo.profiles?.full_name ?? 'Profissional autônomo'} — ${autonomo.headline ?? 'Autônomo'}`
       : 'Autônomo',
     description: autonomo
-      ? stripHtml(autonomo.description_html) || autonomo.headline || undefined
+      ? descriptionToText(autonomo.description_html).slice(0, 160) || autonomo.headline || undefined
       : undefined,
   })
 
@@ -139,7 +139,7 @@ export default function AutonomoDetailPage() {
               Sobre o trabalho
             </h2>
             {autonomo.description_html ? (
-              <RichTextRenderer html={autonomo.description_html} className="text-[15px]" />
+              <BlocksRenderer html={autonomo.description_html} headingLevel={3} />
             ) : (
               <p className="text-[15px] text-muted-foreground">O profissional ainda não escreveu uma descrição.</p>
             )}

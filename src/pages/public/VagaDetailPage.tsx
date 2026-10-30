@@ -2,9 +2,9 @@ import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Briefcase, CalendarDays, MapPin, SearchX } from 'lucide-react'
 import { useVaga } from '@/hooks/useVagas'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
-import { stripHtml } from '@/lib/utils'
+import { descriptionToText } from '@/lib/blocks'
 import { EMPLOYMENT_LABELS, formatLocal, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
-import { RichTextRenderer } from '@/components/RichTextRenderer'
+import { BlocksRenderer } from '@/components/BlocksRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
 import { JsonLd } from '@/components/JsonLd'
 import { ImageCarousel } from '@/components/ImageCarousel'
@@ -44,7 +44,7 @@ export default function VagaDetailPage() {
   useDocumentMeta({
     title: vaga ? `${vaga.title}${vaga.empresas ? ` — ${vaga.empresas.nome_fantasia}` : ''}` : 'Vaga',
     description: vaga
-      ? stripHtml(vaga.description_html) ||
+      ? descriptionToText(vaga.description_html).slice(0, 160) ||
         `Vaga de ${vaga.title}${vaga.empresas ? ` na ${vaga.empresas.nome_fantasia}` : ''} no EmpregaSantana.`
       : undefined,
     image: vaga?.photo_url ?? vaga?.empresas?.logo_url ?? undefined,
@@ -219,7 +219,7 @@ export default function VagaDetailPage() {
                   Descrição da vaga
                 </h2>
                 {vaga.description_html ? (
-                  <RichTextRenderer html={vaga.description_html} className="text-[15px]" />
+                  <BlocksRenderer html={vaga.description_html} headingLevel={3} />
                 ) : (
                   <p className="text-[15px] text-muted-foreground">A empresa não incluiu uma descrição.</p>
                 )}
@@ -232,7 +232,7 @@ export default function VagaDetailPage() {
                     Sobre a empresa
                   </h2>
                   {vaga.empresas.description_html && (
-                    <RichTextRenderer html={vaga.empresas.description_html} className="mb-3 text-[15px]" />
+                    <BlocksRenderer html={vaga.empresas.description_html} headingLevel={3} className="mb-3" />
                   )}
                   <Link to={`/empresas/${vaga.empresas.id}`} className="text-sm font-medium text-primary hover:underline">
                     Ver página e outras vagas da {vaga.empresas.nome_fantasia}
