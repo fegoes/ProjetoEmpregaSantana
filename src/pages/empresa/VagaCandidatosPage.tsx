@@ -1,22 +1,26 @@
-import { useParams } from 'react-router-dom'
-import { Briefcase, GraduationCap, Mail, MapPin, Phone } from 'lucide-react'
-import { useVagaCandidaturas, useUpdateCandidaturaStatus } from '@/hooks/useEmpresaVagas'
-import type { CandidaturaStatus } from '@/types/database'
+import { Link, useParams } from 'react-router-dom'
+import { Briefcase, GraduationCap, Mail, MapPin, MessagesSquare, Phone } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
+import { useEmpresa } from '@/contexts/EmpresaContext'
+import { useVagaCandidaturas } from '@/hooks/useEmpresaVagas'
+import { useLeituras, useProcessos } from '@/hooks/useProcessos'
+import { resumoAndamento, temNovidade } from '@/lib/hiring'
+import { NovidadeTag, ProcessoBadge } from '@/components/processo/ProcessoBadge'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
+import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-const NEXT_STATUS: Partial<Record<CandidaturaStatus, CandidaturaStatus>> = {
-  enviada: 'em_analise',
-  em_analise: 'entrevista',
-  entrevista: 'aprovada',
-}
-
 export default function VagaCandidatosPage() {
   const { id } = useParams<{ id: string }>()
+  const { user } = useAuth()
+  const { empresa } = useEmpresa()
   const { data: candidaturas, isLoading } = useVagaCandidaturas(id)
-  const updateStatus = useUpdateCandidaturaStatus()
+  // Etapas, conversa e documentos de cada candidato ficam no processo dele
+  const { data: processos } = useProcessos(empresa && id ? { tipo: 'empresa', empresaId: empresa.id, vagaId: id } : undefined)
+  const { data: leituras } = useLeituras(user?.id)
+  const processoDe = new Map((processos ?? []).map((p) => [p.candidatura_id, p]))
 
   return (
     <div className="flex flex-col gap-6">
@@ -26,7 +30,7 @@ export default function VagaCandidatosPage() {
 
       <div className="flex flex-col gap-4">
         {candidaturas?.map((c) => {
-          const nextStatus = NEXT_STATUS[c.status]
+          const processo = processoDe.get(c.id)
           const cv = c.cv_variants
           return (
             <Card key={c.id}>
@@ -34,7 +38,10 @@ export default function VagaCandidatosPage() {
                 <CardTitle className="text-base">
                   {c.candidato_profiles?.profiles?.full_name ?? 'Candidato'} — {cv?.title}
                 </CardTitle>
-                <StatusBadge status={c.status} />
+                <div className="flex flex-wrap items-center gap-2">
+                  {processo && temNovidade(processo, user?.id, leituras?.get(processo.id)) && <NovidadeTag />}
+                  {processo ? <ProcessoBadge processo={processo} /> : <StatusBadge status={c.status} />}
+                </div>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground">
@@ -111,24 +118,16 @@ export default function VagaCandidatosPage() {
                   </div>
                 )}
 
-                <div className="flex gap-3 border-t pt-3 text-sm">
-                  {nextStatus && (
-                    <button
-                      className="font-medium text-primary hover:underline"
-                      onClick={() => id && updateStatus.mutate({ id: c.id, status: nextStatus, vagaId: id })}
-                    >
-                      Avançar para "{nextStatus}"
-                    </button>
-                  )}
-                  {c.status !== 'rejeitada' && (
-                    <button
-                      className="font-medium text-destructive hover:underline"
-                      onClick={() => id && updateStatus.mutate({ id: c.id, status: 'rejeitada', vagaId: id })}
-                    >
-                      Rejeitar
-                    </button>
-                  )}
-                </div>
+                {processo && (
+                  <div className="flex flex-col gap-2 border-t pt-3 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm">{resumoAndamento(processo, processo.etapas)}</p>
+                    <Button asChild variant="outline" size="sm" className="self-start sm:self-auto">
+                      <Link to={`/empresa/processos/${processo.id}`}>
+                        <MessagesSquare /> Abrir acompanhamento
+                      </Link>
+                    </Button>
+                  </div>
+                )}
               </CardContent>
             </Card>
           )

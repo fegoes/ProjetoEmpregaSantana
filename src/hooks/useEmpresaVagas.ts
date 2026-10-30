@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
-import type { CandidaturaStatus, Database } from '@/types/database'
+import type { Database } from '@/types/database'
 
 type VagaInsert = Database['public']['Tables']['vagas']['Insert']
 
@@ -65,20 +65,6 @@ export function useVagaCandidaturas(vagaId: string | undefined) {
         .order('created_at', { ascending: false })
       if (error) throw error
       return data
-    },
-  })
-}
-
-export function useUpdateCandidaturaStatus() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async ({ id, status, vagaId }: { id: string; status: CandidaturaStatus; vagaId: string }) => {
-      const { error } = await supabase.from('candidaturas').update({ status }).eq('id', id)
-      if (error) throw error
-      return vagaId
-    },
-    onSuccess: (vagaId) => {
-      queryClient.invalidateQueries({ queryKey: ['candidaturas', 'by-vaga', vagaId] })
     },
   })
 }

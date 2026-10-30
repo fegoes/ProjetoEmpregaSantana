@@ -1,4 +1,5 @@
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEmpresaAdmin } from '@/hooks/useEmpresas'
 import { supabase } from '@/lib/supabase'
@@ -31,6 +32,9 @@ export default function AdminEmpresaDetailPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      <Link to="/admin/empresas" className="inline-flex min-h-11 w-fit items-center gap-1.5 text-sm font-medium text-primary hover:underline md:min-h-9">
+        <ArrowLeft className="size-4" /> Empresas
+      </Link>
       <div className="flex items-start gap-3">
         {empresa.logo_url && (
           <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-cover" />

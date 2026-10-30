@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { cn } from './utils'
+import { cn, matchesSearch, normalizeText } from './utils'
 
 describe('cn', () => {
   it('merges class names and resolves tailwind conflicts', () => {
@@ -18,5 +18,28 @@ describe('safeInternalPath', () => {
     expect(safeInternalPath('//evil.example')).toBeNull()
     expect(safeInternalPath('https://evil.example')).toBeNull()
     expect(safeInternalPath(null)).toBeNull()
+  })
+})
+
+describe('busca do painel', () => {
+  it('ignora acento e maiúscula', () => {
+    expect(normalizeText('  Ação Rápida ')).toBe('acao rapida')
+    expect(normalizeText(null)).toBe('')
+  })
+
+  it('todas as palavras digitadas precisam aparecer, em qualquer campo', () => {
+    expect(matchesSearch('maria silva', 'Maria das Graças', 'silva@exemplo.com')).toBe(true)
+    expect(matchesSearch('maria souza', 'Maria das Graças', 'silva@exemplo.com')).toBe(false)
+  })
+
+  it('acha com ou sem acento', () => {
+    expect(matchesSearch('graca', 'Maria das Graças')).toBe(true)
+    expect(matchesSearch('GRAÇAS', 'maria das gracas')).toBe(true)
+  })
+
+  it('busca vazia vale para tudo e campos vazios não atrapalham', () => {
+    expect(matchesSearch('', 'qualquer coisa')).toBe(true)
+    expect(matchesSearch('   ', null)).toBe(true)
+    expect(matchesSearch('x', null, undefined, 'xis')).toBe(true)
   })
 })

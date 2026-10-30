@@ -10,7 +10,7 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/s
 import { useVagasPublicadas } from '@/hooks/useVagas'
 import { useAutonomosAtivos } from '@/hooks/useAutonomos'
 import { useCategories } from '@/hooks/useCategories'
-import { isActive } from '@/lib/categories'
+import { isActive, isAreaCategory } from '@/lib/categories'
 import {
   DEFAULT_FEED_FILTERS,
   categoryCounts,
@@ -124,7 +124,7 @@ export function FeedBrowser({ search = '', onClearSearch }: FeedBrowserProps) {
   )
 
   const labelOf = React.useMemo(
-    () => new Map((categories ?? []).filter((c) => c.kind !== 'empresa' && isActive(c)).map((c) => [c.slug, c.label])),
+    () => new Map((categories ?? []).filter((c) => isAreaCategory(c) && isActive(c)).map((c) => [c.slug, c.label])),
     [categories],
   )
   const quickCategories = React.useMemo(() => {

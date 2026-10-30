@@ -43,4 +43,5 @@ export const CANDIDATURA_STATUS_HINTS: Record<string, string> = {
   entrevista: 'A empresa quer conversar com você. Fique de olho no telefone e no e-mail.',
   aprovada: 'Você foi aprovado(a) para esta vaga.',
   rejeitada: 'Não foi dessa vez. Continue se candidatando a outras vagas.',
+  desistiu: 'Você desistiu desta vaga.',
 }

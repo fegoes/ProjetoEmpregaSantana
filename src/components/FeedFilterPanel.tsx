@@ -1,7 +1,7 @@
 import * as React from 'react'
 import type { ReactNode } from 'react'
 import { useCategories } from '@/hooks/useCategories'
-import { isActive } from '@/lib/categories'
+import { activeFor, isActive, isAreaCategory } from '@/lib/categories'
 import {
   EMPLOYMENT_TYPE_OPTIONS,
   PRICING_MODEL_OPTIONS,
@@ -56,9 +56,10 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
   const { data: allCategories } = useCategories()
   const categories = React.useMemo(
-    () => allCategories?.filter((c) => c.kind !== 'empresa' && isActive(c)),
+    () => allCategories?.filter((c) => isAreaCategory(c) && isActive(c)),
     [allCategories],
   )
+  const modalidades = React.useMemo(() => activeFor(allCategories, 'modalidade'), [allCategories])
   const [showAllCategories, setShowAllCategories] = React.useState(false)
   const sheet = layout === 'sheet'
   const optionsClass = sheet ? 'flex flex-wrap gap-2' : 'flex flex-col'
@@ -111,11 +112,20 @@ export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFil
         </div>
       </Section>
 
-      <Section title="Local">
-        <div className={optionsClass}>
-          {option(value.remoteOnly, () => onChange({ ...value, remoteOnly: !value.remoteOnly }), 'Só trabalho remoto', 'remote')}
-        </div>
-      </Section>
+      {modalidades.length > 0 && (
+        <Section title="Modalidade">
+          <div className={optionsClass}>
+            {modalidades.map((m) =>
+              option(
+                value.modalidades.includes(m.slug),
+                () => onChange({ ...value, modalidades: toggleInList(value.modalidades, m.slug) }),
+                m.label,
+                m.slug,
+              ),
+            )}
+          </div>
+        </Section>
+      )}
 
       {categories && categories.length > 0 && (
         <Section title="Categoria">

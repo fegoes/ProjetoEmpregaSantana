@@ -25,9 +25,9 @@ A conexão de empregabilidade do sertão: regional (Santana do Ipanema e cidades
 ## Operating Context
 
 - Divulgação de vagas acontece no Instagram e circula por WhatsApp; o site é para onde esses links levam.
-- Fluxo do candidato: ver vaga → criar conta → montar um ou mais currículos → candidatar-se escolhendo o currículo → acompanhar o status (enviada, em análise, entrevista, aprovada, não aprovada).
-- Fluxo da empresa: painel com vagas, candidaturas recebidas, banco de currículos (por plano).
-- Superadmin modera empresas, vagas, usuários, planos e categorias, e monta as páginas do site (início, sobre, termos, privacidade e páginas novas) em seções com fundos de imagem, slides, textos e botões com link.
+- Fluxo do candidato: ver vaga → criar conta → montar um ou mais currículos → candidatar-se escolhendo o currículo → acompanhar o processo etapa por etapa (candidatura recebida, análise do currículo, entrevista, análise de documentos, aguardando posicionamento, contratação — a empresa pode ajustar as etapas de cada vaga), com feedback, conversa e envio de documentos dentro da plataforma.
+- Fluxo da empresa: painel com vagas, seleção (cada candidato por etapas, com feedback, documentos e conversa), contratação de autônomos pela plataforma, banco de currículos (por plano).
+- Superadmin gerencia tudo: empresas (aprovar, suspender, verificar), usuários de todos os perfis, vagas, autônomos, acompanha as seleções, mantém planos e categorias, e monta as páginas do site (início, sobre, termos, privacidade e páginas novas) em seções com fundos de imagem, slides, textos e botões com link.
 
 ## Capabilities and Constraints
 

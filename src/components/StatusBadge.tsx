@@ -13,6 +13,7 @@ const LABELS: Record<string, string> = {
   entrevista: 'Entrevista',
   aprovada: 'Aprovada',
   rejeitada: 'Não aprovada',
+  desistiu: 'Desistiu',
 }
 
 // Cores semânticas: verde = confirmado/ativo, azul = em andamento, laranja = precisa de atenção, vermelho = negativo/encerrado
@@ -29,6 +30,7 @@ const STYLES: Record<string, string> = {
   suspended: 'bg-destructive/12 text-destructive-ink border-destructive/25',
   closed: 'bg-muted text-muted-foreground border-transparent',
   rejeitada: 'bg-destructive/12 text-destructive-ink border-destructive/25',
+  desistiu: 'bg-muted text-muted-foreground border-transparent',
 }
 
 export function StatusBadge({ status, className }: { status: string; className?: string }) {

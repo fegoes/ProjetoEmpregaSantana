@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import {
+  dataBR,
   formatAutonomoPay,
   formatBRL,
   formatLocal,
@@ -93,5 +94,16 @@ describe('toWhatsAppNumber', () => {
     expect(toWhatsAppNumber('(82) 99999-0000')).toBe('5582999990000')
     expect(toWhatsAppNumber('5582999990000')).toBe('5582999990000')
     expect(toWhatsAppNumber('123')).toBeNull()
+  })
+})
+
+describe('dataBR', () => {
+  it('formata dia/mês/ano', () => {
+    expect(dataBR('2026-11-05T15:00:00')).toBe('05/11/2026')
+  })
+  it('vazio quando não há data ou ela é inválida', () => {
+    expect(dataBR(null)).toBe('')
+    expect(dataBR(undefined)).toBe('')
+    expect(dataBR('não é data')).toBe('')
   })
 })

@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label'
 import { AuthLayout } from '@/components/auth/AuthLayout'
 import { PasswordInput } from '@/components/auth/PasswordInput'
 import { FormError } from '@/components/auth/FormError'
+import { afterLoginPath } from '@/lib/panelNav'
 import { safeInternalPath } from '@/lib/utils'
 
 export default function LoginPage() {
@@ -23,13 +24,13 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const { error: signInError, destination } = await signIn(email, password)
+    const { error: signInError, destination, access } = await signIn(email, password)
     setLoading(false)
     if (signInError) {
       setError(signInError)
       return
     }
-    navigate(redirect ?? destination ?? '/')
+    navigate(afterLoginPath(redirect, destination, access))
   }
 
   return (

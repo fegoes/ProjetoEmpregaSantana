@@ -1,5 +1,6 @@
 import type { VagaCardData } from '@/components/VagaCard'
 import type { AutonomoCardData } from '@/components/AutonomoCard'
+import { vagaModalidade } from '@/lib/modalidade'
 
 export const EMPLOYMENT_TYPE_OPTIONS: { value: string; label: string }[] = [
   { value: 'clt', label: 'CLT' },
@@ -20,7 +21,8 @@ export interface FeedFilters {
   categories: string[]
   employmentTypes: string[]
   pricingModels: string[]
-  remoteOnly: boolean
+  /** slugs das modalidades escolhidas (presencial, remota, híbrida…) */
+  modalidades: string[]
 }
 
 export const DEFAULT_FEED_FILTERS: FeedFilters = {
@@ -29,7 +31,7 @@ export const DEFAULT_FEED_FILTERS: FeedFilters = {
   categories: [],
   employmentTypes: [],
   pricingModels: [],
-  remoteOnly: false,
+  modalidades: [],
 }
 
 export function hasActiveFilters(filters: FeedFilters): boolean {
@@ -39,7 +41,7 @@ export function hasActiveFilters(filters: FeedFilters): boolean {
     filters.categories.length > 0 ||
     filters.employmentTypes.length > 0 ||
     filters.pricingModels.length > 0 ||
-    filters.remoteOnly
+    filters.modalidades.length > 0
   )
 }
 
@@ -55,7 +57,7 @@ export function filterVagas(vagas: VagaCardData[], filters: FeedFilters): VagaCa
       return false
     }
     if (filters.pricingModels.length > 0 && !filters.pricingModels.includes(vaga.pricing_model)) return false
-    if (filters.remoteOnly && !vaga.is_remote) return false
+    if (filters.modalidades.length > 0 && !filters.modalidades.includes(vagaModalidade(vaga))) return false
     return true
   })
 }
@@ -123,7 +125,7 @@ export function countPanelFilters(filters: FeedFilters): number {
     filters.categories.length +
     filters.employmentTypes.length +
     filters.pricingModels.length +
-    (filters.remoteOnly ? 1 : 0)
+    filters.modalidades.length
   )
 }
 

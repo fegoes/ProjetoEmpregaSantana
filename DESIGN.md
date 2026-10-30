@@ -256,6 +256,20 @@ Botões, chips e o seletor de tipo são pílulas (9999px). Cards têm cantos de 
 - Botões: laranja (destaque), azul ou só contorno; o destino é uma página do site, um endereço, WhatsApp ou telefone. Botão sem destino válido não aparece no site.
 - Os tamanhos respondem à largura da própria seção (container queries), por isso a prévia em largura de celular no painel se comporta como o celular. O primeiro título da página é o `h1`; os demais descem sem pular nível.
 
+### Painel do superadmin
+- Visão geral: faixa laranja lavada com as empresas que esperam aprovação, depois quatro grupos de números (Pessoas, Empresas, Publicações, Seleção e contratação) em blocos de um nível só, cada um é um link para a lista. Número que pede atenção ganha filete laranja.
+- Listas de gestão (empresas, usuários, vagas, autônomos, seleções): barra com filtros por situação e a quantidade de cada um, busca sem acento, linhas separadas por filete (sem cartão dentro de cartão), etiquetas de situação e as ações da linha em botões de 32px ou mais. "Mostrar mais" a cada 30. Ação destrutiva sempre pede confirmação e a própria conta não pode ser desativada nem apagada.
+
+### Acompanhamento da contratação
+- Tela única para os três lados (candidato, empresa, autônomo): à esquerda a linha do tempo das etapas; à direita a conversa e os documentos. No celular viram três abas (Andamento, Conversa, Documentos).
+- Linha do tempo: marcador de 28px por etapa (concluída = azul com visto, atual = anel azul com ponto, pendente = vazio, pulada = tracejado, contratação = verde, encerrada = vermelho), fio vertical entre eles e o feedback da empresa dentro da etapa, em citação com filete azul. Barra de andamento no topo.
+- Conversa: mensagens sem caixa em volta da lista; balão arredondado só na mensagem (minha em azul lavado, do outro em cinza), avisos do sistema centralizados e pequenos, feedback em bloco com filete azul e o nome da etapa. Documento anexado mostra nome, tamanho, prévia (se for imagem) e "Abrir".
+- Listas de processos seguem o padrão das candidaturas: linhas separadas por filete, etiqueta de situação, etapa atual, barra fina e a etiqueta laranja "Novidade" quando há resposta não lida.
+- Empresa decide numa coluna só: feedback opcional, "Concluir etapa e avançar", "Ir direto para outra etapa", "Marcar como contratado(a)" (laranja) e "Encerrar sem contratar".
+
+### Modalidade da vaga
+- Lista gerenciada pelo superadmin (Presencial, Remota, Híbrida de partida). Aparece como campo no cadastro da vaga, como filtro "Modalidade" no site e no card ("Híbrida · Santana do Ipanema, AL"). "Remota" dispensa a cidade.
+
 ### Card-cartaz "VAGA NOVA" (assinatura)
 O card em destaque vira o post da marca: campo azul profundo, título e valor em branco, secundários em branco a 75%, círculo laranja de 80px saindo do canto superior direito e rótulo "★ Destaque" em laranja. Vaga publicada há até 3 dias recebe a etiqueta laranja "Vaga nova".
 

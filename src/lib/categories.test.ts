@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { activeFor, inScope, slugify, uniqueSlug, type Category } from './categories'
+import { activeFor, inScope, isAreaCategory, slugify, uniqueSlug, type Category } from './categories'
 
 const cat = (slug: string, kind: Category['kind'], is_active = true): Category => ({ id: slug, slug, label: slug, kind, is_active })
 
@@ -36,5 +36,28 @@ describe('scopes', () => {
   it('treats a missing is_active (old database) as active', () => {
     const old = { id: 'x', slug: 'x', label: 'x', kind: 'vaga' } as Category
     expect(activeFor([old], 'vaga')).toHaveLength(1)
+  })
+})
+
+describe('modalidade da vaga', () => {
+  it('é uma lista própria: não aparece como área de vaga nem de autônomo, e vice-versa', () => {
+    expect(inScope(cat('m', 'modalidade'), 'modalidade')).toBe(true)
+    expect(inScope(cat('m', 'modalidade'), 'vaga')).toBe(false)
+    expect(inScope(cat('m', 'modalidade'), 'autonomo')).toBe(false)
+    expect(inScope(cat('a', 'both'), 'modalidade')).toBe(false)
+    expect(inScope(cat('v', 'vaga'), 'modalidade')).toBe(false)
+  })
+
+  it('fica fora das áreas de atuação usadas nos filtros e chips do site', () => {
+    expect(isAreaCategory(cat('m', 'modalidade'))).toBe(false)
+    expect(isAreaCategory(cat('s', 'empresa'))).toBe(false)
+    expect(isAreaCategory(cat('v', 'vaga'))).toBe(true)
+    expect(isAreaCategory(cat('b', 'both'))).toBe(true)
+  })
+
+  it('slug novo leva o prefixo da lista', () => {
+    expect(uniqueSlug('Semipresencial', [], 'modalidade')).toBe('modalidade-semipresencial')
+    expect(uniqueSlug('Remota', ['modalidade-remota'], 'modalidade')).toBe('modalidade-remota-2')
+    expect(uniqueSlug('???', [], 'modalidade')).toBe('modalidade')
   })
 })

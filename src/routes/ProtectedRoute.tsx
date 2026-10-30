@@ -1,5 +1,6 @@
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
+import { panelPathFor } from '@/lib/panelNav'
 import type { UserRole } from '@/types/database'
 
 interface ProtectedRouteProps {
@@ -31,12 +32,15 @@ export function ProtectedRoute({ roles, adminOnly = false }: ProtectedRouteProps
     return <Navigate to={`/login?redirect=${encodeURIComponent(destination)}`} replace />
   }
 
+  // Sem o perfil que a tela pede, a pessoa vai para o painel que ela tem (o superadmin, para o /admin).
+  const ownPanel = panelPathFor({ isAdmin, roles: userRoles })
+
   if (adminOnly && !isAdmin) {
-    return <Navigate to="/perfil" replace />
+    return <Navigate to={ownPanel} replace />
   }
 
   if (roles && roles.length > 0 && !roles.some((r) => userRoles.includes(r))) {
-    return <Navigate to="/perfil" replace />
+    return <Navigate to={ownPanel} replace />
   }
 
   return <Outlet />

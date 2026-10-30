@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
-import { supabase } from '@/lib/supabase'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { Megaphone } from 'lucide-react'
+import { AdminHeader, AdminList, AdminRow } from '@/components/admin/AdminKit'
+import { EmptyState } from '@/components/EmptyState'
 import { StatusBadge } from '@/components/StatusBadge'
+import { dataBR } from '@/lib/format'
+import { supabase } from '@/lib/supabase'
 
 function useAllAds() {
   return useQuery({
@@ -14,42 +17,33 @@ function useAllAds() {
   })
 }
 
+/** Destaques pagos cadastrados na plataforma. */
 export default function AdminAdsPage() {
   const { data: ads, isLoading } = useAllAds()
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight">Campo de ADS</h1>
-        <p className="text-sm text-muted-foreground">
-          Impulsionamento pago (self-serve, checkout Stripe avulso) é roadmap pós-Fase 3 — ver docs/PRD.md
-          seção 6.4. Esta tela só lista/gerencia registros manuais por enquanto.
-        </p>
-      </div>
+      <AdminHeader
+        title="ADS"
+        description="Os destaques pagos que aparecem no site. Por enquanto eles são cadastrados pela equipe: a compra de destaque pelo próprio site ainda não existe."
+      />
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
 
-      {ads?.length === 0 && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Nenhum destaque ativo</CardTitle>
-            <CardDescription>Registros de ADS aparecerão aqui quando criados.</CardDescription>
-          </CardHeader>
-        </Card>
-      )}
+      {ads?.length === 0 && <EmptyState icon={Megaphone} title="Nenhum destaque cadastrado" description="Quando houver destaques pagos, eles aparecem aqui." />}
 
-      <div className="flex flex-col gap-2">
-        {ads?.map((ad) => (
-          <Card key={ad.id}>
-            <CardContent className="flex items-center justify-between py-3">
-              <span>
-                {ad.subject_type} · {ad.placement ?? 'sem posição definida'}
-              </span>
-              <StatusBadge status={ad.status} />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {ads && ads.length > 0 && (
+        <AdminList>
+          {ads.map((ad) => (
+            <AdminRow
+              key={ad.id}
+              title={`${ad.subject_type} · ${ad.placement ?? 'sem posição definida'}`}
+              badges={<StatusBadge status={ad.status} />}
+              meta={ad.created_at ? `cadastrado em ${dataBR(ad.created_at)}` : undefined}
+            />
+          ))}
+        </AdminList>
+      )}
     </div>
   )
 }

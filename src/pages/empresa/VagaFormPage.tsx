@@ -3,12 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEmpresa } from '@/contexts/EmpresaContext'
+import { useCategories } from '@/hooks/useCategories'
 import { useSaveVaga } from '@/hooks/useEmpresaVagas'
 import { supabase } from '@/lib/supabase'
 import { uploadVagaGalleryPhoto } from '@/lib/storage'
 import { DEFAULT_UF } from '@/lib/masks'
+import { activeFor } from '@/lib/categories'
+import { MODELO_PADRAO, lerModelo, modeloParaSalvar, validarModelo, type EtapaModelo } from '@/lib/hiring'
+import { MODALIDADE_PRESENCIAL, MODALIDADE_REMOTA, vagaModalidade } from '@/lib/modalidade'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { BlocksEditor } from '@/components/BlocksEditor'
+import { EtapasEditor } from '@/components/processo/EtapasEditor'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { CategorySelect } from '@/components/CategorySelect'
 import { CityField } from '@/components/fields/CityField'
@@ -19,6 +24,12 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { NativeSelect } from '@/components/ui/native-select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+const FALLBACK_MODALIDADES = [
+  { slug: MODALIDADE_PRESENCIAL, label: 'Presencial' },
+  { slug: MODALIDADE_REMOTA, label: 'Remota' },
+  { slug: 'modalidade-hibrida', label: 'Híbrida' },
+]
 
 function useVagaToEdit(id: string | undefined) {
   return useQuery({
@@ -52,7 +63,16 @@ export default function VagaFormPage() {
   const [category, setCategory] = React.useState('')
   const [locationCity, setLocationCity] = React.useState('')
   const [locationState, setLocationState] = React.useState<string>(DEFAULT_UF)
-  const [isRemote, setIsRemote] = React.useState(false)
+  const [modalidade, setModalidade] = React.useState<string>(MODALIDADE_PRESENCIAL)
+  const [etapas, setEtapas] = React.useState<EtapaModelo[]>(() => MODELO_PADRAO.map((e) => ({ ...e })))
+  // só grava as etapas na vaga quando a empresa mexe nelas (ou a vaga já tinha etapas próprias)
+  const [etapasMexidas, setEtapasMexidas] = React.useState(false)
+  const { data: categories } = useCategories()
+  // Lista que o superadmin gerencia. Sem ela (banco ainda sem a migration 0026) vale a lista de sempre.
+  const managed = activeFor(categories, 'modalidade', modalidade)
+  const hasManagedModalidades = managed.length > 0
+  const modalidades = hasManagedModalidades ? managed : FALLBACK_MODALIDADES
+  const isRemote = modalidade === MODALIDADE_REMOTA
   const [photoUrls, setPhotoUrls] = React.useState<string[]>([])
   const [error, setError] = React.useState<string | null>(null)
 
@@ -69,7 +89,8 @@ export default function VagaFormPage() {
     setCategory(existing.category ?? '')
     setLocationCity(existing.location_city ?? '')
     setLocationState(existing.location_state ?? DEFAULT_UF)
-    setIsRemote(existing.is_remote)
+    setModalidade(vagaModalidade(existing))
+    setEtapas(lerModelo(existing.etapas_selecao) ?? MODELO_PADRAO.map((e) => ({ ...e })))
     setPhotoUrls(existing.photo_urls ?? [])
   }, [existing])
 
@@ -85,8 +106,13 @@ export default function VagaFormPage() {
       setError('O salário máximo precisa ser maior que o mínimo.')
       return
     }
+    const problemaEtapas = validarModelo(etapas)
+    if (problemaEtapas) {
+      setError(problemaEtapas)
+      return
+    }
     if (status === 'published' && !isRemote && !locationCity.trim()) {
-      setError('Informe a cidade da vaga ou marque "Vaga remota".')
+      setError('Informe a cidade da vaga ou escolha a modalidade "Remota".')
       return
     }
 
@@ -113,6 +139,8 @@ export default function VagaFormPage() {
         location_city: isRemote ? null : locationCity.trim() || null,
         location_state: isRemote ? null : locationState,
         is_remote: isRemote,
+        ...(hasManagedModalidades ? { modalidade } : {}),
+        ...(etapasMexidas || existing?.etapas_selecao ? { etapas_selecao: modeloParaSalvar(etapas) } : {}),
         photo_urls: photoUrls,
         status,
       })
@@ -205,10 +233,16 @@ export default function VagaFormPage() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <label className="flex min-h-9 items-center gap-2 text-sm">
-            <input type="checkbox" className="size-4" checked={isRemote} onChange={(e) => setIsRemote(e.target.checked)} />
-            Vaga remota
-          </label>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="modalidade">Modalidade</Label>
+            <NativeSelect id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)}>
+              {modalidades.map((m) => (
+                <option key={m.slug} value={m.slug}>
+                  {m.label}
+                </option>
+              ))}
+            </NativeSelect>
+          </div>
           {!isRemote && (
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="locationCity">Cidade</Label>
@@ -223,6 +257,21 @@ export default function VagaFormPage() {
               />
             </div>
           )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <h2 className="font-display text-base font-bold">Etapas da seleção</h2>
+          <p className="max-w-2xl text-sm text-muted-foreground">
+            É o caminho que cada candidato acompanha depois de se candidatar. Você dá feedback, recebe documentos e conversa em cada etapa. Quem já
+            se candidatou continua com as etapas que tinha.
+          </p>
+          <EtapasEditor
+            value={etapas}
+            onChange={(next) => {
+              setEtapas(next)
+              setEtapasMexidas(true)
+            }}
+          />
         </div>
 
         {id ? (

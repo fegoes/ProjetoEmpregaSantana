@@ -11,6 +11,7 @@ import { ImageCarousel } from '@/components/ImageCarousel'
 import { EmptyState } from '@/components/EmptyState'
 import { BackLink } from '@/components/BackLink'
 import { BrandDivider } from '@/components/BrandDivider'
+import { IniciarContratacao } from '@/components/processo/IniciarContratacao'
 import { Button } from '@/components/ui/button'
 
 /** Botão de contato: visitante vai para o login; logado abre o WhatsApp do profissional com a mensagem pronta. */
@@ -159,6 +160,7 @@ export default function AutonomoDetailPage() {
               </div>
             </dl>
             <ContactButton phone={phone} name={name} className="w-full" />
+            <IniciarContratacao autonomoId={autonomo.id} nome={name} className="w-full" />
           </div>
         </aside>
       </div>

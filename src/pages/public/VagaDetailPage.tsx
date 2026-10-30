@@ -3,7 +3,9 @@ import { Briefcase, CalendarDays, MapPin, SearchX } from 'lucide-react'
 import { useVaga } from '@/hooks/useVagas'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import { descriptionToText } from '@/lib/blocks'
-import { EMPLOYMENT_LABELS, formatLocal, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
+import { useModalidadeLabels } from '@/hooks/useCategories'
+import { EMPLOYMENT_LABELS, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
+import { modalidadeLocal } from '@/lib/modalidade'
 import { BlocksRenderer } from '@/components/BlocksRenderer'
 import { StatusBadge } from '@/components/StatusBadge'
 import { JsonLd } from '@/components/JsonLd'
@@ -40,6 +42,7 @@ export default function VagaDetailPage() {
   const { id } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
   const { data: vaga, isLoading } = useVaga(id)
+  const modalidades = useModalidadeLabels()
 
   useDocumentMeta({
     title: vaga ? `${vaga.title}${vaga.empresas ? ` — ${vaga.empresas.nome_fantasia}` : ''}` : 'Vaga',
@@ -122,7 +125,7 @@ export default function VagaDetailPage() {
   }
 
   const empresaNome = vaga.empresas?.nome_fantasia ?? null
-  const local = vaga.is_remote ? 'Remoto' : formatLocal(vaga.location_city, vaga.location_state)
+  const local = modalidadeLocal(vaga, modalidades)
   const pay = formatVagaPay(vaga)
   const open = vaga.status === 'published'
   const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []

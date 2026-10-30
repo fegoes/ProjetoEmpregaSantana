@@ -25,6 +25,7 @@ const CustomPage = lazy(() => import('@/pages/public/CustomPage'))
 const EmpresasDirectoryPage = lazy(() => import('@/pages/shared/EmpresasDirectoryPage'))
 const PerfilPage = lazy(() => import('@/pages/shared/PerfilPage'))
 const PerfilContaPage = lazy(() => import('@/pages/shared/PerfilContaPage'))
+const ProcessoPage = lazy(() => import('@/pages/shared/ProcessoPage'))
 
 const CandidatoOnboardingPage = lazy(() => import('@/pages/candidato/OnboardingPage'))
 const CvListPage = lazy(() => import('@/pages/candidato/CvListPage'))
@@ -34,6 +35,7 @@ const CandidaturasPage = lazy(() => import('@/pages/candidato/CandidaturasPage')
 const AutonomoOnboardingPage = lazy(() => import('@/pages/autonomo/OnboardingPage'))
 const AutonomoPerfilPage = lazy(() => import('@/pages/autonomo/PerfilPage'))
 const AutonomoPlanoPage = lazy(() => import('@/pages/autonomo/PlanoPage'))
+const AutonomoContratacoesPage = lazy(() => import('@/pages/autonomo/ContratacoesPage'))
 
 const EmpresaLayout = lazy(() => import('@/pages/empresa/EmpresaLayout'))
 const EmpresaOnboardingPage = lazy(() => import('@/pages/empresa/OnboardingPage'))
@@ -44,6 +46,7 @@ const VagaCandidatosPage = lazy(() => import('@/pages/empresa/VagaCandidatosPage
 const EmpresaPerfilPage = lazy(() => import('@/pages/empresa/PerfilPage'))
 const EmpresaPlanoPage = lazy(() => import('@/pages/empresa/PlanoPage'))
 const BancoCurriculosPage = lazy(() => import('@/pages/empresa/BancoCurriculosPage'))
+const EmpresaProcessosPage = lazy(() => import('@/pages/empresa/ProcessosPage'))
 
 const AdminDashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
 const AdminEmpresasPage = lazy(() => import('@/pages/admin/EmpresasPage'))
@@ -55,6 +58,8 @@ const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
 const AdminPaginaEditPage = lazy(() => import('@/pages/admin/PaginaEditPage'))
 const AdminCategoriasPage = lazy(() => import('@/pages/admin/CategoriasPage'))
+const AdminAutonomosPage = lazy(() => import('@/pages/admin/AutonomosPage'))
+const AdminProcessosPage = lazy(() => import('@/pages/admin/ProcessosPage'))
 
 function RouteFallback() {
   return (
@@ -111,6 +116,10 @@ export default function App() {
               <Route path="candidato/cv" element={<CvListPage />} />
               <Route path="candidato/cv/:id" element={<CvEditPage />} />
               <Route path="candidato/candidaturas" element={<CandidaturasPage />} />
+              <Route
+                path="candidato/processos/:id"
+                element={<ProcessoPage back={{ to: '/candidato/candidaturas', label: 'Minhas candidaturas' }} />}
+              />
             </Route>
 
             {/* Autônomo */}
@@ -118,6 +127,11 @@ export default function App() {
             <Route element={<ProtectedRoute roles={['autonomo']} />}>
               <Route path="autonomo/perfil" element={<AutonomoPerfilPage />} />
               <Route path="autonomo/plano" element={<AutonomoPlanoPage />} />
+              <Route path="autonomo/contratacoes" element={<AutonomoContratacoesPage />} />
+              <Route
+                path="autonomo/contratacoes/:id"
+                element={<ProcessoPage back={{ to: '/autonomo/contratacoes', label: 'Contratações' }} />}
+              />
             </Route>
 
             {/* Empresa (dono de empresa; o superadmin NÃO entra aqui só por ser superadmin) */}
@@ -132,6 +146,8 @@ export default function App() {
                 <Route path="empresa/perfil" element={<EmpresaPerfilPage />} />
                 <Route path="empresa/plano" element={<EmpresaPlanoPage />} />
                 <Route path="empresa/banco-de-curriculos" element={<BancoCurriculosPage />} />
+                <Route path="empresa/processos" element={<EmpresaProcessosPage />} />
+                <Route path="empresa/processos/:id" element={<ProcessoPage back={{ to: '/empresa/processos', label: 'Seleção' }} />} />
               </Route>
             </Route>
 
@@ -143,6 +159,9 @@ export default function App() {
               <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
               <Route path="admin/planos" element={<AdminPlanosPage />} />
               <Route path="admin/vagas" element={<AdminVagasPage />} />
+              <Route path="admin/autonomos" element={<AdminAutonomosPage />} />
+              <Route path="admin/processos" element={<AdminProcessosPage />} />
+              <Route path="admin/processos/:id" element={<ProcessoPage somenteLeitura back={{ to: '/admin/processos', label: 'Seleções' }} />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
               <Route path="admin/paginas/:id" element={<AdminPaginaEditPage />} />
               <Route path="admin/categorias" element={<AdminCategoriasPage />} />

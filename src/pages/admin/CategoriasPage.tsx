@@ -24,6 +24,7 @@ interface Usage {
   vagas: Map<string, number>
   autonomos: Map<string, number>
   empresas: Map<string, number>
+  modalidades: Map<string, number>
 }
 
 const countBy = (rows: (string | null)[]) => {
@@ -37,10 +38,12 @@ function useCategoryUsage() {
   return useQuery({
     queryKey: ['categories', 'usage'],
     queryFn: async (): Promise<Usage> => {
-      const [vagas, autonomos, empresas] = await Promise.all([
+      const [vagas, autonomos, empresas, modalidades] = await Promise.all([
         supabase.from('vagas').select('category'),
         supabase.from('autonomo_profiles').select('category'),
         supabase.from('empresas').select('sector'),
+        // coluna da migration 0026: sem ela, só some a contagem desta aba
+        supabase.from('vagas').select('modalidade'),
       ])
       if (vagas.error) throw vagas.error
       if (autonomos.error) throw autonomos.error
@@ -49,6 +52,7 @@ function useCategoryUsage() {
         vagas: countBy(vagas.data.map((r) => r.category)),
         autonomos: countBy(autonomos.data.map((r) => r.category)),
         empresas: countBy(empresas.data.map((r) => r.sector)),
+        modalidades: countBy(modalidades.error ? [] : modalidades.data.map((r) => (r as { modalidade: string | null }).modalidade)),
       }
     },
   })
@@ -60,6 +64,8 @@ function usageOf(category: Category, scope: CategoryScope, usage: Usage | undefi
   const vagas = usage.vagas.get(category.slug) ?? 0
   const autonomos = usage.autonomos.get(category.slug) ?? 0
   const empresas = usage.empresas.get(category.label) ?? 0
+  const modalidades = usage.modalidades.get(category.slug) ?? 0
+  if (scope === 'modalidade') return { total: modalidades, text: modalidades === 0 ? 'Sem uso' : plural(modalidades, 'vaga', 'vagas') }
   const total = scope === 'empresa' ? empresas : vagas + autonomos
   const parts =
     scope === 'empresa'
@@ -76,6 +82,14 @@ const KIND_NOTE: Record<Category['kind'], string | null> = {
   autonomo: null,
   both: 'Vagas e autônomos',
   empresa: null,
+  modalidade: null,
+}
+
+const PLACEHOLDER: Record<CategoryScope, string> = {
+  vaga: 'Ex.: Atendimento ao cliente',
+  autonomo: 'Ex.: Serviços de jardinagem',
+  empresa: 'Ex.: Comércio de materiais de construção',
+  modalidade: 'Ex.: Semipresencial',
 }
 
 function CategoryManager({ scope }: { scope: CategoryScope }) {
@@ -84,6 +98,8 @@ function CategoryManager({ scope }: { scope: CategoryScope }) {
   const { data: usage } = useCategoryUsage()
   const meta = CATEGORY_SCOPES.find((s) => s.value === scope)!
   const otherLabel = scope === 'vaga' ? 'autônomos' : 'vagas'
+  // Segmentos de empresa e modalidades são listas próprias: não se estendem a vagas ou autônomos
+  const ownList = scope === 'empresa' || scope === 'modalidade'
 
   const [newLabel, setNewLabel] = React.useState('')
   const [alsoOther, setAlsoOther] = React.useState(false)
@@ -110,7 +126,7 @@ function CategoryManager({ scope }: { scope: CategoryScope }) {
       const label = newLabel.trim()
       if (duplicate(label)) throw new Error(`Já existe ${meta.singular} com o nome "${label}".`)
       const slug = uniqueSlug(label, (categories ?? []).map((c) => c.slug), scope)
-      const kind: Category['kind'] = scope === 'empresa' ? 'empresa' : alsoOther ? 'both' : scope
+      const kind: Category['kind'] = ownList ? scope : alsoOther ? 'both' : scope
       const { error: insertError } = await supabase.from('categories').insert({ slug, label, kind })
       if (insertError) throw insertError
     },
@@ -192,7 +208,7 @@ function CategoryManager({ scope }: { scope: CategoryScope }) {
             id={`new-${scope}`}
             value={newLabel}
             onChange={(e) => setNewLabel(e.target.value)}
-            placeholder={scope === 'empresa' ? 'Ex.: Comércio de materiais de construção' : 'Ex.: Atendimento ao cliente'}
+            placeholder={PLACEHOLDER[scope]}
             maxLength={60}
             autoComplete="off"
           />
@@ -200,7 +216,12 @@ function CategoryManager({ scope }: { scope: CategoryScope }) {
             {add.isPending ? 'Adicionando…' : 'Adicionar'}
           </Button>
         </div>
-        {scope !== 'empresa' && (
+        {scope === 'modalidade' && (
+          <p className="text-sm text-muted-foreground">
+            Aparece no cadastro da vaga e no filtro do site. A modalidade <strong>Remota</strong> dispensa a cidade da vaga; as outras pedem a cidade.
+          </p>
+        )}
+        {!ownList && (
           <label className="flex min-h-9 items-center gap-2 text-sm">
             <input type="checkbox" className="size-4" checked={alsoOther} onChange={(e) => setAlsoOther(e.target.checked)} />
             Usar também em {otherLabel}
@@ -325,6 +346,9 @@ export default function AdminCategoriasPage() {
           </TabsTrigger>
           <TabsTrigger value="empresa" className="h-10 px-4">
             Segmentos de empresa
+          </TabsTrigger>
+          <TabsTrigger value="modalidade" className="h-10 px-4">
+            Modalidade da vaga
           </TabsTrigger>
         </TabsList>
         {CATEGORY_SCOPES.map((scope) => (

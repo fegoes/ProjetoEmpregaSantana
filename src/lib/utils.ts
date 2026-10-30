@@ -21,3 +21,29 @@ export function safeInternalPath(path: string | null | undefined): string | null
   if (!path || !path.startsWith('/') || path.startsWith('//') || path.startsWith('/\\')) return null
   return path
 }
+
+/** Troca um item de lugar com o vizinho (para cima ou para baixo); nas pontas devolve a mesma lista. */
+export function moveItem<T>(items: T[], index: number, delta: -1 | 1): T[] {
+  const target = index + delta
+  if (index < 0 || index >= items.length || target < 0 || target >= items.length) return items
+  const next = [...items]
+  ;[next[index], next[target]] = [next[target], next[index]]
+  return next
+}
+
+/** Texto para comparar na busca: minúsculo e sem acento ("Ação" -> "acao"). */
+export function normalizeText(value: string | null | undefined): string {
+  return (value ?? '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+}
+
+/** Vale para a busca? Todas as palavras digitadas precisam aparecer em algum dos campos. */
+export function matchesSearch(query: string, ...fields: (string | null | undefined)[]): boolean {
+  const words = normalizeText(query).split(/\s+/).filter(Boolean)
+  if (words.length === 0) return true
+  const haystack = normalizeText(fields.filter(Boolean).join(' '))
+  return words.every((w) => haystack.includes(w))
+}

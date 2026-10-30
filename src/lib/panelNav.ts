@@ -5,7 +5,9 @@ import {
   FileSearch,
   FileText,
   FilePlus2,
+  Handshake,
   LayoutDashboard,
+  ListChecks,
   Megaphone,
   Send,
   Tags,
@@ -61,6 +63,8 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
           { to: '/admin/empresas', label: 'Empresas', icon: Building2 },
           { to: '/admin/usuarios', label: 'Usuários', icon: Users },
           { to: '/admin/vagas', label: 'Vagas', icon: BriefcaseBusiness },
+          { to: '/admin/autonomos', label: 'Autônomos', icon: Wrench },
+          { to: '/admin/processos', label: 'Seleções', icon: ListChecks },
         ],
       },
       {
@@ -90,6 +94,7 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
           { to: '/empresa/painel', label: 'Visão geral', icon: LayoutDashboard, end: true },
           { to: '/empresa/vagas', label: 'Minhas vagas', icon: BriefcaseBusiness, end: true },
           { to: '/empresa/vagas/nova', label: 'Nova vaga', icon: FilePlus2 },
+          { to: '/empresa/processos', label: 'Seleção', icon: ListChecks },
           { to: '/empresa/banco-de-curriculos', label: 'Banco de currículos', icon: FileSearch },
         ],
       },
@@ -125,6 +130,7 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
         label: 'Meus serviços',
         items: [
           { to: '/autonomo/perfil', label: 'Meu perfil', icon: Wrench },
+          { to: '/autonomo/contratacoes', label: 'Contratações', icon: Handshake },
           { to: '/autonomo/plano', label: 'Plano', icon: CreditCard },
         ],
       },
@@ -194,4 +200,24 @@ export function landingPathFor(user: PanelUser): string {
   if (user.isAdmin) return '/admin'
   if (user.roles.includes('empresa_owner')) return '/empresa/painel'
   return '/'
+}
+
+// Telas de ativação do perfil ficam abertas a qualquer pessoa logada: é por elas que o perfil passa a existir.
+const ATIVACAO = /\/onboarding\/?$/
+
+/** A pessoa tem o perfil que aquele endereço pede? (Endereços do site e da conta valem para todos.) */
+export function canOpenPath(path: string, user: PanelUser): boolean {
+  const pathname = path.split(/[?#]/)[0]
+  if (ATIVACAO.test(pathname)) return true
+  const area = areaFromPath(pathname)
+  return area === 'conta' || availableAreas(user).includes(area)
+}
+
+/**
+ * Destino depois do login. O endereço pedido (?redirect=…) só vale se a pessoa pode abri-lo;
+ * senão ela vai para o painel dela (o superadmin, por exemplo, nunca cai numa tela de empresa).
+ */
+export function afterLoginPath(requested: string | null, destination: string | undefined, user: PanelUser | undefined): string {
+  if (requested && user && canOpenPath(requested, user)) return requested
+  return destination ?? '/'
 }

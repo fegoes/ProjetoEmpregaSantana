@@ -2,7 +2,9 @@ import { Link } from 'react-router-dom'
 import { MapPin, Star } from 'lucide-react'
 import { ImageCarousel } from '@/components/ImageCarousel'
 import { PosterShape } from '@/components/PosterShape'
-import { EMPLOYMENT_LABELS, formatLocal, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
+import { useModalidadeLabels } from '@/hooks/useCategories'
+import { EMPLOYMENT_LABELS, formatVagaPay, hasVagaPayValue, isVagaNova, timeAgo } from '@/lib/format'
+import { modalidadeLocal } from '@/lib/modalidade'
 import { cn } from '@/lib/utils'
 
 export interface VagaCardData {
@@ -15,6 +17,7 @@ export interface VagaCardData {
   hourly_rate?: number | null
   salary_visible?: boolean | null
   category?: string | null
+  modalidade?: string | null
   icon_key?: string | null
   location_city: string | null
   location_state: string | null
@@ -43,7 +46,8 @@ export function VagaNovaTag({ className }: { className?: string }) {
 /** Card de vaga. O destaque vira o cartaz "VAGA NOVA" da marca: azul profundo com o grafismo laranja. */
 export function VagaCard({ vaga, hideEmpresa = false }: { vaga: VagaCardData; hideEmpresa?: boolean }) {
   const featured = vaga.is_featured
-  const local = vaga.is_remote ? 'Remoto' : formatLocal(vaga.location_city, vaga.location_state)
+  const modalidades = useModalidadeLabels()
+  const local = modalidadeLocal(vaga, modalidades)
   const empresaNome = vaga.empresas?.nome_fantasia ?? 'Vaga EmpregaSantana'
   const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
   const pay = formatVagaPay(vaga)

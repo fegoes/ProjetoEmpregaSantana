@@ -49,9 +49,7 @@ export function useEmpresa(id: string | undefined) {
         supabase.from('empresas_public').select('*').eq('id', id as string).single(),
         supabase
           .from('vagas')
-          .select(
-            'id, title, status, employment_type, pricing_model, salary_min, salary_max, hourly_rate, salary_visible, category, location_city, location_state, is_remote, is_featured, photo_url, photo_urls, icon_key, description_html, created_at',
-          )
+          .select('*')
           .eq('empresa_id', id as string)
           .eq('status', 'published')
           .order('is_featured', { ascending: false })
@@ -77,6 +75,32 @@ export function useEmpresaAdmin(id: string | undefined) {
         .eq('id', id as string)
         .single()
       if (error) throw error
+      return data
+    },
+  })
+}
+
+/** A empresa de quem está logado, para ações no site público (ex.: iniciar a contratação de um autônomo). */
+export function useMinhaEmpresa(userId: string | undefined, enabled = true) {
+  return useQuery({
+    queryKey: ['empresas', 'minha', userId],
+    enabled: Boolean(userId) && enabled,
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const { data: membership, error } = await supabase
+        .from('empresa_members')
+        .select('empresa_id')
+        .eq('user_id', userId as string)
+        .limit(1)
+        .maybeSingle()
+      if (error) throw error
+      if (!membership) return null
+      const { data, error: empresaError } = await supabase
+        .from('empresas')
+        .select('id, nome_fantasia, status')
+        .eq('id', membership.empresa_id)
+        .single()
+      if (empresaError) throw empresaError
       return data
     },
   })
