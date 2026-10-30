@@ -55,6 +55,7 @@ const AdminUsuariosPage = lazy(() => import('@/pages/admin/UsuariosPage'))
 const AdminPlanosPage = lazy(() => import('@/pages/admin/PlanosPage'))
 const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
+const NaoEncontradaPage = lazy(() => import('@/pages/public/NaoEncontradaPage'))
 
 function RouteFallback() {
   return (
@@ -155,6 +156,10 @@ export default function App() {
               <Route path="admin/ads" element={<AdminAdsPage />} />
             </Route>
           </Route>
+
+          {/* Qualquer endereço não reconhecido — dentro do layout, para manter
+              navbar e rodapé em vez de entregar uma página vazia. */}
+          <Route path="*" element={<NaoEncontradaPage />} />
         </Route>
       </Routes>
     </Suspense>

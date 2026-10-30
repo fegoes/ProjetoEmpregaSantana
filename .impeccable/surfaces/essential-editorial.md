@@ -12,3 +12,7 @@ FINISH: build e testes; capturas home/blog/artigo em 320/390/768/1440 e editor/u
 ## Ampliação de imagens e três posts — 23/10/2026
 
 Home preservada com três cenas raster novas nas seções de públicos. Blog com capas temáticas, preservando capas personalizadas. Três guias completos com capa, imagem no corpo e campos sociais. JPEGs comprimidos para entrega, PNGs originais e prompts preservados; proveniência em docs/IMAGENS_E_POSTS.md. Prévia local somente em desenvolvimento, sinalizada e noindex; produção usa artigos do banco. Migration0027 publica apenas os textos iniciais intactos e preserva conteúdo editado. Verificação em 320/390/768/1440: 20 capturas, sem overflow, imagens quebradas ou erros de página; filtro e navegação do blog funcionais. Ajuste final desloca a imagem interna para o meio do conteúdo. Sem publicação remota ou PR.
+
+## Decisão do usuário — preservar o visual deste trabalho
+
+Após comparar local e site público, o usuário rejeitou as alterações visuais recentes da branch externa e pediu preservar imagens, posts e menu. A base visual continua sendo 1061a3b: não incorporar a reformulação dos cards, grafismos, formulários e home dos commits 82c58b7/aef20b0. Somente as proteções funcionais contra tela em branco e rota inexistente da PR #5 foram aproveitadas, mantendo RouteSeoDefaults. Registro: docs/REVISAO_VISUAL_PRESERVADA.md. Sem nova identidade ou tokens.
