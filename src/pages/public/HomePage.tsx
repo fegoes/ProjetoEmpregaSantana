@@ -1,17 +1,20 @@
-import { useState } from 'react'
+import { BuilderPage } from '@/components/pages/BuilderPage'
+import { usePaginaInstitucional } from '@/hooks/usePaginasInstitucionais'
+import { parseLayout } from '@/lib/pageLayout'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { useAuth } from '@/contexts/AuthContext'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 
-export default function HomePage() {
+function IllustratedHome() {
   const [audience, setAudience] = useState('candidato')
   const { user, roles } = useAuth()
   useDocumentMeta({ title: 'Seu próximo passo começa perto de casa', description: 'Vagas, serviços e conexões que movimentam o nosso sertão. Conheça o EmpregaSantana, sua conexão de empregabilidade em Santana do Ipanema e região.' })
   const enterprisePath = user ? roles.includes('empresa_owner') ? '/empresa/vagas/nova' : '/empresa/onboarding' : '/cadastro'
   const professionalPath = user ? roles.includes('autonomo') ? '/autonomo/perfil' : '/autonomo/onboarding' : '/cadastro'
-  return <div className="flex flex-col gap-16 sm:gap-24">
+  return <div className="mx-auto flex w-full max-w-6xl flex-col gap-16 px-4 py-8 sm:gap-24">
     <section className="grid min-w-0 items-center gap-10 py-6 lg:grid-cols-[1.1fr_1fr] lg:gap-16 lg:py-12">
       <div className="min-w-0"><h1 className="max-w-2xl text-[clamp(2.4rem,5vw,4.1rem)] leading-[1.1] font-extrabold tracking-[-0.04em] text-brand-ink">Seu próximo passo começa <span className="text-primary">perto de casa.</span></h1><p className="mt-6 max-w-lg text-base leading-loose text-muted-foreground">Quem procura trabalho e quem precisa de um profissional têm um lugar para se encontrar. Vagas, serviços e conexões que movimentam o nosso sertão.</p><div className="mt-7 flex flex-wrap items-center gap-5"><Button asChild variant="cta" size="lg" className="max-w-full whitespace-normal"><Link to="/explorar">Encontrar oportunidades<ArrowRight /></Link></Button><a href="#como-funciona" className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-primary">Como funciona<ArrowRight className="size-4" /></a></div><p className="mt-6 flex items-center gap-2 text-xs text-muted-foreground"><MapPin className="size-4 text-primary" />Feito para Santana do Ipanema e região.</p></div>
       <div className="min-w-0"><img src="/illustrations/nossa-gente.png" alt="Uma candidata, um profissional de serviços e uma empresária da região, juntos." width="1536" height="1024" fetchPriority="high" className="mx-auto mb-4 h-56 w-full object-contain sm:h-72" /><div className="rounded-2xl bg-accent/50 p-4 sm:p-6"><div className="mb-6 grid grid-cols-3 gap-1 rounded-2xl border bg-card p-1" role="group" aria-label="Conheça os caminhos">{[['candidato', 'Quero trabalhar'], ['autonomo', 'Sou autônomo'], ['empresa', 'Quero contratar']].map(([key, label]) => <button id={`home-tab-${key}`} type="button" aria-pressed={audience === key} aria-controls="home-path" key={key} onClick={() => setAudience(key)} className={`min-h-12 rounded-xl px-2 py-2 text-xs font-medium ${audience === key ? 'bg-brand-ink text-white' : 'text-foreground'}`}>{label}</button>)}</div>
@@ -38,4 +41,11 @@ export default function HomePage() {
     <section className="grid gap-8 md:grid-cols-[0.85fr_1.15fr]"><h2 className="text-3xl font-extrabold tracking-tight">Antes de dar<br />o primeiro passo.</h2><div>{[['Preciso criar conta para ver as vagas?', 'Você pode explorar vagas e profissionais sem entrar. A conta é necessária para se candidatar, entrar em contato ou publicar.'], ['Posso procurar vaga e divulgar meu serviço?', 'Sim. Uma mesma conta pode ter perfis de candidato e autônomo. Adicione outro perfil no seu painel quando precisar.'], ['Funciona no celular?', 'Sim. Você pode acessar o site e seu painel pelo celular, tablet ou computador.']].map(([q, a]) => <details key={q} className="border-b py-5"><summary className="cursor-pointer text-sm font-medium">{q}</summary><p className="mt-4 text-sm leading-loose text-muted-foreground">{a}</p></details>)}</div></section>
     <section className="mb-4 flex flex-col items-start justify-between gap-7 rounded-3xl bg-accent/50 p-7 sm:p-10 md:flex-row md:items-center"><div><h2 className="text-3xl leading-tight font-extrabold tracking-tight text-brand-ink">Conectamos talentos.<br />Transformamos futuros.</h2><p className="mt-4 flex items-center gap-2 text-sm text-muted-foreground"><Check className="size-4 text-primary" />Seu próximo passo pode começar por aqui.</p></div><Button asChild variant="default" size="lg" className="max-w-full whitespace-normal"><Link to="/explorar">Encontrar oportunidades<ArrowRight /></Link></Button></section>
   </div>
+}
+
+export default function HomePage() {
+  const { data: pagina } = usePaginaInstitucional('inicio')
+  const layout = useMemo(() => parseLayout(pagina?.layout), [pagina?.layout])
+  if (pagina && layout && layout.sections.length > 0) return <BuilderPage pagina={pagina} layout={layout} />
+  return <IllustratedHome />
 }

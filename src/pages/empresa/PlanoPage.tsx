@@ -4,8 +4,8 @@ export default function EmpresaPlanoPage() {
   return (
     <PlaceholderPage
       title="Plano da empresa"
-      phase="Fase 3 do roadmap (docs/PRD.md seção 6)"
-      description="Checkout e enforcement de plano (limite de vagas ativas, destaque, banco de currículos) via Stripe Edge Functions."
+      description="A contratação dos planos pelo site está sendo preparada. Por enquanto, sua empresa usa o plano gratuito, e você pode ver os planos disponíveis na página Planos."
+      back={{ to: '/planos', label: 'Ver os planos' }}
     />
   )
 }

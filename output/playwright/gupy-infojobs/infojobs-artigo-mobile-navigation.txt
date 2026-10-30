@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/');
+```
+### Open tabs
+- 0: (current) [Primeiro Emprego: 7 Dicas para Jovens sem Experiência](https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/
+- Page Title: Primeiro Emprego: 7 Dicas para Jovens sem Experiência
+- Console: 0 errors, 1 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-10-42-440Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-10-39-487Z.log#L1-L3

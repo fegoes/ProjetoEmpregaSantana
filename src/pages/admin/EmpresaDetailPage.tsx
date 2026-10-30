@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useEmpresaAdmin } from '@/hooks/useEmpresas'
 import { supabase } from '@/lib/supabase'
@@ -9,7 +10,7 @@ import { Button } from '@/components/ui/button'
 
 export default function AdminEmpresaDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const { data: empresa, isLoading, isError, refetch } = useEmpresaAdmin(id)
+  const { data: empresa, isLoading } = useEmpresaAdmin(id)
   const queryClient = useQueryClient()
 
   const toggleVerified = useMutation({
@@ -18,37 +19,37 @@ export default function AdminEmpresaDetailPage() {
       const { error } = await supabase
         .from('empresas')
         .update({ is_verified: !empresa.is_verified })
-        .eq('id', empresa.id).select('id').single()
+        .eq('id', empresa.id)
       if (error) throw error
     },
-    onSuccess: () => { queryClient.invalidateQueries({ queryKey: ['empresas'] }); queryClient.invalidateQueries({ queryKey: ['admin', 'empresas'] }) },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['empresas', 'detail', id] }),
   })
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
-  if (isError) return <p role="alert">Não foi possível carregar a empresa. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
   if (!empresa) return <p className="text-sm text-muted-foreground">Empresa não encontrada.</p>
 
   const visibilityNote = (visible: boolean) => (visible ? '' : ' (oculto no perfil público)')
 
   return (
     <div className="flex flex-col gap-6">
+      <Link to="/admin/empresas" className="inline-flex min-h-11 w-fit items-center gap-1.5 text-sm font-medium text-primary hover:underline md:min-h-9">
+        <ArrowLeft className="size-4" /> Empresas
+      </Link>
       <div className="flex items-start gap-3">
         {empresa.logo_url && (
           <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-cover" />
         )}
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>
-          <div className="mt-2 flex flex-wrap items-center gap-2">
+          <div className="mt-2 flex items-center gap-2">
             <StatusBadge status={empresa.status} />
-            <Button asChild size="sm" variant="outline"><Link to={`/admin/empresas/${empresa.id}/editar`}>Editar cadastro</Link></Button>
-            <Button size="sm" variant="outline" disabled={toggleVerified.isPending} onClick={() => toggleVerified.mutate()}>
+            <Button size="sm" variant="outline" onClick={() => toggleVerified.mutate()}>
               {empresa.is_verified ? 'Remover verificação' : 'Marcar como verificada'}
             </Button>
           </div>
         </div>
       </div>
 
-      {toggleVerified.isError && <p role="alert" className="text-sm text-destructive">Não foi possível atualizar a verificação. Tente novamente.</p>}
       <Card>
         <CardHeader>
           <CardTitle className="text-base">Dados da empresa</CardTitle>

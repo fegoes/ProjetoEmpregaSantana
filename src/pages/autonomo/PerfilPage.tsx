@@ -1,15 +1,18 @@
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import type { PricingModelAutonomo } from '@/types/database'
-import { RichTextEditor } from '@/components/RichTextEditor'
-import { FieldHint } from '@/components/FieldHint'
+import { BlocksEditor } from '@/components/BlocksEditor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { NativeSelect } from '@/components/ui/native-select'
+import { CityField } from '@/components/fields/CityField'
+import { CurrencyInput } from '@/components/fields/MaskedInputs'
+import { FormError } from '@/components/auth/FormError'
+import { DEFAULT_UF } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CategorySelect } from '@/components/CategorySelect'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
@@ -34,44 +37,44 @@ function useOwnAutonomoProfile(userId: string | undefined) {
 
 export default function AutonomoPerfilPage() {
   const { user } = useAuth()
-  const { data: autonomo, isLoading, isError, refetch } = useOwnAutonomoProfile(user?.id)
+  const { data: autonomo, isLoading, refetch } = useOwnAutonomoProfile(user?.id)
 
   const [headline, setHeadline] = React.useState('')
   const [typeSlug, setTypeSlug] = React.useState('')
   const [category, setCategory] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
-  const [hourlyRate, setHourlyRate] = React.useState('')
+  const [hourlyRate, setHourlyRate] = React.useState<number | null>(null)
+  const [deliveryNote, setDeliveryNote] = React.useState('')
+  const [city, setCity] = React.useState('')
+  const [uf, setUf] = React.useState<string>(DEFAULT_UF)
+  const [feedback, setFeedback] = React.useState<{ ok: boolean; text: string } | null>(null)
   const [status, setStatus] = React.useState<'active' | 'paused'>('active')
   const [portfolioUrls, setPortfolioUrls] = React.useState<string[]>([])
-  const queryClient = useQueryClient()
-  const [saveError, setSaveError] = React.useState('')
-  const [saved, setSaved] = React.useState(false)
   const [saving, setSaving] = React.useState(false)
 
   React.useEffect(() => {
     if (!autonomo) return
     setHeadline(autonomo.headline ?? '')
-    setCategory(autonomo.category ?? '')
     setTypeSlug(autonomo.type_slug ?? '')
+    setCategory(autonomo.category ?? '')
     setDescriptionHtml(autonomo.description_html ?? '')
     setPricingModel(autonomo.pricing_model)
-    setHourlyRate(autonomo.hourly_rate?.toString() ?? '')
+    setHourlyRate(autonomo.hourly_rate)
+    setDeliveryNote(autonomo.delivery_rate_note ?? '')
+    setCity(autonomo.service_area_city ?? '')
+    setUf(autonomo.service_area_state ?? DEFAULT_UF)
     setStatus(autonomo.status)
     setPortfolioUrls(autonomo.portfolio_urls ?? [])
   }, [autonomo])
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando…</p>
-  if (isError) return <p role="alert">Não foi possível carregar seu perfil. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
   if (!autonomo) return <Navigate to="/autonomo/onboarding" replace />
 
   const handleSave = async () => {
     if (!user) return
-    if (hourlyRate && (!Number.isFinite(Number(hourlyRate)) || Number(hourlyRate) < 0)) { setSaveError('Informe um valor por hora válido.'); return }
     setSaving(true)
-    setSaveError('')
-    setSaved(false)
-    try {
+    setFeedback(null)
     const { error } = await supabase
       .from('autonomo_profiles')
       .update({
@@ -80,16 +83,17 @@ export default function AutonomoPerfilPage() {
         type_slug: typeSlug || null,
         description_html: descriptionHtml,
         pricing_model: pricingModel,
-        hourly_rate: hourlyRate ? Number(hourlyRate) : null,
+        hourly_rate: pricingModel === 'per_delivery' ? null : hourlyRate,
+        delivery_rate_note: pricingModel === 'hourly' ? null : deliveryNote.trim() || null,
+        service_area_city: city.trim() || null,
+        service_area_state: city.trim() ? uf : null,
         status,
         portfolio_urls: portfolioUrls,
       })
-      .eq('id', user.id).select('id').single()
-    if (error) throw error
-    await refetch()
-    queryClient.invalidateQueries({ queryKey: ['autonomos'] })
-    setSaved(true)
-    } catch { setSaveError('Não foi possível salvar o perfil. Tente novamente.') } finally { setSaving(false) }
+      .eq('id', user.id)
+    if (!error) await refetch()
+    setSaving(false)
+    setFeedback(error ? { ok: false, text: 'Não foi possível salvar agora. Confira sua conexão e tente de novo.' } : { ok: true, text: 'Perfil atualizado.' })
   }
 
   return (
@@ -101,31 +105,15 @@ export default function AutonomoPerfilPage() {
         <div className="space-y-2"><Label htmlFor="professional-type">Tipo de profissional</Label><RecordTypeSelect id="professional-type" kind="autonomo" value={typeSlug} onChange={setTypeSlug} /></div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="headline">Título</Label>
-          <FieldHint>
-            É a primeira linha que aparece no seu card. Diga o que você faz e onde atende.
-          </FieldHint>
-          <Input
-            id="headline"
-            placeholder="Ex.: Eletricista predial e residencial em Santana do Ipanema"
-            value={headline}
-            onChange={(e) => setHeadline(e.target.value)}
-          />
+          <Input id="headline" value={headline} onChange={(e) => setHeadline(e.target.value)} />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="category">Categoria</Label>
           <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
         </div>
         <div className="flex flex-col gap-1.5">
-          <Label>O que você faz</Label>
-          <FieldHint>
-            Liste os serviços que você atende, há quanto tempo trabalha com isso e como costuma
-            cobrar. Quem contrata decide por aqui.
-          </FieldHint>
-          <RichTextEditor
-            value={descriptionHtml}
-            onChange={setDescriptionHtml}
-            placeholder="Ex.: Instalação e manutenção elétrica residencial e comercial. Troca de quadro, fiação e chuveiro. 12 anos de experiência. Atendo Santana do Ipanema e cidades vizinhas."
-          />
+          <Label>Sobre o seu trabalho</Label>
+          <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="autonomo" />
         </div>
         <PhotoGalleryField
           label="Fotos de trabalhos (opcional)"
@@ -134,32 +122,38 @@ export default function AutonomoPerfilPage() {
           onChange={setPortfolioUrls}
           hint="Aparecem como carrossel no seu card e no perfil público. PNG ou JPG, até 5 MB cada."
         />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="pricingModel">Cobrança</Label>
-            <select
-              id="pricingModel"
-              className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-              value={pricingModel}
-              onChange={(e) => setPricingModel(e.target.value as PricingModelAutonomo)}
-            >
-              <option value="hourly">Por hora</option>
-              <option value="per_delivery">Por entrega</option>
-              <option value="both">Ambos</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="pricingModel">Cobrança</Label>
+          <NativeSelect
+            id="pricingModel"
+            value={pricingModel}
+            onChange={(e) => setPricingModel(e.target.value as PricingModelAutonomo)}
+          >
+            <option value="hourly">Por hora</option>
+            <option value="per_delivery">Por entrega/serviço</option>
+            <option value="both">Por hora e por serviço</option>
+          </NativeSelect>
+        </div>
+        {pricingModel !== 'per_delivery' && (
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
             <Label htmlFor="hourlyRate">Valor da hora</Label>
-            <FieldHint>Aparece no card como "A partir de R$ …/hora".</FieldHint>
+            <CurrencyInput id="hourlyRate" value={hourlyRate} onChange={setHourlyRate} />
+          </div>
+        )}
+        {pricingModel !== 'hourly' && (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="deliveryNote">Valor por serviço</Label>
             <Input
-              id="hourlyRate"
-              type="number"
-              inputMode="decimal"
-              placeholder="Ex.: 45"
-              value={hourlyRate}
-              onChange={(e) => setHourlyRate(e.target.value)}
+              id="deliveryNote"
+              placeholder="Ex.: a partir de R$ 150 por diária"
+              value={deliveryNote}
+              onChange={(e) => setDeliveryNote(e.target.value)}
             />
           </div>
+        )}
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="serviceCity">Onde você atende?</Label>
+          <CityField id="serviceCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
         </div>
         <label className="flex items-center gap-2 text-sm">
           <input
@@ -169,9 +163,8 @@ export default function AutonomoPerfilPage() {
           />
           Visível publicamente
         </label>
-        {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
-        {saved && <p role="status" className="text-sm text-primary">Perfil atualizado.</p>}
-        <Button onClick={handleSave} disabled={saving}>
+        {feedback && (feedback.ok ? <p role="status" className="text-sm text-muted-foreground">{feedback.text}</p> : <FormError>{feedback.text}</FormError>)}
+        <Button onClick={handleSave} variant="cta" disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar'}
         </Button>
       </CardContent>

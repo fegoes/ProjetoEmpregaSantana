@@ -1,9 +1,11 @@
-import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
-import { LogOut, Menu, Settings, User as UserIcon } from 'lucide-react'
+import * as React from 'react'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import { LayoutDashboard, LogOut, Menu, Settings } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { Button } from '@/components/ui/button'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { Logo } from '@/components/brand/Logo'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,91 +14,111 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { usePaginasNoMenu } from '@/hooks/usePaginasInstitucionais'
+import { panelPathFor } from '@/lib/panelNav'
 import { cn } from '@/lib/utils'
 
-const MOBILE_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
-  cn('flex min-h-11 w-full items-center rounded-md px-2 py-2 text-sm', isActive ? 'font-semibold text-primary' : 'text-foreground')
+interface NavItem {
+  to: string
+  label: string
+  end?: boolean
+}
 
-const NAV_LINK_CLASS = ({ isActive }: { isActive: boolean }) =>
+// O site tem poucos links. Tudo o que é gestão (vagas, candidaturas, currículos,
+// empresa, admin) fica no painel, aberto por "Meu painel".
+function useNavItems(): NavItem[] {
+  const { user } = useAuth()
+  const { data: extraPages } = usePaginasNoMenu()
+  const items: NavItem[] = [
+    { to: '/', label: 'Início', end: true },
+    { to: '/explorar', label: 'Explorar' },
+    { to: '/blog', label: 'Conteúdos' },
+  ]
+  const fixed = user ? [...items, { to: '/empresas', label: 'Empresas' }] : [...items, { to: '/planos', label: 'Planos' }]
+  const custom = (extraPages ?? []).filter((p) => p.show_in_header).map((p) => ({ to: `/pagina/${p.slug}`, label: p.title }))
+  return [...fixed, ...custom]
+}
+
+const DESKTOP_LINK = ({ isActive }: { isActive: boolean }) =>
   cn(
-    'rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors',
-    isActive ? 'bg-accent text-primary' : 'text-foreground/70 hover:bg-accent hover:text-foreground',
+    'relative flex h-10 items-center rounded-full px-3.5 text-sm font-medium transition-colors',
+    isActive ? 'text-primary' : 'text-foreground/75 hover:text-foreground',
+    // traço laranja sob o item ativo — o mesmo grafismo dos posts
+    isActive && 'after:absolute after:inset-x-3.5 after:bottom-0.5 after:h-0.5 after:rounded-full after:bg-brand-orange',
+  )
+
+const SHEET_LINK = ({ isActive }: { isActive: boolean }) =>
+  cn(
+    'flex h-12 items-center rounded-xl px-3 text-base font-medium transition-colors',
+    isActive ? 'bg-accent text-primary' : 'text-foreground hover:bg-muted',
   )
 
 export function Navbar() {
-  const { user, profile, roles, signOut } = useAuth()
+  const { user, profile, roles, isAdmin, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const autonomos = new URLSearchParams(location.search).get('tipo') === 'autonomos'
+  const items = useNavItems()
+  const painelPath = panelPathFor({ isAdmin, roles })
+  const [menuOpen, setMenuOpen] = React.useState(false)
+
+  // Fecha o menu do celular ao trocar de página
+  React.useEffect(() => {
+    setMenuOpen(false)
+  }, [location.pathname])
 
   const handleLogout = async () => {
     await signOut()
     navigate('/')
   }
 
-  return (
-    <header className="sticky top-0 z-40 border-b bg-background/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between gap-2 px-4 sm:gap-4 py-3">
-        <Logo className="max-sm:gap-1.5 max-sm:[&>span:first-child]:size-7 max-sm:[&>span:last-child]:text-sm" />
+  // Nas páginas de entrar/criar conta o botão da própria página já é a ação; não repetir no topo
+  const onAuthPage = ['/login', '/cadastro'].includes(location.pathname)
 
-        <nav aria-label="Menu principal" className="hidden items-center gap-2 lg:flex">
-          <NavLink to="/explorar?tipo=vagas" className={NAV_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>Encontrar trabalho</NavLink>
-          <DropdownMenu><DropdownMenuTrigger asChild><Button variant="ghost" aria-label="Contratar: ver opções">Contratar</Button></DropdownMenuTrigger><DropdownMenuContent align="start"><DropdownMenuItem asChild><Link to="/explorar?tipo=autonomos">Encontrar profissionais</Link></DropdownMenuItem><DropdownMenuItem asChild><Link to={user ? roles.includes('empresa_owner') ? '/empresa/vagas/nova' : '/empresa/onboarding' : '/cadastro'}>Publicar uma vaga</Link></DropdownMenuItem></DropdownMenuContent></DropdownMenu>
+  return (
+    <header className="sticky top-0 z-40 border-b bg-background">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4">
+        <Logo />
+
+        <nav aria-label="Principal" className="hidden items-center lg:flex">
+          {items.map((item) => (
+            <NavLink key={item.to} to={item.to} end={item.end} className={DESKTOP_LINK}>
+              {item.label}
+            </NavLink>
+          ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                aria-label="Abrir menu de navegação"
-                className="flex size-11 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-accent lg:hidden"
-              >
-                <Menu className="size-5" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="min-w-48">
-              <DropdownMenuLabel>O que você precisa?</DropdownMenuLabel>
-              <DropdownMenuItem asChild><NavLink to="/explorar?tipo=vagas" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && !autonomos })}>Encontrar trabalho</NavLink></DropdownMenuItem>
-              <DropdownMenuItem asChild><NavLink to="/explorar?tipo=autonomos" className={MOBILE_LINK_CLASS({ isActive: location.pathname === '/explorar' && autonomos })}>Encontrar profissionais</NavLink></DropdownMenuItem>
-              <DropdownMenuItem asChild><Link to={user ? roles.includes('empresa_owner') ? '/empresa/vagas/nova' : '/empresa/onboarding' : '/cadastro'}>Publicar uma vaga</Link></DropdownMenuItem>
-              <DropdownMenuSeparator />
-              {user ? (
-                <DropdownMenuItem asChild>
-                  <NavLink to="/perfil" className={MOBILE_LINK_CLASS}>
-                    Meu Perfil
-                  </NavLink>
-                </DropdownMenuItem>
-              ) : (
-                <DropdownMenuItem asChild>
-                  <Link to="/cadastro" className="flex min-h-11 w-full items-center rounded-md px-2 py-2 text-sm">
-                    Criar conta
-                  </Link>
-                </DropdownMenuItem>
-              )}
-            </DropdownMenuContent>
-          </DropdownMenu>
-
+        <div className="flex items-center gap-1.5">
+          {user && (
+            <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
+              <Link to={painelPath}>
+                <LayoutDashboard /> Meu painel
+              </Link>
+            </Button>
+          )}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button aria-label="Abrir opções da conta" className="flex min-h-11 min-w-11 items-center gap-2 rounded-full py-0.5 pr-1 pl-0.5 transition-colors hover:bg-accent">
+                <button
+                  aria-label="Minha conta"
+                  className="hidden h-10 items-center gap-2 rounded-full py-1 pr-3 pl-1 transition-colors hover:bg-muted lg:flex"
+                >
                   <InitialsAvatar name={profile?.full_name ?? 'Usuário'} size="sm" />
-                  <span className="hidden max-w-28 truncate text-sm font-medium lg:inline">
+                  <span className="max-w-28 truncate text-sm font-medium">
                     {profile?.full_name?.split(' ')[0] ?? 'Você'}
                   </span>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="min-w-52">
                 <DropdownMenuLabel>{profile?.full_name ?? 'Minha conta'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/perfil">
-                    <UserIcon /> Meu Perfil
+                  <Link to={painelPath}>
+                    <LayoutDashboard /> Meu painel
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/perfil/conta">
-                    <Settings /> Configurações
+                    <Settings /> Minha conta
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -106,15 +128,73 @@ export function Navbar() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <div className="flex items-center gap-3">
-              <Link to="/cadastro" className="hidden text-sm font-medium text-foreground/70 hover:text-primary lg:inline">
-                Criar conta
-              </Link>
-              <Button asChild size="sm" variant="outline">
-                <Link to="/login">Entrar</Link>
-              </Button>
-            </div>
+            !onAuthPage && (
+              <>
+                <Button asChild variant="ghost" className="hidden rounded-full lg:inline-flex">
+                  <Link to="/login">Entrar</Link>
+                </Button>
+                <Button asChild variant="outline" className="hidden sm:inline-flex">
+                  <Link to="/cadastro">Criar conta</Link>
+                </Button>
+                <Button asChild variant="ghost" className="rounded-full sm:hidden">
+                  <Link to="/login">Entrar</Link>
+                </Button>
+              </>
+            )
           )}
+
+          <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+            <SheetTrigger asChild>
+              <button
+                aria-label="Abrir menu"
+                className="flex size-11 items-center justify-center rounded-full transition-colors hover:bg-muted lg:hidden"
+              >
+                <Menu className="size-6" />
+              </button>
+            </SheetTrigger>
+            <SheetContent title={user ? (profile?.full_name ?? 'Menu') : 'Menu'}>
+              <nav aria-label="Principal" className="flex flex-col gap-1">
+                {items.map((item) => (
+                  <NavLink key={item.to} to={item.to} end={item.end} className={SHEET_LINK}>
+                    {item.label}
+                  </NavLink>
+                ))}
+                <NavLink to="/sobre" className={SHEET_LINK}>
+                  Sobre o EmpregaSantana
+                </NavLink>
+              </nav>
+              <div className="mt-4 flex flex-col gap-2 border-t pt-4">
+                {user ? (
+                  <>
+                    <Button asChild size="lg">
+                      <Link to={painelPath}>
+                        <LayoutDashboard /> Meu painel
+                      </Link>
+                    </Button>
+                    <NavLink to="/perfil/conta" className={SHEET_LINK}>
+                      Minha conta
+                    </NavLink>
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="flex h-12 items-center rounded-xl px-3 text-left text-base font-medium text-destructive-ink hover:bg-muted"
+                    >
+                      Sair
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Button asChild size="lg">
+                      <Link to="/cadastro">Criar conta grátis</Link>
+                    </Button>
+                    <Button asChild size="lg" variant="outline">
+                      <Link to="/login">Entrar</Link>
+                    </Button>
+                  </>
+                )}
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>

@@ -1,0 +1,245 @@
+### Open tabs
+- 0: (current) [Gupy](https://vempra.gupy.io/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://vempra.gupy.io/
+- Page Title: Gupy
+- Console: 12 errors, 0 warnings
+### Snapshot
+```yaml
+- generic [active] [ref=f44e1]:
+  - generic [ref=f44e2]:
+    - link "Pular para o conteúdo principal" [ref=f44e3] [cursor=pointer]:
+      - /url: "#h1"
+    - generic [ref=f44e4]:
+      - banner [ref=f44e5]:
+        - navigation "Menu principal" [ref=f44e6]:
+          - generic [ref=f44e7]:
+            - link "Informações sobre a empresa" [ref=f44e8] [cursor=pointer]: Sobre
+            - link "Lista de vagas publicadas pela empresa" [ref=f44e9] [cursor=pointer]: Vagas
+          - button [ref=f44e13]:
+            - button [ref=f44e16] [cursor=pointer]
+      - generic [ref=f44e17]:
+        - img "Foto de capa da empresa" [ref=f44e19]
+        - generic [ref=f44e20]:
+          - img "Logotipo Gupy" [ref=f44e22]
+          - heading "Gupy" [level=1] [ref=f44e24]
+      - main [ref=f44e25]:
+        - generic [ref=f44e26]:
+          - heading "Quão incrível seria ter um mundo com gente realizada em suas jornadas profissionais?" [level=2] [ref=f44e27]
+          - generic [ref=f44e28]:
+            - paragraph [ref=f44e29]: É essa a nossa missão! 💙
+            - paragraph [ref=f44e30]:
+              - text: Há 10 anos fazemos acontecer esse sonho que nasceu da vontade de
+              - strong [ref=f44e31]: construir um mercado de trabalho melhor e produtos inovadores
+              - text: ", que impactam não só a rotina dos RHs, mas também a experiência das pessoas candidatas! 🤩"
+            - paragraph [ref=f44e32]:
+              - text: Premiados como a
+              - strong [ref=f44e33]: Melhor empresa para se trabalhar
+              - text: 🏆
+              - strong [ref=f44e34]: (GPTW) há quatro anos consecutivos
+              - text: ", já fomos residentes no Google Campus, acelerados pela Wayra, investidos pela Yellow Ventures, Canary, Maya Capital, Valor e Oria. Somos apoiados pela Endeavor — inclusive ganhamos o Prêmio de destaque em Diversidade e Inclusão por três anos consecutivos! Demais, né?"
+            - paragraph [ref=f44e35]:
+              - text: Em 2022, recebemos um aporte de R$500 milhões liderado pelos fundos SoftBank e Riverwood. 🤑 O maior aporte para uma plataforma de RH na América Latina e o maior investimento em uma
+              - strong [ref=f44e36]: startup brasileira fundada por mulheres
+              - text: "!"
+            - paragraph [ref=f44e37]:
+              - text: "Hoje temos 5 grandes soluções, venha conhecer:"
+              - link [ref=f44e38] [cursor=pointer]:
+                - /url: https://www.gupy.io/software-de-recrutamento-e-selecao?__hstc=16885734.f3ac2bb1e73b911f967c8d3ef7caec23.1720639464417.1727098584592.1727182160644.15&__hssc=16885734.1.1727182160644&__hsfp=1890499605&_gl=1*1g7tdu0*_gcl_au*NDE2OTY4MTUxLjE3MjA2Mzk0NjM.&int_ref=menu-institucional
+                - strong [ref=f44e39]: Recrutamento & Seleção
+              - text: ","
+              - link [ref=f44e40] [cursor=pointer]:
+                - /url: https://www.gupy.io/software-de-admissao-digital?int_ref=menu-institucional
+                - strong [ref=f44e41]: Admissão
+              - text: ","
+              - link [ref=f44e42] [cursor=pointer]:
+                - /url: https://www.gupy.io/plataforma-de-educacao-corporativa?int_ref=menu-institucional
+                - strong [ref=f44e43]: Treinamento
+              - text: ","
+              - link [ref=f44e44] [cursor=pointer]:
+                - /url: https://www.gupy.io/plataforma-de-clima-e-engajamento?int_ref=menu-institucional
+                - strong [ref=f44e45]: Engajamento
+              - text: e
+              - link [ref=f44e46] [cursor=pointer]:
+                - /url: https://www.gupy.io/plataforma-de-performance-e-desenvolvimento?int_ref=menu-institucional
+                - strong [ref=f44e47]: Performance.
+            - paragraph [ref=f44e48]:
+              - text: Hoje já somos um time de
+              - strong [ref=f44e49]: mais de 600 pessoas
+              - text: ", espalhadas por 23 estados do Brasil! Atuamos em um modelo de trabalho híbrido, isso significa que temos o nosso escritório em São Paulo:"
+              - link "o GupyHub" [ref=f44e50] [cursor=pointer]:
+                - /url: https://www.google.com/maps/place/Gupy+%7C+HR+Tech+l%C3%ADder+em+solu%C3%A7%C3%B5es+para+o+RH/@-23.5649561,-46.6529735,15z/data=!4m6!3m5!1s0x94ce59b3c508885f:0x49b7a893e0090606!8m2!3d-23.5649561!4d-46.6529735!16s%2Fg%2F11g0mjck2t?entry=ttu
+              - text: . Confira o link com localização e algumas fotos apresentando o nosso espaço presencial. 🤩
+            - paragraph [ref=f44e51]:
+              - text: Ao se cadastrar em processos seletivos para trabalhar aqui na Gupy, você declara que aceita e está de acordo com nossa
+              - link "Política de Privacidade na Gestão de Pessoas" [ref=f44e52] [cursor=pointer]:
+                - /url: https://www.gupy.io/privacidade-gest%C3%A3o-de-pessoas
+              - text: .
+            - paragraph [ref=f44e53]:
+              - text: Leia nosso
+              - link "Manifesto de Diversidade" [ref=f44e54] [cursor=pointer]:
+                - /url: https://www.gupy.io/manifesto-de-diversidade
+              - text: e conheça também nosso
+              - strong [ref=f44e55]: compromisso com a Diversidade e Inclusão dentro da Gupy e no mercado
+              - text: .
+            - paragraph [ref=f44e56]:
+              - text: Com muito orgulho, podemos dizer que
+              - strong [ref=f44e57]: somos a HRTech que mais cresce no Brasil
+              - text: ","
+              - strong [ref=f44e58]: IA First
+              - text: e estamos só começando!
+            - paragraph [ref=f44e59]: "#Vempragupy 🚀"
+            - paragraph [ref=f44e60]:
+              - strong [ref=f44e61]: Quer encontrar vagas no nosso time de Tecnologia?
+              - text: 💻
+              - strong [ref=f44e62]: "Acesse:"
+              - link [ref=f44e63] [cursor=pointer]:
+                - /url: https://tech-career.gupy.io/
+                - strong [ref=f44e64]: tech-career.gupy.io
+        - generic [ref=f44e71]:
+          - heading "Não paramos de crescer e vamos precisar de mais Gupiers!" [level=2] [ref=f44e72]
+          - paragraph [ref=f44e74]: Não sei se você sabe, mas nós desenvolvemos a primeira Inteligência Artificial para Recrutamento e Seleção do Brasil. Então, se você busca trabalhar numa empresa que une tecnologia, inovação, gestão e educação, a Gupy é o seu lugar!
+          - generic [ref=f44e75]:
+            - form "Busca de vagas" [ref=f44e76]:
+              - text: Busca de vagas
+              - searchbox "Busca de vagas" [ref=f44e77]:
+                - textbox "Busca de vagas" [ref=f44e78]:
+                  - /placeholder: Digite o nome da vaga
+                - button "Busca de vagas" [ref=f44e79] [cursor=pointer]
+            - form "Opções de Filtro de Vaga" [ref=f44e83]:
+              - generic [ref=f44e84]:
+                - text: Modo de trabalho
+                - generic [ref=f44e89] [cursor=pointer]:
+                  - generic [ref=f44e90]: Todos
+                  - combobox "Modo de trabalho" [ref=f44e93]
+              - generic [ref=f44e98]:
+                - text: Tipo de vaga
+                - generic [ref=f44e103] [cursor=pointer]:
+                  - generic [ref=f44e104]: Todos
+                  - combobox "Tipo de vaga" [ref=f44e107]
+              - generic [ref=f44e112]:
+                - text: Área da vaga
+                - generic [ref=f44e117] [cursor=pointer]:
+                  - generic [ref=f44e118]: Todas
+                  - combobox "Área da vaga" [ref=f44e121]
+              - generic [ref=f44e126]:
+                - text: Estado
+                - generic [ref=f44e131] [cursor=pointer]:
+                  - generic [ref=f44e132]: Todos
+                  - combobox "Estado" [ref=f44e135]
+              - generic [ref=f44e140]:
+                - text: Cidade
+                - generic: Todas
+              - generic [ref=f44e141]:
+                - text: Bairro
+                - generic: Todos
+          - generic [ref=f44e142]:
+            - status [ref=f44e143]: 3 vagas encontradas para 0 filtros aplicados
+            - generic [aria-hidden] [ref=f44e144]: 3 vagas
+          - list "Lista de Vagas" [ref=f44e145]:
+            - listitem [ref=f44e146]:
+              - link "Vaga para Efetivo como Automation Engineer (Pessoa Consultora de Integração) em São Paulo - SP e Híbrido" [ref=f44e147] [cursor=pointer]:
+                - /url: /jobs/12424148?jobBoardSource=gupy_public_page
+                - generic [ref=f44e148]:
+                  - generic [ref=f44e149]:
+                    - generic "Candidatura rápida" [ref=f44e150]
+                    - text: Automation Engineer (Pessoa Consultora de Integração)
+                  - generic [ref=f44e153]: São Paulo - SP e Híbrido
+                  - generic [ref=f44e154]: Efetivo
+            - listitem [ref=f44e155]:
+              - link "Vaga para Efetivo como Gerente de Marketing — Eventos, Patrocínios, Receita & Growth em São Paulo - SP e Híbrido" [ref=f44e156] [cursor=pointer]:
+                - /url: /jobs/12592274?jobBoardSource=gupy_public_page
+                - generic [ref=f44e157]:
+                  - generic [ref=f44e158]: Gerente de Marketing — Eventos, Patrocínios, Receita & Growth
+                  - generic [ref=f44e159]: São Paulo - SP e Híbrido
+                  - generic [ref=f44e160]: Efetivo
+            - listitem [ref=f44e161]:
+              - link "Vaga para Efetivo como Representante de Desenvolvimento de Negócios Sênior (BDR) em São Paulo - SP e Híbrido" [ref=f44e162] [cursor=pointer]:
+                - /url: /jobs/11832039?jobBoardSource=gupy_public_page
+                - generic [ref=f44e163]:
+                  - generic [ref=f44e164]:
+                    - generic "Candidatura rápida" [ref=f44e165]
+                    - text: Representante de Desenvolvimento de Negócios Sênior (BDR)
+                  - generic [ref=f44e168]: São Paulo - SP e Híbrido
+                  - generic [ref=f44e169]: Efetivo
+          - navigation "paginationAriaLabel" [ref=f44e171]:
+            - list [ref=f44e172]:
+              - listitem [ref=f44e173]:
+                - button "previousButtonAriaLabel" [disabled] [ref=f44e174]
+              - listitem [ref=f44e178]:
+                - button "pageButtonAriaLabel 1 undefined" [ref=f44e179] [cursor=pointer]: "1"
+              - listitem [ref=f44e180]:
+                - button "nextButtonAriaLabel" [disabled] [ref=f44e181]
+          - generic [ref=f44e186]:
+            - paragraph [ref=f44e187]: Não encontrou a vaga que procurava? Participe do nosso banco de talentos!
+            - button "Participar do banco de talentos" [ref=f44e188] [cursor=pointer]
+        - region "Seção de Depoimentos" [ref=f44e189]:
+          - generic [ref=f44e190]:
+            - heading "Por dentro das áreas" [level=2] [ref=f44e191]
+            - paragraph [ref=f44e193]: Aqui você vai entender um pouco mais sobre o nosso time e iniciativas! 💙
+            - generic [ref=f44e194]:
+              - generic [ref=f44e195]: slide 1 to 2 of 2
+              - generic [ref=f44e198]:
+                - generic "Depoimento 1 de 2" [ref=f44e199]:
+                  - img "Foto de Lyzandra Figueiredo" [ref=f44e201]
+                  - generic [ref=f44e202]: Lyzandra Figueiredo
+                  - text: Customer Success
+                  - paragraph [ref=f44e203]: Trabalhar em SMB na Gupy é uma tarefa encantadora mas com muitos desafios. A nossa rotina está baseada em reuniões com clientes, analises de dados, projetos de melhorias para os clientes e a área em geral. Por termos um alto volume de clientes precisamos pensar sempre em como prestar um atendimento escalável mas sem perder a personalização, precisamos ter um olhar empático e analítico para lidar com as demandas e clientes. É muito gratificante saber que faz parte da mudança do processo de Recrutamento e Seleção de pequenas e médias empresas do Brasil.
+                - generic "Depoimento 2 de 2" [ref=f44e204]:
+                  - img "Foto de Brenda Santos" [ref=f44e206]
+                  - generic [ref=f44e207]: Brenda Santos
+                  - text: Gente & Gestão
+                  - paragraph [ref=f44e208]: Trabalhar no time de RH é um aprendizado constante. É incrível! Poder atuar na geração de novas oportunidades, no desenvolvimento e no encantamento do time faz essa jornada ser encantadora. Ser Gupy é gostar de gente e ser gente o tempo todo. Se quer um lugar em que pode ser você mesmo e construir uma história, vem com a gente!
+        - region "Seção de Depoimentos" [ref=f44e209]:
+          - generic [ref=f44e210]:
+            - heading "Por dentro da Gupy" [level=2] [ref=f44e211]
+            - paragraph [ref=f44e213]: Temos algumas iniciativas bem legais aqui dentro, olha só!
+            - generic [ref=f44e214]:
+              - generic [ref=f44e215]: slide 1 to 3 of 6
+              - generic [ref=f44e218]:
+                - generic "Depoimento 1 de 6" [ref=f44e219]:
+                  - img "Foto de Grupos de afinidade" [ref=f44e221]
+                  - generic [ref=f44e222]: Grupos de afinidade
+                  - paragraph [ref=f44e223]: "Trabalhamos para que a Gupy seja sempre um ambiente seguro para todes. Não importa qual o seu marcador de diversidade, o seu recorte ou o seu interesse, temos vários grupos de afinidade aqui dentro para reunir pessoas e criar espaços de debate, desenvolvimento e acolhimento. Alguns dos nossos grupos hoje são: Gupretos (pessoas negras), Gupride (LGBTQIAP+), Girlpiers (mulheres) e Devas (mulheres e pessoas não binárias de tech)."
+                - generic "Depoimento 2 de 6" [ref=f44e224]:
+                  - img "Foto de Educação corporativa" [ref=f44e226]
+                  - generic [ref=f44e227]: Educação corporativa
+                  - paragraph [ref=f44e228]: Compartilhar conhecimento é muito importante pra gente! Temos um time referência e precisamos dividir informação o tempo todo. Para isso, usamos a nossa superferramenta de educação corporativa, a Niduu. Todos os gupiers têm acesso ao app e à plataforma para fazer cursos gerais, treinamentos de áreas, aprender sobre a empresa e muito mais! 📚
+                - generic "Depoimento 3 de 6" [ref=f44e229]:
+                  - img "Foto de Recrutamento interno" [ref=f44e231]
+                  - generic [ref=f44e232]: Recrutamento interno
+                  - paragraph [ref=f44e233]: Valorizamos muito nosso time e queremos que todo mundo tenha oportunidade de crescer aqui dentro. Por isso, o recrutamento interno é algo muito forte aqui! Inclusive, grande parte das nossas vagas de liderança são fechadas internamente, sabia? 📈
+                - generic [aria-hidden] [ref=f44e234]:
+                  - generic [ref=f44e237]: Gupy Coin
+                  - paragraph [ref=f44e238]: "Criamos um modelo carinhosamente apelidado de Gupy Coin para incentivar o reconhecimento entre os times. Todo mês, os Gupiers recebem um valor em moedas virtuais para doar para outros Gupiers com foco em reconhecer uma atividade, ação e exemplos atrelado a nossa cultura que a pessoa fez! E o melhor: as Gupy Coins que você ganhar podem ser convertidas para diversos produtos em uma loja virtual da Gupy! 💰"
+                - generic [aria-hidden] [ref=f44e239]:
+                  - generic [ref=f44e242]: DIA T
+                  - paragraph [ref=f44e243]: É o nosso Dia de Trabalho para ganhar Tração para o próximo Trimestre. Esse rito aqui da Gupy acontece trimestralmente para que todos os Gupiers foquem energia em desdobramento da estratégia, Team Building e alinhamentos internos entre todos os times. Todo mundo tem autonomia para sugerir formas de ajudar a Gupy a chegar no sonho grande. Depois de tudo definido, fazemos um happy hour, é claro!🥂
+                - generic [aria-hidden] [ref=f44e244]:
+                  - generic [ref=f44e247]: Treinamento e Desenvolvimento
+                  - paragraph [ref=f44e248]: Evolução é muito importante aqui na Gupy, por isso, temos um ciclo de avaliação de desempenho para que os Gupiers decolem ainda mais alto e uma frente de T&D para apoiar o aprendizado e o aprimoramento constante das nossas pessoas! Queremos que todo Gupier cresça e saiba pra onde está crescendo, por isso, incentivamos a criação de PDIs, 1:1 quinzenais e toda uma jornada que olha para performance, cultura, liderança e promoções.
+              - generic "Carousel Pagination" [ref=f44e249]:
+                - button "Carousel Page 1 (Current Slide)" [ref=f44e250] [cursor=pointer]
+                - button "Carousel Page 2" [ref=f44e251] [cursor=pointer]
+        - region "Seção de links da empresa" [ref=f44e252]:
+          - heading "Nos acompanhe nas redes" [level=2] [ref=f44e253]
+          - list "Lista de links" [ref=f44e254]:
+            - listitem [ref=f44e255]:
+              - link "Website" [ref=f44e256] [cursor=pointer]:
+                - /url: http://gupy.io
+            - listitem [ref=f44e259]:
+              - link "LinkedIn" [ref=f44e260] [cursor=pointer]:
+                - /url: https://www.linkedin.com/company/gupy/
+            - listitem [ref=f44e263]:
+              - link "Facebook" [ref=f44e264] [cursor=pointer]:
+                - /url: https://www.facebook.com/peoplegupy/
+            - listitem [ref=f44e267]:
+              - link "Instagram" [ref=f44e268] [cursor=pointer]:
+                - /url: http://instagram.com/vempragupy
+            - listitem [ref=f44e271]:
+              - link "Glassdoor" [ref=f44e272] [cursor=pointer]:
+                - /url: https://www.glassdoor.com.br/Vis%C3%A3o-geral/Trabalhar-na-Gupy-EI_IE2488824.13,17.htm
+      - contentinfo [ref=f44e275]: Powered by Gupy 2026. Todos os direitos reservados.
+  - alert [ref=f44e276]
+```

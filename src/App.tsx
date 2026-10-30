@@ -1,11 +1,9 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { RootLayout } from '@/components/layout/RootLayout'
+import { PageContainer, RootLayout } from '@/components/layout/RootLayout'
+import { PanelLayout } from '@/components/layout/PanelLayout'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 
-const BlogPage = lazy(() => import('@/pages/public/BlogPage'))
-const BlogArticlePage = lazy(() => import('@/pages/public/BlogPage').then(m => ({ default: m.BlogArticlePage })))
-const ArtigosPage = lazy(() => import('@/pages/admin/ArtigosPage'))
 const HomePage = lazy(() => import('@/pages/public/HomePage'))
 const VagaDetailPage = lazy(() => import('@/pages/public/VagaDetailPage'))
 const AutonomoDetailPage = lazy(() => import('@/pages/public/AutonomoDetailPage'))
@@ -22,9 +20,12 @@ const TermosPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({
 const PrivacidadePage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.PrivacidadePage })))
 const LgpdPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.LgpdPage })))
 
+const CustomPage = lazy(() => import('@/pages/public/CustomPage'))
+
 const EmpresasDirectoryPage = lazy(() => import('@/pages/shared/EmpresasDirectoryPage'))
 const PerfilPage = lazy(() => import('@/pages/shared/PerfilPage'))
 const PerfilContaPage = lazy(() => import('@/pages/shared/PerfilContaPage'))
+const ProcessoPage = lazy(() => import('@/pages/shared/ProcessoPage'))
 
 const CandidatoOnboardingPage = lazy(() => import('@/pages/candidato/OnboardingPage'))
 const CvListPage = lazy(() => import('@/pages/candidato/CvListPage'))
@@ -34,6 +35,7 @@ const CandidaturasPage = lazy(() => import('@/pages/candidato/CandidaturasPage')
 const AutonomoOnboardingPage = lazy(() => import('@/pages/autonomo/OnboardingPage'))
 const AutonomoPerfilPage = lazy(() => import('@/pages/autonomo/PerfilPage'))
 const AutonomoPlanoPage = lazy(() => import('@/pages/autonomo/PlanoPage'))
+const AutonomoContratacoesPage = lazy(() => import('@/pages/autonomo/ContratacoesPage'))
 
 const EmpresaLayout = lazy(() => import('@/pages/empresa/EmpresaLayout'))
 const EmpresaOnboardingPage = lazy(() => import('@/pages/empresa/OnboardingPage'))
@@ -44,17 +46,26 @@ const VagaCandidatosPage = lazy(() => import('@/pages/empresa/VagaCandidatosPage
 const EmpresaPerfilPage = lazy(() => import('@/pages/empresa/PerfilPage'))
 const EmpresaPlanoPage = lazy(() => import('@/pages/empresa/PlanoPage'))
 const BancoCurriculosPage = lazy(() => import('@/pages/empresa/BancoCurriculosPage'))
+const EmpresaProcessosPage = lazy(() => import('@/pages/empresa/ProcessosPage'))
 
-const AdminResourcePage = lazy(() => import('@/pages/admin/ResourcePage'))
-const TaxonomiesPage = lazy(() => import('@/pages/admin/TaxonomiesPage'))
-const AparenciaPage = lazy(() => import('@/pages/admin/AparenciaPage'))
-const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
 const AdminDashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
+const AdminEmpresasPage = lazy(() => import('@/pages/admin/EmpresasPage'))
 const AdminEmpresaDetailPage = lazy(() => import('@/pages/admin/EmpresaDetailPage'))
 const AdminUsuariosPage = lazy(() => import('@/pages/admin/UsuariosPage'))
 const AdminPlanosPage = lazy(() => import('@/pages/admin/PlanosPage'))
+const AdminVagasPage = lazy(() => import('@/pages/admin/VagasPage'))
 const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
+const AdminPaginaEditPage = lazy(() => import('@/pages/admin/PaginaEditPage'))
+const AdminCategoriasPage = lazy(() => import('@/pages/admin/CategoriasPage'))
+const AdminAutonomosPage = lazy(() => import('@/pages/admin/AutonomosPage'))
+const AdminProcessosPage = lazy(() => import('@/pages/admin/ProcessosPage'))
+
+const BlogPage = lazy(() => import('@/pages/public/BlogPage'))
+const BlogArticlePage = lazy(() => import('@/pages/public/BlogPage').then(m => ({ default: m.BlogArticlePage })))
+const ArtigosPage = lazy(() => import('@/pages/admin/ArtigosPage'))
+const TaxonomiesPage = lazy(() => import('@/pages/admin/TaxonomiesPage'))
+const AparenciaPage = lazy(() => import('@/pages/admin/AparenciaPage'))
 const NaoEncontradaPage = lazy(() => import('@/pages/public/NaoEncontradaPage'))
 
 function RouteFallback() {
@@ -69,97 +80,109 @@ export default function App() {
   return (
     <Suspense fallback={<RouteFallback />}>
       <Routes>
+        {/* Site: cabeçalho e rodapé */}
         <Route element={<RootLayout />}>
-          {/* Públicas */}
+          {/* Páginas que o superadmin pode montar em seções: ocupam a tela inteira e cuidam das próprias margens */}
           <Route index element={<HomePage />} />
-          <Route path="blog" element={<BlogPage />} />
-          <Route path="blog/:slug" element={<BlogArticlePage />} />
-          <Route path="vagas/:id" element={<VagaDetailPage />} />
-          <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
-          <Route path="empresas/:id" element={<EmpresaDetailPagePublic />} />
-          <Route path="explorar" element={<ExplorarPage />} />
-          <Route path="planos" element={<PlanosPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
-          <Route path="redefinir-senha" element={<ResetPasswordPage />} />
-          <Route path="cadastro" element={<CadastroPage />} />
-          <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
           <Route path="sobre" element={<SobrePage />} />
           <Route path="termos" element={<TermosPage />} />
           <Route path="privacidade" element={<PrivacidadePage />} />
           <Route path="lgpd" element={<LgpdPage />} />
+          <Route path="pagina/:slug" element={<CustomPage />} />
 
-          {/* Autenticadas — comum */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="empresas" element={<EmpresasDirectoryPage />} />
-            <Route path="perfil" element={<PerfilPage />} />
-            <Route path="perfil/conta" element={<PerfilContaPage />} />
-          </Route>
+          {/* Demais telas do site: largura máxima e margens padrão */}
+          <Route element={<PageContainer />}>
+            <Route path="blog" element={<BlogPage />} />
+            <Route path="blog/:slug" element={<BlogArticlePage />} />
+            <Route path="*" element={<NaoEncontradaPage />} />
+            <Route path="vagas/:id" element={<VagaDetailPage />} />
+            <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
+            <Route path="empresas/:id" element={<EmpresaDetailPagePublic />} />
+            <Route path="explorar" element={<ExplorarPage />} />
+            <Route path="planos" element={<PlanosPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
+            <Route path="redefinir-senha" element={<ResetPasswordPage />} />
+            <Route path="cadastro" element={<CadastroPage />} />
+            <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
 
-          {/* Candidato */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="candidato/onboarding" element={<CandidatoOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['candidato']} />}>
-            <Route path="candidato/cv" element={<CvListPage />} />
-            <Route path="candidato/cv/:id" element={<CvEditPage />} />
-            <Route path="candidato/candidaturas" element={<CandidaturasPage />} />
-          </Route>
-
-          {/* Autônomo */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="autonomo/onboarding" element={<AutonomoOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['autonomo']} />}>
-            <Route path="autonomo/perfil" element={<AutonomoPerfilPage />} />
-            <Route path="autonomo/plano" element={<AutonomoPlanoPage />} />
-          </Route>
-
-          {/* Empresa */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="empresa/onboarding" element={<EmpresaOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['empresa_owner']} />}>
-            <Route element={<EmpresaLayout />}>
-              <Route path="empresa/painel" element={<EmpresaPainelPage />} />
-              <Route path="empresa/vagas" element={<EmpresaVagasListPage />} />
-              <Route path="empresa/vagas/nova" element={<VagaFormPage />} />
-              <Route path="empresa/vagas/:id/editar" element={<VagaFormPage />} />
-              <Route path="empresa/vagas/:id/candidatos" element={<VagaCandidatosPage />} />
-              <Route path="empresa/perfil" element={<EmpresaPerfilPage />} />
-              <Route path="empresa/plano" element={<EmpresaPlanoPage />} />
-              <Route path="empresa/banco-de-curriculos" element={<BancoCurriculosPage />} />
+            {/* Diretório de empresas: só logado, mas faz parte do site */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="empresas" element={<EmpresasDirectoryPage />} />
             </Route>
           </Route>
+        </Route>
 
-          {/* Admin */}
-          <Route element={<ProtectedRoute adminOnly />}>
-            <Route element={<AdminLayout />}>
+        {/* Painéis: só o menu lateral e a área de trabalho, sem cabeçalho e rodapé do site */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<PanelLayout />}>
+            {/* Minha conta (todos os perfis) */}
+            <Route path="perfil" element={<PerfilPage />} />
+            <Route path="perfil/conta" element={<PerfilContaPage />} />
+
+            {/* Candidato */}
+            <Route path="candidato/onboarding" element={<CandidatoOnboardingPage />} />
+            <Route element={<ProtectedRoute roles={['candidato']} />}>
+              <Route path="candidato/cv" element={<CvListPage />} />
+              <Route path="candidato/cv/:id" element={<CvEditPage />} />
+              <Route path="candidato/candidaturas" element={<CandidaturasPage />} />
+              <Route
+                path="candidato/processos/:id"
+                element={<ProcessoPage back={{ to: '/candidato/candidaturas', label: 'Minhas candidaturas' }} />}
+              />
+            </Route>
+
+            {/* Autônomo */}
+            <Route path="autonomo/onboarding" element={<AutonomoOnboardingPage />} />
+            <Route element={<ProtectedRoute roles={['autonomo']} />}>
+              <Route path="autonomo/perfil" element={<AutonomoPerfilPage />} />
+              <Route path="autonomo/plano" element={<AutonomoPlanoPage />} />
+              <Route path="autonomo/contratacoes" element={<AutonomoContratacoesPage />} />
+              <Route
+                path="autonomo/contratacoes/:id"
+                element={<ProcessoPage back={{ to: '/autonomo/contratacoes', label: 'Contratações' }} />}
+              />
+            </Route>
+
+            {/* Empresa (dono de empresa; o superadmin NÃO entra aqui só por ser superadmin) */}
+            <Route path="empresa/onboarding" element={<EmpresaOnboardingPage />} />
+            <Route element={<ProtectedRoute roles={['empresa_owner']} />}>
+              <Route element={<EmpresaLayout />}>
+                <Route path="empresa/painel" element={<EmpresaPainelPage />} />
+                <Route path="empresa/vagas" element={<EmpresaVagasListPage />} />
+                <Route path="empresa/vagas/nova" element={<VagaFormPage />} />
+                <Route path="empresa/vagas/:id/editar" element={<VagaFormPage />} />
+                <Route path="empresa/vagas/:id/candidatos" element={<VagaCandidatosPage />} />
+                <Route path="empresa/perfil" element={<EmpresaPerfilPage />} />
+                <Route path="empresa/plano" element={<EmpresaPlanoPage />} />
+                <Route path="empresa/banco-de-curriculos" element={<BancoCurriculosPage />} />
+                <Route path="empresa/processos" element={<EmpresaProcessosPage />} />
+                <Route path="empresa/processos/:id" element={<ProcessoPage back={{ to: '/empresa/processos', label: 'Seleção' }} />} />
+              </Route>
+            </Route>
+
+            {/* Superadmin */}
+            <Route element={<ProtectedRoute adminOnly />}>
               <Route path="admin" element={<AdminDashboardPage />} />
-              <Route path="admin/empresas" element={<AdminResourcePage resource="empresas" />} />
-              <Route path="admin/empresas/nova" element={<AdminResourcePage resource="empresas" />} />
-              <Route path="admin/empresas/:id/editar" element={<AdminResourcePage resource="empresas" />} />
-              <Route path="admin/profissionais" element={<AdminResourcePage resource="profissionais" />} />
-              <Route path="admin/profissionais/novo" element={<AdminResourcePage resource="profissionais" />} />
-              <Route path="admin/profissionais/:id/editar" element={<AdminResourcePage resource="profissionais" />} />
-              <Route path="admin/configuracoes/categorias" element={<TaxonomiesPage key="categories" mode="categories" />} />
-              <Route path="admin/configuracoes/tipos" element={<TaxonomiesPage key="types" mode="types" />} />
-              <Route path="admin/aparencia" element={<AparenciaPage />} />
+              <Route path="admin/empresas" element={<AdminEmpresasPage />} />
               <Route path="admin/empresas/:id" element={<AdminEmpresaDetailPage />} />
               <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
               <Route path="admin/planos" element={<AdminPlanosPage />} />
-              <Route path="admin/vagas" element={<AdminResourcePage resource="vagas" />} />
-              <Route path="admin/vagas/nova" element={<AdminResourcePage resource="vagas" />} />
-              <Route path="admin/vagas/:id/editar" element={<AdminResourcePage resource="vagas" />} />
-              <Route path="admin/artigos" element={<ArtigosPage />} />
+              <Route path="admin/vagas" element={<AdminVagasPage />} />
+              <Route path="admin/autonomos" element={<AdminAutonomosPage />} />
+              <Route path="admin/processos" element={<AdminProcessosPage />} />
+              <Route path="admin/processos/:id" element={<ProcessoPage somenteLeitura back={{ to: '/admin/processos', label: 'Seleções' }} />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
+              <Route path="admin/paginas/:id" element={<AdminPaginaEditPage />} />
+              <Route path="admin/categorias" element={<AdminCategoriasPage />} />
+              <Route path="admin/artigos" element={<ArtigosPage />} />
+              <Route path="admin/configuracoes/tipos" element={<TaxonomiesPage mode="types" />} />
+              <Route path="admin/configuracoes/categorias" element={<TaxonomiesPage mode="categories" />} />
+              <Route path="admin/configuracoes" element={<TaxonomiesPage mode="categories" />} />
+              <Route path="admin/aparencia" element={<AparenciaPage />} />
               <Route path="admin/ads" element={<AdminAdsPage />} />
             </Route>
           </Route>
-
-          {/* Qualquer endereço não reconhecido — dentro do layout, para manter
-              navbar e rodapé em vez de entregar uma página vazia. */}
-          <Route path="*" element={<NaoEncontradaPage />} />
         </Route>
       </Routes>
     </Suspense>

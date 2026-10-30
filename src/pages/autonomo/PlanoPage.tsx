@@ -4,8 +4,8 @@ export default function AutonomoPlanoPage() {
   return (
     <PlaceholderPage
       title="Plano do autônomo"
-      phase="Fase 3 do roadmap (docs/PRD.md seção 6)"
-      description="Checkout Stripe para o plano Destaque, que ativa featured_placement no perfil público."
+      description="A contratação do plano Destaque pelo site está sendo preparada. Por enquanto, seu perfil usa o plano gratuito, e você pode ver os planos disponíveis na página Planos."
+      back={{ to: '/planos', label: 'Ver os planos' }}
     />
   )
 }

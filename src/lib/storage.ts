@@ -50,6 +50,11 @@ export function uploadAutonomoPortfolioPhoto(file: File, autonomoId: string) {
   return uploadImage(file, `autonomos/${autonomoId}/portfolio-${unique}`)
 }
 
+export function uploadPaginaImage(file: File, paginaId: string) {
+  const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  return uploadImage(file, `paginas/${paginaId}/img-${unique}`)
+}
+
 export function uploadEditorialImage(file: File) {
   if (!['image/jpeg','image/png','image/webp','image/avif'].includes(file.type)) throw new UploadError('Use JPG, PNG, WebP ou AVIF.')
   return uploadImage(file, `editorial/${crypto.randomUUID()}`)

@@ -1,16 +1,22 @@
 import { CategorySelect } from '@/components/CategorySelect'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
-import { useQueryClient } from '@tanstack/react-query'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { supabase } from '@/lib/supabase'
 import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo } from '@/lib/storage'
 import { RichTextEditor } from '@/components/RichTextEditor'
+import { BlocksEditor } from '@/components/BlocksEditor'
+import { SegmentSelect } from '@/components/SegmentSelect'
 import { ImageUploadField } from '@/components/ImageUploadField'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { CepField } from '@/components/fields/CepField'
+import { CityField } from '@/components/fields/CityField'
+import { FormError } from '@/components/auth/FormError'
+import { addressLineFromCep } from '@/lib/cep'
+import { DEFAULT_UF } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 function VisibilityToggle({
@@ -39,6 +45,10 @@ export default function EmpresaPerfilPage() {
   const [logoUrl, setLogoUrl] = React.useState(empresa?.logo_url ?? null)
 
   const [address, setAddress] = React.useState(empresa?.address ?? '')
+  const [zipCode, setZipCode] = React.useState(empresa?.zip_code ?? '')
+  const [city, setCity] = React.useState(empresa?.city ?? '')
+  const [uf, setUf] = React.useState<string>(empresa?.state ?? DEFAULT_UF)
+  const [error, setError] = React.useState<string | null>(null)
   const [addressVisible, setAddressVisible] = React.useState(empresa?.address_visible ?? true)
   const [missionHtml, setMissionHtml] = React.useState(empresa?.mission_vision_values_html ?? '')
   const [missionVisible, setMissionVisible] = React.useState(empresa?.mission_visible ?? true)
@@ -53,21 +63,22 @@ export default function EmpresaPerfilPage() {
     empresa?.employee_count_visible ?? true,
   )
 
-  const queryClient = useQueryClient()
-  const [saveError, setSaveError] = React.useState('')
   const [saving, setSaving] = React.useState(false)
   const [saved, setSaved] = React.useState(false)
 
   React.useEffect(() => {
     if (!empresa) return
     setNomeFantasia(empresa.nome_fantasia)
-    setSector(empresa.sector ?? '')
     setCategory(empresa.category ?? '')
     setTypeSlug(empresa.type_slug ?? '')
+    setSector(empresa.sector ?? '')
     setWebsite(empresa.website ?? '')
     setDescriptionHtml(empresa.description_html ?? '')
     setLogoUrl(empresa.logo_url)
     setAddress(empresa.address ?? '')
+    setZipCode(empresa.zip_code ?? '')
+    setCity(empresa.city ?? '')
+    setUf(empresa.state ?? DEFAULT_UF)
     setAddressVisible(empresa.address_visible)
     setMissionHtml(empresa.mission_vision_values_html ?? '')
     setMissionVisible(empresa.mission_visible)
@@ -83,10 +94,10 @@ export default function EmpresaPerfilPage() {
 
   const handleSave = async () => {
     setSaving(true)
-    setSaveError('')
     setSaved(false)
-    try {
-    const { error } = await supabase
+    setError(null)
+    const zipChanged = zipCode !== (empresa.zip_code ?? '')
+    const { error: saveError } = await supabase
       .from('empresas')
       .update({
         nome_fantasia: nomeFantasia,
@@ -97,6 +108,9 @@ export default function EmpresaPerfilPage() {
         description_html: descriptionHtml,
         logo_url: logoUrl,
         address,
+        ...(zipChanged ? { zip_code: zipCode || null } : {}),
+        city: city.trim() || null,
+        state: city.trim() ? uf : null,
         address_visible: addressVisible,
         mission_vision_values_html: missionHtml,
         mission_visible: missionVisible,
@@ -107,12 +121,14 @@ export default function EmpresaPerfilPage() {
         employee_count: employeeCount,
         employee_count_visible: employeeCountVisible,
       })
-      .eq('id', empresa.id).select('id').single()
-    if (error) throw error
-    await refresh()
-    queryClient.invalidateQueries({ queryKey: ['empresas'] })
-    setSaved(true)
-    } catch { setSaveError('Não foi possível salvar o perfil. Tente novamente.') } finally { setSaving(false) }
+      .eq('id', empresa.id)
+    if (saveError) {
+      setError('Não foi possível salvar agora. Confira sua conexão e tente de novo.')
+    } else {
+      await refresh()
+      setSaved(true)
+    }
+    setSaving(false)
   }
 
   return (
@@ -130,15 +146,15 @@ export default function EmpresaPerfilPage() {
             onUploaded={setLogoUrl}
             hint="PNG ou JPG, até 5 MB."
           />
-          <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
+          <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
+        <div className="flex flex-col gap-1.5">
             <Label htmlFor="nomeFantasia">Nome</Label>
             <Input id="nomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
           </div>
-          <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
-          <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="sector">Setor</Label>
-            <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />
+            <Label htmlFor="sector">Segmento</Label>
+            <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="website">Site</Label>
@@ -146,7 +162,7 @@ export default function EmpresaPerfilPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label>Sobre a empresa</Label>
-            <RichTextEditor value={descriptionHtml} onChange={setDescriptionHtml} />
+            <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="empresa" />
           </div>
         </CardContent>
       </Card>
@@ -156,12 +172,34 @@ export default function EmpresaPerfilPage() {
           <CardTitle className="text-base">Endereço</CardTitle>
           <CardDescription>Onde sua empresa está localizada</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          <Input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Rua, número, bairro, cidade — UF"
-          />
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
+            <Label htmlFor="zipCode">CEP</Label>
+            <CepField
+              id="zipCode"
+              value={zipCode}
+              onChange={setZipCode}
+              onFound={(found) => {
+                setAddress(addressLineFromCep(found))
+                setCity(found.city)
+                setUf(found.uf)
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="address">Rua, número e bairro</Label>
+            <Input
+              id="address"
+              autoComplete="street-address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Rua das Flores, 123, Centro"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="empresaCity">Cidade</Label>
+            <CityField id="empresaCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
+          </div>
           <VisibilityToggle checked={addressVisible} onChange={setAddressVisible} />
         </CardContent>
       </Card>
@@ -221,7 +259,7 @@ export default function EmpresaPerfilPage() {
         </CardContent>
       </Card>
 
-      {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
+      {error && <FormError>{error}</FormError>}
       <div className="flex items-center gap-3">
         <Button onClick={handleSave} variant="cta" disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar alterações'}

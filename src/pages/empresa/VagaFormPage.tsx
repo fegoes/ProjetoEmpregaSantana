@@ -1,23 +1,36 @@
-import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEmpresa } from '@/contexts/EmpresaContext'
+import { useCategories } from '@/hooks/useCategories'
 import { useSaveVaga } from '@/hooks/useEmpresaVagas'
 import { supabase } from '@/lib/supabase'
 import { uploadVagaGalleryPhoto } from '@/lib/storage'
+import { DEFAULT_UF } from '@/lib/masks'
+import { activeFor } from '@/lib/categories'
+import { MODELO_PADRAO, lerModelo, modeloParaSalvar, validarModelo, type EtapaModelo } from '@/lib/hiring'
+import { MODALIDADE_PRESENCIAL, MODALIDADE_REMOTA, vagaModalidade } from '@/lib/modalidade'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
-import { RichTextEditor } from '@/components/RichTextEditor'
-import { FieldHint } from '@/components/FieldHint'
+import { BlocksEditor } from '@/components/BlocksEditor'
+import { EtapasEditor } from '@/components/processo/EtapasEditor'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
-import { IconPickerField } from '@/components/IconPickerField'
 import { CategorySelect } from '@/components/CategorySelect'
+import { CityField } from '@/components/fields/CityField'
+import { CurrencyInput } from '@/components/fields/MaskedInputs'
+import { FormError } from '@/components/auth/FormError'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import { NativeSelect } from '@/components/ui/native-select'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+const FALLBACK_MODALIDADES = [
+  { slug: MODALIDADE_PRESENCIAL, label: 'Presencial' },
+  { slug: MODALIDADE_REMOTA, label: 'Remota' },
+  { slug: 'modalidade-hibrida', label: 'Híbrida' },
+]
 
 function useVagaToEdit(id: string | undefined) {
   return useQuery({
@@ -32,106 +45,232 @@ function useVagaToEdit(id: string | undefined) {
 }
 
 export default function VagaFormPage() {
+  const types = useRecordTypes()
   const { id } = useParams<{ id: string }>()
   const isEditing = Boolean(id)
   const { user } = useAuth()
   const { empresa } = useEmpresa()
   const navigate = useNavigate()
-  const { data: existing, isLoading: loadingExisting, isError: loadError } = useVagaToEdit(id)
+  const { data: existing } = useVagaToEdit(id)
   const saveVaga = useSaveVaga()
-  const types = useRecordTypes()
 
-  const [saveError, setSaveError] = React.useState('')
-  const [saved, setSaved] = React.useState(false)
-  const [salaryMin, setSalaryMin] = React.useState('')
-  const [salaryMax, setSalaryMax] = React.useState('')
-  const [hourlyRate, setHourlyRate] = React.useState('')
-  const [salaryVisible, setSalaryVisible] = React.useState(true)
   const [title, setTitle] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [employmentType, setEmploymentType] = React.useState<EmploymentType>('clt')
   const [pricingModel, setPricingModel] = React.useState<PricingModelVaga>('fixed_salary')
+  const [salaryMin, setSalaryMin] = React.useState<number | null>(null)
+  const [salaryMax, setSalaryMax] = React.useState<number | null>(null)
+  const [hourlyRate, setHourlyRate] = React.useState<number | null>(null)
+  const [salaryVisible, setSalaryVisible] = React.useState(true)
   const [category, setCategory] = React.useState('')
   const [locationCity, setLocationCity] = React.useState('')
-  const [isRemote, setIsRemote] = React.useState(false)
+  const [locationState, setLocationState] = React.useState<string>(DEFAULT_UF)
+  const [modalidade, setModalidade] = React.useState<string>(MODALIDADE_PRESENCIAL)
+  const [etapas, setEtapas] = React.useState<EtapaModelo[]>(() => MODELO_PADRAO.map((e) => ({ ...e })))
+  // só grava as etapas na vaga quando a empresa mexe nelas (ou a vaga já tinha etapas próprias)
+  const [etapasMexidas, setEtapasMexidas] = React.useState(false)
+  const { data: categories } = useCategories()
+  // Lista que o superadmin gerencia. Sem ela (banco ainda sem a migration 0026) vale a lista de sempre.
+  const managed = activeFor(categories, 'modalidade', modalidade)
+  const hasManagedModalidades = managed.length > 0
+  const modalidades = hasManagedModalidades ? managed : FALLBACK_MODALIDADES
+  const isRemote = modalidade === MODALIDADE_REMOTA
   const [photoUrls, setPhotoUrls] = React.useState<string[]>([])
-  const [iconKey, setIconKey] = React.useState<string | null>(null)
+  const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     if (!existing) return
-    setSalaryMin(existing.salary_min?.toString() ?? '')
-    setSalaryMax(existing.salary_max?.toString() ?? '')
-    setHourlyRate(existing.hourly_rate?.toString() ?? '')
-    setSalaryVisible(existing.salary_visible)
     setTitle(existing.title)
     setDescriptionHtml(existing.description_html ?? '')
     setEmploymentType(existing.employment_type)
     setPricingModel(existing.pricing_model)
+    setSalaryMin(existing.salary_min)
+    setSalaryMax(existing.salary_max)
+    setHourlyRate(existing.hourly_rate)
+    setSalaryVisible(existing.salary_visible)
     setCategory(existing.category ?? '')
     setLocationCity(existing.location_city ?? '')
-    setIsRemote(existing.is_remote)
+    setLocationState(existing.location_state ?? DEFAULT_UF)
+    setModalidade(vagaModalidade(existing))
+    setEtapas(lerModelo(existing.etapas_selecao) ?? MODELO_PADRAO.map((e) => ({ ...e })))
     setPhotoUrls(existing.photo_urls ?? [])
-    setIconKey(existing.icon_key ?? null)
   }, [existing])
 
   const handleSave = async (status: VagaStatus) => {
     if (!user || !empresa) return
-    if (types.isLoading || types.isError) { setSaveError('Aguarde o carregamento dos tipos de contratação ou recarregue a página.'); return }
-    setSaveError('')
-    setSaved(false)
-    if (!title.trim()) { setSaveError('Informe o título da vaga.'); return }
-    const amounts = [salaryMin, salaryMax, hourlyRate].filter(Boolean).map(Number)
-    if (amounts.some(v => !Number.isFinite(v) || v < 0) || (salaryMin && salaryMax && Number(salaryMax) < Number(salaryMin))) { setSaveError('Confira os valores: use números positivos e um máximo maior ou igual ao mínimo.'); return }
-    try {
-    const saved = await saveVaga.mutateAsync({
-      id,
-      empresa_id: empresa.id,
-      created_by: user.id,
-      title: title.trim(),
-      salary_min: salaryMin ? Number(salaryMin) : null,
-      salary_max: salaryMax ? Number(salaryMax) : null,
-      hourly_rate: hourlyRate ? Number(hourlyRate) : null,
-      salary_visible: salaryVisible,
-      description_html: descriptionHtml,
-      employment_type: employmentType,
-      pricing_model: pricingModel,
-      category: category || null,
-      location_city: locationCity || null,
-      is_remote: isRemote,
-      photo_urls: photoUrls,
-      icon_key: iconKey,
-      status,
-    })
-    setSaved(true)
-    navigate(`/empresa/vagas/${saved.id}/editar`)
-    } catch { setSaveError('Não foi possível salvar a vaga. Confira os dados e tente novamente.') }
-  }
+    if (types.isLoading || types.isError) { setError('Aguarde o carregamento dos tipos de contratação ou recarregue a página.'); return }
+    setError(null)
 
-  if (isEditing && loadingExisting) return <p role="status">Carregando vaga…</p>
-  if (isEditing && loadError) return <p role="alert">Não foi possível abrir a vaga. Volte à lista e tente novamente.</p>
+    if (!title.trim()) {
+      setError('Dê um título para a vaga, por exemplo "Operador de caixa".')
+      return
+    }
+    if (pricingModel === 'fixed_salary' && salaryMin && salaryMax && salaryMax < salaryMin) {
+      setError('O salário máximo precisa ser maior que o mínimo.')
+      return
+    }
+    const problemaEtapas = validarModelo(etapas)
+    if (problemaEtapas) {
+      setError(problemaEtapas)
+      return
+    }
+    if (status === 'published' && !isRemote && !locationCity.trim()) {
+      setError('Informe a cidade da vaga ou escolha a modalidade "Remota".')
+      return
+    }
+
+    // Cada modelo de pagamento guarda só os seus valores
+    const pay =
+      pricingModel === 'fixed_salary'
+        ? { salary_min: salaryMin, salary_max: salaryMax, hourly_rate: null }
+        : pricingModel === 'hourly'
+          ? { salary_min: null, salary_max: null, hourly_rate: hourlyRate }
+          : { salary_min: null, salary_max: null, hourly_rate: null }
+
+    try {
+      const saved = await saveVaga.mutateAsync({
+        id,
+        empresa_id: empresa.id,
+        created_by: user.id,
+        title: title.trim(),
+        description_html: descriptionHtml,
+        employment_type: employmentType,
+        pricing_model: pricingModel,
+        ...pay,
+        salary_visible: salaryVisible,
+        category: category || null,
+        location_city: isRemote ? null : locationCity.trim() || null,
+        location_state: isRemote ? null : locationState,
+        is_remote: isRemote,
+        ...(hasManagedModalidades ? { modalidade } : {}),
+        ...(etapasMexidas || existing?.etapas_selecao ? { etapas_selecao: modeloParaSalvar(etapas) } : {}),
+        photo_urls: photoUrls,
+        status,
+      })
+      navigate(`/empresa/vagas/${saved.id}/editar`)
+    } catch {
+      setError('Não foi possível salvar agora. Confira sua conexão e tente de novo.')
+    }
+  }
 
   return (
     <Card className="mx-auto max-w-2xl">
       <CardHeader>
-        <h1 className="font-display text-xl font-semibold">{isEditing ? 'Editar vaga' : 'Nova vaga'}</h1>
+        <CardTitle>{isEditing ? 'Editar vaga' : 'Nova vaga'}</CardTitle>
       </CardHeader>
-      <CardContent className="flex flex-col gap-4">
+      <CardContent className="flex flex-col gap-5">
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="title">Título</Label>
-          <FieldHint>O cargo, como a pessoa procuraria. Ex.: "Auxiliar de produção".</FieldHint>
           <Input id="title" required value={title} onChange={(e) => setTitle(e.target.value)} />
         </div>
 
         <div className="flex flex-col gap-1.5">
-          <Label>Descrição</Label>
-          <FieldHint>
-            Diga o que a pessoa vai fazer no dia a dia, o que é necessário para se candidatar e
-            como é o horário. Vaga sem essas três coisas recebe menos candidatura.
-          </FieldHint>
-          <RichTextEditor
-            value={descriptionHtml}
-            onChange={setDescriptionHtml}
-            placeholder="Ex.: Atuar na linha de envase, conferindo pesagem e validade. Necessário ensino fundamental completo e disponibilidade para turno da tarde. Escala de segunda a sábado, com vale-transporte."
+          <Label>Descrição da vaga</Label>
+          <p className="text-sm text-muted-foreground">
+            Separe em blocos (Sobre a vaga, Requisitos, Benefícios…). Quem lê abre e fecha cada um.
+          </p>
+          <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="vaga" />
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="employmentType">Tipo de contratação</Label>
+            <NativeSelect
+              id="employmentType"
+              value={employmentType}
+              onChange={(e) => setEmploymentType(e.target.value as EmploymentType)}
+            >
+              {(types.data ?? []).filter(t => t.kind === 'vaga' && (t.is_active || t.slug === employmentType)).map(t => <option key={t.slug} value={t.slug}>{t.label}</option>)}
+            </NativeSelect>
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="pricingModel">Modelo de pagamento</Label>
+            <NativeSelect
+              id="pricingModel"
+              value={pricingModel}
+              onChange={(e) => setPricingModel(e.target.value as PricingModelVaga)}
+            >
+              <option value="fixed_salary">Salário fixo</option>
+              <option value="hourly">Por hora</option>
+              <option value="per_delivery">Por entrega</option>
+            </NativeSelect>
+          </div>
+        </div>
+
+        {pricingModel === 'fixed_salary' && (
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="salaryMin">Salário (ou o mínimo)</Label>
+              <CurrencyInput id="salaryMin" value={salaryMin} onChange={setSalaryMin} />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="salaryMax">Salário máximo (opcional)</Label>
+              <CurrencyInput id="salaryMax" value={salaryMax} onChange={setSalaryMax} />
+            </div>
+          </div>
+        )}
+        {pricingModel === 'hourly' && (
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
+            <Label htmlFor="hourlyRate">Valor da hora</Label>
+            <CurrencyInput id="hourlyRate" value={hourlyRate} onChange={setHourlyRate} />
+          </div>
+        )}
+        {pricingModel !== 'per_delivery' && (
+          <label className="flex min-h-9 items-center gap-2 text-sm">
+            <input
+              type="checkbox"
+              className="size-4"
+              checked={salaryVisible}
+              onChange={(e) => setSalaryVisible(e.target.checked)}
+            />
+            Mostrar o valor na vaga
+          </label>
+        )}
+
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="category">Categoria</Label>
+          <CategorySelect id="category" kind="vaga" value={category} onChange={setCategory} />
+        </div>
+
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="modalidade">Modalidade</Label>
+            <NativeSelect id="modalidade" value={modalidade} onChange={(e) => setModalidade(e.target.value)}>
+              {modalidades.map((m) => (
+                <option key={m.slug} value={m.slug}>
+                  {m.label}
+                </option>
+              ))}
+            </NativeSelect>
+          </div>
+          {!isRemote && (
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="locationCity">Cidade</Label>
+              <CityField
+                id="locationCity"
+                city={locationCity}
+                uf={locationState}
+                onChange={({ city, uf }) => {
+                  setLocationCity(city)
+                  setLocationState(uf)
+                }}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <h2 className="font-display text-base font-bold">Etapas da seleção</h2>
+          <p className="max-w-2xl text-sm text-muted-foreground">
+            É o caminho que cada candidato acompanha depois de se candidatar. Você dá feedback, recebe documentos e conversa em cada etapa. Quem já
+            se candidatou continua com as etapas que tinha.
+          </p>
+          <EtapasEditor
+            value={etapas}
+            onChange={(next) => {
+              setEtapas(next)
+              setEtapasMexidas(true)
+            }}
           />
         </div>
 
@@ -144,65 +283,18 @@ export default function VagaFormPage() {
             hint="Aparecem como carrossel na vaga e no card de listagem. PNG ou JPG, até 5 MB cada."
           />
         ) : (
-          <p className="text-xs text-muted-foreground">
-            Salve a vaga como rascunho para poder adicionar fotos.
-          </p>
+          <p className="text-sm text-muted-foreground">Salve a vaga como rascunho para poder adicionar fotos.</p>
         )}
 
-        <div className="flex flex-col gap-1.5">
-          <Label>Ícone (usado quando não há foto)</Label>
-          <IconPickerField value={iconKey} onChange={setIconKey} />
-        </div>
+        {error && <FormError>{error}</FormError>}
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="employmentType">Tipo de contratação</Label>
-            <RecordTypeSelect id="employmentType" kind="vaga" value={employmentType} onChange={setEmploymentType} required />
-          </div>
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="pricingModel">Modelo de pagamento</Label>
-            <select
-              id="pricingModel"
-              className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-              value={pricingModel}
-              onChange={(e) => setPricingModel(e.target.value as PricingModelVaga)}
-            >
-              <option value="fixed_salary">Salário fixo</option>
-              <option value="hourly">Por hora</option>
-              <option value="per_delivery">Por entrega</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="category">Categoria</Label>
-          <CategorySelect id="category" kind="vaga" value={category} onChange={setCategory} />
-        </div>
-
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="locationCity">Cidade</Label>
-          <Input id="locationCity" value={locationCity} onChange={(e) => setLocationCity(e.target.value)} />
-        </div>
-
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" checked={isRemote} onChange={(e) => setIsRemote(e.target.checked)} />
-          Vaga remota
-        </label>
-
-        <div className="grid gap-4 sm:grid-cols-2">
-          {pricingModel === 'hourly' ? <div className="space-y-2"><Label htmlFor="hourly-value">Valor por hora (R$)</Label><Input id="hourly-value" type="number" min="0" step="0.01" value={hourlyRate} onChange={e => setHourlyRate(e.target.value)} /></div> : pricingModel === 'fixed_salary' ? <><div className="space-y-2"><Label htmlFor="salary-min">Salário mínimo (R$)</Label><Input id="salary-min" type="number" min="0" step="0.01" value={salaryMin} onChange={e => setSalaryMin(e.target.value)} /></div><div className="space-y-2"><Label htmlFor="salary-max">Salário máximo (R$)</Label><Input id="salary-max" type="number" min="0" step="0.01" value={salaryMax} onChange={e => setSalaryMax(e.target.value)} /></div></> : <p className="text-sm text-muted-foreground">Descreva as condições de pagamento por entrega no conteúdo da vaga.</p>}
-        </div>
-        <label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={salaryVisible} onChange={e => setSalaryVisible(e.target.checked)} />Divulgar remuneração na vaga</label>
-        {saveError && <p role="alert" className="text-sm text-destructive">{saveError}</p>}
-        {saved && <p role="status" className="text-sm text-primary">Vaga salva.</p>}
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <Button variant="outline" onClick={() => handleSave('draft')} disabled={saveVaga.isPending}>
             Salvar rascunho
           </Button>
           <Button variant="cta" onClick={() => handleSave('published')} disabled={saveVaga.isPending}>
-            Publicar vaga
+            {saveVaga.isPending ? 'Salvando…' : 'Publicar vaga'}
           </Button>
-          {isEditing && <><Button variant="outline" onClick={() => handleSave('paused')} disabled={saveVaga.isPending}>Pausar vaga</Button><Button variant="outline" onClick={() => handleSave('closed')} disabled={saveVaga.isPending}>Encerrar vaga</Button></>}
         </div>
       </CardContent>
     </Card>

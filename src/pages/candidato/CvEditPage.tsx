@@ -1,7 +1,9 @@
 import * as React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCvVariant, useSaveCvVariant } from '@/hooks/useCvVariants'
+import { useCategories } from '@/hooks/useCategories'
+import { activeFor } from '@/lib/categories'
 import type { CvEducation, CvExperience } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { ExperienceEditor } from '@/components/ExperienceEditor'
@@ -9,20 +11,29 @@ import { EducationEditor } from '@/components/EducationEditor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PhoneInput } from '@/components/fields/MaskedInputs'
+import { CepField } from '@/components/fields/CepField'
+import { addressLineFromCep } from '@/lib/cep'
+import { maskPhone } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { cn, safeInternalPath } from '@/lib/utils'
 
 export default function CvEditPage() {
   const { id } = useParams<{ id: string }>()
   const { user, profile } = useAuth()
   const navigate = useNavigate()
-  const { data: cv, isLoading, isError, refetch } = useCvVariant(id)
+  const [searchParams] = useSearchParams()
+  const voltar = safeInternalPath(searchParams.get('voltar'))
+  const { data: cv, isLoading } = useCvVariant(id)
   const saveCv = useSaveCvVariant()
+  const { data: categories } = useCategories()
+  const [interests, setInterests] = React.useState<string[]>([])
 
-  const [validation, setValidation] = React.useState('')
   const [title, setTitle] = React.useState('')
   const [contactEmail, setContactEmail] = React.useState('')
   const [contactPhone, setContactPhone] = React.useState('')
   const [address, setAddress] = React.useState('')
+  const [cep, setCep] = React.useState('')
   const [summaryHtml, setSummaryHtml] = React.useState('')
   const [experiences, setExperiences] = React.useState<CvExperience[]>([])
   const [education, setEducation] = React.useState<CvEducation[]>([])
@@ -33,7 +44,8 @@ export default function CvEditPage() {
     if (!cv) return
     setTitle(cv.title)
     setContactEmail(cv.contact_email ?? profile?.email ?? '')
-    setContactPhone(cv.contact_phone ?? profile?.phone ?? '')
+    setContactPhone(maskPhone(cv.contact_phone ?? profile?.phone ?? ''))
+    setInterests(cv.categories ?? [])
     setAddress(cv.address ?? '')
     setSummaryHtml(cv.summary_html ?? '')
     setExperiences(cv.experiences)
@@ -45,13 +57,10 @@ export default function CvEditPage() {
 
   const handleSave = async () => {
     if (!user || !id) return
-    setValidation('')
-    if (!title.trim()) { setValidation('Dê um nome ao currículo antes de salvar.'); return }
-    try {
     await saveCv.mutateAsync({
       id,
       candidato_id: user.id,
-      title: title.trim(),
+      title,
       contact_email: contactEmail || null,
       contact_phone: contactPhone || null,
       address: address || null,
@@ -62,21 +71,19 @@ export default function CvEditPage() {
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean),
+      ...(interests.length > 0 || (cv?.categories?.length ?? 0) > 0 ? { categories: interests } : {}),
       is_default: isDefault,
     })
-    navigate('/candidato/cv')
-    } catch { /* A mutation mantém o erro para exibição e preserva o formulário. */ }
+    navigate(voltar ?? '/candidato/cv')
   }
 
   if (isLoading) return <p className="text-sm text-muted-foreground">Carregando currículo…</p>
-
-  if (isError || !cv) return <p role="alert">Não foi possível abrir o currículo. <button className="underline" onClick={() => refetch()}>Tentar novamente</button></p>
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
       <Card>
         <CardHeader>
-          <h1 className="font-display text-xl font-semibold">Editar currículo</h1>
+          <CardTitle>Editar currículo</CardTitle>
           <CardDescription>{profile?.full_name}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
@@ -107,7 +114,7 @@ export default function CvEditPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="contactPhone">Telefone</Label>
-            <Input id="contactPhone" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} />
+            <PhoneInput id="contactPhone" value={contactPhone} onChange={setContactPhone} />
           </div>
         </CardContent>
       </Card>
@@ -116,12 +123,60 @@ export default function CvEditPage() {
         <CardHeader>
           <CardTitle className="text-base">Endereço</CardTitle>
         </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
+            <Label htmlFor="cep">CEP (preenche o endereço)</Label>
+            <CepField
+              id="cep"
+              value={cep}
+              onChange={setCep}
+              onFound={(found) => setAddress(`${addressLineFromCep(found)}, ${found.city}/${found.uf}`.replace(/^, /, ''))}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="address">Endereço</Label>
+            <Input
+              id="address"
+              autoComplete="street-address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Rua, número, bairro, cidade/UF"
+            />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Áreas de interesse</CardTitle>
+          <CardDescription>Em que tipo de vaga você quer trabalhar? Escolha quantas quiser.</CardDescription>
+        </CardHeader>
         <CardContent>
-          <Input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Cidade, estado — ou endereço completo"
-          />
+          <div role="group" aria-label="Áreas de interesse" className="flex flex-wrap gap-2">
+            {activeFor(categories, 'vaga').map((category) => {
+              const selected = interests.includes(category.slug)
+              return (
+                <button
+                  key={category.slug}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() =>
+                    setInterests((current) =>
+                      selected ? current.filter((slug) => slug !== category.slug) : [...current, category.slug],
+                    )
+                  }
+                  className={cn(
+                    'h-10 rounded-full border px-4 text-sm font-medium transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none',
+                    selected
+                      ? 'border-brand-ink bg-brand-ink text-white'
+                      : 'bg-card text-foreground hover:border-primary/50',
+                  )}
+                >
+                  {category.label}
+                </button>
+              )
+            })}
+          </div>
         </CardContent>
       </Card>
 
@@ -169,9 +224,11 @@ export default function CvEditPage() {
         </CardContent>
       </Card>
 
-      {(validation || saveCv.isError) && <p role="alert" className="text-sm text-destructive">{validation || 'Não foi possível salvar. Seus campos foram preservados; tente novamente.'}</p>}
-      <Button onClick={handleSave} variant="cta" disabled={saveCv.isPending}>
-        {saveCv.isPending ? 'Salvando…' : 'Salvar currículo'}
+      {voltar && (
+        <p className="text-sm text-muted-foreground">Depois de salvar, você volta para a vaga e termina a candidatura.</p>
+      )}
+      <Button onClick={handleSave} variant="cta" size="lg" disabled={saveCv.isPending}>
+        {saveCv.isPending ? 'Salvando…' : voltar ? 'Salvar e voltar para a vaga' : 'Salvar currículo'}
       </Button>
     </div>
   )

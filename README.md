@@ -9,6 +9,11 @@ Marketplace de trabalho: vagas fixas e temporárias (por hora ou por entrega) e 
 - **Referências de UX e inspirações:** [`docs/REFERENCIAS_UX.md`](docs/REFERENCIAS_UX.md)
 - **Impeccable e Playwright:** [`docs/FERRAMENTAS_DESIGN.md`](docs/FERRAMENTAS_DESIGN.md)
 - **Identidade visual (marca, paleta, tipografia):** [`docs/IDENTIDADE_VISUAL.md`](docs/IDENTIDADE_VISUAL.md)
+- **Sistema visual aplicado nas telas (tokens, componentes, regras):** [`DESIGN.md`](DESIGN.md) · contexto de produto: [`PRODUCT.md`](PRODUCT.md)
+- **Painel do superadmin (o que gerencia, proteções, como dar o acesso):** [`docs/PAINEL_SUPERADMIN.md`](docs/PAINEL_SUPERADMIN.md)
+- **Como montar páginas do site (superadmin):** [`docs/PAGINAS.md`](docs/PAGINAS.md)
+- **Acompanhamento da contratação (etapas, feedback, documentos):** [`docs/ACOMPANHAMENTO.md`](docs/ACOMPANHAMENTO.md)
+- **Skills, agentes e MCP do Claude Code:** [`docs/FERRAMENTAS_IA.md`](docs/FERRAMENTAS_IA.md)
 
 **Direção visual:** todo o site e sistema em modo claro, incluindo painéis autenticados, independentemente do tema do dispositivo. Responsividade obrigatória em toda a plataforma; área logada com menu global no topo e navegação do usuário à esquerda, recolhida em telas pequenas.
 

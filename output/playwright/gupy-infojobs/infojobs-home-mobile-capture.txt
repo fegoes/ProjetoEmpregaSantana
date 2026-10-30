@@ -1,0 +1,11 @@
+### Result
+- [Screenshot of viewport](output/playwright/gupy-infojobs/infojobs-home-mobile.webp)
+### Ran Playwright code
+```js
+// Screenshot viewport and save it as output/playwright/gupy-infojobs/infojobs-home-mobile.webp
+await page.screenshot({
+  path: 'output/playwright/gupy-infojobs/infojobs-home-mobile.webp',
+  scale: 'css',
+  type: 'webp'
+});
+```

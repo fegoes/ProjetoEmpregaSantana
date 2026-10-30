@@ -1,0 +1,179 @@
+### Page
+- Page URL: http://127.0.0.1:4174/
+- Page Title: Seu próximo passo · EmpregaSantana
+### Snapshot
+```yaml
+- generic [active] [ref=f1e1]:
+  - link "Pular para o conteúdo" [ref=f1e2] [cursor=pointer]:
+    - /url: "#conteudo"
+  - generic [ref=f1e3]:
+    - generic [ref=f1e4]: Estudo de identidade · dados ilustrativos
+    - link "Ver identidade visual" [ref=f1e5] [cursor=pointer]:
+      - /url: "#identidade"
+      - text: Ver identidade visual ↗
+  - banner [ref=f1e6]:
+    - generic [ref=f1e7]:
+      - link "EmpregaSantana, início" [ref=f1e8] [cursor=pointer]:
+        - /url: "#inicio"
+        - generic [ref=f1e9]: EmpregaSantana
+      - navigation "Menu do site" [ref=f1e10]:
+        - link "O projeto" [ref=f1e11] [cursor=pointer]:
+          - /url: "#inicio"
+        - link "Vagas" [ref=f1e12] [cursor=pointer]:
+          - /url: "#vagas"
+        - link "Autônomos" [ref=f1e13] [cursor=pointer]:
+          - /url: "#autonomos"
+        - link "Dicas de carreira" [ref=f1e14] [cursor=pointer]:
+          - /url: "#blog"
+      - generic [ref=f1e15]:
+        - link "Ver painel" [ref=f1e16] [cursor=pointer]:
+          - /url: "#painel"
+        - button "Criar conta" [ref=f1e17] [cursor=pointer]
+        - button "Abrir menu do site" [ref=f1e18] [cursor=pointer]
+  - main [ref=f1e21]:
+    - generic [ref=f1e23]:
+      - generic [ref=f1e24]:
+        - heading "Seu próximo passo começa perto de casa." [level=1] [ref=f1e25]
+        - paragraph [ref=f1e26]: Quem procura trabalho e quem precisa de um profissional têm um lugar para se encontrar. Vagas, serviços e conexões que movimentam o nosso sertão.
+        - generic [ref=f1e27]:
+          - link "Encontrar oportunidades" [ref=f1e28] [cursor=pointer]:
+            - /url: "#vagas"
+          - link "Como funciona" [ref=f1e31] [cursor=pointer]:
+            - /url: "#inicio"
+        - paragraph [ref=f1e34]: Feito para Santana do Ipanema e região.
+      - generic [ref=f1e38]:
+        - tablist "Conheça os caminhos" [ref=f1e39]:
+          - tab "Quero trabalhar" [selected] [ref=f1e40] [cursor=pointer]
+          - tab "Sou autônomo" [ref=f1e41] [cursor=pointer]
+          - tab "Quero contratar" [ref=f1e42] [cursor=pointer]
+        - tabpanel "Quero trabalhar" [ref=f1e43]:
+          - generic [ref=f1e44]:
+            - generic [ref=f1e45]: CC
+            - generic [ref=f1e46]: Comércio do CentroEmpresa ilustrativa
+            - generic [ref=f1e47]: CLT
+          - heading "Assistente de loja" [level=3] [ref=f1e48]
+          - generic [ref=f1e49]: Santana do Ipanema, AL
+          - generic [ref=f1e54]:
+            - strong [ref=f1e55]: R$ 1.700 a R$ 2.000
+            - generic [ref=f1e56]: por mês
+          - link "Conhecer oportunidade" [ref=f1e57] [cursor=pointer]:
+            - /url: "#vaga/loja"
+        - paragraph [ref=f1e60]: Exemplo ilustrativo da plataforma. Não é uma vaga real.
+    - generic [ref=f1e62]:
+      - strong [ref=f1e64]: Conecta · Orienta · Transforma
+      - generic [ref=f1e65]: Vagas fixas e temporárias
+      - generic [ref=f1e66]: Profissionais autônomos
+      - generic [ref=f1e67]: Empresas da nossa região
+    - generic [ref=f1e68]:
+      - generic [ref=f1e69]:
+        - heading "Tem gente procurando. Tem gente precisando." [level=2] [ref=f1e70]: Tem gente procurando.Tem gente precisando.
+        - paragraph [ref=f1e71]: A oportunidade existe. O encontro é que nem sempre acontece.
+      - generic [ref=f1e72]:
+        - article [ref=f1e73]:
+          - heading "A vaga se perde nas mensagens." [level=3] [ref=f1e74]
+          - paragraph [ref=f1e75]: Entre grupos, indicações e postagens, fica difícil saber onde procurar e o que ainda está disponível.
+        - article [ref=f1e76]:
+          - heading "O serviço depende de uma indicação." [level=3] [ref=f1e77]
+          - paragraph [ref=f1e78]: Quem trabalha por conta própria precisa ser encontrado por mais pessoas, além de quem já conhece.
+        - article [ref=f1e79]:
+          - heading "A contratação demora a se encontrar." [level=3] [ref=f1e80]
+          - paragraph [ref=f1e81]: A empresa tem uma oportunidade. O profissional tem o que oferecer. Falta um caminho entre os dois.
+    - generic [ref=f1e83]:
+      - heading "Somos muito mais que uma página." [level=2] [ref=f1e84]: Somos muito maisque uma página.
+      - paragraph [ref=f1e85]: Somos a sua conexão de empregabilidade no sertão. Um espaço para aproximar o talento da nossa gente de quem precisa dele, com oportunidades e serviços organizados em um só lugar.
+    - generic [ref=f1e86]:
+      - generic [ref=f1e87]:
+        - heading "Um lugar. Diferentes caminhos." [level=2] [ref=f1e88]: Um lugar.Diferentes caminhos.
+        - paragraph [ref=f1e89]: Você não precisa caber em uma opção só. Pode procurar uma vaga e também divulgar seu trabalho.
+      - generic [ref=f1e90]:
+        - article [ref=f1e91]:
+          - generic [aria-hidden] [ref=f1e92]: "01"
+          - generic [ref=f1e93]:
+            - heading "Para quem quer trabalhar." [level=3] [ref=f1e94]
+            - paragraph [ref=f1e95]: Encontre vagas na região, escolha o currículo certo para cada oportunidade e acompanhe suas candidaturas.
+            - link "Explorar vagas" [ref=f1e96] [cursor=pointer]:
+              - /url: "#vagas"
+        - article [ref=f1e99]:
+          - generic [aria-hidden] [ref=f1e100]: "02"
+          - generic [ref=f1e101]:
+            - heading "Para quem faz acontecer." [level=3] [ref=f1e102]
+            - paragraph [ref=f1e103]: Apresente seu serviço, mostre seu portfólio e deixe claro onde você atende e como trabalha.
+            - link "Conhecer os profissionais" [ref=f1e104] [cursor=pointer]:
+              - /url: "#autonomos"
+        - article [ref=f1e107]:
+          - generic [aria-hidden] [ref=f1e108]: "03"
+          - generic [ref=f1e109]:
+            - heading "Para quem precisa contratar." [level=3] [ref=f1e110]
+            - paragraph [ref=f1e111]: Divulgue oportunidades e organize as candidaturas. Sua próxima contratação pode começar por aqui.
+            - link "Ver a área da empresa" [ref=f1e112] [cursor=pointer]:
+              - /url: "#painel/empresa"
+    - generic [ref=f1e116]:
+      - generic [ref=f1e117]:
+        - heading "Do primeiro encontro ao próximo passo." [level=2] [ref=f1e118]: Do primeiro encontroao próximo passo.
+        - list [ref=f1e119]:
+          - listitem [ref=f1e120]:
+            - generic [ref=f1e121]:
+              - heading "Explore as possibilidades." [level=3] [ref=f1e122]
+              - paragraph [ref=f1e123]: Navegue pelas vagas e pelos serviços antes de criar uma conta.
+          - listitem [ref=f1e124]:
+            - generic [ref=f1e125]:
+              - heading "Conte o que você tem a oferecer." [level=3] [ref=f1e126]
+              - paragraph [ref=f1e127]: Organize seu currículo, apresente seu serviço ou publique uma oportunidade.
+          - listitem [ref=f1e128]:
+            - generic [ref=f1e129]:
+              - heading "Faça a conexão acontecer." [level=3] [ref=f1e130]
+              - paragraph [ref=f1e131]: Envie sua candidatura ou encontre o profissional para conversar sobre o serviço.
+      - generic [ref=f1e132]:
+        - generic [ref=f1e133]:
+          - strong [ref=f1e134]: Meu painel
+          - generic [ref=f1e135]: Área do candidato
+        - generic [ref=f1e136]:
+          - generic [ref=f1e137]: AS
+          - generic [ref=f1e138]:
+            - strong [ref=f1e139]: Olá, Ana.
+            - paragraph [ref=f1e140]: Seu próximo passo está aqui.
+        - list [ref=f1e141]:
+          - listitem [ref=f1e142]: Seu currículo está pronto
+          - listitem [ref=f1e143]: Candidatura enviada
+          - listitem [ref=f1e144]: Acompanhe o retorno da empresa
+        - link "Explorar o painel" [ref=f1e145] [cursor=pointer]:
+          - /url: "#painel"
+        - paragraph [ref=f1e148]: Perfil e andamento ilustrativos.
+    - generic [ref=f1e149]:
+      - heading "Antes de dar o primeiro passo." [level=2] [ref=f1e150]: Antes de daro primeiro passo.
+      - generic [ref=f1e151]:
+        - group [ref=f1e152]:
+          - generic "Preciso criar uma conta para ver as vagas? +" [ref=f1e153] [cursor=pointer]
+        - group [ref=f1e154]:
+          - generic "Posso procurar uma vaga e divulgar meu serviço? +" [ref=f1e155] [cursor=pointer]
+        - group [ref=f1e156]:
+          - generic "Funciona no celular? +" [ref=f1e157] [cursor=pointer]
+        - group [ref=f1e158]:
+          - generic "As oportunidades desta apresentação são reais? +" [ref=f1e159] [cursor=pointer]
+    - generic [ref=f1e161]:
+      - generic [ref=f1e162]:
+        - heading "Conectamos talentos. Transformamos futuros." [level=2] [ref=f1e163]: Conectamos talentos.Transformamos futuros.
+        - paragraph [ref=f1e164]: Seu trabalho, sua próxima oportunidade ou o profissional certo podem estar mais perto do que você imagina.
+      - link "Encontre seu próximo passo" [ref=f1e165] [cursor=pointer]:
+        - /url: "#vagas"
+  - contentinfo [ref=f1e168]:
+    - generic [ref=f1e169]:
+      - generic [ref=f1e170]:
+        - generic [ref=f1e171]:
+          - link "EmpregaSantana, início" [ref=f1e172] [cursor=pointer]:
+            - /url: "#inicio"
+            - generic [ref=f1e173]: EmpregaSantana
+          - paragraph [ref=f1e174]: Conectamos talentos às oportunidades.Orientamos caminhos. Transformamos futuros.
+        - navigation "Rodapé" [ref=f1e175]:
+          - link "O projeto" [ref=f1e176] [cursor=pointer]:
+            - /url: "#inicio"
+          - link "Vagas" [ref=f1e177] [cursor=pointer]:
+            - /url: "#vagas"
+          - link "Dicas de carreira" [ref=f1e178] [cursor=pointer]:
+            - /url: "#blog"
+          - link "Identidade" [ref=f1e179] [cursor=pointer]:
+            - /url: "#identidade"
+      - generic [ref=f1e180]:
+        - generic [ref=f1e181]: Santana do Ipanema, AL · Desde agosto de 2022
+        - generic [ref=f1e182]: Protótipo de apresentação. Exemplos fictícios, sem envio de dados.
+```

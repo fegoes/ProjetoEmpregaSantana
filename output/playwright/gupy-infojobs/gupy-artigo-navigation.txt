@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://www.gupy.io/blog-do-emprego/curriculo-gupy');
+```
+### Open tabs
+- 0: (current) [Como cadastrar seu currículo na Gupy: passo a passo](https://www.gupy.io/blog-do-emprego/curriculo-gupy)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://www.gupy.io/blog-do-emprego/curriculo-gupy
+- Page Title: Como cadastrar seu currículo na Gupy: passo a passo
+- Console: 0 errors, 1 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-03-32-778Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-03-26-408Z.log#L1-L72

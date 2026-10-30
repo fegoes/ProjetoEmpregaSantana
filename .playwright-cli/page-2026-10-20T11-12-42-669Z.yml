@@ -1,0 +1,454 @@
+- generic [ref=e2]:
+  - region "Notifications (F8)":
+    - list
+  - region "Notifications alt+T"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "FinGestão, página inicial" [ref=e6] [cursor=pointer]:
+          - /url: /
+          - generic [ref=e7]: FinGestão
+        - navigation "Site" [ref=e12]:
+          - link "Como funciona" [ref=e13] [cursor=pointer]:
+            - /url: /#como-funciona
+          - link "Preços" [ref=e14] [cursor=pointer]:
+            - /url: /precos
+          - button "Para escritórios" [ref=e16] [cursor=pointer]
+          - link "Blog" [ref=e19] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=e20]:
+          - link "Entrar" [ref=e21] [cursor=pointer]:
+            - /url: /login
+          - link "Começar teste grátis" [ref=e22] [cursor=pointer]:
+            - /url: /register
+    - main [ref=e24]:
+      - generic [ref=e27]:
+        - generic [ref=e28]:
+          - heading "Você trabalha o dia todo. No fim do dia, sabe se sobrou dinheiro?" [level=1] [ref=e29]:
+            - text: Você trabalha o dia todo.
+            - generic [ref=e30]: No fim do dia, sabe se sobrou dinheiro?
+          - paragraph [ref=e31]: Lance vendas e contas em segundos. O FinGestão mostra quanto tem, o que vence e quanto sobrou, e responde pelo WhatsApp.
+          - generic [ref=e32]:
+            - link "Começar teste grátis" [ref=e33] [cursor=pointer]:
+              - /url: /register
+            - link "Ver como funciona" [ref=e34] [cursor=pointer]:
+              - /url: "#como-funciona"
+          - list [ref=e35]:
+            - listitem [ref=e36]: Teste grátis
+            - listitem [aria-hidden] [ref=e37]: ·
+            - listitem [ref=e38]: Cancele quando quiser
+            - listitem [aria-hidden] [ref=e39]: ·
+            - listitem [ref=e40]: Suporte de gente de verdade
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: "Exemplo: a Dona Cida pergunta pelo WhatsApp “Sobrou dinheiro esse mês?” e o FinGestão responde “Sobrou, sim: R$ 4.229,55 em outubro.”"
+          - img [aria-hidden] [ref=e44]:
+            - generic [ref=e45]: 14h
+          - generic [aria-hidden] [ref=e104]:
+            - paragraph [ref=e105]: Sobrou dinheiro esse mês?
+            - paragraph [ref=e107]:
+              - text: "Sobrou, sim:"
+              - strong [ref=e108]: R$ 4.229,55
+              - text: em outubro. Você vendeu R$ 18.350 e gastou R$ 14.120.
+            - paragraph [ref=e109]: Conversa de exemplo no WhatsApp
+      - region [ref=e110]:
+        - generic [ref=e111]:
+          - heading "Você se reconhece?" [level=2] [ref=e112]
+          - list [ref=e113]:
+            - listitem [ref=e114]:
+              - generic [ref=e174]:
+                - paragraph [ref=e175]: O caderno não fecha.
+                - paragraph [ref=e176]: Uma anotação esquecida e o caixa do mês já não bate.
+            - listitem [ref=e177]:
+              - img [aria-hidden] [ref=e180]:
+                - generic [ref=e181]:
+                  - generic [ref=e182]:
+                    - generic [ref=e183]: "?"
+                    - generic [ref=e184]: "?"
+                    - generic [ref=e185]: "?"
+                  - generic [ref=e186]: NOTA
+              - generic [ref=e228]:
+                - paragraph [ref=e229]: A nota não diz o caminho.
+                - paragraph [ref=e230]: O sistema do balcão registra a venda. Ninguém diz se deu lucro.
+            - listitem [ref=e231]:
+              - img [aria-hidden] [ref=e234]:
+                - generic [ref=e237]:
+                  - generic [ref=e240]: VENCEU
+                  - generic [ref=e243]: + juros
+              - generic [ref=e294]:
+                - paragraph [ref=e295]: A conta venceu e ninguém viu.
+                - paragraph [ref=e296]: Juros, multa e um mês que já começa no vermelho.
+      - generic [ref=e298]:
+        - generic [ref=e300]:
+          - generic [ref=e301]:
+            - paragraph [ref=e302]: Anualmente, 5 milhões de negócios são criados no Brasil. Entretanto, 2,1 milhões de empresas fecharam só em 2023.
+            - paragraph [ref=e303]: O esforço não é o problema. O problema é não enxergar o dinheiro.
+            - paragraph [ref=e304]:
+              - text: "Fontes:"
+              - link "Agência Sebrae (2025)" [ref=e306] [cursor=pointer]:
+                - /url: https://agenciasebrae.com.br/economia-e-politica/e-recorde-51-milhoes-de-empresas-foram-abertas-em-2025/
+              - generic [ref=e307]:
+                - text: e
+                - link "Sebrae, Panorama dos Pequenos Negócios" [ref=e308] [cursor=pointer]:
+                  - /url: https://sebraepr.com.br/wp-content/uploads/2026/05/PUB_Panorama-Economico-Trimestral-dos-Pequenos-Negocios-Janeiro-2026.pdf
+              - text: .
+            - paragraph [aria-hidden] [ref=e309]: Role para acender a luz
+          - img [aria-hidden] [ref=e311]:
+            - generic [ref=e312]: 14h
+        - generic [ref=e372]:
+          - generic [ref=e373]:
+            - paragraph [ref=e374]: Com o FinGestão, você enxerga o seu dinheiro.
+            - paragraph [ref=e375]: Quanto tem, o que vence e quanto sobrou, na tela do celular. E quem responde quando você pergunta.
+          - img [aria-hidden] [ref=e377]:
+            - generic [ref=e418]:
+              - generic [ref=e421]: Sobrou
+              - generic [ref=e422]: R$ 4.229
+      - region [ref=e424]:
+        - generic [ref=e425]:
+          - heading "Funciona em três passos." [level=2] [ref=e426]
+          - generic [ref=e427]:
+            - generic [ref=e428]:
+              - paragraph [aria-hidden] [ref=e429]: "1"
+              - 'heading "Passo 1: Lance o que entra e o que sai." [level=3] [ref=e430]':
+                - generic [ref=e431]: "Passo 1:"
+                - text: Lance o que entra e o que sai.
+              - paragraph [ref=e432]: "Venda, conta de luz, fornecedor: anote no celular ou no computador em segundos. Marque como pago ou pendente, parcele e repita todo mês."
+            - generic [ref=e433]:
+              - paragraph [ref=e434]: "Exemplo: a venda “Venda no balcão” de R$ 380,00 é lançada como recebida e o saldo de hoje passa para R$ 12.480,90."
+              - generic [aria-hidden] [ref=e435]:
+                - paragraph [ref=e436]: Novo lançamento
+                - generic [ref=e437]:
+                  - generic [ref=e438]: Receita
+                  - generic [ref=e439]: Despesa
+                - generic [ref=e440]:
+                  - generic [ref=e441]:
+                    - paragraph [ref=e442]: Descrição
+                    - generic [ref=e443]: "Ex.: venda, aluguel, fornecedor"
+                  - generic [ref=e445]:
+                    - generic [ref=e446]:
+                      - paragraph [ref=e447]: Valor
+                      - generic [ref=e448]: R$ 0,00
+                    - generic [ref=e450]:
+                      - paragraph [ref=e451]: Categoria
+                      - generic [ref=e452]: Selecione
+                  - generic [ref=e454]:
+                    - paragraph [ref=e455]: Situação
+                    - generic [ref=e456]:
+                      - generic [ref=e457]: Recebido
+                      - generic [ref=e458]: Pendente
+                - generic [ref=e459]: Salvar lançamento
+                - paragraph [ref=e460]: Também dá para parcelar, repetir todo mês e escolher a conta.
+              - generic [aria-hidden] [ref=e461]:
+                - generic [ref=e462]:
+                  - paragraph [ref=e463]: Saldo de hoje
+                  - paragraph [ref=e464]: R$ 12.100,90
+                  - paragraph [ref=e465]: + R$ 380,00 agora há pouco
+                - list [ref=e466]:
+                  - listitem [ref=e467]:
+                    - generic [ref=e468]: Pix de cliente
+                    - generic [ref=e469]: + R$ 150,00
+                    - generic [ref=e470]: Vendas · hoje
+                    - generic [ref=e471]: Recebido
+                  - listitem [ref=e472]:
+                    - generic [ref=e473]: Compra de mercadorias
+                    - generic [ref=e474]: − R$ 1.240,00
+                    - generic [ref=e475]: Mercadorias · hoje
+                    - generic [ref=e476]: Pago
+                - paragraph [ref=e477]: Números de exemplo.
+      - generic [ref=e480]:
+        - generic [ref=e481]:
+          - paragraph [aria-hidden] [ref=e482]: "2"
+          - 'heading "Passo 2: Pergunte pelo WhatsApp." [level=3] [ref=e483]':
+            - generic [ref=e484]: "Passo 2:"
+            - text: Pergunte pelo WhatsApp.
+          - paragraph [ref=e485]: Quanto tenho? O que vence? Sobrou dinheiro? Você liga seu número uma vez, com um código do app, e pergunta como pergunta a um amigo.
+        - generic [ref=e504]:
+          - generic [ref=e505]:
+            - generic [aria-hidden] [ref=e506]: F
+            - generic [ref=e507]:
+              - generic [ref=e508]: FinGestão
+              - generic [ref=e509]: assistente financeiro
+          - list "Conversa de exemplo no WhatsApp" [ref=e510]
+          - paragraph [ref=e511]: Conversa de exemplo. As respostas usam os números da sua empresa.
+      - generic [ref=e513]:
+        - generic [ref=e514]:
+          - generic [ref=e515]:
+            - paragraph [aria-hidden] [ref=e516]: "3"
+            - 'heading "Passo 3: Acompanhe no painel e converse com a IA." [level=3] [ref=e517]':
+              - generic [ref=e518]: "Passo 3:"
+              - text: Acompanhe no painel e converse com a IA.
+            - paragraph [ref=e519]: A tela Início mostra o saldo do dia, o que vence na semana e o resultado do mês. E a IA Financeira explica os números quando você pergunta.
+          - generic [ref=e520]:
+            - paragraph [ref=e521]: "Exemplo da IA Financeira: à pergunta “Quais são minhas maiores despesas do mês?”, ela responde: Em outubro, as maiores foram as mercadorias (R$ 9.200,00) e o aluguel (R$ 3.200,00). Juntas, somam R$ 12.400,00 dos R$ 14.120,45 que saíram."
+            - generic [aria-hidden] [ref=e522]:
+              - generic [ref=e523]:
+                - generic [ref=e524]: IA Financeira
+                - generic [ref=e527]: Números de exemplo
+              - generic [ref=e529]:
+                - generic [ref=e530]:
+                  - generic [ref=e531]: Qual meu saldo atual?
+                  - generic [ref=e532]: Resumo dos últimos 30 dias
+                  - generic [ref=e533]: Como estão minhas metas?
+                - generic [ref=e534]: Pergunte sobre suas finanças...
+        - generic [ref=e538]:
+          - paragraph [ref=e539]: Experimente com os números da sua empresa.
+          - link "Começar teste grátis" [ref=e540] [cursor=pointer]:
+            - /url: /register
+      - region [ref=e541]:
+        - generic [ref=e542]:
+          - heading "Simples para quem vende. Completo para quem confere." [level=2] [ref=e543]
+          - paragraph [ref=e544]: "O mesmo mês, em duas línguas: a do dono do negócio e a do contador."
+          - generic [ref=e585]:
+            - group "Como ver o mês" [ref=e586]:
+              - button "Modo dono" [pressed] [ref=e587] [cursor=pointer]
+              - button "Modo contador" [ref=e588] [cursor=pointer]
+            - generic [ref=e589]:
+              - paragraph [ref=e590]: Outubro
+              - paragraph [ref=e591]: Sobrou R$ 4.229,55.
+              - paragraph [ref=e592]: Entrou R$ 18.350 e saiu R$ 14.120. De cada R$ 100 que você vendeu, ficaram R$ 23 no bolso.
+              - paragraph [ref=e593]: Números de exemplo.
+      - region [ref=e594]:
+        - generic [ref=e595]:
+          - heading "Por que não planilha, sistema comum ou consultoria?" [level=2] [ref=e596]
+          - table [ref=e598]:
+            - rowgroup [ref=e599]:
+              - row [ref=e600]:
+                - columnheader "O que você precisa" [ref=e601]
+                - columnheader "Planilha" [ref=e603]
+                - columnheader "Sistema comum" [ref=e604]
+                - columnheader "Consultoria" [ref=e605]
+                - columnheader "FinGestão" [ref=e606]
+            - rowgroup [ref=e607]:
+              - row [ref=e608]:
+                - rowheader "Mostra quanto sobrou, em português simples" [ref=e609]
+                - cell "Se você montar" [ref=e610]
+                - cell "Em relatórios técnicos" [ref=e611]
+                - cell "Na reunião" [ref=e612]
+                - cell "Todo dia" [ref=e613]
+              - row [ref=e614]:
+                - rowheader "Avisa o que vence na semana" [ref=e615]
+                - cell "Não" [ref=e616]
+                - cell "Sim" [ref=e617]
+                - cell "Não" [ref=e618]
+                - cell "Sim" [ref=e619]
+              - row [ref=e620]:
+                - rowheader "Responde suas perguntas pelo WhatsApp" [ref=e621]
+                - cell "Não" [ref=e622]
+                - cell "Raramente" [ref=e623]
+                - cell "Depende" [ref=e624]
+                - cell "Sim" [ref=e625]
+              - row [ref=e626]:
+                - rowheader "DRE e projeção prontas para o contador" [ref=e627]
+                - cell "Dá trabalho" [ref=e628]
+                - cell "Sim" [ref=e629]
+                - cell "Sim" [ref=e630]
+                - cell "Sim" [ref=e631]
+              - row [ref=e632]:
+                - rowheader "Cabe no bolso da pequena empresa" [ref=e633]
+                - cell "Sim" [ref=e634]
+                - cell "Varia" [ref=e635]
+                - cell "Custa caro" [ref=e636]
+                - cell "Sim" [ref=e637]
+          - paragraph [ref=e638]: Comparação geral, sem citar marcas.
+      - region [ref=e639]:
+        - generic [ref=e640]:
+          - generic [ref=e641]:
+            - img [aria-hidden] [ref=e643]:
+              - generic [ref=e684]:
+                - generic [ref=e687]: Sobrou
+                - generic [ref=e688]: R$ 4.229
+            - generic [ref=e690]:
+              - heading "A Dona Cida saiu do escuro." [level=2] [ref=e691]
+              - paragraph [ref=e692]: Agora ela abre o celular e sabe quanto tem, o que vence e quanto sobra.
+              - paragraph [ref=e693]: Dona Cida é personagem. A rotina dela é de milhões de donos de pequenos negócios.
+          - generic [ref=e694]:
+            - 'figure "Exemplo da tela Início do FinGestão: saldo em caixa hoje de R$ 12.480,90; Você está R$ 4.229,55 no positivo. No mês de outubro entraram R$ 18.350,00 e saíram R$ 14.120,45. A pagar nos próximos 7 dias: R$ 6.035,30." [ref=e695]':
+              - generic [aria-hidden] [ref=e697]:
+                - generic [ref=e698]:
+                  - generic [ref=e699]: Início
+                  - generic [ref=e700]: Números de exemplo
+                - generic [ref=e701]:
+                  - generic [ref=e702]:
+                    - generic [ref=e703]:
+                      - paragraph [ref=e704]: Saldo em caixa hoje
+                      - paragraph [ref=e705]: R$ 12.480,90
+                    - generic [ref=e706]:
+                      - paragraph [ref=e707]: Resultado de outubro
+                      - paragraph [ref=e708]: Você está R$ 4.229,55 no positivo.
+                      - generic [ref=e709]:
+                        - generic [ref=e710]:
+                          - term [ref=e711]: Entrou
+                          - definition [ref=e714]: R$ 18.350,00
+                        - generic [ref=e715]:
+                          - term [ref=e716]: Saiu
+                          - definition [ref=e719]: R$ 14.120,45
+                  - generic [ref=e720]:
+                    - generic [ref=e721]:
+                      - heading [level=3] [ref=e722]: A pagar nos próximos 7 dias
+                      - paragraph [ref=e723]:
+                        - text: R$ 6.035,30
+                        - generic [ref=e724]: 3 lançamentos
+                    - list [ref=e725]:
+                      - listitem [ref=e726]:
+                        - button [ref=e727] [cursor=pointer]:
+                          - generic [ref=e728]: Hoje
+                          - generic [ref=e729]: Aluguel da loja
+                          - generic [ref=e730]: R$ 3.200,00
+                      - listitem [ref=e731]:
+                        - button [ref=e732] [cursor=pointer]:
+                          - generic [ref=e733]: Amanhã
+                          - generic [ref=e734]: Energia elétrica
+                          - generic [ref=e735]: R$ 845,30
+                      - listitem [ref=e736]:
+                        - button [ref=e737] [cursor=pointer]:
+                          - generic [ref=e738]: Sáb, 24
+                          - generic [ref=e739]: Fornecedor de embalagens
+                          - generic [ref=e740]: R$ 1.990,00
+                    - button [ref=e741] [cursor=pointer]: Ver todos os pagamentos
+            - generic [ref=e744]:
+              - heading "E no painel ainda tem" [level=3] [ref=e745]
+              - generic [ref=e746]:
+                - generic [ref=e747]:
+                  - term [ref=e748]: Agenda
+                  - definition [ref=e749]: O que vence hoje, amanhã e na semana, para nada passar do prazo.
+                - generic [ref=e750]:
+                  - term [ref=e751]: Relatórios prontos
+                  - definition [ref=e752]: DRE, fluxo de caixa e quanto sobrou no mês, sem montar planilha.
+                - generic [ref=e753]:
+                  - term [ref=e754]: Metas
+                  - definition [ref=e755]: Quanto você quer vender ou guardar, e quanto falta.
+                - generic [ref=e756]:
+                  - term [ref=e757]: Projeção
+                  - definition [ref=e758]: Como fica o caixa nos próximos meses, em cenários bons e ruins.
+                - generic [ref=e759]:
+                  - term [ref=e760]: Contas e extrato
+                  - definition [ref=e761]: Importe o extrato do banco e confira com o que foi lançado.
+                - generic [ref=e762]:
+                  - term [ref=e763]: Seu contador junto
+                  - definition [ref=e764]: Ele acompanha os mesmos números, sem troca de planilha por e-mail.
+      - region [ref=e765]:
+        - generic [ref=e766]:
+          - heading "Feito por quem conhece o balcão e a contabilidade." [level=2] [ref=e767]
+          - list [ref=e768]:
+            - listitem [ref=e769]:
+              - generic [aria-hidden] [ref=e770]: FG
+              - generic [ref=e771]:
+                - paragraph [ref=e772]: Felipe Goes
+                - paragraph [ref=e773]: Desenvolvedor do FinGestão. Mais de 8 anos em tecnologia e 5 em consultoria comercial para pequenas empresas.
+            - listitem [ref=e774]:
+              - generic [aria-hidden] [ref=e775]: JH
+              - generic [ref=e776]:
+                - paragraph [ref=e777]: Jusmar Henrique
+                - paragraph [ref=e778]: Contador (UFAL), com mais de 5 anos junto a pequenas e médias empresas. Cuida para o FinGestão estar certo na contabilidade e nos tributos.
+          - list "Garantias" [ref=e779]:
+            - listitem [ref=e780]: Dados criptografados
+            - listitem [ref=e781]: Backup diário
+            - listitem [ref=e782]: 99,9% de disponibilidade
+            - listitem [ref=e783]: Suporte humano
+      - region [ref=e784]:
+        - generic [ref=e785]:
+          - generic [ref=e786]:
+            - generic [ref=e787]:
+              - heading "Planos" [level=2] [ref=e788]
+              - paragraph [ref=e789]: Escolha o plano que cabe na sua empresa. Dá para cancelar quando quiser.
+            - link "Ver preços e dúvidas sobre pagamento" [ref=e790] [cursor=pointer]:
+              - /url: /precos
+          - generic "Carregando planos" [ref=e793]
+      - region [ref=e796]:
+        - generic [ref=e798]:
+          - heading "Perguntas de quem está chegando" [level=2] [ref=e799]
+          - list [ref=e800]:
+            - listitem [ref=e801]:
+              - group [ref=e802]:
+                - generic "Preciso entender de contabilidade?" [ref=e803] [cursor=pointer]
+            - listitem [ref=e805]:
+              - group [ref=e806]:
+                - generic "Funciona no celular?" [ref=e807] [cursor=pointer]
+            - listitem [ref=e809]:
+              - group [ref=e810]:
+                - generic "Como funciona o WhatsApp?" [ref=e811] [cursor=pointer]
+            - listitem [ref=e813]:
+              - group [ref=e814]:
+                - generic "Meus dados estão seguros?" [ref=e815] [cursor=pointer]
+            - listitem [ref=e817]:
+              - group [ref=e818]:
+                - generic "Meu contador pode acompanhar?" [ref=e819] [cursor=pointer]
+            - listitem [ref=e821]:
+              - group [ref=e822]:
+                - generic "Posso cancelar quando quiser?" [ref=e823] [cursor=pointer]
+      - region [ref=e825]:
+        - generic [ref=e826]:
+          - generic [ref=e827]:
+            - generic [ref=e828]:
+              - heading "No Brasil existem milhões de Cidas. Seja a próxima a sair do escuro." [level=2] [ref=e829]
+              - generic [ref=e830]:
+                - link "Começar teste grátis" [ref=e831] [cursor=pointer]:
+                  - /url: /register
+                - list [ref=e832]:
+                  - listitem [ref=e833]: Teste grátis
+                  - listitem [aria-hidden] [ref=e834]: ·
+                  - listitem [ref=e835]: Cancele quando quiser
+                  - listitem [aria-hidden] [ref=e836]: ·
+                  - listitem [ref=e837]: Suporte de gente de verdade
+            - img [aria-hidden] [ref=e839]:
+              - generic [ref=e880]:
+                - generic [ref=e883]: Sobrou
+                - generic [ref=e884]: R$ 4.229
+          - generic [ref=e886]:
+            - paragraph [ref=e887]: É contador, BPO ou consultor?
+            - link "Conheça a área para escritórios" [ref=e888] [cursor=pointer]:
+              - /url: /para-escritorios
+    - contentinfo [ref=e891]:
+      - generic [ref=e892]:
+        - generic [ref=e893]:
+          - generic [ref=e894]:
+            - generic [ref=e895]: FinGestão
+            - paragraph [ref=e900]: "As finanças da pequena empresa em ordem: quanto tem, o que vence e quanto sobra."
+          - navigation "Produto" [ref=e901]:
+            - heading "Produto" [level=2] [ref=e902]
+            - list [ref=e903]:
+              - listitem [ref=e904]:
+                - link "Como funciona" [ref=e905] [cursor=pointer]:
+                  - /url: /#como-funciona
+              - listitem [ref=e906]:
+                - link "Preços" [ref=e907] [cursor=pointer]:
+                  - /url: /precos
+              - listitem [ref=e908]:
+                - link "Blog" [ref=e909] [cursor=pointer]:
+                  - /url: /blog
+          - navigation "Para escritórios" [ref=e910]:
+            - heading "Para escritórios" [level=2] [ref=e911]
+            - list [ref=e912]:
+              - listitem [ref=e913]:
+                - link "Para contadores" [ref=e914] [cursor=pointer]:
+                  - /url: /para-contadores
+              - listitem [ref=e915]:
+                - link "Para BPO financeiro" [ref=e916] [cursor=pointer]:
+                  - /url: /para-bpo-financeiro
+              - listitem [ref=e917]:
+                - link "Para consultores" [ref=e918] [cursor=pointer]:
+                  - /url: /para-consultores
+          - navigation "Ajuda" [ref=e919]:
+            - heading "Ajuda" [level=2] [ref=e920]
+            - list [ref=e921]:
+              - listitem [ref=e922]:
+                - link "Central de Ajuda" [ref=e923] [cursor=pointer]:
+                  - /url: /central-de-ajuda
+              - listitem [ref=e924]:
+                - link "Entrar" [ref=e925] [cursor=pointer]:
+                  - /url: /login
+              - listitem [ref=e926]:
+                - link "Criar conta" [ref=e927] [cursor=pointer]:
+                  - /url: /register
+          - navigation "Legal" [ref=e928]:
+            - heading "Legal" [level=2] [ref=e929]
+            - list [ref=e930]:
+              - listitem [ref=e931]:
+                - link "Termos de Uso" [ref=e932] [cursor=pointer]:
+                  - /url: /termos-de-uso
+              - listitem [ref=e933]:
+                - link "Privacidade" [ref=e934] [cursor=pointer]:
+                  - /url: /privacidade
+              - listitem [ref=e935]:
+                - link "LGPD" [ref=e936] [cursor=pointer]:
+                  - /url: /lgpd
+        - paragraph [ref=e937]: © 2026 FinGestão. Todos os direitos reservados.

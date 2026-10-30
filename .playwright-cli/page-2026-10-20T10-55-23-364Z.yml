@@ -1,0 +1,394 @@
+- generic [active] [ref=f7e1]:
+  - generic [ref=f7e2]:
+    - navigation [ref=f7e3]:
+      - generic [ref=f7e4]:
+        - link [ref=f7e6] [cursor=pointer]:
+          - /url: /
+          - img "Gupy Acesse a página inicial do Portal de vagas da Gupy" [ref=f7e9]
+        - generic [ref=f7e10]:
+          - generic [ref=f7e11]:
+            - link "Central de Empregabilidade" [ref=f7e12] [cursor=pointer]:
+              - /url: https://centraldeempregabilidade.com.br/
+            - link "Simulador de Entrevistas" [ref=f7e13] [cursor=pointer]:
+              - /url: https://simuladordeentrevistas.com.br/
+            - link "Mentorias" [ref=f7e14] [cursor=pointer]:
+              - /url: https://candidatos.gupy.io/servicos-de-mentoria
+            - link "Central de Ajuda" [ref=f7e15] [cursor=pointer]:
+              - /url: https://suporte-candidatos.gupy.io/s/?language=pt_BR
+            - link "Cadastrar CV grátis" [ref=f7e16] [cursor=pointer]:
+              - /url: https://login.gupy.io/candidates/signup
+            - link "Entrar" [ref=f7e17] [cursor=pointer]:
+              - /url: https://login.gupy.io/candidates/signin
+          - button "Menu da pessoa usuária" [ref=f7e20] [cursor=pointer]
+    - main [ref=f7e24]:
+      - generic [ref=f7e27]:
+        - heading "Conectando o seu talento às melhores empresas" [level=1] [ref=f7e28]
+        - paragraph [ref=f7e29]: Aqui você encontra vagas reais para impulsionar ainda mais a sua carreira
+        - generic [ref=f7e30]:
+          - textbox "Busque por uma vaga" [ref=f7e40]
+          - button "Buscar vagas" [ref=f7e41] [cursor=pointer]
+        - link "Explorar todas as vagas" [ref=f7e42] [cursor=pointer]:
+          - /url: /job-search/sortBy=publishedDate
+      - generic [ref=f7e47]:
+        - generic [ref=f7e50]:
+          - img "Icone da seção" [ref=f7e51]
+          - heading "A carreira é sua. Mas a jornada a gente faz junto" [level=2] [ref=f7e52]
+        - paragraph [ref=f7e53]: Encontre vagas reais e se conecte com empresas que valorizam o seu potencial
+        - generic [ref=f7e54]:
+          - generic [ref=f7e57]:
+            - img "Arrow Institutional Section" [ref=f7e59]
+            - generic [ref=f7e60]:
+              - heading "+" [level=3] [ref=f7e61]
+              - heading "100mil" [level=3] [ref=f7e62]
+            - heading "vagas em todo o Brasil" [level=3] [ref=f7e63]
+          - generic [ref=f7e64]:
+            - generic [ref=f7e66]:
+              - generic [ref=f7e67]:
+                - heading "+" [level=3] [ref=f7e68]
+                - heading "4mil" [level=3] [ref=f7e69]
+              - heading "clientes, de grandes empresas a negócios locais" [level=3] [ref=f7e70]
+            - generic [ref=f7e72]:
+              - generic [ref=f7e73]:
+                - heading "+" [level=3] [ref=f7e74]
+                - heading "5milhões" [level=3] [ref=f7e75]
+              - heading "de contratações já realizadas" [level=3] [ref=f7e76]
+          - generic [ref=f7e77]:
+            - img "Banner Institutional Section" [ref=f7e79]
+            - paragraph [ref=f7e86]: Fique no radar de quem contrata
+            - paragraph [ref=f7e88]: Cadastre-se no Banco de Talentos e seja uma pessoa vista por empresas que estão buscando profissionais como você.
+            - button "Participar do Banco de Talentos" [ref=f7e90] [cursor=pointer]
+      - generic [ref=f7e92]:
+        - generic [ref=f7e95]:
+          - img "Icone da seção" [ref=f7e96]
+          - heading "Impulsione sua carreira com a Gupy" [level=2] [ref=f7e97]
+        - paragraph [ref=f7e98]: A gente conecta você com oportunidades de verdade. Porque sua trajetória merece protagonismo.
+        - generic [ref=f7e99]:
+          - tablist [ref=f7e102]:
+            - tab "Impulsione seu potencial, curso, lista de 9 itens" [selected] [ref=f7e103] [cursor=pointer]: Curso
+            - tab "Impulsione seu potencial, conteúdo, lista de 4 itens" [ref=f7e104] [cursor=pointer]: Conteúdo
+          - tabpanel [ref=f7e106]:
+            - generic [ref=f7e109]:
+              - generic [ref=f7e110]:
+                - button [disabled] [aria-hidden]
+              - list [ref=f7e112]:
+                - listitem [ref=f7e113]:
+                  - generic [ref=f7e115]:
+                    - img "Aula 1" [ref=f7e117]
+                    - generic [ref=f7e120]:
+                      - heading "Aula 1" [level=3] [ref=f7e121]
+                      - paragraph [ref=f7e122]: Entenda como a inteligência artificial está transformando o mercado de trabalho e as etapas dos processos seletivos.
+                    - button "Aula 1, Entenda como a inteligência artificial está transformando o mercado de trabalho e as etapas dos processos seletivos., link Assistir" [ref=f7e124] [cursor=pointer]: Assistir
+                - listitem [ref=f7e128]:
+                  - generic [ref=f7e130]:
+                    - img "Aula 2" [ref=f7e132]
+                    - generic [ref=f7e135]:
+                      - heading "Aula 2" [level=3] [ref=f7e136]
+                      - paragraph [ref=f7e137]: Descubra os bastidores de como recrutadores e sistemas de IA avaliam o seu currículo.
+                    - button "Aula 2, Descubra os bastidores de como recrutadores e sistemas de IA avaliam o seu currículo., link Assistir" [ref=f7e139] [cursor=pointer]: Assistir
+                - listitem [ref=f7e143]:
+                  - generic [ref=f7e145]:
+                    - img "Aula 3" [ref=f7e147]
+                    - generic [ref=f7e150]:
+                      - heading "Aula 3" [level=3] [ref=f7e151]
+                      - paragraph [ref=f7e152]: Aprenda o passo a passo prático para cadastrar e estruturar seu perfil na Gupy.
+                    - button "Aula 3, Aprenda o passo a passo prático para cadastrar e estruturar seu perfil na Gupy., link Assistir" [ref=f7e154] [cursor=pointer]: Assistir
+                - listitem [ref=f7e158]:
+                  - generic [ref=f7e160]:
+                    - img "Aula 4" [ref=f7e162]
+                    - generic [ref=f7e165]:
+                      - heading "Aula 4" [level=3] [ref=f7e166]
+                      - paragraph [ref=f7e167]: Entenda como a IA lê as informações do seu currículo e desvende o mito do uso de palavras-chave.
+                    - button "Aula 4, Entenda como a IA lê as informações do seu currículo e desvende o mito do uso de palavras-chave., link Assistir" [ref=f7e169] [cursor=pointer]: Assistir
+                - listitem [ref=f7e173]:
+                  - generic [ref=f7e175]:
+                    - img "Aula 5" [ref=f7e177]
+                    - generic [ref=f7e180]:
+                      - heading "Aula 5" [level=3] [ref=f7e181]
+                      - paragraph [ref=f7e182]: Saiba como construir um currículo de destaque focando em conquistas reais e resultados, e não apenas em tarefas.
+                    - button "Aula 5, Saiba como construir um currículo de destaque focando em conquistas reais e resultados, e não apenas em tarefas., link Assistir" [ref=f7e184] [cursor=pointer]: Assistir
+                - listitem [ref=f7e188]:
+                  - generic [ref=f7e190]:
+                    - img "Aula 6" [ref=f7e192]
+                    - generic [ref=f7e195]:
+                      - heading "Aula 6" [level=3] [ref=f7e196]
+                      - paragraph [ref=f7e197]: Descubra como encontrar as vagas certas.
+                    - button "Aula 6, Descubra como encontrar as vagas certas., link Assistir" [ref=f7e199] [cursor=pointer]: Assistir
+                - listitem [ref=f7e203]:
+                  - generic [ref=f7e205]:
+                    - img "Aula 7" [ref=f7e207]
+                    - generic [ref=f7e210]:
+                      - heading "Aula 7" [level=3] [ref=f7e211]
+                      - paragraph [ref=f7e212]: Conheça as melhores práticas e os erros mais comuns sobre o que fazer e o que evitar durante a preparação para o processo seletivo.
+                    - button "Aula 7, Conheça as melhores práticas e os erros mais comuns sobre o que fazer e o que evitar durante a preparação para o processo seletivo., link Assistir" [ref=f7e214] [cursor=pointer]: Assistir
+                - listitem [ref=f7e218]:
+                  - generic [ref=f7e220]:
+                    - img "Aula 8" [ref=f7e222]
+                    - generic [ref=f7e225]:
+                      - heading "Aula 8" [level=3] [ref=f7e226]
+                      - paragraph [ref=f7e227]: Dicas e orientações essenciais para cuidar da sua saúde mental e bem-estar ao longo da jornada de busca por emprego.
+                    - button "Aula 8, Dicas e orientações essenciais para cuidar da sua saúde mental e bem-estar ao longo da jornada de busca por emprego., link Assistir" [ref=f7e229] [cursor=pointer]: Assistir
+                - listitem [ref=f7e233]:
+                  - generic [ref=f7e235]:
+                    - img "Aula 9" [ref=f7e237]
+                    - generic [ref=f7e240]:
+                      - heading "Aula 9" [level=3] [ref=f7e241]
+                      - paragraph [ref=f7e242]: Confira uma conversa com Guilherme Dias, cofundador da Gupy, sobre os próximos passos e o futuro das seleções na era da IA.
+                    - button "Aula 9, Confira uma conversa com Guilherme Dias, cofundador da Gupy, sobre os próximos passos e o futuro das seleções na era da IA., link Assistir" [ref=f7e244] [cursor=pointer]: Assistir
+              - button [aria-hidden] [ref=f7e252] [cursor=pointer]
+    - contentinfo [ref=f7e255]:
+      - generic [ref=f7e256]:
+        - generic [ref=f7e257]:
+          - navigation [ref=f7e259]:
+            - button "Vagas por estado" [ref=f7e260] [cursor=pointer]
+            - list [ref=f7e263]:
+              - listitem [ref=f7e264]:
+                - link "Acre" [ref=f7e265] [cursor=pointer]:
+                  - /url: /job-search/state=Acre
+              - listitem [ref=f7e266]:
+                - link "Alagoas" [ref=f7e267] [cursor=pointer]:
+                  - /url: /job-search/state=Alagoas
+              - listitem [ref=f7e268]:
+                - link "Amapá" [ref=f7e269] [cursor=pointer]:
+                  - /url: /job-search/state=Amap%C3%A1
+              - listitem [ref=f7e270]:
+                - link "Amazonas" [ref=f7e271] [cursor=pointer]:
+                  - /url: /job-search/state=Amazonas
+              - listitem [ref=f7e272]:
+                - link "Bahia" [ref=f7e273] [cursor=pointer]:
+                  - /url: /job-search/state=Bahia
+              - listitem [ref=f7e274]:
+                - link "Ceará" [ref=f7e275] [cursor=pointer]:
+                  - /url: /job-search/state=Cear%C3%A1
+              - listitem [ref=f7e276]:
+                - link "Distrito Federal" [ref=f7e277] [cursor=pointer]:
+                  - /url: /job-search/state=Distrito%20Federal
+              - listitem [ref=f7e278]:
+                - link "Espírito Santo" [ref=f7e279] [cursor=pointer]:
+                  - /url: /job-search/state=Esp%C3%ADrito%20Santo
+            - list [ref=f7e280]:
+              - listitem [ref=f7e281]:
+                - link [ref=f7e282] [cursor=pointer]:
+                  - /url: /job-search/state=Goi%C3%A1s
+                  - text: Goiás
+              - listitem [ref=f7e283]:
+                - link [ref=f7e284] [cursor=pointer]:
+                  - /url: /job-search/state=Maranh%C3%A3o
+                  - text: Maranhão
+              - listitem [ref=f7e285]:
+                - link [ref=f7e286] [cursor=pointer]:
+                  - /url: /job-search/state=Mato%20Grosso
+                  - text: Mato Grosso
+              - listitem [ref=f7e287]:
+                - link [ref=f7e288] [cursor=pointer]:
+                  - /url: /job-search/state=Mato%20Grosso%20do%20Sul
+                  - text: Mato Grosso do Sul
+              - listitem [ref=f7e289]:
+                - link [ref=f7e290] [cursor=pointer]:
+                  - /url: /job-search/state=Minas%20Gerais
+                  - text: Minas Gerais
+              - listitem [ref=f7e291]:
+                - link [ref=f7e292] [cursor=pointer]:
+                  - /url: /job-search/state=Par%C3%A1
+                  - text: Pará
+              - listitem [ref=f7e293]:
+                - link [ref=f7e294] [cursor=pointer]:
+                  - /url: /job-search/state=Para%C3%ADba
+                  - text: Paraíba
+              - listitem [ref=f7e295]:
+                - link [ref=f7e296] [cursor=pointer]:
+                  - /url: /job-search/state=Paran%C3%A1
+                  - text: Paraná
+              - listitem [ref=f7e297]:
+                - link [ref=f7e298] [cursor=pointer]:
+                  - /url: /job-search/state=Pernambuco
+                  - text: Pernambuco
+              - listitem [ref=f7e299]:
+                - link [ref=f7e300] [cursor=pointer]:
+                  - /url: /job-search/state=Piau%C3%AD
+                  - text: Piauí
+              - listitem [ref=f7e301]:
+                - link [ref=f7e302] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20de%20Janeiro
+                  - text: Rio de Janeiro
+              - listitem [ref=f7e303]:
+                - link [ref=f7e304] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20Grande%20do%20Norte
+                  - text: Rio Grande do Norte
+              - listitem [ref=f7e305]:
+                - link [ref=f7e306] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20Grande%20do%20Sul
+                  - text: Rio Grande do Sul
+              - listitem [ref=f7e307]:
+                - link [ref=f7e308] [cursor=pointer]:
+                  - /url: /job-search/state=Rond%C3%B4nia
+                  - text: Rondônia
+              - listitem [ref=f7e309]:
+                - link [ref=f7e310] [cursor=pointer]:
+                  - /url: /job-search/state=Roraima
+                  - text: Roraima
+              - listitem [ref=f7e311]:
+                - link [ref=f7e312] [cursor=pointer]:
+                  - /url: /job-search/state=Santa%20Catarina
+                  - text: Santa Catarina
+              - listitem [ref=f7e313]:
+                - link [ref=f7e314] [cursor=pointer]:
+                  - /url: /job-search/state=S%C3%A3o%20Paulo
+                  - text: São Paulo
+              - listitem [ref=f7e315]:
+                - link [ref=f7e316] [cursor=pointer]:
+                  - /url: /job-search/state=Sergipe
+                  - text: Sergipe
+              - listitem [ref=f7e317]:
+                - link [ref=f7e318] [cursor=pointer]:
+                  - /url: /job-search/state=Tocantins
+                  - text: Tocantins
+          - generic [ref=f7e319]:
+            - navigation [ref=f7e320]:
+              - button "Cidades mais buscadas" [ref=f7e321] [cursor=pointer]
+              - list [ref=f7e324]:
+                - listitem [ref=f7e325]:
+                  - link "São Paulo - SP" [ref=f7e326] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=S%C3%A3o%20Paulo
+                - listitem [ref=f7e327]:
+                  - link "Recife - PE" [ref=f7e328] [cursor=pointer]:
+                    - /url: /job-search/state=Pernambuco&city%5B%5D=Recife
+              - list [ref=f7e329]:
+                - listitem [ref=f7e330]:
+                  - link [ref=f7e331] [cursor=pointer]:
+                    - /url: /job-search/state=Amazonas&city%5B%5D=Manaus
+                    - text: Manaus - AM
+                - listitem [ref=f7e332]:
+                  - link [ref=f7e333] [cursor=pointer]:
+                    - /url: /job-search/state=Bahia&city%5B%5D=Salvador
+                    - text: Salvador - BA
+                - listitem [ref=f7e334]:
+                  - link [ref=f7e335] [cursor=pointer]:
+                    - /url: /job-search/state=Sergipe&city%5B%5D=Aracaju
+                    - text: Aracaju - SE
+                - listitem [ref=f7e336]:
+                  - link [ref=f7e337] [cursor=pointer]:
+                    - /url: /job-search/state=Rio%20de%20Janeiro&city%5B%5D=Rio%20de%20Janeiro
+                    - text: Rio de Janeiro - RJ
+                - listitem [ref=f7e338]:
+                  - link [ref=f7e339] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Tatu%C3%AD
+                    - text: Tatuí - SP
+                - listitem [ref=f7e340]:
+                  - link [ref=f7e341] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Santos
+                    - text: Santos - SP
+                - listitem [ref=f7e342]:
+                  - link [ref=f7e343] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Franca
+                    - text: Franca - SP
+                - listitem [ref=f7e344]:
+                  - link [ref=f7e345] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Campinas
+                    - text: Campinas - SP
+            - navigation [ref=f7e346]:
+              - button "Cargos mais buscados" [ref=f7e347] [cursor=pointer]
+              - list [ref=f7e350]:
+                - listitem [ref=f7e351]:
+                  - link "Enfermeiro" [ref=f7e352] [cursor=pointer]:
+                    - /url: /job-search/term=Enfermeiro
+                - listitem [ref=f7e353]:
+                  - link "Auxiliar" [ref=f7e354] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar
+              - list [ref=f7e355]:
+                - listitem [ref=f7e356]:
+                  - link [ref=f7e357] [cursor=pointer]:
+                    - /url: /job-search/term=Motorista
+                    - text: Motorista
+                - listitem [ref=f7e358]:
+                  - link [ref=f7e359] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar%20de%20enfermagem
+                    - text: Auxiliar de enfermagem
+                - listitem [ref=f7e360]:
+                  - link [ref=f7e361] [cursor=pointer]:
+                    - /url: /job-search/term=T%C3%A9cnico%20de%20enfermagem
+                    - text: Técnico de enfermagem
+                - listitem [ref=f7e362]:
+                  - link [ref=f7e363] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar%20administrativo
+                    - text: Auxiliar administrativo
+                - listitem [ref=f7e364]:
+                  - link [ref=f7e365] [cursor=pointer]:
+                    - /url: /job-search/term=Recepcionista
+                    - text: Recepcionista
+                - listitem [ref=f7e366]:
+                  - link [ref=f7e367] [cursor=pointer]:
+                    - /url: /job-search/term=Analista
+                    - text: Analista
+                - listitem [ref=f7e368]:
+                  - link [ref=f7e369] [cursor=pointer]:
+                    - /url: /job-search/term=Assistente
+                    - text: Assistente
+                - listitem [ref=f7e370]:
+                  - link [ref=f7e371] [cursor=pointer]:
+                    - /url: /job-search/term=Advogado
+                    - text: Advogado
+            - navigation [ref=f7e372]:
+              - button "Mais buscados" [ref=f7e373] [cursor=pointer]
+              - list [ref=f7e376]:
+                - listitem [ref=f7e377]:
+                  - link "Home office" [ref=f7e378] [cursor=pointer]:
+                    - /url: /job-search/workplaceTypes%5B%5D=remote
+                - listitem [ref=f7e379]:
+                  - link "Jovem aprendiz" [ref=f7e380] [cursor=pointer]:
+                    - /url: /job-search/jobTypes%5B%5D=vacancy_type_apprentice
+              - list [ref=f7e381]:
+                - listitem [ref=f7e382]:
+                  - link [ref=f7e383] [cursor=pointer]:
+                    - /url: /job-search/jobTypes%5B%5D=vacancy_type_internship
+                    - text: Estágio
+                - listitem [ref=f7e384]:
+                  - link [ref=f7e385] [cursor=pointer]:
+                    - /url: /job-search/pwd=true
+                    - text: PCD
+          - generic [ref=f7e386]:
+            - paragraph [ref=f7e387]: Redes sociais
+            - navigation "Redes sociais" [ref=f7e388]:
+              - link "Instagram Portal de Vagas Gupy" [ref=f7e389] [cursor=pointer]:
+                - /url: https://www.instagram.com/portaldevagas.gupy/
+              - link "TikTok Portal de Vagas Gupy" [ref=f7e392] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@portaldevagas.gupy
+              - link "YouTube Canal da Gupy" [ref=f7e395] [cursor=pointer]:
+                - /url: https://www.youtube.com/@canaldagupy
+              - link "Newsletter “À Frente com Gupy” no LinkedIn" [ref=f7e398] [cursor=pointer]:
+                - /url: https://www.linkedin.com/newsletters/7052275367725662208/
+            - navigation [ref=f7e401]:
+              - paragraph [ref=f7e402]: Sobre a Gupy
+              - list [ref=f7e403]:
+                - listitem [ref=f7e404]:
+                  - link "Sobre a Gupy" [ref=f7e405] [cursor=pointer]:
+                    - /url: https://www.gupy.io/sobre-a-gupy?_gl=1*szj8hu*_gcl_au*ODU1NzY5NjM0LjE3MjQ2OTU2MTA.
+                - listitem [ref=f7e406]:
+                  - link "Para pessoas candidatas" [ref=f7e407] [cursor=pointer]:
+                    - /url: https://www.gupy.io/manifesto-experiencia-pessoa-candidata
+                - listitem [ref=f7e408]:
+                  - link "Entenda Agentes de IA Gupy" [ref=f7e409] [cursor=pointer]:
+                    - /url: https://www.gupy.io/inteligencia-artificial
+                - listitem [ref=f7e410]:
+                  - link "Selo de Feedback" [ref=f7e411] [cursor=pointer]:
+                    - /url: https://pravoce.gupy.io/pt/como-a-gupy-incentiva-o-feedback-das-empresas?role=s_QKIrThDW7923%3Bs_vbDskKHs15288%3Bs_iWtQKQeI15046%3Bs_icuLmVfh15597
+                - listitem [ref=f7e412]:
+                  - link "Novidades" [ref=f7e413] [cursor=pointer]:
+                    - /url: https://pravoce.gupy.io/pt
+                - listitem [ref=f7e414]:
+                  - link "Central de Ajuda" [ref=f7e415] [cursor=pointer]:
+                    - /url: https://suporte-candidatos.gupy.io/s/?language=pt_BR
+                - listitem [ref=f7e416]:
+                  - link "Falar com o Suporte" [ref=f7e417] [cursor=pointer]:
+                    - /url: https://suporte-candidatos.gupy.io/s/suporte?language=pt_BR
+        - generic [ref=f7e418]:
+          - img "Logotipo da Gupy no rodapé" [ref=f7e420]
+          - generic [ref=f7e421]: ©2015-2026 Gupy. Todos os direitos reservados.
+          - navigation "Termos de uso, Política de privacidade" [ref=f7e422]:
+            - list [ref=f7e423]:
+              - listitem [ref=f7e424]:
+                - link "Termos de uso" [ref=f7e425] [cursor=pointer]:
+                  - /url: https://login.gupy.io/candidates/gupy-terms
+              - listitem [ref=f7e426]:
+                - link "Política de privacidade" [ref=f7e427] [cursor=pointer]:
+                  - /url: https://login.gupy.io/candidates/gupy-privacy
+  - alert [ref=f7e428]

@@ -1,0 +1,20 @@
+### Result
+- [Screenshot of viewport](output/playwright/gupy-infojobs/gupy-empresa.png)
+### Ran Playwright code
+```js
+// Screenshot viewport and save it as output/playwright/gupy-infojobs/gupy-empresa.png
+await page.screenshot({
+  path: 'output/playwright/gupy-infojobs/gupy-empresa.png',
+  scale: 'css',
+  type: 'png'
+});
+```
+### Open tabs
+- 0: (current) [Gupy](https://vempra.gupy.io/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://vempra.gupy.io/
+- Page Title: Gupy
+- Console: 14 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-03-37-323Z.log#L52-L53

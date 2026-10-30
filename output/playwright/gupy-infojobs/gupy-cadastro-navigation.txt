@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://login.gupy.io/candidates/signup');
+```
+### Open tabs
+- 0: (current) [Gupy](https://login.gupy.io/candidates/signup)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://login.gupy.io/candidates/signup
+- Page Title: Gupy
+- Console: 1 errors, 0 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-04-03-364Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-03-49-596Z.log#L1-L35

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
-import type { CandidaturaStatus, Database } from '@/types/database'
+import type { Database } from '@/types/database'
 
 type VagaInsert = Database['public']['Tables']['vagas']['Insert']
 
@@ -28,10 +28,9 @@ export function useSaveVaga() {
       if (error) throw error
       return data
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['vagas'] })
-      queryClient.invalidateQueries({ queryKey: ['admin', 'vagas'] })
-      queryClient.invalidateQueries({ queryKey: ['empresas'] })
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['vagas', 'by-empresa', data.empresa_id ?? undefined] })
+      queryClient.invalidateQueries({ queryKey: ['vagas', 'list'] })
     },
   })
 }
@@ -40,14 +39,13 @@ export function useDeleteVaga() {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: async ({ id }: { id: string; empresaId?: string }) => {
-      const { error } = await supabase.from('vagas').delete().eq('id', id).select('id').single()
+      const { error } = await supabase.from('vagas').delete().eq('id', id)
       if (error) throw error
     },
     onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ['vagas', 'by-empresa', variables.empresaId] })
-      queryClient.invalidateQueries({ queryKey: ['vagas'] })
+      queryClient.invalidateQueries({ queryKey: ['vagas', 'list'] })
       queryClient.invalidateQueries({ queryKey: ['admin', 'vagas'] })
-      queryClient.invalidateQueries({ queryKey: ['empresas'] })
     },
   })
 }
@@ -67,21 +65,6 @@ export function useVagaCandidaturas(vagaId: string | undefined) {
         .order('created_at', { ascending: false })
       if (error) throw error
       return data
-    },
-  })
-}
-
-export function useUpdateCandidaturaStatus() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async ({ id, status, vagaId }: { id: string; status: CandidaturaStatus; vagaId: string }) => {
-      const { error } = await supabase.from('candidaturas').update({ status }).eq('id', id).select('id').single()
-      if (error) throw error
-      return vagaId
-    },
-    onSuccess: (vagaId) => {
-      queryClient.invalidateQueries({ queryKey: ['candidaturas', 'by-vaga', vagaId] })
-      queryClient.invalidateQueries({ queryKey: ['candidaturas', 'by-candidato'] })
     },
   })
 }

@@ -1,0 +1,109 @@
+### Open tabs
+- 0: (current) [Cadastrar Curriculo GRÁTIS | Infojobs](https://login.infojobs.com.br/cadastrar-curriculo.aspx)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+- Page Title: Cadastrar Curriculo GRÁTIS | Infojobs
+### Snapshot
+```yaml
+- generic [ref=f69e1]:
+  - dialog "Bem-vindo ao Infojobs Brasil Gestão de autorizações" [ref=f69e4]:
+    - document [active] [ref=f69e5]:
+      - generic [ref=f69e6]:
+        - paragraph [ref=f69e8]:
+          - text: "Nós e nossos parceiros usamos cookies e tecnologias semelhantes com o seu consentimento para personalizar o serviço (ex: publicidade, geolocalização e medição de audiências). Pode gerir ou retirar o seu consentimento a qualquer momento na nossa"
+          - link "Política de Privacidade" [ref=f69e9] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+          - text: Com o seu consentimento, nós e
+          - button "os nossos 1071 parceiros" [ref=f69e10] [cursor=pointer]
+          - text: usamos cookies ou tecnologias semelhantes para armazenar, aceder e processar dados pessoais como a sua visita a este sítio web, endereços IP e identificadores de cookies. Alguns parceiros não pedem o seu consentimento para processar os seus dados e baseiam-se nos seus interesses comerciais legítimos. Pode retirar o seu consentimento ou opor-se ao processamento de dados com base no seu interesse legítimo em qualquer altura, clicando em "Saiba mais" ou na nossa Política de Privacidade neste sítio web.
+        - paragraph [ref=f69e12]:
+          - heading "Nós e os nossos parceiros efetuamos o seguinte processamento de dados:" [level=2] [ref=f69e13]
+          - generic [ref=f69e14]: Armazenar e/ou aceder a informações num dispositivo, Dados analíticos, Dados de geolocalização precisos e identificação através da procura de dispositivos, Funcional, Marketing, Medição de públicos-alvo, Publicidade, Publicidade e conteúdos personalizados, medição de publicidade e conteúdos, estudos de audiência e desenvolvimento de serviços, Social
+      - generic [ref=f69e15]:
+        - button "Learn more" [ref=f69e16] [cursor=pointer]: Saiba mais
+        - button "Agree and close" [ref=f69e17] [cursor=pointer]: Aceitar
+  - generic [ref=f69e20]:
+    - generic [ref=f69e21]:
+      - link [ref=f69e22] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br
+        - img "Infojobs" [ref=f69e23]
+      - generic [ref=f69e24]:
+        - generic [ref=f69e25]:
+          - heading "O emprego que você procura está no Infojobs!" [level=2] [ref=f69e26]
+          - list [ref=f69e27]:
+            - listitem [ref=f69e28]: Candidate-se às melhores vagas do país.
+            - listitem [ref=f69e29]: Fique visível para milhares de empresas.
+            - listitem [ref=f69e30]: Receba vagas adequadas ao seu perfil.
+            - listitem [ref=f69e31]: Conheça as empresas por dentro.
+        - generic [ref=f69e32]:
+          - generic [ref=f69e33]: As melhores empresas estão aqui!
+          - generic [ref=f69e34]:
+            - img "Grupo Big" [ref=f69e35]
+            - img "Extrafarma" [ref=f69e36]
+            - img "Bimbo" [ref=f69e37]
+            - img "Carrefour" [ref=f69e38]
+            - img "Dia" [ref=f69e39]
+    - generic [ref=f69e40]:
+      - link "Voltar" [ref=f69e42] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br
+      - generic [ref=f69e47]:
+        - generic [ref=f69e48]:
+          - heading "O seu próximo emprego está aqui!" [level=1] [ref=f69e49]
+          - heading "Crie sua conta para acessar e candidate-se à milhares de vagas." [level=2] [ref=f69e50]
+        - generic [ref=f69e52]:
+          - generic [ref=f69e53]:
+            - heading "Entre e comece a se candidatar:" [level=3] [ref=f69e55]
+            - link "Google" [ref=f69e57] [cursor=pointer]:
+              - /url: /External/Challenge?provider=google
+            - link "LinkedIn" [ref=f69e67] [cursor=pointer]:
+              - /url: /External/Challenge?provider=linkedin
+            - link "Facebook" [ref=f69e75] [cursor=pointer]:
+              - /url: /External/Challenge?provider=facebook
+            - link "Apple" [ref=f69e83] [cursor=pointer]:
+              - /url: /External/Challenge?provider=apple
+            - link "Microsoft" [ref=f69e90] [cursor=pointer]:
+              - /url: /External/Challenge?provider=microsoft
+            - generic [ref=f69e99]: "Ou continue com seu e-mail:"
+          - generic [ref=f69e100]:
+            - generic [ref=f69e101]:
+              - textbox "Nome e sobrenome" [ref=f69e103]
+              - textbox "E-mail" [ref=f69e105]
+              - textbox "Senha" [ref=f69e107]
+              - generic [ref=f69e109]:
+                - textbox "CEP" [ref=f69e110]
+                - button [ref=f69e112] [cursor=pointer]
+              - textbox "Cargo Desejado" [ref=f69e118]
+              - generic [ref=f69e120]:
+                - checkbox "Li e aceito as Condições Legais e a Política de Privacidade do Infojobs. Se você for uma pessoa com menos de 18 anos, informe seus pais ou responsáveis legais sobre a criação e o uso desta conta antes de continuar." [ref=f69e121]
+                - generic [ref=f69e123]:
+                  - text: Li e aceito as
+                  - link "Condições Legais" [ref=f69e124] [cursor=pointer]:
+                    - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+                  - text: e a
+                  - link "Política de Privacidade" [ref=f69e125] [cursor=pointer]:
+                    - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+                  - text: do Infojobs. Se você for uma pessoa com menos de 18 anos, informe seus pais ou responsáveis legais sobre a criação e o uso desta conta antes de continuar.
+              - generic [ref=f69e127]:
+                - checkbox "Quero receber comunicações sobre produtos, novidades, ofertas e eventos do Infojobs e de seus parceiros." [ref=f69e128]
+                - generic [ref=f69e129]: Quero receber comunicações sobre produtos, novidades, ofertas e eventos do Infojobs e de seus parceiros.
+            - generic [ref=f69e132]:
+              - button "Cadastrar-se" [ref=f69e133] [cursor=pointer]
+              - generic [ref=f69e134]:
+                - text: Você é uma empresa?
+                - link "Cadastre-se grátis aqui." [ref=f69e135] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/company/insertnew.aspx?oac=true
+      - generic [ref=f69e136]:
+        - generic [ref=f69e137]:
+          - link [ref=f69e138] [cursor=pointer]:
+            - /url: https://play.google.com/store/apps/details?id=com.infojobs.phone&referrer=xtor%3DEPR-369427104%26origenvisita%3D644&utm_source=infojobs_organic&utm_campaign=landing_alta_cv&utm_medium=promo_www
+            - img "Android" [ref=f69e139]
+          - link [ref=f69e140] [cursor=pointer]:
+            - /url: https://itunes.apple.com/br/app/infojobs-vagas-de-emprego/id981457216#?t=W251bGwsMSwxLDIxMiwiY29tLmluZm9qb2JzLnBob25lIl0
+            - img "Apple" [ref=f69e141]
+        - text: © Infojobs Brasil Atividades de Internet, Ltda. Todos os direitos reservados.
+  - status [ref=f69e142]
+  - status [ref=f69e143]
+  - status [ref=f69e144]
+  - iframe [ref=f69e147]
+```

@@ -8,7 +8,7 @@ export type PricingModelVaga = 'fixed_salary' | 'hourly' | 'per_delivery'
 export type PricingModelAutonomo = 'hourly' | 'per_delivery' | 'both'
 export type VagaStatus = 'draft' | 'published' | 'paused' | 'closed'
 export type EmpresaStatus = 'active' | 'pending' | 'suspended'
-export type CandidaturaStatus = 'enviada' | 'em_analise' | 'entrevista' | 'aprovada' | 'rejeitada'
+export type CandidaturaStatus = 'enviada' | 'em_analise' | 'entrevista' | 'aprovada' | 'rejeitada' | 'desistiu'
 export type UserRole = 'candidato' | 'autonomo' | 'empresa_owner'
 export type PlanAudience = 'empresa' | 'autonomo'
 
@@ -120,7 +120,7 @@ export interface Database {
           id: string
           slug: string
           label: string
-          kind: TaxonomyKind | 'both'
+          kind: 'vaga' | 'autonomo' | 'both' | 'empresa' | 'modalidade'
           is_active: boolean
         }
         Insert: Partial<Database['public']['Tables']['categories']['Row']> & {
@@ -155,6 +155,7 @@ export interface Database {
           is_verified: boolean
           status: EmpresaStatus
           address: string | null
+          zip_code: string | null
           address_visible: boolean
           mission_vision_values_html: string | null
           mission_visible: boolean
@@ -206,6 +207,10 @@ export interface Database {
           location_state: string | null
           is_remote: boolean
           category: string | null
+          /** slug de uma categoria do tipo "modalidade" (presencial, remota, híbrida…) */
+          modalidade: string | null
+          /** etapas do processo seletivo escolhidas pela empresa; nulo = modelo padrão */
+          etapas_selecao: unknown | null
           status: VagaStatus
           is_featured: boolean
           photo_url: string | null
@@ -243,6 +248,7 @@ export interface Database {
         Row: {
           id: string
           headline: string | null
+          type_slug: string | null
           bio_html: string | null
           desired_role: string | null
           desired_salary_min: number | null
@@ -277,6 +283,7 @@ export interface Database {
           experiences: CvExperience[]
           education: CvEducation[]
           skills: string[]
+          categories: string[]
           is_default: boolean
           is_public: boolean
           pdf_url: string | null
@@ -439,6 +446,13 @@ export interface Database {
           slug: string
           title: string
           content_html: string
+          /** Desenho em seções e blocos (ver lib/pageLayout.ts); nulo = só content_html */
+          layout: unknown | null
+          is_published: boolean
+          is_system: boolean
+          show_in_header: boolean
+          show_in_footer: boolean
+          seo_description: string | null
           updated_by: string | null
           created_at: string
           updated_at: string
@@ -448,6 +462,86 @@ export interface Database {
           title: string
         }
         Update: Partial<Database['public']['Tables']['paginas_institucionais']['Row']>
+        Relationships: []
+      }
+      processos: {
+        Row: {
+          id: string
+          origem: 'candidatura' | 'autonomo'
+          empresa_id: string
+          /** a pessoa acompanhada: candidato ou autônomo */
+          pessoa_id: string
+          candidatura_id: string | null
+          vaga_id: string | null
+          titulo: string
+          empresa_nome: string
+          pessoa_nome: string
+          status: 'em_andamento' | 'contratado' | 'encerrado'
+          motivo: 'reprovado' | 'desistencia' | null
+          etapa_atual_id: string | null
+          ultima_atividade_em: string
+          ultima_atividade_por: string | null
+          concluido_em: string | null
+          created_at: string
+          updated_at: string
+        }
+        // Só as funções processo_* gravam aqui (ver migration 0024)
+        Insert: never
+        Update: never
+        Relationships: []
+      }
+      processo_etapas: {
+        Row: {
+          id: string
+          processo_id: string
+          posicao: number
+          tipo: 'recebida' | 'triagem' | 'entrevista' | 'documentos' | 'aguardando' | 'conclusao' | 'outra'
+          titulo: string
+          descricao: string | null
+          status: 'pendente' | 'atual' | 'concluida' | 'pulada'
+          iniciada_em: string | null
+          concluida_em: string | null
+        }
+        Insert: never
+        Update: never
+        Relationships: []
+      }
+      processo_mensagens: {
+        Row: {
+          id: string
+          processo_id: string
+          etapa_id: string | null
+          autor_id: string | null
+          tipo: 'mensagem' | 'feedback' | 'sistema'
+          corpo: string | null
+          anexo_path: string | null
+          anexo_nome: string | null
+          anexo_tipo: string | null
+          anexo_tamanho: number | null
+          created_at: string
+        }
+        Insert: {
+          processo_id: string
+          autor_id: string
+          tipo: 'mensagem' | 'feedback'
+          corpo?: string | null
+          etapa_id?: string | null
+          anexo_path?: string | null
+          anexo_nome?: string | null
+          anexo_tipo?: string | null
+          anexo_tamanho?: number | null
+        }
+        Update: never
+        Relationships: []
+      }
+      processo_leituras: {
+        Row: {
+          processo_id: string
+          user_id: string
+          lida_ate: string
+        }
+        Insert: never
+        Update: never
         Relationships: []
       }
     }
@@ -460,6 +554,8 @@ export interface Database {
           nome_fantasia: string
           cnpj: string | null
           sector: string | null
+          category: string | null
+          type_slug: string | null
           description_html: string | null
           logo_url: string | null
           cover_url: string | null
@@ -484,7 +580,15 @@ export interface Database {
         Relationships: []
       }
     }
-    Functions: Record<string, never>
+    Functions: {
+      processo_avancar: { Args: { p_processo: string; p_etapa?: string | null; p_mensagem?: string | null }; Returns: undefined }
+      processo_contratar: { Args: { p_processo: string; p_mensagem?: string | null }; Returns: undefined }
+      processo_encerrar: { Args: { p_processo: string; p_mensagem?: string | null }; Returns: undefined }
+      processo_reabrir: { Args: { p_processo: string }; Returns: undefined }
+      processo_desistir: { Args: { p_processo: string; p_mensagem?: string | null }; Returns: undefined }
+      processo_iniciar_contratacao: { Args: { p_empresa: string; p_autonomo: string; p_mensagem?: string | null }; Returns: string }
+      processo_marcar_lido: { Args: { p_processo: string }; Returns: undefined }
+    }
     Enums: Record<string, never>
     CompositeTypes: Record<string, never>
   }

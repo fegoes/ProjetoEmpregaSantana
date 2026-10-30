@@ -1,5 +1,6 @@
 import type { VagaCardData } from '@/components/VagaCard'
 import type { AutonomoCardData } from '@/components/AutonomoCard'
+import { vagaModalidade } from '@/lib/modalidade'
 
 export const EMPLOYMENT_TYPE_OPTIONS: { value: string; label: string }[] = [
   { value: 'clt', label: 'CLT' },
@@ -20,7 +21,8 @@ export interface FeedFilters {
   categories: string[]
   employmentTypes: string[]
   pricingModels: string[]
-  remoteOnly: boolean
+  /** slugs das modalidades escolhidas (presencial, remota, híbrida…) */
+  modalidades: string[]
 }
 
 export const DEFAULT_FEED_FILTERS: FeedFilters = {
@@ -29,7 +31,7 @@ export const DEFAULT_FEED_FILTERS: FeedFilters = {
   categories: [],
   employmentTypes: [],
   pricingModels: [],
-  remoteOnly: false,
+  modalidades: [],
 }
 
 export function hasActiveFilters(filters: FeedFilters): boolean {
@@ -39,7 +41,7 @@ export function hasActiveFilters(filters: FeedFilters): boolean {
     filters.categories.length > 0 ||
     filters.employmentTypes.length > 0 ||
     filters.pricingModels.length > 0 ||
-    filters.remoteOnly
+    filters.modalidades.length > 0
   )
 }
 
@@ -55,7 +57,7 @@ export function filterVagas(vagas: VagaCardData[], filters: FeedFilters): VagaCa
       return false
     }
     if (filters.pricingModels.length > 0 && !filters.pricingModels.includes(vaga.pricing_model)) return false
-    if (filters.remoteOnly && !vaga.is_remote) return false
+    if (filters.modalidades.length > 0 && !filters.modalidades.includes(vagaModalidade(vaga))) return false
     return true
   })
 }
@@ -63,11 +65,10 @@ export function filterVagas(vagas: VagaCardData[], filters: FeedFilters): VagaCa
 export function filterAutonomos(autonomos: AutonomoCardData[], filters: FeedFilters): AutonomoCardData[] {
   if (!filters.showAutonomos) return []
   return autonomos.filter((autonomo) => {
-    if (filters.remoteOnly && !autonomo.serves_remote) return false
     if (filters.categories.length > 0 && !filters.categories.includes(autonomo.category ?? '')) return false
     if (filters.pricingModels.length > 0) {
       const matches =
-        filters.pricingModels.includes(autonomo.pricing_model) || (autonomo.pricing_model === 'both' && filters.pricingModels.some(model => model === 'hourly' || model === 'per_delivery'))
+        filters.pricingModels.includes(autonomo.pricing_model) || autonomo.pricing_model === 'both'
       if (!matches) return false
     }
     return true
@@ -102,27 +103,46 @@ export function mergeFeed(vagas: VagaCardData[], autonomos: AutonomoCardData[]):
   })
 }
 
-export function readFeedFilters(params: URLSearchParams): FeedFilters {
-  const kind = params.get('tipo')
-  return {
-    showVagas: kind !== 'autonomos' && kind !== 'nenhum',
-    showAutonomos: kind !== 'vagas' && kind !== 'nenhum',
-    categories: params.getAll('categoria'),
-    employmentTypes: params.getAll('contratacao').filter(v => /^[a-z0-9]+(-[a-z0-9]+)*$/.test(v)),
-    pricingModels: params.getAll('pagamento').filter(v => PRICING_MODEL_OPTIONS.some(o => o.value === v)),
-    remoteOnly: params.get('remoto') === '1',
-  }
+// ---------------------------------------------------------------------------
+// Seletor "Tudo · Vagas · Profissionais" — mapeado sobre showVagas/showAutonomos
+// para a lógica de filtro continuar uma só.
+
+export type FeedKind = 'todos' | 'vagas' | 'autonomos'
+
+export function kindOf(filters: FeedFilters): FeedKind {
+  if (filters.showVagas && !filters.showAutonomos) return 'vagas'
+  if (!filters.showVagas && filters.showAutonomos) return 'autonomos'
+  return 'todos'
 }
 
-export function writeFeedFilters(params: URLSearchParams, filters: FeedFilters): URLSearchParams {
-  const next = new URLSearchParams(params)
-  for (const key of ['tipo', 'categoria', 'contratacao', 'pagamento', 'remoto']) next.delete(key)
-  if (!filters.showVagas && !filters.showAutonomos) next.set('tipo', 'nenhum')
-  else if (!filters.showVagas) next.set('tipo', 'autonomos')
-  else if (!filters.showAutonomos) next.set('tipo', 'vagas')
-  filters.categories.forEach(v => next.append('categoria', v))
-  filters.employmentTypes.forEach(v => next.append('contratacao', v))
-  filters.pricingModels.forEach(v => next.append('pagamento', v))
-  if (filters.remoteOnly) next.set('remoto', '1')
-  return next
+export function withKind(filters: FeedFilters, kind: FeedKind): FeedFilters {
+  return { ...filters, showVagas: kind !== 'autonomos', showAutonomos: kind !== 'vagas' }
+}
+
+/** Filtros do painel (sem contar o seletor de tipo). */
+export function countPanelFilters(filters: FeedFilters): number {
+  return (
+    filters.categories.length +
+    filters.employmentTypes.length +
+    filters.pricingModels.length +
+    filters.modalidades.length
+  )
+}
+
+/** Limpa os filtros do painel e mantém o tipo escolhido no seletor. */
+export function clearPanelFilters(filters: FeedFilters): FeedFilters {
+  return { ...DEFAULT_FEED_FILTERS, showVagas: filters.showVagas, showAutonomos: filters.showAutonomos }
+}
+
+/** Categorias presentes nos resultados, da mais frequente para a menos. */
+export function categoryCounts(
+  vagas: { category?: string | null }[],
+  autonomos: { category?: string | null }[],
+): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const item of [...vagas, ...autonomos]) {
+    if (!item.category) continue
+    counts.set(item.category, (counts.get(item.category) ?? 0) + 1)
+  }
+  return new Map([...counts.entries()].sort((a, b) => b[1] - a[1]))
 }

@@ -1,0 +1,413 @@
+- generic [active] [ref=f86e1]:
+  - generic [ref=f86e2]:
+    - link "Pular para o conteúdo principal" [ref=f86e3] [cursor=pointer]:
+      - /url: "#main"
+    - generic [ref=f86e4]:
+      - banner [ref=f86e5]:
+        - navigation [ref=f86e6]:
+          - link "Ir para a página da empresa" [ref=f86e7] [cursor=pointer]
+          - generic [ref=f86e11]:
+            - button "Candidate-se pelo WhatsApp" [ref=f86e12] [cursor=pointer]
+            - menuitem [ref=f86e19]:
+              - button [ref=f86e22] [cursor=pointer]
+        - img "Foto de capa da empresa" [ref=f86e24]
+      - main [ref=f86e25]:
+        - generic [ref=f86e26]:
+          - generic [ref=f86e28]:
+            - generic [ref=f86e29]:
+              - generic [ref=f86e30]:
+                - heading "Automation Engineer (Pessoa Consultora de Integração)" [level=1] [ref=f86e31]
+                - button "Botão de copiar link da vaga" [ref=f86e34]:
+                  - button [ref=f86e35] [cursor=pointer]
+              - generic [ref=f86e39]:
+                - paragraph [ref=f86e40]: Publicada em 14 de outubro de 2026
+                - paragraph [ref=f86e41]: Inscrições abertas até 03 de novembro de 2026
+            - generic [ref=f86e42]:
+              - separator [aria-hidden] [ref=f86e44]
+              - generic [ref=f86e45]:
+                - paragraph [ref=f86e46]:
+                  - generic [ref=f86e47]: "Local de trabalho: São Paulo - SP"
+                  - generic [aria-hidden] [ref=f86e49]: São Paulo - SP
+                - paragraph [ref=f86e50]:
+                  - generic [ref=f86e51]: "Tipo de vaga: Efetivo"
+                  - generic [aria-hidden] [ref=f86e53]: Efetivo
+                - paragraph [ref=f86e54]:
+                  - generic [ref=f86e55]: "Modelo de trabalho: Híbrido"
+                  - generic [aria-hidden] [ref=f86e57]: Híbrido
+                - paragraph [ref=f86e58]:
+                  - paragraph [ref=f86e59]: Vaga também para PcD
+                  - generic [aria-hidden] [ref=f86e61]: Vaga também para PcD
+              - separator [aria-hidden] [ref=f86e62]
+          - generic [ref=f86e63]:
+            - generic [ref=f86e64]:
+              - generic [ref=f86e65]:
+                - generic [ref=f86e66]:
+                  - heading "Descrição da vaga" [level=2] [ref=f86e67]
+                  - generic [ref=f86e68]:
+                    - paragraph [ref=f86e69]:
+                      - strong [ref=f86e70]: Conheça mais sobre a gente!
+                    - paragraph [ref=f86e71]: "Nosso propósito é claro: impulsionar o potencial humano. Acreditamos que, com tecnologia e inovação, podemos transformar a forma como pessoas e empresas se conectam. Somos a AI Talent Platform nº 1 para gestão de pessoas no Brasil, com uma jornada completa que vai do recrutamento ao desenvolvimento e acompanhamento, agora com agentes de IA e dados centralizados atuando de forma integrada."
+                    - paragraph [ref=f86e72]: Na Gupy, estimulamos o desenvolvimento contínuo em um ambiente com desafios reais, autonomia, colaboração entre áreas e espaço para inovar. O aprendizado faz parte do dia a dia e é potencializado por times diversos e colaborativos, que acreditam no poder das conexões genuínas.
+                    - paragraph [ref=f86e73]: Para nós, diversidade é muito importante! Se você pertence a um grupo diverso, saiba que todas as nossas vagas são abertas para você. Queremos construir um time cada vez mais inclusivo, onde todos possam crescer e contribuir de forma única.
+                    - paragraph [ref=f86e74]: Fazer parte da Gupy é criar o futuro do trabalho com propósito, tecnologia e impacto real na vida das pessoas.
+                    - paragraph [ref=f86e75]
+                - generic [ref=f86e76]:
+                  - heading "Responsabilidades e atribuições" [level=2] [ref=f86e77]
+                  - generic [ref=f86e78]:
+                    - paragraph [ref=f86e79]: Buscamos um profissional para atuar nos projetos de Integração entre sistema de nossos clientes, de forma que os requisitos funcionais e não-funcionais sejam descritos e implementados. Sua missão será garantir que o ecossistema de ferramentas de RH (Core HR, Recrutamento, Performance, Folha de Pagamento) esteja perfeitamente conectado, automatizando fluxos de dados e otimizando a experiência do colaborador através de integrações eficientes e seguras.
+                    - paragraph [ref=f86e80]:
+                      - strong [ref=f86e81]: 📌 Responsabilidades e Atribuições
+                    - list [ref=f86e82]:
+                      - listitem [ref=f86e83]: "Levantamento de Requisitos: Traduzir necessidades das áreas de RH em especificações técnicas de integração (mapeamento de campos, lógica de transformação e periodicidade)."
+                      - listitem [ref=f86e84]: "Gestão do Ecossistema: Sustentar e monitorar as integrações entre o ERP/Folha e plataformas especialistas (Ex: Gupy, Workday, SuccessFactors, RM Totvs, Senior, etc.)."
+                      - listitem [ref=f86e85]: "Documentação Técnica: Elaborar e manter atualizados os diagramas de fluxos de dados e dicionários de dados (data mapping)."
+                      - listitem [ref=f86e86]: "Desenvolvimento: Implementar as integrações através de plataformas no/low-code."
+                      - listitem [ref=f86e87]: "QA e Testes: Planejar e executar testes de integração (UAT), garantindo a integridade dos dados e o tratamento de exceções/erros."
+                      - listitem [ref=f86e88]: "Interface com Stakeholders: Ser o elo entre o time técnico e o RH de nossos clientes, garantindo a tradução para os diferentes stakeholders."
+                      - listitem [ref=f86e89]: "Melhoria Contínua: Identificar gargalos em processos manuais e propor automações que reduzam o esforço operacional do time de RH."
+                - generic [ref=f86e90]:
+                  - heading "Requisitos e qualificações" [level=2] [ref=f86e91]
+                  - generic [ref=f86e92]:
+                    - paragraph [ref=f86e93]:
+                      - strong [ref=f86e95]: "Como requisitos básicos, você deve ter:"
+                    - list [ref=f86e96]:
+                      - listitem [ref=f86e97]: "Domínio Técnico de Integrações: Experiência prática com APIs (REST/SOAP), formatos de arquivos (JSON, XML, CSV) e ferramentas de transferência de arquivos (SFTP)."
+                      - listitem [ref=f86e98]: "Conhecimento em SQL: Capacidade de realizar consultas para validação de dados e geração de relatórios simples."
+                      - listitem [ref=f86e99]: "Visão de LGPD: Entendimento crítico sobre segurança da informação e privacidade de dados sensíveis de colaboradores."
+                      - listitem [ref=f86e100]: "Metodologias Ágeis: Familiaridade com Scrum ou Kanban para gestão de demandas."
+                      - listitem [ref=f86e101]: Inglês técnico para leitura de documentações e suporte com softwares globais.
+                    - paragraph [ref=f86e102]:
+                      - strong [ref=f86e103]: "Você se destaca, se tiver:"
+                    - list [ref=f86e104]:
+                      - listitem [ref=f86e105]: "Experiência com ferramentas de iPaaS (Ex: Digibee, Workato, Dell Boomi, Mulesoft) ou plataformas de automação (N8N, Make, Power Automate)."
+                      - listitem [ref=f86e106]: "Experiência com HRIS: Conhecimento funcional de processos de RH (Recrutamento e Seleção, Admissão, Perfomance, Engajamento, Treinamento e Estrutura Organizacional)."
+                      - listitem [ref=f86e107]: Vivência em projetos de integração de grandes empresas com sistemas de folha.
+                      - listitem [ref=f86e108]: Espanhol e Inglês.
+                    - paragraph [ref=f86e109]:
+                      - strong [ref=f86e110]: Acha que não preenche todos os requisitos?
+                    - paragraph [ref=f86e111]: Um estudo recente do LinkedIn indicou que mulheres são menos propensas a se candidatarem a vagas se não acreditarem que preenchem 100% das qualificações (em comparação, homens tendem a se inscrever mesmo atendendo a 60%).
+                    - paragraph [ref=f86e112]: Aqui na Gupy, queremos construir um ambiente de trabalho cada vez mais diverso e inclusivo. Portanto, se você gostou e se identificou com a vaga, mas a sua experiência
+                    - paragraph [ref=f86e113]: prévia não se alinha exatamente com todos os requisitos descritos, te incentivamos a se candidatar de qualquer maneira.
+                    - paragraph [ref=f86e114]: Você pode ser a pessoa certa e não queremos perder a chance de te conhecer.
+                - generic [ref=f86e115]:
+                  - heading "Informações adicionais" [level=2] [ref=f86e116]
+                  - generic [ref=f86e117]:
+                    - paragraph
+                    - heading [level=4] [ref=f86e118]:
+                      - strong [ref=f86e119]: Benefícios
+                    - heading [level=4] [ref=f86e120]:
+                      - strong [ref=f86e121]: Saúde e Bem-Estar
+                    - list [ref=f86e122]:
+                      - listitem [ref=f86e123]: "Plano de Saúde (Seguros Unimed): mensalidade 100% custeada para o colaborador e seus dependentes (com coparticipação de 20% apenas para os dependentes)."
+                      - listitem [ref=f86e124]: "Plano Odontológico (Amil): Opção de contratação do Plano Dental 200 com cobertura nacional"
+                      - listitem [ref=f86e125]: "Desconto Farmácia: Condições e descontos exclusivos nas principais redes de farmácias do Brasil."
+                      - listitem [ref=f86e126]: "Seguro de Vida (Prudential): 100% custeado pela empresa"
+                      - listitem [ref=f86e127]: "Plataformas de Bem-Estar e Atividade Física:"
+                    - paragraph [ref=f86e128]: "*Starbem: Consultas psicológicas (4 mensais), nutrição e bem-estar gratuitas e online."
+                    - paragraph [ref=f86e129]: "*Totalpass & Wellhub: Planos com acesso a academias premium, estúdios, treinos virtuais e opção de incluir até 3 dependentes."
+                    - heading [level=4] [ref=f86e130]:
+                      - strong [ref=f86e131]: Qualidade de Vida e Flexibilidade
+                    - list [ref=f86e132]:
+                      - listitem [ref=f86e133]: "Auxílio Creche: Benefício mensal por dependente (para filhos de até 5 anos)."
+                      - listitem [ref=f86e134]: "Licença Parental Estendida: Licença maternidade de 6 meses e licença paternidade de 20 dias (regras da Empresa Cidadã)."
+                    - paragraph [ref=f86e135]: "*Nossa política de licença parental é igualmente aplicável a casais homoafetivos, a mães não gestantes e aos casos de adoção, independentemente da idade;"
+                    - list [ref=f86e136]:
+                      - listitem [ref=f86e137]: "DayOff de Aniversário: Um dia de folga no mês do seu aniversário."
+                      - listitem [ref=f86e138]: "Guapeco (Plano de Saúde Pet): Até 3 opções de planos com sistema de reembolso em qualquer clínica veterinária do país."
+                      - listitem [ref=f86e139]: "Convênio SESC: Acesso completo à rede SESC (esporte, cultura, lazer e bem-estar) em todo o Brasil."
+                    - heading [level=4] [ref=f86e140]:
+                      - strong [ref=f86e141]: Saúde Financeira e Facilidades
+                    - list [ref=f86e142]:
+                      - listitem [ref=f86e143]: "Caju VR/VA: Vale Refeição/Alimentação com saldo flexível."
+                      - listitem [ref=f86e144]: "Caju Auxílio Home Office: Ajuda de custo mensal para despesas de trabalho remoto."
+                      - listitem [ref=f86e145]: "Caju Auxílio Mobilidade: Para quem reside até 50 km do Gupy Hub e atua no modelo híbrido."
+                      - listitem [ref=f86e146]: "Creditas: Possibilidade de antecipação de até 40% do salário com desconto direto na folha seguinte."
+                      - listitem [ref=f86e147]: "Férias&Co: Condições especiais e incentivo financeiro para planejar e contratar hospedagens/viagens nas férias."
+                    - heading [level=4] [ref=f86e148]:
+                      - strong [ref=f86e149]: Reconhecimento e Cultura
+                    - list [ref=f86e150]:
+                      - listitem [ref=f86e151]: "Gupy Coins: Moeda virtual interna utilizada para reconhecimento mútuo entre colaboradores, acumulável e trocável por recompensas exclusivas."
+                      - listitem [ref=f86e152]: "Gupy Match (Caju Indicação): Bonificação financeira por indicação de talentos que venham a ser contratados."
+                    - heading [level=4] [ref=f86e153]:
+                      - strong [ref=f86e154]: Desenvolvimento Profissional
+                    - list [ref=f86e155]:
+                      - listitem [ref=f86e156]: "Parcerias Educacionais: Descontos exclusivos em instituições de ensino parceiras para cursos de extensão, pós-graduação, MBA e idiomas."
+                      - listitem [ref=f86e157]: "Sociedade: Oportunidade de se tornar sócio da Gupy;"
+                    - paragraph
+                - generic [ref=f86e158]:
+                  - heading "Etapas do processo" [level=2] [ref=f86e159]
+                  - list [ref=f86e160]:
+                    - listitem [ref=f86e161]:
+                      - generic [ref=f86e162]: "Etapa 1: Cadastro"
+                      - generic [aria-hidden] [ref=f86e163]: "1"
+                      - generic [aria-hidden] [ref=f86e164]: Cadastro
+                    - listitem [ref=f86e165]:
+                      - generic [ref=f86e166]: "Etapa 2: Pré-entrevista"
+                      - generic [aria-hidden] [ref=f86e167]: "2"
+                      - generic [aria-hidden] [ref=f86e168]: Pré-entrevista
+                    - listitem [ref=f86e169]:
+                      - generic [ref=f86e170]: "Etapa 3: Bate-papo com Gente e Gestão"
+                      - generic [aria-hidden] [ref=f86e171]: "3"
+                      - generic [aria-hidden] [ref=f86e172]: Bate-papo com Gente e Gestão
+                    - listitem [ref=f86e173]:
+                      - generic [ref=f86e174]: "Etapa 4: Bate-papo Técnico"
+                      - generic [aria-hidden] [ref=f86e175]: "4"
+                      - generic [aria-hidden] [ref=f86e176]: Bate-papo Técnico
+                    - listitem [ref=f86e177]:
+                      - generic [ref=f86e178]: "Etapa 5: Bate-papo com a Liderança"
+                      - generic [aria-hidden] [ref=f86e179]: "5"
+                      - generic [aria-hidden] [ref=f86e180]: Bate-papo com a Liderança
+                    - listitem [ref=f86e181]:
+                      - generic [ref=f86e182]: "Etapa 6: Comitê de Cultura"
+                      - generic [aria-hidden] [ref=f86e183]: "6"
+                      - generic [aria-hidden] [ref=f86e184]: Comitê de Cultura
+                    - listitem [ref=f86e185]:
+                      - generic [ref=f86e186]: "Etapa 7: Proposta"
+                      - generic [aria-hidden] [ref=f86e187]: "7"
+                      - generic [aria-hidden] [ref=f86e188]: Proposta
+                    - listitem [ref=f86e189]:
+                      - generic [ref=f86e190]: "Etapa 8: Contratação"
+                      - generic [aria-hidden] [ref=f86e191]: "8"
+                      - generic [aria-hidden] [ref=f86e192]: Contratação
+                - generic [ref=f86e193]:
+                  - heading "Quão incrível seria ter um mundo com gente realizada em suas jornadas profissionais?" [level=2] [ref=f86e194]
+                  - generic [ref=f86e195]:
+                    - paragraph [ref=f86e196]: É essa a nossa missão! 💙
+                    - paragraph [ref=f86e197]:
+                      - text: Há 10 anos fazemos acontecer esse sonho que nasceu da vontade de
+                      - strong [ref=f86e198]: construir um mercado de trabalho melhor e produtos inovadores
+                      - text: ", que impactam não só a rotina dos RHs, mas também a experiência das pessoas candidatas! 🤩"
+                    - paragraph [ref=f86e199]:
+                      - text: Premiados como a
+                      - strong [ref=f86e200]: Melhor empresa para se trabalhar
+                      - text: 🏆
+                      - strong [ref=f86e201]: (GPTW) há quatro anos consecutivos
+                      - text: ", já fomos residentes no Google Campus, acelerados pela Wayra, investidos pela Yellow Ventures, Canary, Maya Capital, Valor e Oria. Somos apoiados pela Endeavor — inclusive ganhamos o Prêmio de destaque em Diversidade e Inclusão por três anos consecutivos! Demais, né?"
+                    - paragraph [ref=f86e202]:
+                      - text: Em 2022, recebemos um aporte de R$500 milhões liderado pelos fundos SoftBank e Riverwood. 🤑 O maior aporte para uma plataforma de RH na América Latina e o maior investimento em uma
+                      - strong [ref=f86e203]: startup brasileira fundada por mulheres
+                      - text: "!"
+                    - paragraph [ref=f86e204]:
+                      - text: "Hoje temos 5 grandes soluções, venha conhecer:"
+                      - link [ref=f86e205] [cursor=pointer]:
+                        - /url: https://www.gupy.io/software-de-recrutamento-e-selecao?__hstc=16885734.f3ac2bb1e73b911f967c8d3ef7caec23.1720639464417.1727098584592.1727182160644.15&__hssc=16885734.1.1727182160644&__hsfp=1890499605&_gl=1*1g7tdu0*_gcl_au*NDE2OTY4MTUxLjE3MjA2Mzk0NjM.&int_ref=menu-institucional
+                        - strong [ref=f86e206]: Recrutamento & Seleção
+                      - text: ","
+                      - link [ref=f86e207] [cursor=pointer]:
+                        - /url: https://www.gupy.io/software-de-admissao-digital?int_ref=menu-institucional
+                        - strong [ref=f86e208]: Admissão
+                      - text: ","
+                      - link [ref=f86e209] [cursor=pointer]:
+                        - /url: https://www.gupy.io/plataforma-de-educacao-corporativa?int_ref=menu-institucional
+                        - strong [ref=f86e210]: Treinamento
+                      - text: ","
+                      - link [ref=f86e211] [cursor=pointer]:
+                        - /url: https://www.gupy.io/plataforma-de-clima-e-engajamento?int_ref=menu-institucional
+                        - strong [ref=f86e212]: Engajamento
+                      - text: e
+                      - link [ref=f86e213] [cursor=pointer]:
+                        - /url: https://www.gupy.io/plataforma-de-performance-e-desenvolvimento?int_ref=menu-institucional
+                        - strong [ref=f86e214]: Performance.
+                    - paragraph [ref=f86e215]:
+                      - text: Hoje já somos um time de
+                      - strong [ref=f86e216]: mais de 600 pessoas
+                      - text: ", espalhadas por 23 estados do Brasil! Atuamos em um modelo de trabalho híbrido, isso significa que temos o nosso escritório em São Paulo:"
+                      - link "o GupyHub" [ref=f86e217] [cursor=pointer]:
+                        - /url: https://www.google.com/maps/place/Gupy+%7C+HR+Tech+l%C3%ADder+em+solu%C3%A7%C3%B5es+para+o+RH/@-23.5649561,-46.6529735,15z/data=!4m6!3m5!1s0x94ce59b3c508885f:0x49b7a893e0090606!8m2!3d-23.5649561!4d-46.6529735!16s%2Fg%2F11g0mjck2t?entry=ttu
+                      - text: . Confira o link com localização e algumas fotos apresentando o nosso espaço presencial. 🤩
+                    - paragraph [ref=f86e218]:
+                      - text: Ao se cadastrar em processos seletivos para trabalhar aqui na Gupy, você declara que aceita e está de acordo com nossa
+                      - link "Política de Privacidade na Gestão de Pessoas" [ref=f86e219] [cursor=pointer]:
+                        - /url: https://www.gupy.io/privacidade-gest%C3%A3o-de-pessoas
+                      - text: .
+                    - paragraph [ref=f86e220]:
+                      - text: Leia nosso
+                      - link "Manifesto de Diversidade" [ref=f86e221] [cursor=pointer]:
+                        - /url: https://www.gupy.io/manifesto-de-diversidade
+                      - text: e conheça também nosso
+                      - strong [ref=f86e222]: compromisso com a Diversidade e Inclusão dentro da Gupy e no mercado
+                      - text: .
+                    - paragraph [ref=f86e223]:
+                      - text: Com muito orgulho, podemos dizer que
+                      - strong [ref=f86e224]: somos a HRTech que mais cresce no Brasil
+                      - text: ","
+                      - strong [ref=f86e225]: IA First
+                      - text: e estamos só começando!
+                    - paragraph [ref=f86e226]: "#Vempragupy 🚀"
+                    - paragraph [ref=f86e227]:
+                      - strong [ref=f86e228]: Quer encontrar vagas no nosso time de Tecnologia?
+                      - text: 💻
+                      - strong [ref=f86e229]: "Acesse:"
+                      - link [ref=f86e230] [cursor=pointer]:
+                        - /url: https://tech-career.gupy.io/
+                        - strong [ref=f86e231]: tech-career.gupy.io
+              - region "Seção de links da empresa" [ref=f86e232]:
+                - heading "Nos acompanhe nas redes" [level=2] [ref=f86e233]
+                - list "Lista de links" [ref=f86e234]:
+                  - listitem [ref=f86e235]:
+                    - link "Website" [ref=f86e236] [cursor=pointer]:
+                      - /url: http://gupy.io
+                  - listitem [ref=f86e239]:
+                    - link "LinkedIn" [ref=f86e240] [cursor=pointer]:
+                      - /url: https://www.linkedin.com/company/gupy/
+                  - listitem [ref=f86e243]:
+                    - link "Facebook" [ref=f86e244] [cursor=pointer]:
+                      - /url: https://www.facebook.com/peoplegupy/
+                  - listitem [ref=f86e247]:
+                    - link "Instagram" [ref=f86e248] [cursor=pointer]:
+                      - /url: http://instagram.com/vempragupy
+                  - listitem [ref=f86e251]:
+                    - link "Glassdoor" [ref=f86e252] [cursor=pointer]:
+                      - /url: https://www.glassdoor.com.br/Vis%C3%A3o-geral/Trabalhar-na-Gupy-EI_IE2488824.13,17.htm
+            - complementary [ref=f86e255]:
+              - generic [ref=f86e257]:
+                - group [ref=f86e258]:
+                  - heading "Candidatura rápida" [level=3] [ref=f86e261]
+                  - generic "Vagas com candidatura rápida permitem que você se candidate apenas com informações essenciais." [ref=f86e263]
+                - tablist [ref=f86e268]:
+                  - tab "Cadastro" [selected] [ref=f86e269] [cursor=pointer]
+                  - tab "Perguntas adicionais" [disabled]
+                - tabpanel [ref=f86e271]:
+                  - generic [ref=f86e273]:
+                    - paragraph [ref=f86e274]: Dados pessoais
+                    - radiogroup [ref=f86e276]:
+                      - generic [ref=f86e277] [cursor=pointer]:
+                        - radio "Tenho documentos emitidos no Brasil" [checked] [ref=f86e279]
+                        - generic [ref=f86e285]: Tenho documentos emitidos no Brasil
+                      - generic [ref=f86e286] [cursor=pointer]:
+                        - radio "Tenho documentos emitidos em outro país" [ref=f86e288]
+                        - generic [ref=f86e292]: Tenho documentos emitidos em outro país
+                    - generic [ref=f86e295]:
+                      - generic: Nome completo
+                      - generic [ref=f86e296]:
+                        - textbox "Nome completo" [ref=f86e297]:
+                          - /placeholder: Seu nome completo
+                        - group [aria-hidden]:
+                          - generic: Nome completo
+                    - generic [ref=f86e300]:
+                      - generic: CPF
+                      - generic [ref=f86e301]:
+                        - textbox "CPF" [ref=f86e302]
+                        - group [aria-hidden]:
+                          - generic: CPF
+                    - generic [ref=f86e305]:
+                      - generic: E-mail
+                      - generic [ref=f86e306]:
+                        - textbox "E-mail" [ref=f86e307]:
+                          - /placeholder: email@email.com
+                        - group [aria-hidden]:
+                          - generic: E-mail
+                    - generic [ref=f86e308]:
+                      - generic [ref=f86e309]: Número de celular
+                      - generic [ref=f86e310]:
+                        - generic [ref=f86e315] [cursor=pointer]:
+                          - generic [ref=f86e316]: BR+55
+                          - combobox [ref=f86e318]
+                        - textbox "Número de celular" [ref=f86e323]:
+                          - /placeholder: (__) _______-______
+                    - generic [ref=f86e325]:
+                      - generic [ref=f86e328]:
+                        - generic: Data de nascimento
+                        - generic [ref=f86e329]:
+                          - textbox "Data de nascimento" [ref=f86e330]:
+                            - /placeholder: DD/MM/AAAA
+                          - group [aria-hidden]:
+                            - generic: Data de nascimento
+                      - generic [ref=f86e332]:
+                        - generic [ref=f86e333]: Com qual gênero você se identifica?
+                        - radiogroup "Com qual gênero você se identifica?" [ref=f86e334]:
+                          - generic "Feminino" [ref=f86e335] [cursor=pointer]:
+                            - radio "Feminino" [ref=f86e337]
+                          - generic "Masculino" [ref=f86e342] [cursor=pointer]:
+                            - radio "Masculino" [ref=f86e344]
+                          - generic "Não-binário" [ref=f86e349] [cursor=pointer]:
+                            - radio "Não-binário" [ref=f86e351]
+                          - generic "Outro" [ref=f86e356] [cursor=pointer]:
+                            - radio "Outro" [ref=f86e358]
+                          - generic "Prefiro não informar" [ref=f86e363] [cursor=pointer]:
+                            - radio "Prefiro não informar" [ref=f86e365]
+                      - generic [ref=f86e370]:
+                        - paragraph [ref=f86e371]: PCD e tipo de deficiência
+                        - generic [ref=f86e373]:
+                          - generic [ref=f86e374]: Você é uma pessoa com deficiência (PCD)?
+                          - radiogroup "Você é uma pessoa com deficiência (PCD)?" [ref=f86e375]:
+                            - generic "Sim" [ref=f86e376] [cursor=pointer]:
+                              - radio "Sim" [ref=f86e378]
+                            - generic "Não" [ref=f86e383] [cursor=pointer]:
+                              - radio "Não" [ref=f86e385]
+                      - generic [ref=f86e390]:
+                        - paragraph [ref=f86e391]: Endereço
+                        - generic [ref=f86e394]:
+                          - generic: Informe o seu CEP
+                          - generic [ref=f86e395]:
+                            - textbox "Informe o seu CEP" [ref=f86e396]:
+                              - /placeholder: Digite seu CEP
+                            - group [aria-hidden]:
+                              - generic: Informe o seu CEP
+                      - generic [ref=f86e399]:
+                        - generic: Pretensão salarial
+                        - generic [ref=f86e400]:
+                          - textbox "Pretensão salarial" [ref=f86e401]:
+                            - /placeholder: R$ 0,00
+                          - group [aria-hidden]:
+                            - generic: Pretensão salarial
+                      - generic [ref=f86e402]:
+                        - paragraph [ref=f86e403]: Formação acadêmica
+                        - generic [ref=f86e404]:
+                          - generic [ref=f86e405]:
+                            - generic [ref=f86e406]: Formação acadêmica
+                            - generic [ref=f86e407]:
+                              - combobox "Selecione uma opção" [ref=f86e408] [cursor=pointer]
+                              - textbox [aria-hidden]
+                              - group [aria-hidden]
+                          - generic [ref=f86e410]:
+                            - generic [ref=f86e411]: Status
+                            - generic [ref=f86e412]:
+                              - combobox "Selecione uma opção" [ref=f86e413] [cursor=pointer]
+                              - textbox [aria-hidden]
+                              - group [aria-hidden]
+                      - generic [ref=f86e415]:
+                        - paragraph [ref=f86e416]: Experiência profissional
+                        - generic [ref=f86e417]:
+                          - generic [ref=f86e419]:
+                            - generic: Cargo
+                            - generic [ref=f86e420]:
+                              - textbox "Cargo" [ref=f86e421]:
+                                - /placeholder: Digite o nome do cargo
+                              - group [aria-hidden]:
+                                - generic: Cargo
+                          - generic [ref=f86e423]:
+                            - generic: Descreva suas atividades
+                            - generic [ref=f86e424]:
+                              - textbox "Descreva suas atividades" [ref=f86e425]:
+                                - /placeholder: Descreva suas principais atividades e responsabilidades
+                              - group [aria-hidden]:
+                                - generic: Descreva suas atividades
+                          - generic [ref=f86e427] [cursor=pointer]:
+                            - checkbox "Não tenho Experiência Profissional" [ref=f86e429]
+                            - generic [ref=f86e432]: Não tenho Experiência Profissional
+                    - generic [ref=f86e435]:
+                      - generic: Linkedin (Opcional)
+                      - generic [ref=f86e436]:
+                        - textbox "Linkedin (Opcional)" [ref=f86e437]:
+                          - /placeholder: www.linkedin.com/in/usuario
+                        - group [aria-hidden]:
+                          - generic: Linkedin (Opcional)
+                    - generic [ref=f86e438]:
+                      - generic [ref=f86e439]: Adicionar currículo
+                      - paragraph [ref=f86e440]: Este arquivo será encaminhado à empresa sem nenhuma alteração.
+                      - button [ref=f86e441] [cursor=pointer]:
+                        - paragraph [ref=f86e445]: Adicionar arquivo
+                        - paragraph [ref=f86e446]: "O arquivo do currículo deve estar nos formatos: DOCX ou PDF"
+                      - paragraph
+                    - button "Continuar" [disabled]
+                - paragraph [ref=f86e447]:
+                  - text: Ao se cadastrar você declara que leu e está de acordo com nossos
+                  - link "Termos de Uso" [ref=f86e448] [cursor=pointer]:
+                    - /url: https://www.gupy.io/termos-de-uso-recrutamento-e-selecao-candidatos
+                  - text: e
+                  - link "Aviso de Privacidade" [ref=f86e449] [cursor=pointer]:
+                    - /url: https://www.gupy.io/aviso-de-privacidade-candidatos
+                  - text: .
+      - contentinfo [ref=f86e450]: Powered by Gupy 2026. Todos os direitos reservados.
+  - alert [ref=f86e451]

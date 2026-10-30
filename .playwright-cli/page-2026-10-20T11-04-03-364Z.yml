@@ -1,0 +1,16 @@
+- generic [active] [ref=f50e1]:
+  - generic [ref=f50e3]:
+    - progressbar [ref=f50e6]
+    - link "Suporte para candidatos" [ref=f50e9] [cursor=pointer]:
+      - /url: https://suporte-candidatos.gupy.io/s/suporte?language=pt_BR
+      - text: "?"
+  - generic [ref=f50e10]:
+    - button "Abrir recursos assistivos." [ref=f50e11] [cursor=pointer]:
+      - paragraph:
+        - generic [ref=f50e14]: Recursos Assistivos
+    - button "Abrir tradutor de língua de sinais." [ref=f50e15] [cursor=pointer]:
+      - paragraph:
+        - generic [ref=f50e23]: Acessível em Libras
+  - generic:
+    - generic "Privacy Tools - Cookie Management"
+    - generic "Privacy Tools - Cookie Management - https://www.privacytools.com.br"

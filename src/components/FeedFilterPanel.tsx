@@ -1,12 +1,11 @@
 import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
 import type { ReactNode } from 'react'
-import { ChevronDown, SlidersHorizontal } from 'lucide-react'
 import { useCategories } from '@/hooks/useCategories'
+import { activeFor, isActive, isAreaCategory } from '@/lib/categories'
 import {
-  DEFAULT_FEED_FILTERS,
+  EMPLOYMENT_TYPE_OPTIONS,
   PRICING_MODEL_OPTIONS,
-  hasActiveFilters,
   toggleInList,
   type FeedFilters,
 } from '@/lib/feedFilters'
@@ -15,28 +14,21 @@ import { cn } from '@/lib/utils'
 interface FeedFilterPanelProps {
   value: FeedFilters
   onChange: (filters: FeedFilters) => void
-  layout?: 'sidebar' | 'inline'
+  /** 'sidebar' = lista de caixinhas no desktop; 'sheet' = chips grandes no painel do celular */
+  layout?: 'sidebar' | 'sheet'
 }
 
-function Pill({
-  checked,
-  onClick,
-  children,
-}: {
-  checked: boolean
-  onClick: () => void
-  children: ReactNode
-}) {
+const VISIBLE_CATEGORIES = 8
+
+function Chip({ checked, onClick, children }: { checked: boolean; onClick: () => void; children: ReactNode }) {
   return (
     <button
       type="button"
-      onClick={onClick}
       aria-pressed={checked}
+      onClick={onClick}
       className={cn(
-        'rounded-full border px-3 py-1 text-xs font-medium transition-colors',
-        checked
-          ? 'border-primary bg-primary/10 text-primary'
-          : 'border-border text-muted-foreground hover:border-primary/40 hover:text-foreground',
+        'h-11 rounded-full border px-4 text-sm font-medium transition-colors',
+        checked ? 'border-primary bg-primary text-primary-foreground' : 'border-border bg-card text-foreground hover:border-primary/50',
       )}
     >
       {children}
@@ -44,194 +36,123 @@ function Pill({
   )
 }
 
-function CheckboxRow({
-  checked,
-  onChange,
-  children,
-}: {
-  checked: boolean
-  onChange: () => void
-  children: ReactNode
-}) {
+function CheckRow({ checked, onChange, children }: { checked: boolean; onChange: () => void; children: ReactNode }) {
   return (
-    <label className="flex items-center gap-2 text-sm">
-      <input type="checkbox" checked={checked} onChange={onChange} />
+    <label className="flex min-h-9 cursor-pointer items-center gap-2.5 rounded-md text-sm hover:text-primary">
+      <input type="checkbox" className="size-4 shrink-0" checked={checked} onChange={onChange} />
       {children}
     </label>
   )
 }
 
-export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
-  const { data: allCategories } = useCategories()
-  const categories = allCategories?.filter(c => c.kind !== 'empresa' && (c.is_active !== false || value.categories.includes(c.slug)))
-  const { data: types, isError: typesError } = useRecordTypes()
-  const employmentOptions = (types ?? []).filter(t => t.kind === 'vaga' && (t.is_active !== false || value.employmentTypes.includes(t.slug))).map(t => ({ value: t.slug, label: t.label }))
-  const inline = layout === 'inline'
-  const [expanded, setExpanded] = React.useState(false)
-  const activeCount =
-    value.categories.length + value.employmentTypes.length + value.pricingModels.length + (value.remoteOnly ? 1 : 0)
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <fieldset className="flex flex-col gap-2">
+      <legend className="mb-1 font-display text-xs font-semibold tracking-wide text-muted-foreground uppercase">{title}</legend>
+      {children}
+    </fieldset>
+  )
+}
 
-  const sectionClass = inline ? 'flex flex-col gap-2' : 'flex flex-col gap-2.5'
-  const optionsClass = inline ? 'flex flex-wrap gap-2' : 'flex flex-col gap-1.5'
+export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
+  const { data: types } = useRecordTypes()
+  const employmentOptions = types ? types.filter(t => t.kind === 'vaga' && (t.is_active || value.employmentTypes.includes(t.slug))).map(t => ({ value: t.slug, label: t.label })) : EMPLOYMENT_TYPE_OPTIONS
+  const { data: allCategories } = useCategories()
+  const categories = React.useMemo(
+    () => allCategories?.filter((c) => isAreaCategory(c) && isActive(c)),
+    [allCategories],
+  )
+  const modalidades = React.useMemo(() => activeFor(allCategories, 'modalidade'), [allCategories])
+  const [showAllCategories, setShowAllCategories] = React.useState(false)
+  const sheet = layout === 'sheet'
+  const optionsClass = sheet ? 'flex flex-wrap gap-2' : 'flex flex-col'
+
+  const option = (checked: boolean, toggle: () => void, label: string, key: string) =>
+    sheet ? (
+      <Chip key={key} checked={checked} onClick={toggle}>
+        {label}
+      </Chip>
+    ) : (
+      <CheckRow key={key} checked={checked} onChange={toggle}>
+        {label}
+      </CheckRow>
+    )
+
+  // No desktop a lista de categorias começa curta; as marcadas aparecem sempre.
+  const visibleCategories = React.useMemo(() => {
+    if (!categories) return []
+    if (sheet || showAllCategories) return categories
+    const selected = categories.filter((c) => value.categories.includes(c.slug))
+    const rest = categories.filter((c) => !value.categories.includes(c.slug))
+    return [...selected, ...rest].slice(0, Math.max(VISIBLE_CATEGORIES, selected.length))
+  }, [categories, sheet, showAllCategories, value.categories])
 
   return (
-    <div className={inline ? 'flex flex-col gap-4' : 'flex flex-col gap-4 lg:gap-6'}>
-      {!inline && (
-        <div className="flex items-center justify-between">
-          <span className="hidden items-center gap-1.5 text-sm font-semibold lg:inline-flex"><SlidersHorizontal className="size-4" />Filtros{activeCount > 0 ? ` (${activeCount})` : ''}</span>
-          <button
-            type="button"
-            aria-expanded={expanded}
-            aria-controls="feed-filter-options"
-            onClick={() => setExpanded((e) => !e)}
-            className="flex items-center gap-1.5 text-sm font-semibold lg:hidden"
-          >
-            <SlidersHorizontal className="size-4" /> Filtros
-            {activeCount > 0 && (
-              <span className="flex size-4 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground">
-                {activeCount}
-              </span>
-            )}
-            <ChevronDown className={cn('size-4 transition-transform lg:hidden', expanded && 'rotate-180')} />
-          </button>
-          {hasActiveFilters(value) && (
-            <button
-              type="button"
-              onClick={() => onChange(DEFAULT_FEED_FILTERS)}
-              className="text-xs text-primary hover:underline"
-            >
-              Limpar
-            </button>
-          )}
-        </div>
-      )}
-
-      <div id="feed-filter-options" className={cn('flex flex-col gap-4', !inline && (expanded ? 'flex' : 'hidden'), !inline && 'lg:flex lg:gap-6')}>
-      <div className={sectionClass}>
-        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">O que buscar</p>
+    <div className={cn('flex flex-col', sheet ? 'gap-6' : 'gap-6')}>
+      <Section title="Contratação">
         <div className={optionsClass}>
-          {inline ? (
-            <>
-              <Pill checked={value.showVagas} onClick={() => onChange({ ...value, showVagas: !value.showVagas })}>
-                Vagas
-              </Pill>
-              <Pill
-                checked={value.showAutonomos}
-                onClick={() => onChange({ ...value, showAutonomos: !value.showAutonomos })}
-              >
-                Autônomos
-              </Pill>
-            </>
-          ) : (
-            <>
-              <CheckboxRow
-                checked={value.showVagas}
-                onChange={() => onChange({ ...value, showVagas: !value.showVagas })}
-              >
-                Vagas
-              </CheckboxRow>
-              <CheckboxRow
-                checked={value.showAutonomos}
-                onChange={() => onChange({ ...value, showAutonomos: !value.showAutonomos })}
-              >
-                Autônomos
-              </CheckboxRow>
-            </>
-          )}
-        </div>
-      </div>
-
-      <div className={sectionClass}>
-        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Contratação</p>
-        {typesError && <p role="status" className="text-xs text-muted-foreground">Tipos indisponíveis. Recarregue para tentar novamente.</p>}
-        <div className={optionsClass}>
-          {employmentOptions.map((option) =>
-            inline ? (
-              <Pill
-                key={option.value}
-                checked={value.employmentTypes.includes(option.value)}
-                onClick={() => onChange({ ...value, employmentTypes: toggleInList(value.employmentTypes, option.value) })}
-              >
-                {option.label}
-              </Pill>
-            ) : (
-              <CheckboxRow
-                key={option.value}
-                checked={value.employmentTypes.includes(option.value)}
-                onChange={() => onChange({ ...value, employmentTypes: toggleInList(value.employmentTypes, option.value) })}
-              >
-                {option.label}
-              </CheckboxRow>
+          {employmentOptions.map((o) =>
+            option(
+              value.employmentTypes.includes(o.value),
+              () => onChange({ ...value, employmentTypes: toggleInList(value.employmentTypes, o.value) }),
+              o.label,
+              o.value,
             ),
           )}
         </div>
-      </div>
+      </Section>
 
-      <div className={sectionClass}>
-        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Pagamento</p>
+      <Section title="Pagamento">
         <div className={optionsClass}>
-          {PRICING_MODEL_OPTIONS.map((option) =>
-            inline ? (
-              <Pill
-                key={option.value}
-                checked={value.pricingModels.includes(option.value)}
-                onClick={() => onChange({ ...value, pricingModels: toggleInList(value.pricingModels, option.value) })}
-              >
-                {option.label}
-              </Pill>
-            ) : (
-              <CheckboxRow
-                key={option.value}
-                checked={value.pricingModels.includes(option.value)}
-                onChange={() => onChange({ ...value, pricingModels: toggleInList(value.pricingModels, option.value) })}
-              >
-                {option.label}
-              </CheckboxRow>
+          {PRICING_MODEL_OPTIONS.map((o) =>
+            option(
+              value.pricingModels.includes(o.value),
+              () => onChange({ ...value, pricingModels: toggleInList(value.pricingModels, o.value) }),
+              o.label,
+              o.value,
             ),
           )}
         </div>
-      </div>
+      </Section>
 
-      <div className={sectionClass}>
-        <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Local</p>
-        {inline ? (
-          <Pill checked={value.remoteOnly} onClick={() => onChange({ ...value, remoteOnly: !value.remoteOnly })}>
-            Somente remoto
-          </Pill>
-        ) : (
-          <CheckboxRow checked={value.remoteOnly} onChange={() => onChange({ ...value, remoteOnly: !value.remoteOnly })}>
-            Somente remoto
-          </CheckboxRow>
-        )}
-      </div>
-
-      {categories && categories.length > 0 && (
-        <div className={sectionClass}>
-          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">Categoria</p>
-          <div className={cn(optionsClass, !inline && 'max-h-56 overflow-y-auto pr-1')}>
-            {categories.map((category) =>
-              inline ? (
-                <Pill
-                  key={category.slug}
-                  checked={value.categories.includes(category.slug)}
-                  onClick={() => onChange({ ...value, categories: toggleInList(value.categories, category.slug) })}
-                >
-                  {category.label}
-                </Pill>
-              ) : (
-                <CheckboxRow
-                  key={category.slug}
-                  checked={value.categories.includes(category.slug)}
-                  onChange={() => onChange({ ...value, categories: toggleInList(value.categories, category.slug) })}
-                >
-                  {category.label}
-                </CheckboxRow>
+      {modalidades.length > 0 && (
+        <Section title="Modalidade">
+          <div className={optionsClass}>
+            {modalidades.map((m) =>
+              option(
+                value.modalidades.includes(m.slug),
+                () => onChange({ ...value, modalidades: toggleInList(value.modalidades, m.slug) }),
+                m.label,
+                m.slug,
               ),
             )}
           </div>
-        </div>
+        </Section>
       )}
-      </div>
+
+      {categories && categories.length > 0 && (
+        <Section title="Categoria">
+          <div className={optionsClass}>
+            {visibleCategories.map((c) =>
+              option(
+                value.categories.includes(c.slug),
+                () => onChange({ ...value, categories: toggleInList(value.categories, c.slug) }),
+                c.label,
+                c.slug,
+              ),
+            )}
+          </div>
+          {!sheet && categories.length > VISIBLE_CATEGORIES && (
+            <button
+              type="button"
+              onClick={() => setShowAllCategories((v) => !v)}
+              className="mt-1 self-start text-sm font-medium text-primary hover:underline"
+            >
+              {showAllCategories ? 'Mostrar menos' : `Ver todas as ${categories.length} categorias`}
+            </button>
+          )}
+        </Section>
+      )}
     </div>
   )
 }

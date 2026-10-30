@@ -2,6 +2,8 @@ import * as React from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import { hasAdminAccess, isPublicRole } from '@/lib/accessControl'
+import { translateAuthError } from '@/lib/authErrors'
+import { landingPathFor, type PanelUser } from '@/lib/panelNav'
 import { queryClient } from '@/lib/queryClient'
 import type { Database, UserRole } from '@/types/database'
 
@@ -14,7 +16,7 @@ interface AuthContextValue {
   roles: UserRole[]
   isAdmin: boolean
   loading: boolean
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>
+  signIn: (email: string, password: string) => Promise<{ error: string | null; destination?: string; access?: PanelUser }>
   signUp: (
     email: string,
     password: string,
@@ -108,21 +110,24 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signIn: AuthContextValue['signIn'] = async (email, password) => {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) return { error: error.message }
+    if (error) return { error: translateAuthError(error.message) }
 
+    let destination: string | undefined
+    let access: PanelUser | undefined
     if (data.user) {
-      const { data: activeCheck } = await supabase
-        .from('profiles')
-        .select('is_active')
-        .eq('id', data.user.id)
-        .single()
-      if (!activeCheck || !activeCheck.is_active) {
+      const [{ data: profileRow }, { data: roleRows }] = await Promise.all([
+        supabase.from('profiles').select('is_active, is_admin').eq('id', data.user.id).single(),
+        supabase.from('user_roles').select('role').eq('user_id', data.user.id),
+      ])
+      if (!profileRow || !profileRow.is_active) {
         await supabase.auth.signOut()
         return { error: 'Sua conta foi desativada. Entre em contato com o suporte.' }
       }
+      access = { isAdmin: profileRow.is_admin, roles: (roleRows ?? []).map((r) => r.role as UserRole) }
+      destination = landingPathFor(access)
     }
 
-    return { error: null }
+    return { error: null, destination, access }
   }
 
   const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName) => {

@@ -7,6 +7,10 @@ import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { CnpjInput } from '@/components/fields/MaskedInputs'
+import { SegmentSelect } from '@/components/SegmentSelect'
+import { FormError } from '@/components/auth/FormError'
+import { isValidCnpj } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 export default function EmpresaOnboardingPage() {
@@ -23,8 +27,12 @@ export default function EmpresaOnboardingPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!user) return
-    setLoading(true)
     setError(null)
+    if (cnpj && !isValidCnpj(cnpj)) {
+      setError('Esse CNPJ não parece válido. Confira os 14 números.')
+      return
+    }
+    setLoading(true)
 
     const { error: insertError } = await supabase.from('empresas').insert({
       owner_id: user.id,
@@ -37,7 +45,11 @@ export default function EmpresaOnboardingPage() {
 
     setLoading(false)
     if (insertError) {
-      setError(insertError.message)
+      setError(
+        insertError.code === '23505'
+          ? 'Já existe uma empresa cadastrada com esse CNPJ. Se ela é sua, fale com o suporte.'
+          : 'Não foi possível cadastrar agora. Confira sua conexão e tente de novo.',
+      )
       return
     }
     navigate('/empresa/painel')
@@ -59,15 +71,15 @@ export default function EmpresaOnboardingPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="cnpj">CNPJ</Label>
-            <Input id="cnpj" value={cnpj} onChange={(e) => setCnpj(e.target.value)} />
+            <CnpjInput id="cnpj" value={cnpj} onChange={setCnpj} />
           </div>
           <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
           <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="sector">Setor</Label>
-            <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />
+            <Label htmlFor="sector">Segmento</Label>
+            <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
-          {error && <p className="text-sm text-destructive">{error}</p>}
+          {error && <FormError>{error}</FormError>}
           <Button type="submit" variant="cta" disabled={loading}>
             {loading ? 'Criando…' : 'Criar empresa'}
           </Button>

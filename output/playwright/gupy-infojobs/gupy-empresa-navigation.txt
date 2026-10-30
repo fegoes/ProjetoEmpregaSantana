@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://vempra.gupy.io/');
+```
+### Open tabs
+- 0: (current) [Gupy](https://vempra.gupy.io/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://vempra.gupy.io/
+- Page Title: Gupy
+- Console: 12 errors, 0 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-03-45-638Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-03-37-323Z.log#L1-L51

@@ -41,17 +41,17 @@ export function ImageCarousel({ images, alt, className, loading = 'lazy' }: Imag
             type="button"
             aria-label="Foto anterior"
             onClick={(e) => go(e, -1)}
-            className="absolute top-1/2 left-1.5 flex size-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover/carousel:opacity-100"
+            className="absolute top-1/2 left-2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity group-hover/carousel:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
           >
-            <ChevronLeft className="size-3.5" />
+            <ChevronLeft className="size-4.5" />
           </button>
           <button
             type="button"
             aria-label="Próxima foto"
             onClick={(e) => go(e, 1)}
-            className="absolute top-1/2 right-1.5 flex size-6 -translate-y-1/2 items-center justify-center rounded-full bg-black/50 text-white opacity-0 transition-opacity group-hover/carousel:opacity-100"
+            className="absolute top-1/2 right-2 flex size-9 -translate-y-1/2 items-center justify-center rounded-full bg-black/55 text-white opacity-0 transition-opacity group-hover/carousel:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
           >
-            <ChevronRight className="size-3.5" />
+            <ChevronRight className="size-4.5" />
           </button>
           <div className="absolute bottom-1.5 left-1/2 flex -translate-x-1/2 gap-1">
             {images.map((url, i) => (

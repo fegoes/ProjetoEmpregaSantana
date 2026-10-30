@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://portal.gupy.io/');
+```
+### Open tabs
+- 0: (current) [Portal Gupy | Encontre Vagas de Emprego que Impulsionam sua Carreira](https://portal.gupy.io/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://portal.gupy.io/
+- Page Title: Portal Gupy | Encontre Vagas de Emprego que Impulsionam sua Carreira
+- Console: 3 errors, 0 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-09-54-811Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-09-51-508Z.log#L1-L6

@@ -1,0 +1,438 @@
+- generic [active] [ref=f98e1]:
+  - banner [ref=f98e2]:
+    - generic [ref=f98e3]:
+      - link [ref=f98e4] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br/
+      - navigation "Navegação principal" [ref=f98e8]:
+        - list [ref=f98e9]:
+          - listitem [ref=f98e10]:
+            - link "Achar Vagas" [ref=f98e11] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/
+          - listitem [ref=f98e12]:
+            - link "Avaliações de Empresas" [ref=f98e13] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/ranking-melhores-empresas.aspx
+          - listitem [ref=f98e14]:
+            - link "Salários" [ref=f98e15] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/salarios
+          - listitem [ref=f98e16]:
+            - link "Blog" [ref=f98e17] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/
+        - generic [ref=f98e18]:
+          - link "Empresas" [ref=f98e19] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+          - link "Anunciar Vaga" [ref=f98e20] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/company/insertnew.aspx
+          - link "Login" [ref=f98e21] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/Account/Login
+          - link "Cadastrar CV" [ref=f98e22] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+  - text:                  
+  - main [ref=f98e23]:
+    - generic [ref=f98e26]:
+      - generic [ref=f98e27]:
+        - heading "Blog Infojobs" [level=1] [ref=f98e28]
+        - paragraph [ref=f98e29]: Conteúdos sobre carreira, mercado de trabalho, currículo, entrevistas e desenvolvimento profissional para ajudar você a evoluir na sua trajetória.
+        - link "Acessar posts" [ref=f98e30] [cursor=pointer]:
+          - /url: http://dev.blog.infojobs.com.br/candidatos/
+      - figure [ref=f98e31]
+    - region [ref=f98e32]:
+      - generic [ref=f98e33]:
+        - heading "Para Candidatos" [level=2] [ref=f98e34]
+        - generic [ref=f98e35]:
+          - article [ref=f98e36]:
+            - link "Prompts para criar currículo no ChatGPT e conquistar um emprego" [ref=f98e37] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/prompts-criar-curriculo-chatgpt/
+              - img "Prompts para criar currículo no ChatGPT e conquistar um emprego" [ref=f98e38]
+              - text: 
+            - link "Prompts para criar currículo no ChatGPT e conquistar um emprego" [ref=f98e39] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/prompts-criar-curriculo-chatgpt/
+            - generic [ref=f98e40]: Veja 10 prompts para criar e melhorar seu currículo no ChatGPT, destacar suas experiências e se preparar para conquistar uma nova oportunidade.
+            - time [ref=f98e41]: 16 outubro 2026
+            - link "Ler artigo completo" [ref=f98e42] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/prompts-criar-curriculo-chatgpt/
+          - article [ref=f98e43]:
+            - link "Vale a pena trabalhar como PJ? Entenda antes de aceitar uma proposta" [ref=f98e44] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sem-categoria/vale-a-pena-trabalhar-como-pj/
+              - img "Vale a pena trabalhar como PJ? Entenda antes de aceitar uma proposta" [ref=f98e45]
+            - link "Vale a pena trabalhar como PJ? Entenda antes de aceitar uma proposta" [ref=f98e46] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sem-categoria/vale-a-pena-trabalhar-como-pj/
+            - generic [ref=f98e47]: Vale a pena trabalhar como PJ? Entenda as diferenças entre PJ e CLT, os principais pontos de atenção e o que avaliar antes de aceitar uma proposta.
+            - time [ref=f98e48]: 16 outubro 2026
+            - link "Ler artigo completo" [ref=f98e49] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sem-categoria/vale-a-pena-trabalhar-como-pj/
+          - article [ref=f98e50]:
+            - 'link "Primeiro emprego: 7 dicas para jovens que estão começando a carreira" [ref=f98e51] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/
+              - 'img "Primeiro emprego: 7 dicas para jovens que estão começando a carreira" [ref=f98e52]'
+              - text: 
+            - 'link "Primeiro emprego: 7 dicas para jovens que estão começando a carreira" [ref=f98e53] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/
+            - generic [ref=f98e54]: Entrar no mercado de trabalho pode trazer muitas dúvidas, principalmente quando você ainda não teve uma experiência profissional formal. A boa notícia é que não ter trabalhado antes não significa não ter experiências, habilidades ou conhecimentos para apresentar às empresas.
+            - time [ref=f98e55]: 23 setembro 2026
+            - link "Ler artigo completo" [ref=f98e56] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/primeiro-emprego-dicas-para-jovens/
+        - link "Ver mais posts" [ref=f98e58] [cursor=pointer]:
+          - /url: https://blog.infojobs.com.br/candidatos/
+          - text: Ver mais posts
+          - generic [aria-hidden] [ref=f98e59]: 
+    - region [ref=f98e60]:
+      - generic [ref=f98e61]:
+        - heading "Para Empresas" [level=2] [ref=f98e62]
+        - generic [ref=f98e63]:
+          - article [ref=f98e64]:
+            - link "O que é recrutamento digital e por que sua empresa precisa?" [ref=f98e65] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/recrutamento-digital-2/
+              - img "O que é recrutamento digital e por que sua empresa precisa?" [ref=f98e66]
+              - text: 
+            - link "O que é recrutamento digital e por que sua empresa precisa?" [ref=f98e67] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/recrutamento-digital-2/
+            - generic [ref=f98e68]: Entenda o que é recrutamento digital, conheça seus principais benefícios e veja como a tecnologia pode tornar o processo seletivo mais ágil e estratégico.
+            - time [ref=f98e69]: 15 outubro 2026
+            - link "Ler artigo completo" [ref=f98e70] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/recrutamento-digital-2/
+          - article [ref=f98e71]:
+            - link "Lista dos benefícios empresariais mais “queridinhos” dos funcionários" [ref=f98e72] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/beneficios-empresariais/
+              - img "Lista dos benefícios empresariais mais “queridinhos” dos funcionários" [ref=f98e73]
+              - text: 
+            - link "Lista dos benefícios empresariais mais “queridinhos” dos funcionários" [ref=f98e74] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/beneficios-empresariais/
+            - generic [ref=f98e75]: Confira a lista com 26 benefícios empresariais mais desejados por candidatos e colaboradores!
+            - time [ref=f98e76]: 11 agosto 2026
+            - link "Ler artigo completo" [ref=f98e77] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/beneficios-empresariais/
+          - article [ref=f98e78]:
+            - 'link "Clima organizacional: o que é, qual a importância e como medir?" [ref=f98e79] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/empresas/clima-organizacional/
+              - 'img "Clima organizacional: o que é, qual a importância e como medir?" [ref=f98e80]'
+              - text: 
+            - 'link "Clima organizacional: o que é, qual a importância e como medir?" [ref=f98e81] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/empresas/clima-organizacional/
+            - generic [ref=f98e82]: Saiba como e porque o clima organizacional é tão importante para os resultados de uma empresa
+            - time [ref=f98e83]: 10 agosto 2026
+            - link "Ler artigo completo" [ref=f98e84] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/empresas/clima-organizacional/
+        - link "Ver mais posts" [ref=f98e86] [cursor=pointer]:
+          - /url: https://blog.infojobs.com.br/empresas/
+          - text: Ver mais posts
+          - generic [aria-hidden] [ref=f98e87]: 
+    - region [ref=f98e88]:
+      - generic [ref=f98e89]:
+        - heading "Infojobs na Mídia" [level=2] [ref=f98e90]
+        - generic [ref=f98e91]:
+          - article [ref=f98e92]:
+            - link "Vagas para Pessoas Jurídicas cresceram 30% em dois anos no país" [ref=f98e93] [cursor=pointer]:
+              - /url: https://monitormercantil.com.br/vagas-para-pj-cresceram-30-em-dois-anos-no-brasil/#new_tab
+              - img "Vagas para Pessoas Jurídicas cresceram 30% em dois anos no país" [ref=f98e94]
+              - text: 
+            - link "Vagas para Pessoas Jurídicas cresceram 30% em dois anos no país" [ref=f98e95] [cursor=pointer]:
+              - /url: https://monitormercantil.com.br/vagas-para-pj-cresceram-30-em-dois-anos-no-brasil/#new_tab
+            - time [ref=f98e96]: 22 julho 2026
+            - link "Ler artigo completo" [ref=f98e97] [cursor=pointer]:
+              - /url: https://monitormercantil.com.br/vagas-para-pj-cresceram-30-em-dois-anos-no-brasil/#new_tab
+          - article [ref=f98e98]:
+            - link "Copa impulsiona contratações temporárias no Brasil; veja os direitos dos trabalhadores" [ref=f98e99] [cursor=pointer]:
+              - /url: https://g1.globo.com/trabalho-e-carreira/noticia/2026/07/05/copa-impulsiona-contratacoes-temporarias-no-brasil-veja-os-direitos-dos-trabalhadores.ghtml#new_tab
+              - img "Copa impulsiona contratações temporárias no Brasil; veja os direitos dos trabalhadores" [ref=f98e100]
+              - text: 
+            - link "Copa impulsiona contratações temporárias no Brasil; veja os direitos dos trabalhadores" [ref=f98e101] [cursor=pointer]:
+              - /url: https://g1.globo.com/trabalho-e-carreira/noticia/2026/07/05/copa-impulsiona-contratacoes-temporarias-no-brasil-veja-os-direitos-dos-trabalhadores.ghtml#new_tab
+            - time [ref=f98e102]: 5 julho 2026
+            - link "Ler artigo completo" [ref=f98e103] [cursor=pointer]:
+              - /url: https://g1.globo.com/trabalho-e-carreira/noticia/2026/07/05/copa-impulsiona-contratacoes-temporarias-no-brasil-veja-os-direitos-dos-trabalhadores.ghtml#new_tab
+          - article [ref=f98e104]:
+            - link "Copa do Mundo deve impulsionar vagas temporárias e aumentar pressão por empresas mais flexíveis" [ref=f98e105] [cursor=pointer]:
+              - /url: https://exame.com/carreira/copa-do-mundo-deve-impulsionar-vagas-temporarias-e-aumentar-pressao-por-empresas-mais-flexiveis/#new_tab
+              - img "Copa do Mundo deve impulsionar vagas temporárias e aumentar pressão por empresas mais flexíveis" [ref=f98e106]
+              - text: 
+            - link "Copa do Mundo deve impulsionar vagas temporárias e aumentar pressão por empresas mais flexíveis" [ref=f98e107] [cursor=pointer]:
+              - /url: https://exame.com/carreira/copa-do-mundo-deve-impulsionar-vagas-temporarias-e-aumentar-pressao-por-empresas-mais-flexiveis/#new_tab
+            - time [ref=f98e108]: 12 junho 2026
+            - link "Ler artigo completo" [ref=f98e109] [cursor=pointer]:
+              - /url: https://exame.com/carreira/copa-do-mundo-deve-impulsionar-vagas-temporarias-e-aumentar-pressao-por-empresas-mais-flexiveis/#new_tab
+        - link "Ver mais posts" [ref=f98e111] [cursor=pointer]:
+          - /url: https://blog.infojobs.com.br/noticias/
+          - text: Ver mais posts
+          - generic [aria-hidden] [ref=f98e112]: 
+    - region [ref=f98e113]:
+      - generic [ref=f98e114]:
+        - generic [ref=f98e115]:
+          - heading "Buscar artigo" [level=2] [ref=f98e116]
+          - paragraph [ref=f98e117]: Pesquise por artigo ou tema.
+        - search [ref=f98e119]:
+          - generic [ref=f98e120]: Selecionar categoria
+          - combobox "Selecionar categoria" [ref=f98e121]:
+            - option "Todas as categorias" [selected]
+            - option "Candidatos"
+            - option "Dúvidas"
+            - option "Empresas"
+            - option "Notícias"
+          - generic [ref=f98e122]: Buscar artigo
+          - searchbox "Buscar artigo" [ref=f98e123]
+          - button "Buscar artigo" [ref=f98e124] [cursor=pointer]
+    - region [ref=f98e125]:
+      - generic [ref=f98e126]:
+        - heading "Artigos mais lidos" [level=2] [ref=f98e127]
+        - generic [ref=f98e128]:
+          - article [ref=f98e129]:
+            - 'link "Selo de segurança do Infojobs: verificação de empresas no site" [ref=f98e130] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/comportamento/infojobs-promove-selo-de-seguranca/
+              - 'img "Selo de segurança do Infojobs: verificação de empresas no site" [ref=f98e131]'
+              - text: 
+            - 'link "Selo de segurança do Infojobs: verificação de empresas no site" [ref=f98e132] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/comportamento/infojobs-promove-selo-de-seguranca/
+            - generic [ref=f98e133]: A implementação do selo ajuda as pessoas candidatas a conferirem a veracidade e segurança das vagas com mais facilidade
+            - time [ref=f98e134]: 22 novembro 2024
+            - link "Ler artigo completo" [ref=f98e135] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/comportamento/infojobs-promove-selo-de-seguranca/
+          - article [ref=f98e136]:
+            - 'link "Calculadora de rescisão: saiba quanto vai receber" [ref=f98e137] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/calculadora-de-rescisao/
+              - 'img "Calculadora de rescisão: saiba quanto vai receber" [ref=f98e138]'
+              - text: 
+            - 'link "Calculadora de rescisão: saiba quanto vai receber" [ref=f98e139] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/calculadora-de-rescisao/
+            - generic [ref=f98e140]: Aprenda a calcular esse pagamento, como ele funciona e as principais dúvidas
+            - time [ref=f98e141]: 26 agosto 2026
+            - link "Ler artigo completo" [ref=f98e142] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/calculadora-de-rescisao/
+          - article [ref=f98e143]:
+            - 'link "Status de candidatura Infojobs: O que significa cada etapa" [ref=f98e144] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/status-de-candidatura-infojobs-o-que-significa-cada-etapa/
+              - 'img "Status de candidatura Infojobs: O que significa cada etapa" [ref=f98e145]'
+              - text: 
+            - 'link "Status de candidatura Infojobs: O que significa cada etapa" [ref=f98e146] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/status-de-candidatura-infojobs-o-que-significa-cada-etapa/
+            - generic [ref=f98e147]: Saiba como funcionam as etapas dos processos seletivos no site de empregos mais usado no Brasil para acompanhar suas candidaturas.
+            - time [ref=f98e148]: 28 agosto 2026
+            - link "Ler artigo completo" [ref=f98e149] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/status-de-candidatura-infojobs-o-que-significa-cada-etapa/
+          - article [ref=f98e150]:
+            - link "Como responder “fale sobre você”?" [ref=f98e151] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/como-responder-fale-sobre-voce/
+              - img "Como responder “fale sobre você”?" [ref=f98e152]
+              - text: 
+            - link "Como responder “fale sobre você”?" [ref=f98e153] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/como-responder-fale-sobre-voce/
+            - generic [ref=f98e154]: Entenda o que o recrutador avalia nessa pergunta e veja qual a melhor maneira de respondê-la
+            - time [ref=f98e155]: 11 agosto 2026
+            - link "Ler artigo completo" [ref=f98e156] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/como-responder-fale-sobre-voce/
+          - article [ref=f98e157]:
+            - 'link "FAQ: O Infojobs é confiável e seguro? É pago? É bom para arrumar emprego?" [ref=f98e158] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/faq-o-infojobs-e-confiavel-e-seguro/
+              - 'img "FAQ: O Infojobs é confiável e seguro? É pago? É bom para arrumar emprego?" [ref=f98e159]'
+              - text: 
+            - 'link "FAQ: O Infojobs é confiável e seguro? É pago? É bom para arrumar emprego?" [ref=f98e160] [cursor=pointer]':
+              - /url: https://blog.infojobs.com.br/candidatos/faq-o-infojobs-e-confiavel-e-seguro/
+            - generic [ref=f98e161]: Conheça mais sobre o site de empregos mais utilizado do Brasil e como ele funciona
+            - time [ref=f98e162]: 29 novembro 2024
+            - link "Ler artigo completo" [ref=f98e163] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/faq-o-infojobs-e-confiavel-e-seguro/
+          - article [ref=f98e164]:
+            - link "Qual o melhor sites de empregos" [ref=f98e165] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sites-de-emprego-qual-o-melhor/
+              - img "Qual o melhor sites de empregos" [ref=f98e166]
+              - text: 
+            - link "Qual o melhor sites de empregos" [ref=f98e167] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sites-de-emprego-qual-o-melhor/
+            - generic [ref=f98e168]: Saiba onde encontrar as melhores oportunidades profissionais para você
+            - time [ref=f98e169]: 28 novembro 2024
+            - link "Ler artigo completo" [ref=f98e170] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/candidatos/sites-de-emprego-qual-o-melhor/
+    - region [ref=f98e171]:
+      - generic [ref=f98e172]:
+        - navigation "Redes sociais do Infojobs" [ref=f98e173]:
+          - link "Instagram" [ref=f98e174] [cursor=pointer]:
+            - /url: https://www.instagram.com/infojobsbr/
+            - generic [aria-hidden] [ref=f98e175]: 
+          - link "LinkedIn" [ref=f98e176] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/infojobs
+            - generic [aria-hidden] [ref=f98e177]: 
+          - link "Facebook" [ref=f98e178] [cursor=pointer]:
+            - /url: https://www.facebook.com/infojobs.com.br/
+            - generic [aria-hidden] [ref=f98e179]: 
+          - link "TikTok" [ref=f98e180] [cursor=pointer]:
+            - /url: https://www.tiktok.com/@infojobsbr
+            - generic [aria-hidden] [ref=f98e181]: 
+          - link "YouTube" [ref=f98e182] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/InfoJobscombr
+            - generic [aria-hidden] [ref=f98e183]: 
+          - link "X/Twitter" [ref=f98e184] [cursor=pointer]:
+            - /url: https://twitter.com/infojobscombr
+            - generic [aria-hidden] [ref=f98e185]: 
+        - generic [ref=f98e186]:
+          - heading "Fique ligado nas novidades!" [level=2] [ref=f98e187]
+          - paragraph [ref=f98e188]: E siga nosso perfil nas redes sociais
+    - region [ref=f98e189]:
+      - generic [ref=f98e190]:
+        - heading "Aperte o Play" [level=2] [ref=f98e191]
+        - generic [ref=f98e192]:
+          - figure [ref=f98e195]:
+            - iframe [ref=f98e197]
+          - figure [ref=f98e200]:
+            - iframe [ref=f98e202]
+    - region [ref=f98e203]:
+      - generic [ref=f98e204]:
+        - heading "Tem alguma dúvida?" [level=2] [ref=f98e205]
+        - generic [ref=f98e206]:
+          - 'link "Selo de segurança do Infojobs: verificação de empresas no site " [ref=f98e207] [cursor=pointer]':
+            - /url: https://blog.infojobs.com.br/candidatos/comportamento/infojobs-promove-selo-de-seguranca/
+            - generic [aria-hidden] [ref=f98e208]: 
+            - generic [ref=f98e209]: "Selo de segurança do Infojobs: verificação de empresas no site"
+            - text: 
+          - 'link "Status de candidatura Infojobs: O que significa cada etapa " [ref=f98e210] [cursor=pointer]':
+            - /url: https://blog.infojobs.com.br/candidatos/status-de-candidatura-infojobs-o-que-significa-cada-etapa/
+            - generic [aria-hidden] [ref=f98e211]: 
+            - generic [ref=f98e212]: "Status de candidatura Infojobs: O que significa cada etapa"
+            - text: 
+          - 'link "FAQ: O Infojobs é confiável e seguro? É pago? É bom para arrumar emprego? " [ref=f98e213] [cursor=pointer]':
+            - /url: https://blog.infojobs.com.br/candidatos/faq-o-infojobs-e-confiavel-e-seguro/
+            - generic [aria-hidden] [ref=f98e214]: 
+            - generic [ref=f98e215]: "FAQ: O Infojobs é confiável e seguro? É pago? É bom para arrumar emprego?"
+            - text: 
+          - 'link "Login Infojobs: o que fazer quando já tem CPF cadastrado? " [ref=f98e216] [cursor=pointer]':
+            - /url: https://blog.infojobs.com.br/candidatos/login-infojobs-cpf-ja-cadastrado/
+            - generic [aria-hidden] [ref=f98e217]: 
+            - generic [ref=f98e218]: "Login Infojobs: o que fazer quando já tem CPF cadastrado?"
+            - text: 
+          - link "Como buscar vagas no Infojobs " [ref=f98e219] [cursor=pointer]:
+            - /url: https://blog.infojobs.com.br/candidatos/passos-para-buscar-vagas-no-infojobs/
+            - generic [aria-hidden] [ref=f98e220]: 
+            - generic [ref=f98e221]: Como buscar vagas no Infojobs
+            - text: 
+          - link "Como recuperar senha no Infojobs " [ref=f98e222] [cursor=pointer]:
+            - /url: https://blog.infojobs.com.br/candidatos/como-recuperar-senha-no-infojobs/
+            - generic [aria-hidden] [ref=f98e223]: 
+            - generic [ref=f98e224]: Como recuperar senha no Infojobs
+            - text: 
+          - link "Como a empresa visualiza o currículo no Infojobs? " [ref=f98e225] [cursor=pointer]:
+            - /url: https://blog.infojobs.com.br/candidatos/como-a-empresa-visualiza-o-curriculo-no-infojobs/
+            - generic [aria-hidden] [ref=f98e226]: 
+            - generic [ref=f98e227]: Como a empresa visualiza o currículo no Infojobs?
+            - text: 
+          - link "Veja todas as dúvidas " [ref=f98e228] [cursor=pointer]:
+            - /url: https://blog.infojobs.com.br/duvidas-sobre-o-infojobs/
+            - generic [aria-hidden] [ref=f98e229]: 
+            - generic [ref=f98e230]: Veja todas as dúvidas
+            - text: 
+    - region [ref=f98e231]:
+      - generic [ref=f98e232]:
+        - heading "Infojobs O site de busca de emprego mais usado no Brasil" [level=2] [ref=f98e234]
+        - generic [ref=f98e235]:
+          - generic [ref=f98e236]:
+            - generic [ref=f98e237]: O quê?
+            - searchbox "O quê?" [ref=f98e238]
+          - generic [ref=f98e239]:
+            - generic [ref=f98e240]: Onde?
+            - combobox "Onde?" [ref=f98e241]:
+              - option "Acre"
+              - option "Alagoas"
+              - option "Amapá"
+              - option "Amazonas"
+              - option "Bahia"
+              - option "Ceará"
+              - option "Distrito Federal"
+              - option "Espírito Santo"
+              - option "Goiás"
+              - option "Maranhão"
+              - option "Mato Grosso"
+              - option "Mato Grosso do Sul"
+              - option "Minas Gerais"
+              - option "Pará"
+              - option "Paraíba"
+              - option "Paraná"
+              - option "Pernambuco"
+              - option "Piauí"
+              - option "Rio de Janeiro"
+              - option "Rio Grande do Norte"
+              - option "Rio Grande do Sul"
+              - option "Rondônia"
+              - option "Roraima"
+              - option "Santa Catarina"
+              - option "São Paulo" [selected]
+              - option "Sergipe"
+              - option "Tocantins"
+          - button "Achar vagas" [ref=f98e242] [cursor=pointer]
+  - contentinfo "Rodapé do Infojobs" [ref=f98e244]:
+    - generic [ref=f98e245]:
+      - region "Infojobs Brasil" [ref=f98e246]:
+        - img "Infojobs" [ref=f98e248]
+        - paragraph [ref=f98e249]: © Infojobs Brasil Atividades de Internet, Ltda.Todos os direitos reservados.
+        - generic "Prêmios e reconhecimentos" [ref=f98e250]:
+          - img "Top of Mind 2023" [ref=f98e251]
+          - img "Top of Mind 2024" [ref=f98e252]
+          - img "Top of Mind 2025" [ref=f98e253]
+          - img "Reclame Aqui" [ref=f98e254]
+          - img "Great Place to Work" [ref=f98e255]
+      - generic [ref=f98e256]:
+        - navigation [ref=f98e257]:
+          - heading "Institucional" [level=2] [ref=f98e258]
+          - link "Quem somos?" [ref=f98e259] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Sobre_InfoJobs__4648.aspx
+          - link "Por que usar Infojobs?" [ref=f98e260] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/por-que-infojobs.aspx
+          - link "Trabalhe Conosco" [ref=f98e261] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/microsite_infojobs__4631.aspx
+          - link "Política de Cookies" [ref=f98e262] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+        - navigation [ref=f98e263]:
+          - heading "Empresas" [level=2] [ref=f98e264]
+          - link "Ajuda" [ref=f98e265] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Ajuda_Empresas__1581.aspx
+          - link "Artigos" [ref=f98e266] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+          - link "Anunciar Vagas" [ref=f98e267] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+          - link "Buscar candidatos" [ref=f98e268] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/Company/Candidate1/List.aspx
+          - link "PandaPé" [ref=f98e269] [cursor=pointer]:
+            - /url: https://www.pandape.com.br/
+          - link "Aviso Legal" [ref=f98e270] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/aviso-legal-para-empresas__15726.aspx
+          - link "Política de Privacidade" [ref=f98e271] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-empresas__15729.aspx
+        - navigation [ref=f98e272]:
+          - heading "Candidatos" [level=2] [ref=f98e273]
+          - link "Ajuda" [ref=f98e274] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Ajuda_Candidatos__1579.aspx
+          - link "Artigos" [ref=f98e275] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/blog/blog-candidatos__10146.aspx
+          - link "Vagas" [ref=f98e276] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/EmpregosMaisBuscados.aspx
+          - link "Guia de Cargos" [ref=f98e277] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/cargo
+          - link "Aviso Legal" [ref=f98e278] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+          - link "Política de Privacidade" [ref=f98e279] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+          - link "Busca de emprego segura" [ref=f98e280] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/proteja-se-ao-buscar-emprego__16245.aspx
+      - navigation [ref=f98e281]:
+        - generic [ref=f98e282]:
+          - heading "Siga-nos" [level=2] [ref=f98e283]
+          - generic [ref=f98e284]:
+            - link "WhatsApp" [ref=f98e285] [cursor=pointer]:
+              - /url: https://chat.whatsapp.com/DuMsJdhIEh62x8M2bGzbJH
+              - generic [aria-hidden] [ref=f98e286]: 
+            - link "Blog" [ref=f98e287] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+              - generic [aria-hidden] [ref=f98e288]: 
+            - link "Instagram" [ref=f98e289] [cursor=pointer]:
+              - /url: https://www.instagram.com/infojobsbr/
+              - generic [aria-hidden] [ref=f98e290]: 
+            - link "LinkedIn" [ref=f98e291] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/infojobs
+              - generic [aria-hidden] [ref=f98e292]: 
+            - link "Facebook" [ref=f98e293] [cursor=pointer]:
+              - /url: https://www.facebook.com/infojobs.com.br/
+              - generic [aria-hidden] [ref=f98e294]: 
+            - link "TikTok" [ref=f98e295] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@infojobsbr
+              - generic [aria-hidden] [ref=f98e296]: 
+            - link "YouTube" [ref=f98e297] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/InfoJobscombr
+              - generic [aria-hidden] [ref=f98e298]: 
+            - link "X/Twitter" [ref=f98e299] [cursor=pointer]:
+              - /url: https://twitter.com/infojobscombr
+              - generic [aria-hidden] [ref=f98e300]: 

@@ -1,27 +1,79 @@
 import { describe, expect, it } from 'vitest'
-import { DEFAULT_FEED_FILTERS, filterAutonomos, readFeedFilters, writeFeedFilters } from './feedFilters'
+import type { VagaCardData } from '@/components/VagaCard'
+import {
+  DEFAULT_FEED_FILTERS,
+  categoryCounts,
+  clearPanelFilters,
+  countPanelFilters,
+  filterVagas,
+  kindOf,
+  withKind,
+} from './feedFilters'
 
-const professional = { id: '1', headline: 'Serviços', category: null, pricing_model: 'hourly', hourly_rate: 50, service_area_city: 'Santana do Ipanema', service_area_state: 'AL', is_featured: false, profiles: { full_name: 'Teste' } }
+describe('feed kind selector', () => {
+  it('round-trips through showVagas/showAutonomos', () => {
+    expect(kindOf(DEFAULT_FEED_FILTERS)).toBe('todos')
+    expect(kindOf(withKind(DEFAULT_FEED_FILTERS, 'vagas'))).toBe('vagas')
+    expect(kindOf(withKind(DEFAULT_FEED_FILTERS, 'autonomos'))).toBe('autonomos')
+  })
+})
 
-describe('filtros públicos', () => {
-  it('preserva busca e cidade ao persistir e restaurar filtros múltiplos', () => {
-    const filters = { ...DEFAULT_FEED_FILTERS, showAutonomos: false, categories: ['comercio', 'servicos'], employmentTypes: ['clt'], pricingModels: ['hourly'], remoteOnly: true }
-    const params = writeFeedFilters(new URLSearchParams('q=vendas&cidade=Santana'), filters)
-    expect(params.get('q')).toBe('vendas')
-    expect(params.get('cidade')).toBe('Santana')
-    expect(readFeedFilters(params)).toEqual(filters)
+describe('panel filters', () => {
+  it('counts and clears without touching the kind', () => {
+    const filters = { ...withKind(DEFAULT_FEED_FILTERS, 'vagas'), categories: ['saude'], modalidades: ['modalidade-remota'] }
+    expect(countPanelFilters(filters)).toBe(2)
+    const cleared = clearPanelFilters(filters)
+    expect(countPanelFilters(cleared)).toBe(0)
+    expect(kindOf(cleared)).toBe('vagas')
   })
-  it('restaura inclusive a seleção sem tipos e ignora contratos inválidos', () => {
-    expect(readFeedFilters(writeFeedFilters(new URLSearchParams(), { ...DEFAULT_FEED_FILTERS, showVagas: false, showAutonomos: false }))).toMatchObject({ showVagas: false, showAutonomos: false })
-    expect(readFeedFilters(new URLSearchParams('contratacao=invalido%20com%20espaco')).employmentTypes).toEqual([])
+})
+
+describe('categoryCounts', () => {
+  it('orders categories by frequency and skips empty ones', () => {
+    const counts = categoryCounts([{ category: 'vendas' }, { category: 'saude' }, { category: 'vendas' }], [
+      { category: null },
+      { category: 'saude' },
+      { category: 'vendas' },
+    ])
+    expect([...counts.entries()]).toEqual([
+      ['vendas', 3],
+      ['saude', 2],
+    ])
   })
-  it('preserva tipos de contratação configurados pelo administrador na URL', () => {
-    const filters = { ...DEFAULT_FEED_FILTERS, employmentTypes: ['aprendiz', 'estagio-supervisionado'] }
-    expect(readFeedFilters(writeFeedFilters(new URLSearchParams(), filters))).toEqual(filters)
+})
+
+describe('filtro por modalidade', () => {
+  const vaga = (id: string, patch: Partial<VagaCardData>): VagaCardData => ({
+    id,
+    title: id,
+    employment_type: 'clt',
+    pricing_model: 'fixed_salary',
+    location_city: null,
+    location_state: null,
+    is_remote: false,
+    is_featured: false,
+    empresas: null,
+    ...patch,
   })
-  it('aplica remoto a autônomos e mantém formas de cobrança compatíveis', () => {
-    const remote = { ...professional, id: '2', serves_remote: true, pricing_model: 'both' }
-    expect(filterAutonomos([professional, remote], { ...DEFAULT_FEED_FILTERS, remoteOnly: true, pricingModels: ['hourly'] })).toEqual([remote])
-    expect(filterAutonomos([remote], { ...DEFAULT_FEED_FILTERS, pricingModels: ['fixed_salary'] })).toEqual([])
+  const vagas = [
+    vaga('a', { modalidade: 'modalidade-presencial' }),
+    vaga('b', { modalidade: 'modalidade-hibrida' }),
+    vaga('c', { modalidade: 'modalidade-remota', is_remote: true }),
+    vaga('antiga-remota', { is_remote: true }),
+    vaga('antiga-presencial', {}),
+  ]
+  const ids = (filters: Partial<typeof DEFAULT_FEED_FILTERS>) => filterVagas(vagas, { ...DEFAULT_FEED_FILTERS, ...filters }).map((v) => v.id)
+
+  it('sem escolha mostra todas', () => {
+    expect(ids({})).toHaveLength(5)
+  })
+
+  it('filtra por uma ou mais modalidades', () => {
+    expect(ids({ modalidades: ['modalidade-hibrida'] })).toEqual(['b'])
+    expect(ids({ modalidades: ['modalidade-hibrida', 'modalidade-presencial'] })).toEqual(['a', 'b', 'antiga-presencial'])
+  })
+
+  it('vaga antiga, sem modalidade, vale pelo campo remoto de antes', () => {
+    expect(ids({ modalidades: ['modalidade-remota'] })).toEqual(['c', 'antiga-remota'])
   })
 })

@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://www.gupy.io/blog-do-emprego');
+```
+### Open tabs
+- 0: (current) [Blog do Emprego](https://www.gupy.io/blog-do-emprego)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://www.gupy.io/blog-do-emprego
+- Page Title: Blog do Emprego
+- Console: 0 errors, 2 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-10-07-834Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-10-00-071Z.log#L1-L64

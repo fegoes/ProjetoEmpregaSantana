@@ -12,6 +12,8 @@ interface ImageUploadFieldProps {
   onUploaded: (url: string) => void
   shape?: 'square' | 'banner'
   hint?: string
+  /** Quando informado, aparece o botão "Remover imagem" */
+  onRemove?: () => void
 }
 
 // Componente "burro": faz upload e devolve a URL via onUploaded — quem persiste
@@ -23,6 +25,7 @@ export function ImageUploadField({
   onUploaded,
   shape = 'square',
   hint,
+  onRemove,
 }: ImageUploadFieldProps) {
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [preview, setPreview] = React.useState<string | null>(currentUrl ?? null)
@@ -84,6 +87,11 @@ export function ImageUploadField({
           >
             {preview ? 'Trocar imagem' : 'Enviar imagem'}
           </Button>
+          {preview && onRemove && (
+            <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading} onClick={onRemove}>
+              Remover imagem
+            </Button>
+          )}
           {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
           {error && <p className="text-xs text-destructive">{error}</p>}
         </div>

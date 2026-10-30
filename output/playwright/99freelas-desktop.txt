@@ -1,0 +1,202 @@
+### Page
+- Page URL: https://www.99freelas.com.br/
+- Page Title: Contrate os melhores freelancers do Brasil | 99Freelas
+### Snapshot
+```yaml
+- generic [active] [ref=f6e1]:
+  - banner [ref=f6e2]:
+    - generic [ref=f6e3]:
+      - generic [ref=f6e6]:
+        - generic:
+          - generic [ref=f6e7]: Freelancers
+          - searchbox "Buscar freelancers" [ref=f6e11]
+          - button [ref=f6e12] [cursor=pointer]
+      - generic [ref=f6e14]:
+        - link "Login" [ref=f6e15] [cursor=pointer]:
+          - /url: /login
+        - link "Cadastre-se" [ref=f6e16] [cursor=pointer]:
+          - /url: /register
+        - link "Publicar projeto" [ref=f6e17] [cursor=pointer]:
+          - /url: /project/new
+  - generic [ref=f6e18]:
+    - generic [ref=f6e21]:
+      - link "Como Funciona" [ref=f6e22] [cursor=pointer]:
+        - /url: /como-funciona
+      - link "Encontrar Freelancers" [ref=f6e23] [cursor=pointer]:
+        - /url: /freelancers
+      - link "Encontrar Trabalho" [ref=f6e24] [cursor=pointer]:
+        - /url: /projects
+    - generic [ref=f6e25]:
+      - heading "Encontre o melhor profissional freelancer para melhorar." [level=1] [ref=f6e170]
+      - generic [ref=f6e28]:
+        - link "Publicar projeto" [ref=f6e29] [cursor=pointer]:
+          - /url: /project/new
+        - link "Quero Trabalhar" [ref=f6e30] [cursor=pointer]:
+          - /url: /como-funciona?for=freelancer
+  - paragraph [ref=f6e31]:
+    - text: Você é um freelancer? Junte-se a nós!
+    - link "Cadastre-se" [ref=f6e32] [cursor=pointer]:
+      - /url: /register/freelancer
+    - text: .
+  - generic [ref=f6e33]:
+    - list:
+      - listitem [ref=f6e34]:
+        - generic [ref=f6e35]: "145.624"
+        - text: projetos concluídos
+      - listitem [ref=f6e36]:
+        - generic [ref=f6e37]: 3.997.444
+        - text: freelancers cadastrados
+      - listitem [ref=f6e38]:
+        - generic [ref=f6e39]: R$ 29.046.679,83
+        - text: pago aos freelancers
+  - generic [ref=f6e40]:
+    - heading "Encontre freelancers talentosos para..." [level=2] [ref=f6e41]
+    - list [ref=f6e42]:
+      - listitem [ref=f6e43]:
+        - paragraph [ref=f6e44]:
+          - text: Desenhar o seu
+          - generic [ref=f6e45]: website
+      - listitem [ref=f6e46]:
+        - paragraph [ref=f6e47]:
+          - text: Escrever o seu
+          - generic [ref=f6e48]: conteúdo
+      - listitem [ref=f6e49]:
+        - paragraph [ref=f6e50]:
+          - text: Desenvolver o seu
+          - generic [ref=f6e51]: código
+    - list [ref=f6e52]:
+      - listitem [ref=f6e53]:
+        - paragraph [ref=f6e54]:
+          - text: Melhorar o seu
+          - generic [ref=f6e55]: SEO
+      - listitem [ref=f6e56]:
+        - paragraph [ref=f6e57]:
+          - text: Desenhar o seu
+          - generic [ref=f6e58]: logotipo
+      - listitem [ref=f6e59]:
+        - paragraph [ref=f6e60]:
+          - text: Criar o seu
+          - generic [ref=f6e61]: vídeo
+    - link "Ver todas categorias" [ref=f6e62] [cursor=pointer]:
+      - /url: /freelancers
+  - generic [ref=f6e63]:
+    - heading "Como Funciona?" [level=2] [ref=f6e64]
+    - paragraph [ref=f6e65]: Anuncie o seu trabalho facilmente, contrate freelancers e pague com segurança.
+    - list [ref=f6e66]:
+      - listitem [ref=f6e67]:
+        - heading "Publique uma vaga" [level=3] [ref=f6e70]
+        - paragraph [ref=f6e71]: Publique a sua vaga para milhares de profissionais, você irá receber propostas de freelancers talentosos em poucos minutos.
+      - listitem [ref=f6e72]:
+        - heading "Contrate" [level=3] [ref=f6e75]
+        - paragraph [ref=f6e76]: Reveja o histórico de trabalho, feedback de clientes e portfólio para limitar os candidatos. Então faça uma entrevista pelo chat e escolha o melhor.
+      - listitem [ref=f6e77]:
+        - heading "Pague com segurança" [level=3] [ref=f6e80]
+        - paragraph [ref=f6e81]: Com o pagamento seguro do 99Freelas, o pagamento será repassado para o freelancer somente quando o projeto estiver concluído.
+  - generic [ref=f6e82]:
+    - heading "O que nossos clientes estão dizendo" [level=2] [ref=f6e83]
+    - generic [ref=f6e85]:
+      - list [ref=f6e87]:
+        - listitem [ref=f6e88]:
+          - generic [ref=f6e89]: "\" Muito bom site para quem busca profissionais de diversos segmentos e especialização. Depois que você faz um projeto com esse site, você se pergunta: como eu trabalhava sem esse site? Valeu muito a pena! \""
+          - generic [ref=f6e90]: "- Rafael Leite"
+        - listitem [ref=f6e92]:
+          - generic [ref=f6e93]: "\" Dentre as plataformas de freelas, a 99 foi a que tem a maior base de respostas entre propostas de freelas. O nível da base de dados de profissionais disponíveis é muito acima do esperado. Sobre a plataforma, é necessário apenas alguns ajustes de respostas nas informações. Mas a plataforma é limpa e objetiva. Parabéns ao 99Freelas. \""
+          - generic [ref=f6e94]: "- Lincoln Tamashiro"
+        - listitem [ref=f6e96]:
+          - generic [ref=f6e97]: "\" O 99Freelas foi um achado. Já conhecia o site há certo tempo mas não acreditava em sua eficiência. Como tenho muitas demandas passei a ser um usuário permanente. Todas as propostas foram bem elaboradas, os profissionais mostram ser plenamente competentes. \""
+          - generic [ref=f6e98]: "- Jorge Medeiros"
+        - listitem [ref=f6e100]:
+          - generic [ref=f6e101]: "\" Pela primeira vez que utilizei o site, tive uma excelente experiência e com certeza recomendo o 99Freelas pela rapidez no suporte ao usuário, segurança no processo o qual é feito dentro do site e plataforma incrível de trabalho. Site hiper recomendado. \""
+          - generic [ref=f6e102]: "- Vanessa Custodio"
+      - list [ref=f6e104]:
+        - listitem [ref=f6e105]:
+          - link "1" [ref=f6e106]:
+            - /url: "#"
+        - listitem [ref=f6e107]:
+          - link "2" [ref=f6e108] [cursor=pointer]:
+            - /url: "#"
+  - generic [ref=f6e109]:
+    - heading "Está pronto para encontrar o freelancer ideal para o seu projeto?" [level=2] [ref=f6e110]
+    - link "Anuncie uma vaga agora!" [ref=f6e111] [cursor=pointer]:
+      - /url: /project/new
+  - contentinfo [ref=f6e112]:
+    - generic [ref=f6e113]:
+      - generic [ref=f6e114]:
+        - paragraph [ref=f6e115]: Você é um freelancer? Nós conectamos milhares de profissionais a empresas todos os dias.
+        - link "Cadastre-se" [ref=f6e116] [cursor=pointer]:
+          - /url: /register/freelancer
+      - generic [ref=f6e117]:
+        - generic [ref=f6e118]:
+          - heading "99Freelas" [level=3] [ref=f6e119]
+          - list [ref=f6e120]:
+            - listitem [ref=f6e121]:
+              - link "Como funciona" [ref=f6e122] [cursor=pointer]:
+                - /url: /como-funciona
+            - listitem [ref=f6e123]:
+              - link "Blog" [ref=f6e124] [cursor=pointer]:
+                - /url: http://blog.99freelas.com.br
+            - listitem [ref=f6e125]:
+              - link "Central de ajuda" [ref=f6e126] [cursor=pointer]:
+                - /url: https://99freelas.zendesk.com/hc/pt-br
+            - listitem [ref=f6e127]:
+              - link "Termos de uso" [ref=f6e128] [cursor=pointer]:
+                - /url: /termos
+            - listitem [ref=f6e129]:
+              - link "Política de privacidade" [ref=f6e130] [cursor=pointer]:
+                - /url: /privacidade
+        - generic [ref=f6e131]:
+          - heading "Para Empresas" [level=3] [ref=f6e132]
+          - list [ref=f6e133]:
+            - listitem [ref=f6e134]:
+              - link "Área de empresa" [ref=f6e135] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f6e136]:
+              - link "Cadastro de empresa" [ref=f6e137] [cursor=pointer]:
+                - /url: /register/client
+            - listitem [ref=f6e138]:
+              - link "Como funciona" [ref=f6e139] [cursor=pointer]:
+                - /url: /como-funciona?for=client
+            - listitem [ref=f6e140]:
+              - link "Publique seu projeto" [ref=f6e141] [cursor=pointer]:
+                - /url: /project/new
+            - listitem [ref=f6e142]:
+              - link "Lista de freelancers" [ref=f6e143] [cursor=pointer]:
+                - /url: /freelancers
+        - generic [ref=f6e144]:
+          - heading "Para Freelancers" [level=3] [ref=f6e145]
+          - list [ref=f6e146]:
+            - listitem [ref=f6e147]:
+              - link "Área de freelancer" [ref=f6e148] [cursor=pointer]:
+                - /url: /dashboard
+            - listitem [ref=f6e149]:
+              - link "Cadastro de freelancer" [ref=f6e150] [cursor=pointer]:
+                - /url: /register/freelancer
+            - listitem [ref=f6e151]:
+              - link "Como funciona" [ref=f6e152] [cursor=pointer]:
+                - /url: /como-funciona?for=freelancer
+            - listitem [ref=f6e153]:
+              - link "Lista de projetos" [ref=f6e154] [cursor=pointer]:
+                - /url: /projects
+        - generic [ref=f6e155]:
+          - heading "Siga-nos" [level=3] [ref=f6e156]
+          - list [ref=f6e157]:
+            - listitem [ref=f6e158]:
+              - link "Facebook" [ref=f6e159] [cursor=pointer]:
+                - /url: https://www.facebook.com/99freelas
+            - listitem [ref=f6e160]:
+              - link "Twitter" [ref=f6e161] [cursor=pointer]:
+                - /url: https://twitter.com/99freelas
+            - listitem [ref=f6e162]:
+              - link "Linkedin" [ref=f6e163] [cursor=pointer]:
+                - /url: http://www.linkedin.com/company/5050773
+            - listitem [ref=f6e164]:
+              - link "Google +" [ref=f6e165] [cursor=pointer]:
+                - /url: https://plus.google.com/116098932737275899436?rel=publisher
+  - generic [ref=f6e166]:
+    - generic [ref=f6e167] [cursor=pointer]
+    - generic [ref=f6e168]:
+      - text: Nós fazemos uso de cookies em nosso site para melhorar a sua experiência. Ao utilizar a 99Freelas, você aceita o uso de cookies de acordo com a nossa
+      - link "política de privacidade" [ref=f6e169] [cursor=pointer]:
+        - /url: /privacidade
+      - text: .
+```

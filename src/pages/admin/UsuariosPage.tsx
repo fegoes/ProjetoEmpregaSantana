@@ -1,150 +1,160 @@
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import * as React from 'react'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
+import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
+import * as React from 'react'
 import { useAuth } from '@/contexts/AuthContext'
-import { Card, CardContent } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
+import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { AdminAviso, AdminHeader, AdminList, AdminRow, AdminToolbar, MostrarMais, Tag, type AdminFilter } from '@/components/admin/AdminKit'
+import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
+import { useAdminUsuarios, useAtualizarPerfil, useExcluirPerfil, type AdminUsuario } from '@/hooks/useAdmin'
+import { usePaged } from '@/hooks/usePaged'
+import { dataBR } from '@/lib/format'
+import { matchesSearch } from '@/lib/utils'
+import { Users } from 'lucide-react'
 
-function useAllUsers() {
-  return useQuery({
-    queryKey: ['admin', 'usuarios'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('*, user_roles ( role )')
-        .order('created_at', { ascending: false })
-      if (error) throw error
-      return data
-    },
-  })
+type Filtro = 'todos' | 'candidato' | 'autonomo' | 'empresa_owner' | 'admin' | 'inativo'
+
+const PERFIL_ROTULO = { candidato: 'Candidato', autonomo: 'Autônomo', empresa_owner: 'Empresa' } as const
+
+const pertence = (u: AdminUsuario, filtro: Filtro) => {
+  switch (filtro) {
+    case 'todos':
+      return true
+    case 'admin':
+      return u.is_admin
+    case 'inativo':
+      return !u.is_active
+    default:
+      return u.user_roles.some((r) => r.role === filtro)
+  }
 }
 
-function useToggleActive() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async ({ id, isActive }: { id: string; isActive: boolean }) => {
-      const { error } = await supabase.from('profiles').update({ is_active: isActive }).eq('id', id)
-      if (error) throw error
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'usuarios'] }),
-  })
+function erroDeExclusao(error: unknown): string {
+  const message = error instanceof Error ? error.message : typeof error === 'object' && error && 'message' in error ? String((error as { message: unknown }).message) : ''
+  if (message.includes('superadmin')) return 'Não foi possível: deve existir pelo menos um superadmin.'
+  if (message.includes('empresas')) return 'Não foi possível excluir: essa pessoa é dona de uma empresa. Exclua ou transfira a empresa primeiro.'
+  if (message.includes('vagas')) return 'Não foi possível excluir: essa pessoa tem vagas cadastradas em nome dela.'
+  return 'Não foi possível concluir. Tente de novo.'
 }
 
-function useDeleteUser() {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from('profiles').delete().eq('id', id)
-      if (error) throw error
-    },
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['admin', 'usuarios'] }),
-  })
-}
-
+/** Todos os usuários da plataforma, de qualquer perfil: ativar, desativar, dar ou tirar o acesso de superadmin, excluir. */
 export default function AdminUsuariosPage() {
-  const { data: usuarios, isLoading } = useAllUsers()
-  const { requestPasswordReset } = useAuth()
-  const toggleActive = useToggleActive()
-  const deleteUser = useDeleteUser()
+  const { user, requestPasswordReset } = useAuth()
+  const { data: usuarios, isLoading, isError } = useAdminUsuarios()
+  const atualizar = useAtualizarPerfil()
+  const excluir = useExcluirPerfil()
+  const [busca, setBusca] = React.useState('')
+  const [filtro, setFiltro] = React.useState<Filtro>('todos')
+  const [aviso, setAviso] = React.useState<{ tipo: 'erro' | 'ok'; texto: string } | null>(null)
+
   const [passwordTarget,setPasswordTarget] = React.useState<{id:string;name:string}|null>(null)
   const [password,setPassword] = React.useState('')
   const [confirmation,setConfirmation] = React.useState('')
   const [manualMessage,setManualMessage] = React.useState('')
   const manual = useMutation({mutationFn:async()=>{const {data,error}=await supabase.functions.invoke<{ok:boolean;auditPending?:boolean;error?:string}>('admin-password',{body:{userId:passwordTarget?.id,password}});if(error||data?.ok!==true)throw new Error('Não foi possível alterar. Confira sua sessão, a senha e a disponibilidade do serviço.');return data},onSuccess:(data)=>{setPassword('');setConfirmation('');setPasswordTarget(null);setManualMessage('Nova senha definida. Nenhum link de redefinição foi solicitado por e-mail.'+(data.auditPending?' A confirmação do registro de auditoria ficou pendente.':'')) }})
-  const [deleteError, setDeleteError] = React.useState<string | null>(null)
-  const [resetSentFor, setResetSentFor] = React.useState<string | null>(null)
-  const [resetError, setResetError] = React.useState<string | null>(null)
 
-  const handleSendReset = async (id: string, email: string | null) => {
-    if (!email) return
-    setResetError(null)
-    setResetSentFor(null)
-    const { error } = await requestPasswordReset(email)
-    if (error) {
-      setResetError(error)
-      return
-    }
-    setResetSentFor(id)
-  }
+  const lista = usuarios ?? []
+  const filtros: AdminFilter<Filtro>[] = [
+    { value: 'todos', label: 'Todos', count: lista.length },
+    { value: 'candidato', label: 'Candidatos', count: lista.filter((u) => pertence(u, 'candidato')).length },
+    { value: 'autonomo', label: 'Autônomos', count: lista.filter((u) => pertence(u, 'autonomo')).length },
+    { value: 'empresa_owner', label: 'Empresas', count: lista.filter((u) => pertence(u, 'empresa_owner')).length },
+    { value: 'admin', label: 'Superadmins', count: lista.filter((u) => u.is_admin).length },
+    { value: 'inativo', label: 'Inativos', count: lista.filter((u) => !u.is_active).length },
+  ]
+  const visiveis = lista.filter((u) => pertence(u, filtro) && matchesSearch(busca, u.full_name, u.email, u.phone, u.city))
+  const { shown, remaining, more } = usePaged(visiveis, 30, `${filtro}|${busca}`)
 
-  const handleDelete = (id: string, nome: string) => {
-    if (
-      !window.confirm(
-        `Excluir "${nome}" permanentemente? Currículos, candidaturas e perfil de autônomo dessa pessoa serão apagados junto. Essa ação não pode ser desfeita.`,
-      )
+  const mudar = (u: AdminUsuario, changes: { is_active?: boolean; is_admin?: boolean }, ok: string, confirmacao?: string) => {
+    if (confirmacao && !window.confirm(confirmacao)) return
+    setAviso(null)
+    atualizar.mutate(
+      { id: u.id, changes },
+      { onSuccess: () => setAviso({ tipo: 'ok', texto: ok }), onError: (e) => setAviso({ tipo: 'erro', texto: erroDeExclusao(e) }) },
     )
-      return
-    setDeleteError(null)
-    deleteUser.mutate(id, {
-      onError: (err) => {
-        const message = err instanceof Error ? err.message : String(err)
-        if (message.includes('empresas')) {
-          setDeleteError('Não foi possível excluir: essa pessoa é dona de uma empresa. Exclua a empresa primeiro.')
-        } else if (message.includes('vagas')) {
-          setDeleteError('Não foi possível excluir: essa pessoa tem vagas cadastradas em nome dela.')
-        } else {
-          setDeleteError('Não foi possível excluir esse usuário.')
-        }
-      },
-    })
   }
+
+  const apagar = (u: AdminUsuario) => {
+    const nome = u.full_name ?? u.email ?? 'este usuário'
+    if (!window.confirm(`Excluir "${nome}" para sempre? Currículos, candidaturas e perfil de autônomo dessa pessoa serão apagados junto. Não dá para desfazer.`)) return
+    setAviso(null)
+    excluir.mutate(u.id, { onSuccess: () => setAviso({ tipo: 'ok', texto: `${nome} foi excluído.` }), onError: (e) => setAviso({ tipo: 'erro', texto: erroDeExclusao(e) }) })
+  }
+
+  const redefinir = async (u: AdminUsuario) => {
+    if (!u.email) return
+    setAviso(null)
+    const { error } = await requestPasswordReset(u.email)
+    setAviso(error ? { tipo: 'erro', texto: error } : { tipo: 'ok', texto: `Enviamos o link para redefinir a senha para ${u.email}.` })
+  }
+
+  const ocupado = atualizar.isPending || excluir.isPending
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-2xl font-extrabold tracking-tight">Cadastro de usuários</h1>
-      <p className="text-sm text-muted-foreground">Contas criadas pela plataforma não recebem acesso administrativo. Essa permissão é definida fora deste cadastro, apenas para operadores autorizados.</p>
+      <AdminHeader title="Usuários" description="Todas as pessoas cadastradas, de qualquer perfil: candidatos, autônomos, donos de empresa e superadmins." />
+      <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por nome ou e-mail" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
+
       {manualMessage&&<p role="status" className="text-sm text-primary">{manualMessage}</p>}
       {passwordTarget&&<form className="max-w-xl space-y-4 rounded-xl border bg-card p-5" onSubmit={e=>{e.preventDefault();if(password!==confirmation)return;manual.mutate()}}><h2 className="font-bold">Definir senha para {passwordTarget.name}</h2><p className="text-sm text-muted-foreground">A nova senha substitui a anterior sem solicitar um link por e-mail.</p><Label htmlFor="manual-password">Nova senha</Label><p id="manual-password-help" className="text-xs text-muted-foreground">Use entre 12 e 128 caracteres. Combine palavras para criar uma senha longa e exclusiva.</p><Input aria-describedby="manual-password-help" id="manual-password" type="password" autoComplete="new-password" minLength={12} maxLength={128} required value={password} disabled={manual.isPending} onChange={e=>setPassword(e.target.value)} /><Label htmlFor="confirm-password">Confirmar nova senha</Label><Input id="confirm-password" type="password" autoComplete="new-password" required value={confirmation} disabled={manual.isPending} onChange={e=>setConfirmation(e.target.value)} />{confirmation&&password!==confirmation&&<p role="alert" className="text-sm text-destructive">As senhas precisam ser iguais.</p>}{manual.isError&&<p role="alert" className="text-sm text-destructive">Não foi possível definir a senha. Confira sua sessão, a política de senhas e o serviço de administração.</p>}<div className="flex flex-wrap gap-3"><Button variant="cta" disabled={manual.isPending||password.length<12||password!==confirmation}>{manual.isPending?'Alterando…':'Definir nova senha'}</Button><Button type="button" variant="outline" disabled={manual.isPending} onClick={()=>{setPasswordTarget(null);setPassword('');setConfirmation('');manual.reset()}}>Cancelar</Button></div></form>}
-      {deleteError && <p className="text-sm text-destructive">{deleteError}</p>}
-      {resetError && <p className="text-sm text-destructive">{resetError}</p>}
-      {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
-      <div className="flex flex-col gap-2">
-        {usuarios?.map((u) => (
-          <Card key={u.id}>
-            <CardContent className="flex flex-col items-start justify-between gap-4 py-3 xl:flex-row">
-              <div>
-                <p className="font-medium">{u.full_name ?? u.email}</p>
-                <div className="mt-1 flex gap-1">
-                  {u.user_roles?.map((r) => (
-                    <Badge key={r.role} variant="secondary">
-                      {r.role}
-                    </Badge>
-                  ))}
-                  {u.is_admin && <Badge>admin</Badge>}
-                  {!u.is_active && <Badge variant="destructive">inativo</Badge>}
-                </div>
-              </div>
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                {resetSentFor === u.id && <span className="text-xs text-muted-foreground">Link enviado</span>}
-                <Button size="sm" variant="outline" onClick={() => handleSendReset(u.id, u.email)}>
-                  Enviar e-mail de redefinição
-                </Button>
-                <Button size="sm" variant="outline" disabled={manual.isPending} onClick={()=>{setPasswordTarget({id:u.id,name:u.full_name??u.email??'Usuário'});setPassword('');setConfirmation('');manual.reset();setManualMessage('');window.scrollTo({top:0})}}>Definir senha manualmente</Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => toggleActive.mutate({ id: u.id, isActive: !u.is_active })}
-                >
-                  {u.is_active ? 'Desativar' : 'Ativar'}
-                </Button>
 
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="text-destructive hover:text-destructive"
-                  onClick={() => handleDelete(u.id, u.full_name ?? u.email ?? 'usuário')}
-                  disabled={deleteUser.isPending}
-                >
-                  Excluir
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {aviso && <AdminAviso kind={aviso.tipo}>{aviso.texto}</AdminAviso>}
+      {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
+      {isError && <AdminAviso>Não foi possível carregar os usuários. Recarregue a página.</AdminAviso>}
+
+      {usuarios && visiveis.length === 0 && (
+        <EmptyState icon={Users} title="Nenhum usuário encontrado" description={busca ? 'Tente outro nome ou e-mail.' : 'Não há ninguém neste grupo.'} />
+      )}
+
+      {shown.length > 0 && (
+        <AdminList>
+          {shown.map((u) => {
+            const eu = u.id === user?.id
+            const nome = u.full_name ?? u.email ?? 'Sem nome'
+            return (
+              <AdminRow
+                key={u.id}
+                avatar={<InitialsAvatar name={nome} />}
+                title={nome}
+                badges={
+                  <>
+                    {u.is_admin && <Tag tone="blue">Superadmin</Tag>}
+                    {u.user_roles.map((r) => (
+                      <Tag key={r.role}>{PERFIL_ROTULO[r.role]}</Tag>
+                    ))}
+                    {!u.is_active && <Tag tone="red">Inativo</Tag>}
+                    {eu && <Tag tone="orange">Você</Tag>}
+                  </>
+                }
+                subtitle={u.email}
+                meta={[u.city && `${u.city}${u.state ? `, ${u.state}` : ''}`, u.phone, `cadastro em ${dataBR(u.created_at)}`].filter(Boolean).join(' · ')}
+                actions={
+                  <>
+                <Button size="sm" variant="outline" disabled={manual.isPending} onClick={()=>{setPasswordTarget({id:u.id,name:u.full_name??u.email??'Usuário'});setPassword('');setConfirmation('');manual.reset();setManualMessage('');window.scrollTo({top:0})}}>Definir senha manualmente</Button>
+                    <Button size="sm" variant="outline" disabled={!u.email} onClick={() => void redefinir(u)}>
+                      Redefinir senha
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      disabled={ocupado || eu}
+                      onClick={() => mudar(u, { is_active: !u.is_active }, u.is_active ? `${nome} foi desativado.` : `${nome} foi ativado.`, u.is_active ? `Desativar ${nome}? A pessoa não consegue mais entrar.` : undefined)}
+                    >
+                      {u.is_active ? 'Desativar' : 'Ativar'}
+                    </Button>
+                    <Button size="sm" variant="ghost" className="text-destructive-ink" disabled={ocupado || eu} onClick={() => apagar(u)}>
+                      Excluir
+                    </Button>
+                  </>
+                }
+              />
+            )
+          })}
+        </AdminList>
+      )}
+      <MostrarMais restantes={remaining} onMais={more} />
     </div>
   )
 }

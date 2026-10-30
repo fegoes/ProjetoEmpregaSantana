@@ -1,14 +1,33 @@
-import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
+import { usePaginasNoMenu } from '@/hooks/usePaginasInstitucionais'
 import { Navbar } from '@/components/layout/Navbar'
-import { PanelLayout } from '@/components/layout/PanelLayout'
-import { useAuth } from '@/contexts/AuthContext'
 import { Logo } from '@/components/brand/Logo'
 
+const FOOTER_LINKS = [
+  { to: '/explorar', label: 'Explorar' },
+  { to: '/sobre', label: 'Sobre' },
+  { to: '/blog', label: 'Conteúdos' },
+  { to: '/planos', label: 'Planos' },
+  { to: '/termos', label: 'Termos' },
+  { to: '/privacidade', label: 'Privacidade' },
+  { to: '/lgpd', label: 'LGPD' },
+]
+
+/** Moldura padrão das telas do site: largura máxima e margens laterais. As páginas montadas no painel ocupam a tela inteira e ficam fora dela. */
+export function PageContainer() {
+  return (
+    <div className="mx-auto w-full max-w-6xl px-4 py-8">
+      <Outlet />
+    </div>
+  )
+}
+
 export function RootLayout() {
-  const { pathname } = useLocation()
-  const { user } = useAuth()
-  const panel = Boolean(user) && (/^\/(perfil|candidato|autonomo|empresa|admin)(\/|$)/.test(pathname) || pathname === '/empresas')
-  if (/^\/admin(\/|$)/.test(pathname)) return <Outlet />
+  const { data: extraPages } = usePaginasNoMenu()
+  const footerLinks = [
+    ...FOOTER_LINKS,
+    ...(extraPages ?? []).filter((p) => p.show_in_footer).map((p) => ({ to: `/pagina/${p.slug}`, label: p.title })),
+  ]
   return (
     <div className="flex min-h-screen flex-col">
       <a
@@ -18,33 +37,28 @@ export function RootLayout() {
         Pular para o conteúdo
       </a>
       <Navbar />
-      <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        {panel ? <PanelLayout><Outlet /></PanelLayout> : <Outlet />}
+      <main id="main-content" className="w-full flex-1">
+        <Outlet />
       </main>
-      <footer className="border-t bg-secondary/40">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <div><img src="/illustrations/nossa-gente.png" alt="" width="1536" height="1024" loading="lazy" className="mb-3 h-28 w-44 object-contain" /><Logo size="sm" /></div>
-          <nav className="flex flex-wrap gap-x-5 gap-y-2 text-muted-foreground">
-            <Link to="/blog" className="hover:text-primary">Dicas de carreira</Link>
-            <Link to="/sobre" className="hover:text-primary">
-              Sobre
-            </Link>
-            <Link to="/planos" className="hover:text-primary">
-              Planos
-            </Link>
-            <Link to="/termos" className="hover:text-primary">
-              Termos
-            </Link>
-            <Link to="/privacidade" className="hover:text-primary">
-              Privacidade
-            </Link>
-            <Link to="/lgpd" className="hover:text-primary">
-              LGPD
-            </Link>
+      <footer className="border-t bg-secondary/60">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 py-8 text-sm sm:flex-row sm:items-start sm:justify-between">
+          <div className="flex flex-col gap-3">
+            <Logo size="sm" />
+            <p className="max-w-xs text-muted-foreground">
+              Somos a sua conexão de empregabilidade no sertão, desde agosto de 2022.
+            </p>
+          </div>
+          <nav aria-label="Rodapé" className="-mx-2 flex flex-wrap text-muted-foreground">
+            {footerLinks.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="inline-flex h-11 items-center px-2 hover:text-primary hover:underline sm:h-9"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
-          <p className="max-w-xs text-muted-foreground sm:text-right">
-            Somos a sua conexão de empregabilidade no sertão — desde agosto de 2022.
-          </p>
         </div>
       </footer>
     </div>
