@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { CnpjInput } from '@/components/fields/MaskedInputs'
+import { SegmentSelect } from '@/components/SegmentSelect'
 import { FormError } from '@/components/auth/FormError'
 import { isValidCnpj } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
@@ -67,8 +68,8 @@ export default function EmpresaOnboardingPage() {
             <CnpjInput id="cnpj" value={cnpj} onChange={setCnpj} />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="sector">Setor</Label>
-            <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />
+            <Label htmlFor="sector">Segmento</Label>
+            <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
           {error && <FormError>{error}</FormError>}
           <Button type="submit" variant="cta" disabled={loading}>

@@ -51,6 +51,7 @@ const AdminPlanosPage = lazy(() => import('@/pages/admin/PlanosPage'))
 const AdminVagasPage = lazy(() => import('@/pages/admin/VagasPage'))
 const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
+const AdminCategoriasPage = lazy(() => import('@/pages/admin/CategoriasPage'))
 
 function RouteFallback() {
   return (
@@ -134,6 +135,7 @@ export default function App() {
               <Route path="admin/planos" element={<AdminPlanosPage />} />
               <Route path="admin/vagas" element={<AdminVagasPage />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
+              <Route path="admin/categorias" element={<AdminCategoriasPage />} />
               <Route path="admin/ads" element={<AdminAdsPage />} />
             </Route>
           </Route>

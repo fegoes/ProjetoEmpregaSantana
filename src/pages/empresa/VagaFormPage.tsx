@@ -10,7 +10,6 @@ import { DEFAULT_UF } from '@/lib/masks'
 import type { EmploymentType, PricingModelVaga, VagaStatus } from '@/types/database'
 import { BlocksEditor } from '@/components/BlocksEditor'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
-import { IconPickerField } from '@/components/IconPickerField'
 import { CategorySelect } from '@/components/CategorySelect'
 import { CityField } from '@/components/fields/CityField'
 import { CurrencyInput } from '@/components/fields/MaskedInputs'
@@ -55,7 +54,6 @@ export default function VagaFormPage() {
   const [locationState, setLocationState] = React.useState<string>(DEFAULT_UF)
   const [isRemote, setIsRemote] = React.useState(false)
   const [photoUrls, setPhotoUrls] = React.useState<string[]>([])
-  const [iconKey, setIconKey] = React.useState<string | null>(null)
   const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
@@ -73,7 +71,6 @@ export default function VagaFormPage() {
     setLocationState(existing.location_state ?? DEFAULT_UF)
     setIsRemote(existing.is_remote)
     setPhotoUrls(existing.photo_urls ?? [])
-    setIconKey(existing.icon_key ?? null)
   }, [existing])
 
   const handleSave = async (status: VagaStatus) => {
@@ -117,7 +114,6 @@ export default function VagaFormPage() {
         location_state: isRemote ? null : locationState,
         is_remote: isRemote,
         photo_urls: photoUrls,
-        icon_key: iconKey,
         status,
       })
       navigate(`/empresa/vagas/${saved.id}/editar`)
@@ -240,16 +236,6 @@ export default function VagaFormPage() {
         ) : (
           <p className="text-sm text-muted-foreground">Salve a vaga como rascunho para poder adicionar fotos.</p>
         )}
-
-        <details className="group rounded-xl border px-4 py-3">
-          <summary className="flex min-h-9 cursor-pointer items-center justify-between gap-2 text-sm font-medium [&::-webkit-details-marker]:hidden">
-            Ícone da vaga (usado quando não há foto)
-            <span className="text-muted-foreground group-open:hidden">Escolher</span>
-          </summary>
-          <div className="pt-3">
-            <IconPickerField value={iconKey} onChange={setIconKey} />
-          </div>
-        </details>
 
         {error && <FormError>{error}</FormError>}
 

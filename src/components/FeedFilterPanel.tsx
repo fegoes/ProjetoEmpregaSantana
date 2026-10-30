@@ -1,6 +1,7 @@
 import * as React from 'react'
 import type { ReactNode } from 'react'
 import { useCategories } from '@/hooks/useCategories'
+import { isActive } from '@/lib/categories'
 import {
   EMPLOYMENT_TYPE_OPTIONS,
   PRICING_MODEL_OPTIONS,
@@ -53,7 +54,11 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
 }
 
 export function FeedFilterPanel({ value, onChange, layout = 'sidebar' }: FeedFilterPanelProps) {
-  const { data: categories } = useCategories()
+  const { data: allCategories } = useCategories()
+  const categories = React.useMemo(
+    () => allCategories?.filter((c) => c.kind !== 'empresa' && isActive(c)),
+    [allCategories],
+  )
   const [showAllCategories, setShowAllCategories] = React.useState(false)
   const sheet = layout === 'sheet'
   const optionsClass = sheet ? 'flex flex-wrap gap-2' : 'flex flex-col'

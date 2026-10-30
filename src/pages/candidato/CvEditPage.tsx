@@ -2,6 +2,8 @@ import * as React from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCvVariant, useSaveCvVariant } from '@/hooks/useCvVariants'
+import { useCategories } from '@/hooks/useCategories'
+import { activeFor } from '@/lib/categories'
 import type { CvEducation, CvExperience } from '@/types/database'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { ExperienceEditor } from '@/components/ExperienceEditor'
@@ -14,7 +16,7 @@ import { CepField } from '@/components/fields/CepField'
 import { addressLineFromCep } from '@/lib/cep'
 import { maskPhone } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { safeInternalPath } from '@/lib/utils'
+import { cn, safeInternalPath } from '@/lib/utils'
 
 export default function CvEditPage() {
   const { id } = useParams<{ id: string }>()
@@ -24,6 +26,8 @@ export default function CvEditPage() {
   const voltar = safeInternalPath(searchParams.get('voltar'))
   const { data: cv, isLoading } = useCvVariant(id)
   const saveCv = useSaveCvVariant()
+  const { data: categories } = useCategories()
+  const [interests, setInterests] = React.useState<string[]>([])
 
   const [title, setTitle] = React.useState('')
   const [contactEmail, setContactEmail] = React.useState('')
@@ -41,6 +45,7 @@ export default function CvEditPage() {
     setTitle(cv.title)
     setContactEmail(cv.contact_email ?? profile?.email ?? '')
     setContactPhone(maskPhone(cv.contact_phone ?? profile?.phone ?? ''))
+    setInterests(cv.categories ?? [])
     setAddress(cv.address ?? '')
     setSummaryHtml(cv.summary_html ?? '')
     setExperiences(cv.experiences)
@@ -66,6 +71,7 @@ export default function CvEditPage() {
         .split(',')
         .map((s) => s.trim())
         .filter(Boolean),
+      ...(interests.length > 0 || (cv?.categories?.length ?? 0) > 0 ? { categories: interests } : {}),
       is_default: isDefault,
     })
     navigate(voltar ?? '/candidato/cv')
@@ -136,6 +142,40 @@ export default function CvEditPage() {
               onChange={(e) => setAddress(e.target.value)}
               placeholder="Rua, número, bairro, cidade/UF"
             />
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Áreas de interesse</CardTitle>
+          <CardDescription>Em que tipo de vaga você quer trabalhar? Escolha quantas quiser.</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div role="group" aria-label="Áreas de interesse" className="flex flex-wrap gap-2">
+            {activeFor(categories, 'vaga').map((category) => {
+              const selected = interests.includes(category.slug)
+              return (
+                <button
+                  key={category.slug}
+                  type="button"
+                  aria-pressed={selected}
+                  onClick={() =>
+                    setInterests((current) =>
+                      selected ? current.filter((slug) => slug !== category.slug) : [...current, category.slug],
+                    )
+                  }
+                  className={cn(
+                    'h-10 rounded-full border px-4 text-sm font-medium transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none',
+                    selected
+                      ? 'border-brand-ink bg-brand-ink text-white'
+                      : 'bg-card text-foreground hover:border-primary/50',
+                  )}
+                >
+                  {category.label}
+                </button>
+              )
+            })}
           </div>
         </CardContent>
       </Card>

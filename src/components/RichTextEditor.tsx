@@ -39,19 +39,15 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
     onUpdate: ({ editor }) => onChange(editor.getHTML()),
     editorProps: {
       attributes: {
-        class: 'px-3 py-2.5 text-base md:text-sm focus:outline-none',
+        class:
+          'rounded-md border border-input bg-transparent px-3 py-2.5 text-base transition-[color,box-shadow] outline-none md:text-sm focus:border-ring focus:ring-[3px] focus:ring-ring/50',
       },
     },
   })
 
   return (
-    <div
-      className={cn(
-        'rich-editor overflow-hidden rounded-md border border-input bg-card shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-[3px] focus-within:ring-ring/50',
-        className,
-      )}
-    >
-      <div role="toolbar" aria-label="Formatação do texto" className="flex flex-wrap gap-1 border-b bg-secondary/60 p-1">
+    <div className={cn('rich-editor flex flex-col gap-1.5', className)}>
+      <div role="toolbar" aria-label="Formatação do texto" className="flex flex-wrap gap-1">
         {TOOLS.map(({ label, icon: Icon, isActive, run }) => {
           const active = editor ? isActive(editor) : false
           return (
@@ -66,7 +62,9 @@ export function RichTextEditor({ value, onChange, placeholder, className }: Rich
               onClick={() => editor && run(editor)}
               className={cn(
                 'flex h-10 min-w-10 items-center justify-center gap-1.5 rounded-md px-2.5 text-sm font-medium transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none sm:px-3',
-                active ? 'bg-primary text-primary-foreground' : 'text-foreground hover:bg-muted',
+                active
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-secondary text-foreground hover:bg-accent',
               )}
             >
               <Icon className="size-4.5" />

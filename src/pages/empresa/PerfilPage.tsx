@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo } from '@/lib/storage'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { BlocksEditor } from '@/components/BlocksEditor'
+import { SegmentSelect } from '@/components/SegmentSelect'
 import { ImageUploadField } from '@/components/ImageUploadField'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { Button } from '@/components/ui/button'
@@ -89,6 +90,7 @@ export default function EmpresaPerfilPage() {
     setSaving(true)
     setSaved(false)
     setError(null)
+    const zipChanged = zipCode !== (empresa.zip_code ?? '')
     const { error: saveError } = await supabase
       .from('empresas')
       .update({
@@ -98,7 +100,7 @@ export default function EmpresaPerfilPage() {
         description_html: descriptionHtml,
         logo_url: logoUrl,
         address,
-        zip_code: zipCode || null,
+        ...(zipChanged ? { zip_code: zipCode || null } : {}),
         city: city.trim() || null,
         state: city.trim() ? uf : null,
         address_visible: addressVisible,
@@ -141,8 +143,8 @@ export default function EmpresaPerfilPage() {
             <Input id="nomeFantasia" value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
           </div>
           <div className="flex flex-col gap-1.5">
-            <Label htmlFor="sector">Setor</Label>
-            <Input id="sector" value={sector} onChange={(e) => setSector(e.target.value)} />
+            <Label htmlFor="sector">Segmento</Label>
+            <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="website">Site</Label>

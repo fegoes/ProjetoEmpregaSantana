@@ -2,6 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { FileText } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { useCvVariants, useDeleteCvVariant, useSaveCvVariant } from '@/hooks/useCvVariants'
+import { useCategories } from '@/hooks/useCategories'
 import { EmptyState } from '@/components/EmptyState'
 import { Button } from '@/components/ui/button'
 
@@ -9,6 +10,8 @@ export default function CvListPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const { data: cvs, isLoading } = useCvVariants(user?.id)
+  const { data: categories } = useCategories()
+  const labelOf = new Map((categories ?? []).map((c) => [c.slug, c.label]))
   const saveCv = useSaveCvVariant()
   const deleteCv = useDeleteCvVariant()
 
@@ -60,6 +63,12 @@ export default function CvListPage() {
               <p className="text-sm text-muted-foreground">
                 {cv.skills.length > 0 ? cv.skills.join(', ') : 'Nenhuma habilidade adicionada ainda.'}
               </p>
+              {(cv.categories ?? []).length > 0 && (
+                <p className="text-sm">
+                  <span className="text-muted-foreground">Áreas: </span>
+                  {(cv.categories ?? []).map((slug) => labelOf.get(slug) ?? slug).join(', ')}
+                </p>
+              )}
               <div className="mt-auto flex gap-2">
                 <Button asChild size="sm" variant="outline">
                   <Link to={`/candidato/cv/${cv.id}`}>Editar</Link>

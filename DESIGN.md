@@ -191,6 +191,8 @@ Páginas de detalhe: conteúdo à esquerda (descrição com até 68ch) e resumo 
 
 Ritmo: 12px dentro de grupos, 20px de respiro interno dos cards, 32px entre seções.
 
+**Painéis (superadmin, empresa, candidato, autônomo e conta).** Telas de gestão não usam o cabeçalho e o rodapé do site: só o menu lateral e a área de trabalho. Menu de 288px (72px recolhido) em azul profundo no desktop; no celular vira gaveta pela esquerda. No topo do menu, o seletor de perfil (quem tem mais de um troca de painel); o superadmin leva a etiqueta laranja "Superadmin". A faixa superior do painel traz o título do perfil e o botão para o site ("Ver o site", "Encontrar vagas", "Ver meu perfil público"). Item ativo = pílula branca com texto azul profundo.
+
 ## Elevation & Depth
 
 Plano por padrão. A elevação vem da rampa de três neutros (página #F8F8F8 → card #FFFFFF → apoio #F2F2F2) e da borda de 1px. Sombra só onde algo realmente flutua sobre o conteúdo.
@@ -234,6 +236,17 @@ Botões, chips e o seletor de tipo são pílulas (9999px). Cards têm cantos de 
 
 ### Navigation
 - Barra branca de 64px, fixa no topo. Desktop: links em Poppins 500; o ativo fica azul com um traço laranja de 2px embaixo. Celular: botão de menu de 44px que abre painel inferior com itens de 48px. Atalhos por perfil (Candidaturas, Currículos, Minha empresa).
+
+### Painel lateral
+- Fundo azul profundo, itens de 44px com ícone de 20px e texto Poppins 500; grupos com rótulo em caixa alta (Montserrat 600, 12px, branco a 70%). Rodapé do menu: pessoa logada e "Sair".
+- Recolhido, mostra só os ícones (com o nome no `title`). A escolha fica guardada no navegador.
+
+### Descrição em blocos (sanfona)
+- Editor: cada bloco tem título e texto com barra de Negrito, Itálico, Título e Lista (botões de 40px); blocos se separam por filetes, sem caixas. Subir, descer e apagar por bloco; sugestões de título por tipo de texto.
+- Leitura: sanfona com o primeiro bloco aberto. Texto antigo, sem blocos, aparece como parágrafos normais.
+
+### Campos formatados
+- Moeda (R$ 1.518,00, dígitos entram da direita), telefone, CNPJ e CEP com máscara; CEP preenche rua, bairro, cidade e UF; cidade com UF e sugestões oficiais do IBGE.
 
 ### Card-cartaz "VAGA NOVA" (assinatura)
 O card em destaque vira o post da marca: campo azul profundo, título e valor em branco, secundários em branco a 75%, círculo laranja de 80px saindo do canto superior direito e rótulo "★ Destaque" em laranja. Vaga publicada há até 3 dias recebe a etiqueta laranja "Vaga nova".

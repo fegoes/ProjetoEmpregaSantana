@@ -79,7 +79,8 @@ export interface Database {
           id: string
           slug: string
           label: string
-          kind: 'vaga' | 'autonomo' | 'both'
+          kind: 'vaga' | 'autonomo' | 'both' | 'empresa'
+          is_active: boolean
         }
         Insert: Partial<Database['public']['Tables']['categories']['Row']> & {
           slug: string
@@ -228,6 +229,7 @@ export interface Database {
           experiences: CvExperience[]
           education: CvEducation[]
           skills: string[]
+          categories: string[]
           is_default: boolean
           is_public: boolean
           pdf_url: string | null

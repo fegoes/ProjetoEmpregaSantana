@@ -1,4 +1,5 @@
 import { useCategories } from '@/hooks/useCategories'
+import { activeFor } from '@/lib/categories'
 import { NativeSelect } from '@/components/ui/native-select'
 
 interface CategorySelectProps {
@@ -11,7 +12,8 @@ interface CategorySelectProps {
 
 export function CategorySelect({ id, kind, value, onChange, className }: CategorySelectProps) {
   const { data: categories } = useCategories()
-  const options = (categories ?? []).filter((c) => c.kind === kind || c.kind === 'both')
+  // Categorias ocultas pelo superadmin saem da lista, mas a já escolhida continua aparecendo
+  const options = activeFor(categories, kind, value)
 
   return (
     <NativeSelect id={id} className={className} value={value} onChange={(e) => onChange(e.target.value)}>

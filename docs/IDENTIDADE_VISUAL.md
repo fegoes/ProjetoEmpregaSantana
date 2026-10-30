@@ -702,6 +702,12 @@ Saída da crítica de design de 2026-10-16 (`.impeccable/critique/`). O registro
 - Dois tokens de sistema novos (não são cores de marca): `--success-ink` e `--destructive-ink`, texto de status sobre o próprio tom lavado (5,2:1 e 5,3:1; os tons base davam 3,2:1 e 3,8:1).
 - Botões sem "levantar" no hover; 44px de altura no celular.
 
+**Bloco 6 — Painéis, campos formatados, blocos e categorias** ✅ **APLICADO**
+- **Painéis sem o site em volta.** Superadmin, empresa, candidato, autônomo e "Minha conta" abrem numa casca própria (menu lateral em `#0D3A66` + área de trabalho), sem cabeçalho e rodapé do site, com botão para o site conforme o perfil. Superadmin deixa de entrar nas áreas de empresa só por ser superadmin. Detalhes em `DESIGN.md` (Layout e Componentes).
+- **Campos:** moeda, telefone, CNPJ e CEP formatados; cidade com UF e lista do IBGE; salário e cidade/UF passam a existir no cadastro de vaga.
+- **Descrição em blocos** (sanfona) com barra de formatação no editor.
+- **Categorias** gerenciadas pelo superadmin em `/admin/categorias` (vagas, autônomos e segmentos de empresa). Migrations `0021` e `0022` (rodar `supabase db push`).
+
 ### 9.2 Dívidas conhecidas que a migração deveria resolver junto
 
 - **Não há alternador de tema.** O bloco `.dark` existe, é completo e está validado — mas nenhum controle na UI o ativa. O site sempre abre claro. Já registrado em `docs/PRD.md` §8.1.

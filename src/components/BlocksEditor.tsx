@@ -99,13 +99,13 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
 
   return (
     <div className="flex flex-col gap-3">
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col divide-y border-y">
         {blocks.map((block, index) => {
           const open = openIds.has(block.id)
           const empty = htmlText(block.html).length === 0
           return (
-            <li key={block.id} id={`block-${block.id}`} className="rounded-xl border bg-background">
-              <div className="flex items-center gap-1 p-2">
+            <li key={block.id} id={`block-${block.id}`} className="py-2">
+              <div className="flex items-center gap-1">
                 <button
                   type="button"
                   onClick={() => toggle(block.id)}
@@ -126,7 +126,7 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
               </div>
 
               {open && (
-                <div id={`block-body-${block.id}`} className="flex flex-col gap-3 px-2 pb-2 sm:px-3 sm:pb-3">
+                <div id={`block-body-${block.id}`} className="flex flex-col gap-3 pt-2 pb-1 sm:pl-12">
                   <RichTextEditor value={block.html} onChange={(html) => update(block.id, { html })} placeholder="Escreva aqui…" />
                   {empty && (
                     <p className="text-sm text-muted-foreground">Bloco sem texto: ele não aparece para quem lê.</p>
