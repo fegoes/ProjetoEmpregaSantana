@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import type { UserRole } from '@/types/database'
@@ -61,11 +60,6 @@ function CandidatoShortcuts({ userId }: { userId: string }) {
 
 export default function PerfilPage() {
   const { user, profile, roles, isAdmin } = useAuth()
-  const navigate = useNavigate()
-
-  React.useEffect(() => {
-    if (isAdmin) navigate('/admin', { replace: true })
-  }, [isAdmin, navigate])
 
   const firstName = profile?.full_name?.split(' ')[0]
   const missingRoles = ADD_ROLE_OPTIONS.filter((option) => !roles.includes(option.role))
@@ -74,10 +68,17 @@ export default function PerfilPage() {
     <div className="flex max-w-2xl flex-col gap-8">
       <div>
         <h1 className="text-2xl font-extrabold tracking-tight">Olá{firstName ? `, ${firstName}` : ''}</h1>
-        <Link to="/perfil/conta" className="mt-1 inline-block text-sm font-medium text-primary hover:underline">
-          Configurações da conta
-        </Link>
+        <p className="mt-1 text-sm text-muted-foreground">Estes são os seus perfis no EmpregaSantana.</p>
       </div>
+
+      {isAdmin && (
+        <section className="flex flex-col gap-3">
+          <h2 className="text-lg font-bold">Superadmin</h2>
+          <ul className="divide-y overflow-hidden rounded-2xl border bg-card">
+            <Shortcut to="/admin" title="Painel da plataforma" detail="Empresas, usuários, vagas, planos, categorias e páginas do site" />
+          </ul>
+        </section>
+      )}
 
       {roles.includes('candidato') && user && <CandidatoShortcuts userId={user.id} />}
 
@@ -101,7 +102,7 @@ export default function PerfilPage() {
         </section>
       )}
 
-      {roles.length === 0 && (
+      {roles.length === 0 && !isAdmin && (
         <p className="text-[15px] text-muted-foreground">Escolha abaixo como você quer usar o EmpregaSantana.</p>
       )}
 

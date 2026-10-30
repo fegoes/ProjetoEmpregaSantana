@@ -3,6 +3,7 @@ import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
 import type { Database, UserRole } from '@/types/database'
 import { translateAuthError } from '@/lib/authErrors'
+import { landingPathFor } from '@/lib/panelNav'
 
 type Profile = Database['public']['Tables']['profiles']['Row']
 
@@ -13,7 +14,8 @@ interface AuthContextValue {
   roles: UserRole[]
   isAdmin: boolean
   loading: boolean
-  signIn: (email: string, password: string) => Promise<{ error: string | null }>
+  /** `destination`: para onde levar a pessoa depois do login (superadmin e empresa ao painel; os demais ao site). */
+  signIn: (email: string, password: string) => Promise<{ error: string | null; destination?: string }>
   signUp: (
     email: string,
     password: string,
@@ -94,19 +96,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) return { error: translateAuthError(error.message) }
 
+    let destination: string | undefined
     if (data.user) {
-      const { data: activeCheck } = await supabase
-        .from('profiles')
-        .select('is_active')
-        .eq('id', data.user.id)
-        .single()
-      if (!activeCheck || !activeCheck.is_active) {
+      const [{ data: profileRow }, { data: roleRows }] = await Promise.all([
+        supabase.from('profiles').select('is_active, is_admin').eq('id', data.user.id).single(),
+        supabase.from('user_roles').select('role').eq('user_id', data.user.id),
+      ])
+      if (!profileRow || !profileRow.is_active) {
         await supabase.auth.signOut()
         return { error: 'Sua conta foi desativada. Entre em contato com o suporte.' }
       }
+      destination = landingPathFor({
+        isAdmin: profileRow.is_admin,
+        roles: (roleRows ?? []).map((r) => r.role as UserRole),
+      })
     }
 
-    return { error: null }
+    return { error: null, destination }
   }
 
   const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName) => {
@@ -123,7 +129,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .from('user_roles')
       .insert({ user_id: data.user.id, role: initialRole })
 
-    return { error: roleError ? 'Sua conta foi criada, mas não conseguimos salvar o perfil escolhido. Entre e adicione o perfil em "Meu perfil".' : null }
+    return { error: roleError ? 'Sua conta foi criada, mas não conseguimos salvar o perfil escolhido. Entre e adicione o perfil em "Meus perfis".' : null }
   }
 
   const signOut = async () => {

@@ -23,13 +23,13 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
-    const { error: signInError } = await signIn(email, password)
+    const { error: signInError, destination } = await signIn(email, password)
     setLoading(false)
     if (signInError) {
       setError(signInError)
       return
     }
-    navigate(redirect ?? '/perfil')
+    navigate(redirect ?? destination ?? '/')
   }
 
   return (

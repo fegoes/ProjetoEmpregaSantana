@@ -1,8 +1,7 @@
 import * as React from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
-import { LogOut, Menu, Settings, User as UserIcon } from 'lucide-react'
+import { LayoutDashboard, LogOut, Menu, Settings } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
-import type { UserRole } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { Logo } from '@/components/brand/Logo'
@@ -15,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { panelPathFor } from '@/lib/panelNav'
 import { cn } from '@/lib/utils'
 
 interface NavItem {
@@ -23,28 +23,15 @@ interface NavItem {
   end?: boolean
 }
 
-const ROLE_LINKS: Record<UserRole, NavItem[]> = {
-  candidato: [
-    { to: '/candidato/candidaturas', label: 'Candidaturas' },
-    { to: '/candidato/cv', label: 'Currículos' },
-  ],
-  empresa_owner: [{ to: '/empresa/painel', label: 'Minha empresa' }],
-  autonomo: [{ to: '/autonomo/perfil', label: 'Meu perfil de autônomo' }],
-}
-
+// O site tem poucos links. Tudo o que é gestão (vagas, candidaturas, currículos,
+// empresa, admin) fica no painel, aberto por "Meu painel".
 function useNavItems(): NavItem[] {
-  const { user, roles, isAdmin } = useAuth()
+  const { user } = useAuth()
   const items: NavItem[] = [
     { to: '/', label: 'Início', end: true },
     { to: '/explorar', label: 'Explorar' },
   ]
-  if (!user) return [...items, { to: '/planos', label: 'Planos' }]
-  items.push({ to: '/empresas', label: 'Empresas' })
-  for (const role of ['candidato', 'empresa_owner', 'autonomo'] as UserRole[]) {
-    if (roles.includes(role)) items.push(...ROLE_LINKS[role])
-  }
-  if (isAdmin) items.push({ to: '/admin', label: 'Admin' })
-  return items
+  return user ? [...items, { to: '/empresas', label: 'Empresas' }] : [...items, { to: '/planos', label: 'Planos' }]
 }
 
 const DESKTOP_LINK = ({ isActive }: { isActive: boolean }) =>
@@ -62,10 +49,11 @@ const SHEET_LINK = ({ isActive }: { isActive: boolean }) =>
   )
 
 export function Navbar() {
-  const { user, profile, signOut } = useAuth()
+  const { user, profile, roles, isAdmin, signOut } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
   const items = useNavItems()
+  const painelPath = panelPathFor({ isAdmin, roles })
   const [menuOpen, setMenuOpen] = React.useState(false)
 
   // Fecha o menu do celular ao trocar de página
@@ -95,6 +83,13 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-1.5">
+          {user && (
+            <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
+              <Link to={painelPath}>
+                <LayoutDashboard /> Meu painel
+              </Link>
+            </Button>
+          )}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -112,13 +107,13 @@ export function Navbar() {
                 <DropdownMenuLabel>{profile?.full_name ?? 'Minha conta'}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/perfil">
-                    <UserIcon /> Meu perfil
+                  <Link to={painelPath}>
+                    <LayoutDashboard /> Meu painel
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/perfil/conta">
-                    <Settings /> Configurações
+                    <Settings /> Minha conta
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
@@ -166,11 +161,13 @@ export function Navbar() {
               <div className="mt-4 flex flex-col gap-2 border-t pt-4">
                 {user ? (
                   <>
-                    <NavLink to="/perfil" end className={SHEET_LINK}>
-                      Meu perfil
-                    </NavLink>
+                    <Button asChild size="lg">
+                      <Link to={painelPath}>
+                        <LayoutDashboard /> Meu painel
+                      </Link>
+                    </Button>
                     <NavLink to="/perfil/conta" className={SHEET_LINK}>
-                      Configurações
+                      Minha conta
                     </NavLink>
                     <button
                       type="button"

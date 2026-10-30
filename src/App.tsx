@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { RootLayout } from '@/components/layout/RootLayout'
+import { PanelLayout } from '@/components/layout/PanelLayout'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 
 const HomePage = lazy(() => import('@/pages/public/HomePage'))
@@ -42,7 +43,6 @@ const EmpresaPerfilPage = lazy(() => import('@/pages/empresa/PerfilPage'))
 const EmpresaPlanoPage = lazy(() => import('@/pages/empresa/PlanoPage'))
 const BancoCurriculosPage = lazy(() => import('@/pages/empresa/BancoCurriculosPage'))
 
-const AdminLayout = lazy(() => import('@/pages/admin/AdminLayout'))
 const AdminDashboardPage = lazy(() => import('@/pages/admin/DashboardPage'))
 const AdminEmpresasPage = lazy(() => import('@/pages/admin/EmpresasPage'))
 const AdminEmpresaDetailPage = lazy(() => import('@/pages/admin/EmpresaDetailPage'))
@@ -64,8 +64,8 @@ export default function App() {
   return (
     <Suspense fallback={<RouteFallback />}>
       <Routes>
+        {/* Site: cabeçalho e rodapé */}
         <Route element={<RootLayout />}>
-          {/* Públicas */}
           <Route index element={<HomePage />} />
           <Route path="vagas/:id" element={<VagaDetailPage />} />
           <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
@@ -82,52 +82,51 @@ export default function App() {
           <Route path="privacidade" element={<PrivacidadePage />} />
           <Route path="lgpd" element={<LgpdPage />} />
 
-          {/* Autenticadas — comum */}
+          {/* Diretório de empresas: só logado, mas faz parte do site */}
           <Route element={<ProtectedRoute />}>
             <Route path="empresas" element={<EmpresasDirectoryPage />} />
+          </Route>
+        </Route>
+
+        {/* Painéis: só o menu lateral e a área de trabalho, sem cabeçalho e rodapé do site */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<PanelLayout />}>
+            {/* Minha conta (todos os perfis) */}
             <Route path="perfil" element={<PerfilPage />} />
             <Route path="perfil/conta" element={<PerfilContaPage />} />
-          </Route>
 
-          {/* Candidato */}
-          <Route element={<ProtectedRoute />}>
+            {/* Candidato */}
             <Route path="candidato/onboarding" element={<CandidatoOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['candidato']} />}>
-            <Route path="candidato/cv" element={<CvListPage />} />
-            <Route path="candidato/cv/:id" element={<CvEditPage />} />
-            <Route path="candidato/candidaturas" element={<CandidaturasPage />} />
-          </Route>
-
-          {/* Autônomo */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="autonomo/onboarding" element={<AutonomoOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['autonomo']} />}>
-            <Route path="autonomo/perfil" element={<AutonomoPerfilPage />} />
-            <Route path="autonomo/plano" element={<AutonomoPlanoPage />} />
-          </Route>
-
-          {/* Empresa */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="empresa/onboarding" element={<EmpresaOnboardingPage />} />
-          </Route>
-          <Route element={<ProtectedRoute roles={['empresa_owner']} />}>
-            <Route element={<EmpresaLayout />}>
-              <Route path="empresa/painel" element={<EmpresaPainelPage />} />
-              <Route path="empresa/vagas" element={<EmpresaVagasListPage />} />
-              <Route path="empresa/vagas/nova" element={<VagaFormPage />} />
-              <Route path="empresa/vagas/:id/editar" element={<VagaFormPage />} />
-              <Route path="empresa/vagas/:id/candidatos" element={<VagaCandidatosPage />} />
-              <Route path="empresa/perfil" element={<EmpresaPerfilPage />} />
-              <Route path="empresa/plano" element={<EmpresaPlanoPage />} />
-              <Route path="empresa/banco-de-curriculos" element={<BancoCurriculosPage />} />
+            <Route element={<ProtectedRoute roles={['candidato']} />}>
+              <Route path="candidato/cv" element={<CvListPage />} />
+              <Route path="candidato/cv/:id" element={<CvEditPage />} />
+              <Route path="candidato/candidaturas" element={<CandidaturasPage />} />
             </Route>
-          </Route>
 
-          {/* Admin */}
-          <Route element={<ProtectedRoute adminOnly />}>
-            <Route element={<AdminLayout />}>
+            {/* Autônomo */}
+            <Route path="autonomo/onboarding" element={<AutonomoOnboardingPage />} />
+            <Route element={<ProtectedRoute roles={['autonomo']} />}>
+              <Route path="autonomo/perfil" element={<AutonomoPerfilPage />} />
+              <Route path="autonomo/plano" element={<AutonomoPlanoPage />} />
+            </Route>
+
+            {/* Empresa (dono de empresa; o superadmin NÃO entra aqui só por ser superadmin) */}
+            <Route path="empresa/onboarding" element={<EmpresaOnboardingPage />} />
+            <Route element={<ProtectedRoute roles={['empresa_owner']} />}>
+              <Route element={<EmpresaLayout />}>
+                <Route path="empresa/painel" element={<EmpresaPainelPage />} />
+                <Route path="empresa/vagas" element={<EmpresaVagasListPage />} />
+                <Route path="empresa/vagas/nova" element={<VagaFormPage />} />
+                <Route path="empresa/vagas/:id/editar" element={<VagaFormPage />} />
+                <Route path="empresa/vagas/:id/candidatos" element={<VagaCandidatosPage />} />
+                <Route path="empresa/perfil" element={<EmpresaPerfilPage />} />
+                <Route path="empresa/plano" element={<EmpresaPlanoPage />} />
+                <Route path="empresa/banco-de-curriculos" element={<BancoCurriculosPage />} />
+              </Route>
+            </Route>
+
+            {/* Superadmin */}
+            <Route element={<ProtectedRoute adminOnly />}>
               <Route path="admin" element={<AdminDashboardPage />} />
               <Route path="admin/empresas" element={<AdminEmpresasPage />} />
               <Route path="admin/empresas/:id" element={<AdminEmpresaDetailPage />} />
