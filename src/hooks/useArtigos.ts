@@ -9,6 +9,7 @@ export type ArtigoInput = Database['public']['Tables']['artigos']['Insert']
 export function useArtigos(admin = false) {
   return useQuery({
     queryKey: ['artigos', admin ? 'admin' : 'public'],
+    staleTime: 30_000, refetchOnWindowFocus: true, refetchInterval: admin ? false : 60_000,
     queryFn: async () => {
       let query = supabase.from('artigos').select('*').order('published_at', { ascending: false, nullsFirst: false }).order('created_at', { ascending: false })
       if (!admin) query = query.eq('status', 'published').lte('published_at', new Date().toISOString())
@@ -26,6 +27,7 @@ export function useArtigos(admin = false) {
 export function useArtigo(slug: string | undefined) {
   return useQuery({
     queryKey: ['artigos', 'detail', slug],
+    staleTime: 30_000, refetchOnWindowFocus: true, refetchInterval: 60_000,
     enabled: Boolean(slug),
     queryFn: async () => {
       const { data, error } = await supabase.from('artigos').select('*').eq('slug', slug!).eq('status', 'published').lte('published_at', new Date().toISOString()).maybeSingle()

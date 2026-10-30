@@ -40,6 +40,12 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['site_appearance']['Row']>
         Relationships: []
       }
+      blog_categories: {
+        Row: { id: string; name: string; slug: string; description: string; is_active: boolean }
+        Insert: { id?: string; name: string; slug: string; description?: string; is_active?: boolean }
+        Update: Partial<Database['public']['Tables']['blog_categories']['Row']>
+        Relationships: []
+      }
       artigos: {
         Row: {
           id: string
@@ -60,6 +66,8 @@ export interface Database {
           author_name: string
           author_id: string | null
           cover_url: string | null
+          category_ids: string[]
+          location: string
           cover_alt: string
           status: 'draft' | 'published' | 'archived'
           published_at: string | null
@@ -248,7 +256,6 @@ export interface Database {
         Row: {
           id: string
           headline: string | null
-          type_slug: string | null
           bio_html: string | null
           desired_role: string | null
           desired_salary_min: number | null
@@ -581,6 +588,12 @@ export interface Database {
       }
     }
     Functions: {
+      admin_manage_process: { Args: { p_action: string; p_id?: string | null; p_data?: unknown }; Returns: string }
+      admin_save_person: { Args: { p_user_id: string; p_details: unknown; p_roles?: string[] }; Returns: string }
+      admin_save_candidate: { Args: { p_user_id: string; p_data: unknown }; Returns: string }
+      admin_delete_candidate: { Args: { p_user_id: string }; Returns: undefined }
+      admin_set_company_member: { Args: { p_empresa: string; p_user: string; p_remove?: boolean }; Returns: undefined }
+
       processo_avancar: { Args: { p_processo: string; p_etapa?: string | null; p_mensagem?: string | null }; Returns: undefined }
       processo_contratar: { Args: { p_processo: string; p_mensagem?: string | null }; Returns: undefined }
       processo_encerrar: { Args: { p_processo: string; p_mensagem?: string | null }; Returns: undefined }

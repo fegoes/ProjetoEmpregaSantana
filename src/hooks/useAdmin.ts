@@ -1,3 +1,4 @@
+import { manageAdminUser } from '@/lib/adminUsers'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import type { Database, UserRole } from '@/types/database'
@@ -49,6 +50,8 @@ export function useAdminEmpresas() {
         donos.length > 0 ? supabase.from('profiles').select('id, full_name, email').in('id', donos) : Promise.resolve({ data: [], error: null }),
         supabase.from('vagas').select('empresa_id'),
       ])
+      if (perfis.error) throw perfis.error
+      if (vagas.error) throw vagas.error
       const donoPor = new Map((perfis.data ?? []).map((p) => [p.id, { full_name: p.full_name, email: p.email }]))
       const vagasPor = contar((vagas.data ?? []).map((v) => v.empresa_id))
       return empresas.map((e) => ({ ...e, dono: donoPor.get(e.owner_id) ?? null, vagas: vagasPor.get(e.id) ?? 0 }))
@@ -198,8 +201,7 @@ export function useExcluirPerfil() {
   const recarregar = useRecarregar()
   return useMutation({
     mutationFn: async (id: string) => {
-      const { error } = await supabase.from('profiles').delete().eq('id', id)
-      if (error) throw error
+      await manageAdminUser({ action: 'delete', userId: id })
     },
     onSuccess: recarregar,
   })

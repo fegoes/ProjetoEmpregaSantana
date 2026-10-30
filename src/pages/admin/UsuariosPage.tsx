@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { adminError } from '@/lib/adminUsers'
 import { useMutation } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { Label } from '@/components/ui/label'
@@ -78,9 +80,9 @@ export default function AdminUsuariosPage() {
 
   const apagar = (u: AdminUsuario) => {
     const nome = u.full_name ?? u.email ?? 'este usuário'
-    if (!window.confirm(`Excluir "${nome}" para sempre? Currículos, candidaturas e perfil de autônomo dessa pessoa serão apagados junto. Não dá para desfazer.`)) return
+    if (!window.confirm(`Excluir "${nome}" para sempre? A conta de acesso, currículos, candidaturas e perfil de autônomo dessa pessoa serão apagados junto. Não dá para desfazer.`)) return
     setAviso(null)
-    excluir.mutate(u.id, { onSuccess: () => setAviso({ tipo: 'ok', texto: `${nome} foi excluído.` }), onError: (e) => setAviso({ tipo: 'erro', texto: erroDeExclusao(e) }) })
+    excluir.mutate(u.id, { onSuccess: () => setAviso({ tipo: 'ok', texto: `${nome} foi excluído.` }), onError: (e) => setAviso({ tipo: 'erro', texto: adminError(e) }) })
   }
 
   const redefinir = async (u: AdminUsuario) => {
@@ -94,7 +96,7 @@ export default function AdminUsuariosPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <AdminHeader title="Usuários" description="Todas as pessoas cadastradas, de qualquer perfil: candidatos, autônomos, donos de empresa e superadmins." />
+      <AdminHeader actions={<Button asChild variant="cta"><Link to="/admin/usuarios/novo">Novo usuário</Link></Button>} title="Usuários" description="Todas as pessoas cadastradas, de qualquer perfil: candidatos, autônomos, donos de empresa e superadmins." />
       <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por nome ou e-mail" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
 
       {manualMessage&&<p role="status" className="text-sm text-primary">{manualMessage}</p>}
@@ -133,6 +135,7 @@ export default function AdminUsuariosPage() {
                 actions={
                   <>
                 <Button size="sm" variant="outline" disabled={manual.isPending} onClick={()=>{setPasswordTarget({id:u.id,name:u.full_name??u.email??'Usuário'});setPassword('');setConfirmation('');manual.reset();setManualMessage('');window.scrollTo({top:0})}}>Definir senha manualmente</Button>
+                    <Button asChild size="sm" variant="outline"><Link to={`/admin/usuarios/${u.id}/editar`}>Consultar / editar</Link></Button>
                     <Button size="sm" variant="outline" disabled={!u.email} onClick={() => void redefinir(u)}>
                       Redefinir senha
                     </Button>

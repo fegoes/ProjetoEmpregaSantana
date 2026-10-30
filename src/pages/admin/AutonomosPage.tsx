@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import * as React from 'react'
 import { Wrench } from 'lucide-react'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
@@ -60,7 +61,7 @@ export default function AdminAutonomosPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <AdminHeader title="Autônomos" description="Os perfis de profissionais que aparecem no site. Pause quem estiver fora das regras e destaque quem merece." />
+      <AdminHeader actions={<Button asChild variant="cta"><Link to="/admin/autonomos/novo">Adicionar</Link></Button>} title="Autônomos" description="Os perfis de profissionais que aparecem no site. Pause quem estiver fora das regras e destaque quem merece." />
       <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por nome, serviço ou cidade" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
 
       {aviso && <AdminAviso kind={aviso.tipo}>{aviso.texto}</AdminAviso>}
@@ -88,6 +89,7 @@ export default function AdminAutonomosPage() {
               meta={`Atende em ${formatLocal(a.service_area_city, a.service_area_state, 'área a combinar')} · ${a.profiles?.email ?? 'sem e-mail'} · cadastro em ${dataBR(a.created_at)}`}
               actions={
                 <>
+                    <Button asChild variant="outline" size="sm"><Link to={`/admin/autonomos/${a.id}/editar`}>Editar</Link></Button>
                   <Button
                     size="sm"
                     variant={a.status === 'active' ? 'outline' : 'default'}

@@ -1,3 +1,4 @@
+import { CompanyMembers } from '@/components/admin/CompanyMembers'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -82,6 +83,8 @@ export default function AdminEmpresaDetailPage() {
         </CardContent>
       </Card>
 
+      <Button asChild variant="outline" className="w-fit"><Link to={`/admin/empresas/${empresa.id}/editar`}>Editar empresa</Link></Button>
+      <CompanyMembers companyId={empresa.id} ownerId={empresa.owner_id} />
       <RichTextRenderer html={empresa.description_html} />
 
       <div>

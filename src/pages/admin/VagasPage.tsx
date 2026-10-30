@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import * as React from 'react'
 import { BriefcaseBusiness } from 'lucide-react'
 import { AdminAviso, AdminHeader, AdminList, AdminRow, AdminToolbar, MostrarMais, Tag, type AdminFilter } from '@/components/admin/AdminKit'
@@ -59,7 +60,7 @@ export default function AdminVagasPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <AdminHeader title="Vagas" description="Todas as vagas da plataforma, de todas as empresas. Pause ou encerre o que estiver fora das regras e destaque o que merece aparecer primeiro." />
+      <AdminHeader actions={<Button asChild variant="cta"><Link to="/admin/vagas/nova">Adicionar</Link></Button>} title="Vagas" description="Todas as vagas da plataforma, de todas as empresas. Pause ou encerre o que estiver fora das regras e destaque o que merece aparecer primeiro." />
       <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por título, empresa ou cidade" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
 
       {aviso && <AdminAviso kind={aviso.tipo}>{aviso.texto}</AdminAviso>}
@@ -87,6 +88,7 @@ export default function AdminVagasPage() {
               meta={`${plural(v.candidaturas, 'candidatura', 'candidaturas')} · criada em ${dataBR(v.created_at)}`}
               actions={
                 <>
+                    <Button asChild variant="outline" size="sm"><Link to={`/admin/vagas/${v.id}/editar`}>Editar</Link></Button>
                   {v.status !== 'published' && (
                     <Button size="sm" disabled={ocupado} onClick={() => mudar(v, { status: 'published' }, 'Vaga publicada.')}>
                       Publicar

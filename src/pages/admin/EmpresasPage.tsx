@@ -71,7 +71,7 @@ export default function AdminEmpresasPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <AdminHeader title="Empresas" description="Aprove os cadastros novos, suspenda quem descumpre as regras, marque as empresas verificadas e veja os dados de cada uma." />
+      <AdminHeader actions={<Button asChild variant="cta"><Link to="/admin/empresas/nova">Adicionar</Link></Button>} title="Empresas" description="Aprove os cadastros novos, suspenda quem descumpre as regras, marque as empresas verificadas e veja os dados de cada uma." />
       <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por nome, CNPJ ou cidade" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
 
       {aviso && <AdminAviso kind={aviso.tipo}>{aviso.texto}</AdminAviso>}
@@ -105,6 +105,7 @@ export default function AdminEmpresasPage() {
                 meta={`Dono: ${e.dono?.full_name ?? e.dono?.email ?? '—'}${e.dono?.email && e.dono.full_name ? ` (${e.dono.email})` : ''} · ${plural(e.vagas, 'vaga', 'vagas')} · cadastro em ${dataBR(e.created_at)}`}
                 actions={
                   <>
+                    <Button asChild variant="outline" size="sm"><Link to={`/admin/empresas/${e.id}/editar`}>Editar</Link></Button>
                     {e.status !== 'active' && (
                       <Button size="sm" disabled={ocupado} onClick={() => mudar(e, { status: 'active' }, `${e.nome_fantasia} está ativa.`)}>
                         {e.status === 'pending' ? 'Aprovar' : 'Reativar'}

@@ -5,7 +5,7 @@ import { editorialImage } from './editorialImages'
 /** Local previews never replace database content or appear in a production build. */
 export const localEditorialPreview: Artigo[] = import.meta.env.DEV ? editorialDrafts.map((draft, index) => {
   const cover = editorialImage(draft.category ?? '')
-  return {
+  return { category_ids: [], location: 'Santana do Ipanema, AL',
     id: `local-editorial-${index}`, slug: draft.slug, title: draft.title,
     excerpt: draft.excerpt ?? '', content_html: draft.content_html ?? '', category: draft.category ?? '',
     author_name: draft.author_name ?? 'Equipe EmpregaSantana', author_id: null,

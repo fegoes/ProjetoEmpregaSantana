@@ -1,3 +1,4 @@
+import { AdminProcessManager } from '@/components/admin/AdminProcessManager'
 import * as React from 'react'
 import { ListChecks } from 'lucide-react'
 import { AdminAviso, AdminHeader, AdminToolbar, MostrarMais, type AdminFilter } from '@/components/admin/AdminKit'
@@ -29,12 +30,13 @@ export default function AdminProcessosPage() {
     <div className="flex flex-col gap-6">
       <AdminHeader
         title="Seleções"
-        description="Os processos de seleção e as contratações em andamento na plataforma, entre candidatos, autônomos e empresas. Você acompanha as etapas, a conversa e os documentos; quem conduz são as partes."
+        description="Os processos de seleção e as contratações em andamento na plataforma, entre candidatos, autônomos e empresas. Consulte etapas, conversas e documentos ou faça a gestão administrativa dos registros."
       />
+      <AdminProcessManager processes={lista} />
       <AdminToolbar busca={busca} onBusca={setBusca} placeholder="Buscar por pessoa, empresa ou vaga" filtros={filtros} filtro={filtro} onFiltro={setFiltro} />
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
-      {isError && <AdminAviso>Não foi possível carregar as seleções. Se a atualização do banco (migration 0024) ainda não foi aplicada, aplique e recarregue.</AdminAviso>}
+      {isError && <AdminAviso>Não foi possível carregar as seleções. Se a atualização do banco (migrations 0031 e 0037) ainda não foi aplicada, aplique e recarregue.</AdminAviso>}
 
       {processos && visiveis.length === 0 && (
         <EmptyState icon={ListChecks} title="Nenhum processo encontrado" description={busca ? 'Tente outro nome.' : 'Ainda não há processos neste grupo.'} />

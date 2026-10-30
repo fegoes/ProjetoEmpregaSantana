@@ -61,6 +61,7 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
         items: [
           { to: '/admin', label: 'Visão geral', icon: LayoutDashboard, end: true },
           { to: '/admin/empresas', label: 'Empresas', icon: Building2 },
+          { to: '/admin/candidatos', label: 'Candidatos', icon: Users },
           { to: '/admin/usuarios', label: 'Usuários', icon: Users },
           { to: '/admin/vagas', label: 'Vagas', icon: BriefcaseBusiness },
           { to: '/admin/autonomos', label: 'Autônomos', icon: Wrench },
@@ -77,7 +78,8 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
       {
         label: 'Conteúdo e sistema',
         items: [
-          { to: '/admin/artigos', label: 'Artigos', icon: FileText },
+          { to: '/admin/blog/categorias', label: 'Categorias do blog', icon: Tags },
+          { to: '/admin/artigos', label: 'Posts do blog', icon: FileText },
           { to: '/admin/configuracoes', label: 'Categorias e tipos', icon: Tags },
           { to: '/admin/aparencia', label: 'Aparência', icon: Tags },
           { to: '/admin/paginas', label: 'Páginas do site', icon: FileText },

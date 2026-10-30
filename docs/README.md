@@ -49,3 +49,6 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 - **Texto e UI em português.** Inclusive nomes de função de domínio.
 - **Migrations são imutáveis.** Correção entra como migration nova, nunca editando
   uma já aplicada.
+
+- [Unificação das branches](UNIFICACAO_BRANCHES.md)
+- [CRUD do superadmin e editor do blog](SUPERADMIN_CRUD_E_BLOG.md)

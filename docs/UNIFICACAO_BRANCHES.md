@@ -29,7 +29,7 @@ Backup local criado antes da integração: `backup/pre-unificacao-20261030` (c78
 
 ## Situação Git para revisão
 
-Os dois primeiros merges foram registrados localmente em 8e0a748 e f58ce4d, antes da orientação posterior para aguardar novos commits/envios. O merge final com tender-rubin está com os conflitos resolvidos e alterações preparadas, aguardando o commit de merge. Não executar `git merge --abort` para continuar o trabalho: esse comando descartaria a integração final preparada. O GitHub permanece como estava.
+Os dois primeiros merges foram registrados localmente em 8e0a748 e f58ce4d, antes da orientação posterior para aguardar novos commits/envios. O merge final com tender-rubin foi concluído no commit de1662c. A orientação posterior autorizou os commits e o envio remoto após implementar o CRUD e o editor editorial. Os detalhes adicionais estão em SUPERADMIN_CRUD_E_BLOG.md. Nenhuma migration foi executada no banco remoto.
 
 ## Banco de dados: arquivos preparados, nenhuma execução remota
 
@@ -61,7 +61,7 @@ Se o ambiente estiver exatamente no estado da main remota, conferir também quai
 
 - Instalação reproduzível com `npm ci --no-audit --no-fund`.
 - Build TypeScript/Vite de produção aprovada.
-- 170 testes unitários e de componentes aprovados em 17 arquivos.
+- A integração inicial passou em 170 testes; a versão com CRUD e blog passou em 187 testes em 19 arquivos.
 - ESLint sem erros; quatro avisos existentes de Fast Refresh. A verificação de espaços de código, testes e migrations passa; arquivos históricos de skills/evidências importados conservam avisos de espaços finais.
 - Detector mecânico Impeccable sem ocorrências nos alvos inspecionados (homepage, navbar e usuários).
 - Testes PostgreSQL existentes aprovados: administração, classificações, conteúdo editorial e auditoria de senhas.

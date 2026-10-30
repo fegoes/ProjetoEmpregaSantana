@@ -68,6 +68,12 @@ const TaxonomiesPage = lazy(() => import('@/pages/admin/TaxonomiesPage'))
 const AparenciaPage = lazy(() => import('@/pages/admin/AparenciaPage'))
 const NaoEncontradaPage = lazy(() => import('@/pages/public/NaoEncontradaPage'))
 
+const AdminResourcePage = lazy(() => import('@/pages/admin/ResourcePage'))
+const UsuarioFormPage = lazy(() => import('@/pages/admin/UsuarioFormPage'))
+const AdminCandidatosPage = lazy(() => import('@/pages/admin/CandidatosPage'))
+
+const BlogCategoriesPage = lazy(() => import('@/pages/admin/BlogCategoriesPage'))
+
 function RouteFallback() {
   return (
     <div className="flex min-h-[40vh] items-center justify-center">
@@ -164,17 +170,29 @@ export default function App() {
             {/* Superadmin */}
             <Route element={<ProtectedRoute adminOnly />}>
               <Route path="admin" element={<AdminDashboardPage />} />
+              <Route path="admin/empresas/nova" element={<AdminResourcePage resource="empresas" />} />
+              <Route path="admin/empresas/:id/editar" element={<AdminResourcePage resource="empresas" />} />
               <Route path="admin/empresas" element={<AdminEmpresasPage />} />
               <Route path="admin/empresas/:id" element={<AdminEmpresaDetailPage />} />
+              <Route path="admin/usuarios/novo" element={<UsuarioFormPage />} />
+              <Route path="admin/usuarios/:id/editar" element={<UsuarioFormPage />} />
+              <Route path="admin/candidatos" element={<AdminCandidatosPage />} />
+              <Route path="admin/candidatos/novo" element={<AdminCandidatosPage />} />
+              <Route path="admin/candidatos/:id/editar" element={<AdminCandidatosPage />} />
               <Route path="admin/usuarios" element={<AdminUsuariosPage />} />
               <Route path="admin/planos" element={<AdminPlanosPage />} />
+              <Route path="admin/vagas/nova" element={<AdminResourcePage resource="vagas" />} />
+              <Route path="admin/vagas/:id/editar" element={<AdminResourcePage resource="vagas" />} />
               <Route path="admin/vagas" element={<AdminVagasPage />} />
+              <Route path="admin/autonomos/novo" element={<AdminResourcePage resource="profissionais" />} />
+              <Route path="admin/autonomos/:id/editar" element={<AdminResourcePage resource="profissionais" />} />
               <Route path="admin/autonomos" element={<AdminAutonomosPage />} />
               <Route path="admin/processos" element={<AdminProcessosPage />} />
               <Route path="admin/processos/:id" element={<ProcessoPage somenteLeitura back={{ to: '/admin/processos', label: 'Seleções' }} />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
               <Route path="admin/paginas/:id" element={<AdminPaginaEditPage />} />
               <Route path="admin/categorias" element={<AdminCategoriasPage />} />
+              <Route path="admin/blog/categorias" element={<BlogCategoriesPage />} />
               <Route path="admin/artigos" element={<ArtigosPage />} />
               <Route path="admin/configuracoes/tipos" element={<TaxonomiesPage mode="types" />} />
               <Route path="admin/configuracoes/categorias" element={<TaxonomiesPage mode="categories" />} />
