@@ -46,6 +46,15 @@ export interface Database {
           slug: string
           title: string
           excerpt: string
+          seo_title: string
+          seo_description: string
+          keywords: string[]
+          social_title: string
+          social_description: string
+          social_image_url: string | null
+          social_image_alt: string
+          canonical_url: string | null
+          noindex: boolean
           content_html: string
           category: string
           author_name: string

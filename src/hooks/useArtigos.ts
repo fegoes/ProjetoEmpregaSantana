@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import type { Database } from '@/types/database'
+import { localEditorialPreview } from '@/content/localEditorialPreview'
 
 export type Artigo = Database['public']['Tables']['artigos']['Row']
 export type ArtigoInput = Database['public']['Tables']['artigos']['Insert']
@@ -13,6 +14,10 @@ export function useArtigos(admin = false) {
       if (!admin) query = query.eq('status', 'published').lte('published_at', new Date().toISOString())
       const { data, error } = await query
       if (error) throw error
+      if (!admin && localEditorialPreview.length) {
+        const existing = new Set(data.map(article => article.slug))
+        return [...data, ...localEditorialPreview.filter(article => !existing.has(article.slug))]
+      }
       return data
     },
   })
@@ -25,7 +30,7 @@ export function useArtigo(slug: string | undefined) {
     queryFn: async () => {
       const { data, error } = await supabase.from('artigos').select('*').eq('slug', slug!).eq('status', 'published').lte('published_at', new Date().toISOString()).maybeSingle()
       if (error) throw error
-      return data
+      return data ?? localEditorialPreview.find(article => article.slug === slug) ?? null
     },
   })
 }

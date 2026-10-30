@@ -1,0 +1,481 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-20T13:40:10.887098+00:00",
+  "title": "Design System: EmpregaSantana",
+  "extensions": {
+    "colorMeta": {
+      "primary": {
+        "role": "primary",
+        "displayName": "primary",
+        "tonalRamp": [
+          "oklch(0.15 0.148 255.8)",
+          "oklch(0.26 0.148 255.8)",
+          "oklch(0.38 0.148 255.8)",
+          "oklch(0.49 0.148 255.8)",
+          "oklch(0.61 0.148 255.8)",
+          "oklch(0.72 0.148 255.8)",
+          "oklch(0.84 0.148 255.8)",
+          "oklch(0.95 0.148 255.8)"
+        ]
+      },
+      "primary-foreground": {
+        "role": "neutral",
+        "displayName": "primary-foreground",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "brand-ink": {
+        "role": "primary",
+        "displayName": "brand-ink",
+        "tonalRamp": [
+          "oklch(0.15 0.090 252)",
+          "oklch(0.26 0.090 252)",
+          "oklch(0.38 0.090 252)",
+          "oklch(0.49 0.090 252)",
+          "oklch(0.61 0.090 252)",
+          "oklch(0.72 0.090 252)",
+          "oklch(0.84 0.090 252)",
+          "oklch(0.95 0.090 252)"
+        ]
+      },
+      "brand-blue-strong": {
+        "role": "primary",
+        "displayName": "brand-blue-strong",
+        "tonalRamp": [
+          "oklch(0.15 0.133 256)",
+          "oklch(0.26 0.133 256)",
+          "oklch(0.38 0.133 256)",
+          "oklch(0.49 0.133 256)",
+          "oklch(0.61 0.133 256)",
+          "oklch(0.72 0.133 256)",
+          "oklch(0.84 0.133 256)",
+          "oklch(0.95 0.133 256)"
+        ]
+      },
+      "brand-orange": {
+        "role": "secondary",
+        "displayName": "brand-orange",
+        "tonalRamp": [
+          "oklch(0.15 0.180 57.4)",
+          "oklch(0.26 0.180 57.4)",
+          "oklch(0.38 0.180 57.4)",
+          "oklch(0.49 0.180 57.4)",
+          "oklch(0.61 0.180 57.4)",
+          "oklch(0.72 0.180 57.4)",
+          "oklch(0.84 0.180 57.4)",
+          "oklch(0.95 0.180 57.4)"
+        ]
+      },
+      "brand-orange-strong": {
+        "role": "secondary",
+        "displayName": "brand-orange-strong",
+        "tonalRamp": [
+          "oklch(0.15 0.180 55)",
+          "oklch(0.26 0.180 55)",
+          "oklch(0.38 0.180 55)",
+          "oklch(0.49 0.180 55)",
+          "oklch(0.61 0.180 55)",
+          "oklch(0.72 0.180 55)",
+          "oklch(0.84 0.180 55)",
+          "oklch(0.95 0.180 55)"
+        ]
+      },
+      "brand-orange-ink": {
+        "role": "secondary",
+        "displayName": "brand-orange-ink",
+        "tonalRamp": [
+          "oklch(0.15 0.143 52.5)",
+          "oklch(0.26 0.143 52.5)",
+          "oklch(0.38 0.143 52.5)",
+          "oklch(0.49 0.143 52.5)",
+          "oklch(0.61 0.143 52.5)",
+          "oklch(0.72 0.143 52.5)",
+          "oklch(0.84 0.143 52.5)",
+          "oklch(0.95 0.143 52.5)"
+        ]
+      },
+      "brand-orange-foreground": {
+        "role": "secondary",
+        "displayName": "brand-orange-foreground",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "background": {
+        "role": "neutral",
+        "displayName": "background",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "foreground": {
+        "role": "neutral",
+        "displayName": "foreground",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "card": {
+        "role": "neutral",
+        "displayName": "card",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "secondary": {
+        "role": "neutral",
+        "displayName": "secondary",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "muted-foreground": {
+        "role": "neutral",
+        "displayName": "muted-foreground",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "accent": {
+        "role": "semantic",
+        "displayName": "accent",
+        "tonalRamp": [
+          "oklch(0.15 0.012 255.8)",
+          "oklch(0.26 0.012 255.8)",
+          "oklch(0.38 0.012 255.8)",
+          "oklch(0.49 0.012 255.8)",
+          "oklch(0.61 0.012 255.8)",
+          "oklch(0.72 0.012 255.8)",
+          "oklch(0.84 0.012 255.8)",
+          "oklch(0.95 0.012 255.8)"
+        ]
+      },
+      "accent-foreground": {
+        "role": "semantic",
+        "displayName": "accent-foreground",
+        "tonalRamp": [
+          "oklch(0.15 0.09 252)",
+          "oklch(0.26 0.09 252)",
+          "oklch(0.38 0.09 252)",
+          "oklch(0.49 0.09 252)",
+          "oklch(0.61 0.09 252)",
+          "oklch(0.72 0.09 252)",
+          "oklch(0.84 0.09 252)",
+          "oklch(0.95 0.09 252)"
+        ]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "border",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "ring": {
+        "role": "semantic",
+        "displayName": "ring",
+        "tonalRamp": [
+          "oklch(0.15 0.148 255.8)",
+          "oklch(0.26 0.148 255.8)",
+          "oklch(0.38 0.148 255.8)",
+          "oklch(0.49 0.148 255.8)",
+          "oklch(0.61 0.148 255.8)",
+          "oklch(0.72 0.148 255.8)",
+          "oklch(0.84 0.148 255.8)",
+          "oklch(0.95 0.148 255.8)"
+        ]
+      },
+      "destructive": {
+        "role": "semantic",
+        "displayName": "destructive",
+        "tonalRamp": [
+          "oklch(0.15 0.245 27.325)",
+          "oklch(0.26 0.245 27.325)",
+          "oklch(0.38 0.245 27.325)",
+          "oklch(0.49 0.245 27.325)",
+          "oklch(0.61 0.245 27.325)",
+          "oklch(0.72 0.245 27.325)",
+          "oklch(0.84 0.245 27.325)",
+          "oklch(0.95 0.245 27.325)"
+        ]
+      },
+      "success": {
+        "role": "semantic",
+        "displayName": "success",
+        "tonalRamp": [
+          "oklch(0.15 0.13 155)",
+          "oklch(0.26 0.13 155)",
+          "oklch(0.38 0.13 155)",
+          "oklch(0.49 0.13 155)",
+          "oklch(0.61 0.13 155)",
+          "oklch(0.72 0.13 155)",
+          "oklch(0.84 0.13 155)",
+          "oklch(0.95 0.13 155)"
+        ]
+      },
+      "sidebar-text": {
+        "role": "neutral",
+        "displayName": "sidebar-text",
+        "tonalRamp": [
+          "oklch(0.15 0.032 255.585)",
+          "oklch(0.26 0.032 255.585)",
+          "oklch(0.38 0.032 255.585)",
+          "oklch(0.49 0.032 255.585)",
+          "oklch(0.61 0.032 255.585)",
+          "oklch(0.72 0.032 255.585)",
+          "oklch(0.84 0.032 255.585)",
+          "oklch(0.95 0.032 255.585)"
+        ]
+      },
+      "sidebar-selected": {
+        "role": "neutral",
+        "displayName": "sidebar-selected",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      },
+      "sidebar-hover": {
+        "role": "neutral",
+        "displayName": "sidebar-hover",
+        "tonalRamp": [
+          "oklch(0.15 0 0)",
+          "oklch(0.26 0 0)",
+          "oklch(0.38 0 0)",
+          "oklch(0.49 0 0)",
+          "oklch(0.61 0 0)",
+          "oklch(0.72 0 0)",
+          "oklch(0.84 0 0)",
+          "oklch(0.95 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Título principal",
+        "purpose": "Montserrat nos títulos de página."
+      },
+      "title": {
+        "displayName": "Título de card",
+        "purpose": "Poppins em oportunidades, empresas e profissionais."
+      }
+    },
+    "shadows": [
+      {
+        "name": "xs",
+        "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+        "purpose": "Campo e variantes leves."
+      },
+      {
+        "name": "sm",
+        "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+        "purpose": "Cards e botões em repouso."
+      },
+      {
+        "name": "md",
+        "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+        "purpose": "Hover dos botões principais."
+      }
+    ],
+    "motion": [
+      {
+        "name": "component-transition",
+        "value": "200ms",
+        "purpose": "Transições observadas em botões e cards React."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "Com prefers-reduced-motion: reduce, o CSS global reduz transições/animações e usa scroll-behavior:auto."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "40rem"
+      },
+      {
+        "name": "md",
+        "value": "48rem"
+      },
+      {
+        "name": "lg",
+        "value": "64rem"
+      },
+      {
+        "name": "xl",
+        "value": "80rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primário",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Variante existente do botão React, tamanho padrão.",
+      "html": "<button class=\"ds-button ds-primary\">Ver vagas</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:2.5rem;padding:.5rem 1.25rem;border:0;border-radius:var(--button-radius,9999px);font:600 .875rem/1.428571 Poppins,sans-serif;transition:all .2s;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)}.ds-button:hover{transform:translateY(-.125rem);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)}.ds-button:focus-visible{outline:3px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:2px}.ds-button:disabled{pointer-events:none;opacity:.5}.ds-primary{background:var(--primary,oklch(.504 .148 255.8));color:white}.ds-primary:hover{background:color-mix(in oklch,var(--primary,oklch(.504 .148 255.8)) 90%,transparent)}@media(pointer:coarse){.ds-button{min-height:44px}}@media(prefers-reduced-motion:reduce){.ds-button{transition-duration:.01ms}}"
+    },
+    {
+      "name": "CTA",
+      "kind": "button",
+      "refersTo": "button-cta",
+      "description": "Variante existente do botão React, tamanho padrão.",
+      "html": "<button class=\"ds-button ds-cta\">Criar conta</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:2.5rem;padding:.5rem 1.25rem;border:0;border-radius:var(--button-radius,9999px);font:600 .875rem/1.428571 Poppins,sans-serif;transition:all .2s;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)}.ds-button:hover{transform:translateY(-.125rem);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)}.ds-button:focus-visible{outline:3px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:2px}.ds-button:disabled{pointer-events:none;opacity:.5}.ds-cta{background:var(--brand-orange,oklch(.747 .180 57.4));color:var(--brand-orange-foreground,oklch(.321 0 0))}.ds-cta:hover{background:var(--brand-orange-strong,oklch(.720 .180 55))}@media(pointer:coarse){.ds-button{min-height:44px}}@media(prefers-reduced-motion:reduce){.ds-button{transition-duration:.01ms}}"
+    },
+    {
+      "name": "Outline",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Variante existente do botão React, tamanho padrão.",
+      "html": "<button class=\"ds-button ds-outline\">Ver detalhes</button>",
+      "css": ".ds-button{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;height:2.5rem;padding:.5rem 1.25rem;border:0;border-radius:var(--button-radius,9999px);font:600 .875rem/1.428571 Poppins,sans-serif;transition:all .2s;box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)}.ds-button:hover{transform:translateY(-.125rem);box-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)}.ds-button:focus-visible{outline:3px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:2px}.ds-button:disabled{pointer-events:none;opacity:.5}.ds-outline{background:var(--background,oklch(.98 0 0));color:var(--foreground,oklch(.321 0 0))}.ds-outline:hover{background:var(--background,oklch(.98 0 0))}.ds-outline{border:2px solid var(--border,oklch(.90 0 0));box-shadow:0 1px 2px rgb(0 0 0 / .05)}.ds-outline:hover{transform:none;border-color:var(--primary,oklch(.504 .148 255.8));color:var(--primary,oklch(.504 .148 255.8));box-shadow:0 1px 2px rgb(0 0 0 / .05)}@media(pointer:coarse){.ds-button{min-height:44px}}@media(prefers-reduced-motion:reduce){.ds-button{transition-duration:.01ms}}"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Campo compartilhado com foco e erro visíveis.",
+      "html": "<label class=\"ds-field\">Nome<input class=\"ds-input\" placeholder=\"Seu nome\"></label>",
+      "css": ".ds-field{display:grid;gap:.5rem;font:400 .875rem Poppins,sans-serif;color:var(--foreground,#333)}.ds-input{height:2.25rem;padding:.25rem .75rem;border:1px solid var(--input,#dedede);border-radius:calc(.85rem - 3px);background:transparent;color:inherit;font:inherit;transition:color .15s,box-shadow .15s;box-shadow:0 1px 2px rgb(0 0 0 / .05)}.ds-input::placeholder{color:var(--muted-foreground,#636363)}.ds-input:focus-visible{outline:3px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:1px}.ds-input[aria-invalid=true]{border-color:var(--destructive,#b91c1c)}.ds-input:disabled{opacity:.5;cursor:not-allowed}"
+    },
+    {
+      "name": "Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Contêiner compartilhado; títulos de oportunidades usam Poppins.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-title\">Auxiliar administrativo</h3><p class=\"ds-copy\">Exemplo de oportunidade</p></article>",
+      "css": ".ds-card{padding:1.5rem;border:1px solid var(--border,#dedede);border-radius:calc(.85rem + 6px);background:var(--card,white);color:var(--foreground,#333);box-shadow:0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);font-family:Poppins,sans-serif}.ds-title{margin:0;font-size:15px;line-height:1.375;font-weight:600}.ds-copy{font-size:.875rem;color:var(--muted-foreground,#636363)}"
+    },
+    {
+      "name": "Badge secundário",
+      "kind": "chip",
+      "refersTo": "badge-secondary",
+      "description": "Metadado secundário sem ação.",
+      "html": "<span class=\"ds-badge\">Presencial</span>",
+      "css": ".ds-badge{display:inline-flex;align-items:center;gap:.25rem;padding:.125rem .5rem;border:1px solid transparent;border-radius:calc(.85rem - 3px);background:var(--secondary,#f2f2f2);color:var(--foreground,#333);font:500 .75rem/1.333333 Poppins,sans-serif}"
+    },
+    {
+      "name": "Navegação",
+      "kind": "nav",
+      "refersTo": "navigation-active",
+      "description": "Links da navbar React; links completos em lg e menu compacto abaixo de lg.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"Demonstração da navegação global\"><a href=\"#\" aria-current=\"page\">O projeto</a><a href=\"#\">Vagas</a><a href=\"#\">Dicas de carreira</a></nav>",
+      "css": ".ds-nav{display:flex;flex-wrap:wrap;gap:.25rem;font:500 .875rem/1.428571 Poppins,sans-serif}.ds-nav a{padding:.375rem .875rem;border-radius:9999px;color:color-mix(in oklch,var(--foreground,#333) 70%,transparent);text-decoration:none;transition:color .15s,background-color .15s}.ds-nav a:hover{background:var(--accent,#e6ecf3);color:var(--foreground,#333)}.ds-nav a[aria-current]{background:var(--accent,#e6ecf3);color:var(--primary,#1e63b6)}.ds-nav a:focus-visible{outline:3px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:2px}@media(prefers-reduced-motion:reduce){.ds-nav a{transition-duration:.01ms}}"
+    },
+    {
+      "name": "Navegação do painel",
+      "kind": "nav",
+      "refersTo": "panel-navigation-active",
+      "description": "Navegação azul profunda de usuários e administração. Usuário: lateral 240px com header global; admin: 16rem fixa, sem header público. Drawer abaixo de lg; preview demonstra links e submenus, não permissões.",
+      "html": "<nav class=\"ds-panel-nav\" aria-label=\"Administração\"><a href=\"#\" aria-current=\"page\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><rect x=\"2\" y=\"7\" width=\"20\" height=\"14\" rx=\"2\"/><path d=\"M8 7V3h8v4M2 12h20M10 12v3h4v-3\"/></svg><span>Vagas</span></a><div class=\"ds-panel-sub\"><a href=\"#\" aria-current=\"page\">Todas as vagas</a><a href=\"#\">Adicionar vaga</a></div><a href=\"#\"><svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><circle cx=\"8\" cy=\"9\" r=\"1\"/><circle cx=\"14\" cy=\"7\" r=\"1\"/><circle cx=\"17\" cy=\"12\" r=\"1\"/><path d=\"M12 21c-3-3 3-4 0-7\"/></svg><span>Aparência</span></a></nav>",
+      "css": ".ds-panel-nav{display:flex;flex-direction:column;gap:.25rem;background:var(--brand-ink,oklch(.344 .090 252));color:white;padding:1rem;font:400 .875rem/1.428571 Poppins,sans-serif}.ds-panel-nav a{display:flex;align-items:center;gap:.75rem;min-height:44px;padding:.625rem .75rem;border-radius:calc(var(--radius,.85rem) - 3px);color:var(--color-blue-100,oklch(93.2% .032 255.585));text-decoration:none;outline-offset:2px}.ds-panel-nav a:hover{background:rgb(255 255 255 / .10);color:white}.ds-panel-nav a[aria-current]{background:rgb(255 255 255 / .15);color:white;font-weight:600}.ds-panel-nav a:focus-visible{outline:2px solid white}.ds-panel-nav svg{width:1rem;height:1rem;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ds-panel-sub{display:flex;flex-direction:column;gap:.25rem;margin:.25rem 0 .25rem 1rem;border-left:1px solid rgb(255 255 255 / .25);padding-left:.75rem}"
+    },
+    {
+      "name": "Preferência de aparência",
+      "kind": "custom",
+      "description": "Select nativo de configuração. A prévia real é local até salvar; este snippet demonstra o controle e não persiste dados.",
+      "html": "<label class=\"ds-appearance-label\" for=\"ds-appearance-shape\">Formato dos botões</label><select class=\"ds-appearance-select\" id=\"ds-appearance-shape\"><option>Cápsula</option><option>Cantos arredondados</option></select>",
+      "css": ".ds-appearance-label{display:block;margin-bottom:.5rem;color:var(--foreground,#333);font:500 .875rem/1 Poppins,sans-serif}.ds-appearance-select{min-height:44px;width:100%;padding:0 .75rem;border:1px solid var(--border,#dedede);border-radius:var(--radius,.85rem);background:var(--card,white);color:var(--foreground,#333);font:400 .875rem/1.428571 Poppins,sans-serif}.ds-appearance-select:focus-visible{outline:2px solid var(--ring,oklch(.504 .148 255.8 / 40%));outline-offset:2px}.ds-appearance-select:disabled{opacity:.5;cursor:not-allowed}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Conexão de empregabilidade no sertão",
+    "overview": "A identidade é direta, acolhedora e regional: pessoas e oportunidades de trabalho em Santana do Ipanema e no sertão. A interface combina conteúdo e controles claros, navegação lateral em azul profundo e laranja reservado à ação, com Montserrat nos títulos e Poppins na leitura e operação. A lateral escura é uma extensão autorizada pelo responsável, não um modo escuro geral.\n\nEste documento registra o sistema existente. A autoridade de marca continua em [IDENTIDADE_VISUAL.md](docs/IDENTIDADE_VISUAL.md); os tokens executáveis vivem em [src/index.css](src/index.css). Os componentes React em `src/components/ui/` e a navegação em `src/components/layout/` sustentam os padrões descritos. Em conflito, o manual prevalece sobre uma divergência do código. Não há substituição de identidade nem migração automática do aplicativo.",
+    "keyCharacteristics": [
+      "Conteúdo e controles em modo claro, inclusive com preferência escura do dispositivo. Por escolha posterior do responsável, a navegação lateral usa azul profundo.",
+      "Neutros puros, azul institucional e laranja de ação.",
+      "Hierarquia geométrica com leitura funcional e linguagem concreta.",
+      "Descoberta pública e menus identificáveis em telas pequenas."
+    ],
+    "rules": [
+      {
+        "name": "The Laranja de Ação Rule",
+        "body": "Na interface, um único CTA laranja por tela; seu texto usa `brand-orange-foreground`, inclusive no hover. A proporção de referência do manual é 60% neutros, 30% azul e 10% laranja.",
+        "section": "colors"
+      },
+      {
+        "name": "The Título de Card Rule",
+        "body": "`h1` e `h2` recebem Montserrat na base; `h3` de vaga, empresa e autônomo permanece em Poppins. O componente genérico `CardTitle` ainda declara Montserrat: isso é uma diferença existente, não uma nova regra para títulos de oportunidades.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do preservar os tokens de `src/index.css` e consultar o manual antes de introduzir valores de marca.",
+      "Do usar texto escuro no CTA laranja e o token de laranja de texto em fundos claros.",
+      "Do preservar foco visível, rótulos, reflow e identificação independente dos menus.",
+      "Do manter exemplos e operações simuladas identificados no estudo local."
+    ],
+    "donts": [
+      "Don't usar texto branco sobre o laranja de ação ou usar esse laranja como texto em fundo claro.",
+      "Don't recolorir, distorcer ou reconstruir o selo oficial com tipografia substituta.",
+      "Don't promover as diferenças visuais do protótipo a novas regras globais de marca.",
+      "Don't inventar estatísticas, depoimentos ou oportunidades reais para preencher a interface."
+    ]
+  }
+}

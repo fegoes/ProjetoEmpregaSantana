@@ -23,7 +23,7 @@ export function RootLayout() {
       </main>
       <footer className="border-t bg-secondary/40">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
-          <Logo size="sm" />
+          <div><img src="/illustrations/nossa-gente.png" alt="" width="1536" height="1024" loading="lazy" className="mb-3 h-28 w-44 object-contain" /><Logo size="sm" /></div>
           <nav className="flex flex-wrap gap-x-5 gap-y-2 text-muted-foreground">
             <Link to="/blog" className="hover:text-primary">Dicas de carreira</Link>
             <Link to="/sobre" className="hover:text-primary">

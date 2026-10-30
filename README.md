@@ -72,3 +72,5 @@ Modelos e permissões: [MODELOS_E_ACESSOS.md](docs/MODELOS_E_ACESSOS.md). Testes
 Publicação e diagnóstico de versões: [DEPLOY.md](docs/DEPLOY.md). O build gera `version.json`; compare a publicação com `npm run verify:deploy -- https://emprega-santana.vercel.app`. Alterações locais precisam estar no commit enviado ao GitHub para entrar no deploy.
 
 Configurações de categorias e tipos dos três cadastros e melhorias nos formulários: [CATEGORIAS_E_TIPOS.md](docs/CATEGORIAS_E_TIPOS.md). Esta etapa exige a migration 0024 depois das anteriores.
+
+Editor de posts, SEO, compartilhamento, imagens e definição administrativa de senha: [EDITORIAL_E_ACESSO.md](docs/EDITORIAL_E_ACESSO.md). Navegação pública simplificada e personagens: [NAVEGACAO_ESSENCIAL.md](docs/NAVEGACAO_ESSENCIAL.md). Esta etapa foi mantida apenas nos arquivos locais.

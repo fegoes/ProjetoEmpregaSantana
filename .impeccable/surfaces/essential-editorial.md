@@ -1,0 +1,18 @@
+# Navegação essencial e editor editorial
+
+Extensão da identidade existente, code-first, sem comp aprovada ou nova paleta. Modos: home Persuade, blog Read, editor e senhas Operate. Usuário pede personagens estáticos ou animados, menu público reduzido ao essencial, imagens ao longo das páginas, posts iniciais e editor WordPress com prévia lateral, SEO, personalização social e imagens no conteúdo; também duas opções de senha (e-mail/manual).
+
+THESIS: poucos caminhos públicos e edição com retorno visual imediato.
+OWN-WORLD: Montserrat/Poppins, conteúdo claro, azul/laranja existentes, administração com lateral azul profunda.
+STORY: encontrar trabalho ou contratar; escolher perfil na home; editor com rascunho, imagens e prévia; gestão de senha apenas por operador autorizado.
+FIRST VIEWPORT: duas entradas no menu desktop; três ações diretas no menu compacto. Editor e prévia lado a lado em xl, empilhados abaixo. Ilustração estática na home, blog e rodapé público. Sem imagens decorativas no admin.
+FORM: imagem raster gerada pelo image_gen, proveniência embutida em public/illustrations/nossa-gente.png e prompt/origem documentados em docs/NAVEGACAO_ESSENCIAL.md. Sem animação automática. Personagens ilustrativos, sem alegação de usuários reais.
+FINISH: build e testes; capturas home/blog/artigo em 320/390/768/1440 e editor/usuários nas mesmas larguras. API/sessão simuladas. Migration0025 e0026 e função de senha não implantadas. Nenhum PR, push, commit ou dado real alterado nesta rodada.
+
+## Ampliação de imagens e três posts — 23/10/2026
+
+Home preservada com três cenas raster novas nas seções de públicos. Blog com capas temáticas, preservando capas personalizadas. Três guias completos com capa, imagem no corpo e campos sociais. JPEGs comprimidos para entrega, PNGs originais e prompts preservados; proveniência em docs/IMAGENS_E_POSTS.md. Prévia local somente em desenvolvimento, sinalizada e noindex; produção usa artigos do banco. Migration0027 publica apenas os textos iniciais intactos e preserva conteúdo editado. Verificação em 320/390/768/1440: 20 capturas, sem overflow, imagens quebradas ou erros de página; filtro e navegação do blog funcionais. Ajuste final desloca a imagem interna para o meio do conteúdo. Sem publicação remota ou PR.
+
+## Decisão do usuário — preservar o visual deste trabalho
+
+Após comparar local e site público, o usuário rejeitou as alterações visuais recentes da branch externa e pediu preservar imagens, posts e menu. A base visual continua sendo 1061a3b: não incorporar a reformulação dos cards, grafismos, formulários e home dos commits 82c58b7/aef20b0. Somente as proteções funcionais contra tela em branco e rota inexistente da PR #5 foram aproveitadas, mantendo RouteSeoDefaults. Registro: docs/REVISAO_VISUAL_PRESERVADA.md. Sem nova identidade ou tokens.

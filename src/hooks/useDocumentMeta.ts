@@ -1,6 +1,11 @@
 import { useEffect } from 'react'
 
 interface DocumentMetaOptions {
+  socialTitle?: string
+  socialDescription?: string
+  imageAlt?: string
+  keywords?: string[]
+  noindex?: boolean
   canonical?: string
   title: string
   description?: string
@@ -24,7 +29,7 @@ function setMetaTag(attr: 'name' | 'property', key: string, content: string) {
 // (que executa JS) a indexar cada página com seu próprio título/descrição;
 // crawlers que não executam JS (ex.: prévias de link) ainda veem os
 // valores padrão do index.html.
-export function useDocumentMeta({ title, description, image, canonical, type = 'website' }: DocumentMetaOptions) {
+export function useDocumentMeta({ title, description = 'Vagas, serviços e oportunidades em Santana do Ipanema e região.', image, canonical, socialTitle, socialDescription, imageAlt = '', keywords, noindex = false, type = 'website' }: DocumentMetaOptions) {
   useEffect(() => {
     const fullTitle = `${title} | ${SITE_NAME}`
     document.title = fullTitle
@@ -34,16 +39,24 @@ export function useDocumentMeta({ title, description, image, canonical, type = '
       setMetaTag('property', 'og:description', description)
       setMetaTag('name', 'twitter:description', description)
     }
-    if (canonical) {
+    setMetaTag('name', 'keywords', (keywords ?? []).join(', '))
+    setMetaTag('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
+    {
+      const canonicalPath = canonical || window.location.pathname
       let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')
       if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link) }
-      link.href = new URL(canonical, window.location.origin).href
+      link.href = new URL(canonicalPath, window.location.origin).href
       setMetaTag('property', 'og:url', link.href)
-    } else document.querySelector('link[rel="canonical"]')?.remove()
-    setMetaTag('property', 'og:title', fullTitle)
+    }
+    setMetaTag('property', 'og:title', socialTitle || fullTitle)
     setMetaTag('property', 'og:type', type)
-    setMetaTag('name', 'twitter:title', fullTitle)
+    setMetaTag('name', 'twitter:title', socialTitle || fullTitle)
     setMetaTag('property', 'og:image', image ?? new URL('/og-image.png', window.location.origin).href)
     setMetaTag('name', 'twitter:image', image ?? new URL('/og-image.png', window.location.origin).href)
-  }, [title, description, image, type, canonical])
+    setMetaTag('property', 'og:description', socialDescription || description)
+    setMetaTag('name', 'twitter:description', socialDescription || description)
+    setMetaTag('property', 'og:image:alt', imageAlt)
+    setMetaTag('name', 'twitter:image:alt', imageAlt)
+    setMetaTag('name', 'twitter:card', 'summary_large_image')
+  }, [title, description, image, type, canonical, socialTitle, socialDescription, imageAlt, keywords, noindex])
 }

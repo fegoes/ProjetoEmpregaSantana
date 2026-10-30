@@ -1,3 +1,4 @@
+import { RouteSeoDefaults } from '@/components/RouteSeoDefaults'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
@@ -28,6 +29,7 @@ if (!supabaseConfigurado) {
         <QueryClientProvider client={queryClient}>
           <BrowserRouter>
             <AuthProvider>
+              <RouteSeoDefaults />
               <AppearanceSync />
               <App />
             </AuthProvider>
