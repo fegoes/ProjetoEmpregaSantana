@@ -6,7 +6,7 @@ import { stripHtml } from '@/lib/utils'
 import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { VagaCard } from '@/components/VagaCard'
 import { EmptyState } from '@/components/EmptyState'
-import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { CompanyLogo } from '@/components/CompanyLogo'
 import { JsonLd } from '@/components/JsonLd'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -48,15 +48,7 @@ export default function EmpresaDetailPage() {
     <div className="flex flex-col gap-8">
       <JsonLd data={organizationJsonLd} />
       <div className="flex items-start gap-4">
-        {empresa.logo_url ? (
-          <img
-            src={empresa.logo_url}
-            alt={empresa.nome_fantasia}
-            className="size-16 shrink-0 rounded-2xl border object-cover"
-          />
-        ) : (
-          <InitialsAvatar name={empresa.nome_fantasia} size="lg" />
-        )}
+        <CompanyLogo name={empresa.nome_fantasia} logoUrl={empresa.logo_url} size="lg" />
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>

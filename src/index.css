@@ -30,6 +30,10 @@
   --destructive-foreground: oklch(1 0 0);
   --success: oklch(0.58 0.13 155);
   --success-foreground: oklch(1 0 0);
+  /* Texto de status sobre o próprio tom lavado (bg-success/15, bg-destructive/12):
+     o tom base reprova ali (3.2:1 e 3.8:1); estes passam (5.2:1 e 5.3:1) */
+  --success-ink: oklch(0.48 0.11 155);
+  --destructive-ink: oklch(0.50 0.19 27.3);
 
   --border: oklch(0.90 0 0);               /* #DEDEDE */
   --input: oklch(0.90 0 0);
@@ -76,6 +80,8 @@
   --color-destructive-foreground: var(--destructive-foreground);
   --color-success: var(--success);
   --color-success-foreground: var(--success-foreground);
+  --color-success-ink: var(--success-ink);
+  --color-destructive-ink: var(--destructive-ink);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -110,16 +116,36 @@
 }
 
 @layer utilities {
-  /* Mancha de fundo discreta para heros e cabeçalhos — laranja + azul da marca */
-  .brand-mesh {
-    background-image:
-      radial-gradient(50% 65% at 8% 10%, color-mix(in oklch, var(--brand-orange) 14%, transparent) 0%, transparent 100%),
-      radial-gradient(55% 70% at 100% 100%, color-mix(in oklch, var(--brand-blue) 10%, transparent) 0%, transparent 100%);
+  /* Faixa de marca para o topo de telas de autenticação. Discreta de propósito:
+     mancha radial em dois cantos é assinatura de template. */
+  .brand-edge {
+    border-top: 3px solid var(--primary);
+    background-image: linear-gradient(
+      to bottom,
+      color-mix(in oklch, var(--primary) 8%, transparent) 0%,
+      transparent 45%
+    );
   }
+
 }
 
 /* Reflow comum às páginas públicas, editores e áreas de gestão. */
 @layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Superfícies do navegador também levam a marca: rolagem, caret, checkbox */
+    scrollbar-color: color-mix(in oklch, var(--foreground) 28%, transparent) transparent;
+    accent-color: var(--primary);
+    caret-color: var(--primary);
+  }
+  body { -webkit-tap-highlight-color: transparent; }
+  ::selection {
+    background: color-mix(in oklch, var(--brand-orange) 35%, transparent);
+    color: var(--foreground);
+  }
+  /* Evita a última linha do parágrafo ficar com uma palavra solta */
+  p { text-wrap: pretty; }
+  a { text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
   h1, h2, h3 { overflow-wrap: anywhere; }
   :focus-visible { scroll-margin-block: 6rem; }
   input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-width: 0; }

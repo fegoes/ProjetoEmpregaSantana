@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
+import { FieldHint } from '@/components/FieldHint'
 
 interface ExperienceEditorProps {
   value: CvExperience[]
@@ -47,11 +48,19 @@ export function ExperienceEditor({ value, onChange }: ExperienceEditorProps) {
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
               <Label>Cargo</Label>
-              <Input value={exp.role} onChange={(e) => update(exp.id, { role: e.target.value })} />
+              <Input
+                placeholder="Ex.: Auxiliar de produção"
+                value={exp.role}
+                onChange={(e) => update(exp.id, { role: e.target.value })}
+              />
             </div>
             <div className="flex flex-col gap-1.5">
               <Label>Empresa</Label>
-              <Input value={exp.company} onChange={(e) => update(exp.id, { company: e.target.value })} />
+              <Input
+                placeholder="Ex.: Laticínio Vale Verde"
+                value={exp.company}
+                onChange={(e) => update(exp.id, { company: e.target.value })}
+              />
             </div>
             <div className="flex flex-col gap-1.5">
               <Label>Início</Label>
@@ -80,9 +89,15 @@ export function ExperienceEditor({ value, onChange }: ExperienceEditorProps) {
             Emprego atual
           </label>
           <div className="flex flex-col gap-1.5">
-            <Label>Descrição</Label>
+            <Label htmlFor={`exp-desc-${exp.id}`}>O que você fazia nesse trabalho?</Label>
+            <FieldHint>
+              Liste 2 ou 3 atividades do dia a dia, e o que você entregava de resultado. É a parte
+              que a empresa mais lê.
+            </FieldHint>
             <Textarea
-              rows={3}
+              id={`exp-desc-${exp.id}`}
+              rows={4}
+              placeholder={'Ex.: Operava a linha de envase e conferia a pesagem.\nOrganizava o estoque e o controle de validade.\nTreinei dois colegas novos no setor.'}
               value={exp.description}
               onChange={(e) => update(exp.id, { description: e.target.value })}
             />

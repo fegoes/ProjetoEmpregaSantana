@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { BadgeCheck, MapPin } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { InitialsAvatar } from '@/components/InitialsAvatar'
+import { CompanyLogo } from '@/components/CompanyLogo'
 
 export interface EmpresaCardData {
   id: string
@@ -22,18 +22,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
     <Link to={`/empresas/${empresa.id}`} className="group block h-full">
       <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 transition-[border-color,box-shadow] duration-200 group-hover:border-primary/50 group-hover:shadow-md">
         <CardHeader className="flex-row items-start gap-3">
-          {empresa.logo_url ? (
-            <img
-              src={empresa.logo_url}
-              alt={empresa.nome_fantasia}
-              className="size-10 shrink-0 rounded-full border object-cover"
-              loading="lazy"
-              width={40}
-              height={40}
-            />
-          ) : (
-            <InitialsAvatar name={empresa.nome_fantasia} size="md" />
-          )}
+          <CompanyLogo name={empresa.nome_fantasia} logoUrl={empresa.logo_url} size="md" />
           <div className="min-w-0 pt-0.5">
             <h3 className="flex items-center gap-1.5 truncate text-[15px] leading-snug font-semibold">
               <span className="truncate">{empresa.nome_fantasia}</span>
