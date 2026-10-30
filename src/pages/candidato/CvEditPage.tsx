@@ -9,6 +9,10 @@ import { EducationEditor } from '@/components/EducationEditor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PhoneInput } from '@/components/fields/MaskedInputs'
+import { CepField } from '@/components/fields/CepField'
+import { addressLineFromCep } from '@/lib/cep'
+import { maskPhone } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { safeInternalPath } from '@/lib/utils'
 
@@ -25,6 +29,7 @@ export default function CvEditPage() {
   const [contactEmail, setContactEmail] = React.useState('')
   const [contactPhone, setContactPhone] = React.useState('')
   const [address, setAddress] = React.useState('')
+  const [cep, setCep] = React.useState('')
   const [summaryHtml, setSummaryHtml] = React.useState('')
   const [experiences, setExperiences] = React.useState<CvExperience[]>([])
   const [education, setEducation] = React.useState<CvEducation[]>([])
@@ -35,7 +40,7 @@ export default function CvEditPage() {
     if (!cv) return
     setTitle(cv.title)
     setContactEmail(cv.contact_email ?? profile?.email ?? '')
-    setContactPhone(cv.contact_phone ?? profile?.phone ?? '')
+    setContactPhone(maskPhone(cv.contact_phone ?? profile?.phone ?? ''))
     setAddress(cv.address ?? '')
     setSummaryHtml(cv.summary_html ?? '')
     setExperiences(cv.experiences)
@@ -103,7 +108,7 @@ export default function CvEditPage() {
           </div>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="contactPhone">Telefone</Label>
-            <Input id="contactPhone" value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} />
+            <PhoneInput id="contactPhone" value={contactPhone} onChange={setContactPhone} />
           </div>
         </CardContent>
       </Card>
@@ -112,12 +117,26 @@ export default function CvEditPage() {
         <CardHeader>
           <CardTitle className="text-base">Endereço</CardTitle>
         </CardHeader>
-        <CardContent>
-          <Input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Cidade, estado — ou endereço completo"
-          />
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
+            <Label htmlFor="cep">CEP (preenche o endereço)</Label>
+            <CepField
+              id="cep"
+              value={cep}
+              onChange={setCep}
+              onFound={(found) => setAddress(`${addressLineFromCep(found)}, ${found.city}/${found.uf}`.replace(/^, /, ''))}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="address">Endereço</Label>
+            <Input
+              id="address"
+              autoComplete="street-address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Rua, número, bairro, cidade/UF"
+            />
+          </div>
         </CardContent>
       </Card>
 

@@ -1,5 +1,5 @@
 import { useCategories } from '@/hooks/useCategories'
-import { cn } from '@/lib/utils'
+import { NativeSelect } from '@/components/ui/native-select'
 
 interface CategorySelectProps {
   id?: string
@@ -14,18 +14,13 @@ export function CategorySelect({ id, kind, value, onChange, className }: Categor
   const options = (categories ?? []).filter((c) => c.kind === kind || c.kind === 'both')
 
   return (
-    <select
-      id={id}
-      className={cn('h-9 rounded-md border border-input bg-transparent px-3 text-sm', className)}
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-    >
+    <NativeSelect id={id} className={className} value={value} onChange={(e) => onChange(e.target.value)}>
       <option value="">Selecione uma categoria</option>
       {options.map((category) => (
         <option key={category.slug} value={category.slug}>
           {category.label}
         </option>
       ))}
-    </select>
+    </NativeSelect>
   )
 }

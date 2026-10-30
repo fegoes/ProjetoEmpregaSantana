@@ -4,12 +4,14 @@ import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { PhoneInput } from '@/components/fields/MaskedInputs'
+import { maskPhone } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
 export default function PerfilContaPage() {
   const { profile, refreshProfile, updatePassword } = useAuth()
   const [fullName, setFullName] = React.useState(profile?.full_name ?? '')
-  const [phone, setPhone] = React.useState(profile?.phone ?? '')
+  const [phone, setPhone] = React.useState(maskPhone(profile?.phone ?? ''))
   const [saving, setSaving] = React.useState(false)
   const [saved, setSaved] = React.useState(false)
 
@@ -64,7 +66,7 @@ export default function PerfilContaPage() {
             </div>
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="phone">Telefone</Label>
-              <Input id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} />
+              <PhoneInput id="phone" value={phone} onChange={setPhone} />
             </div>
             <Button type="submit" disabled={saving}>
               {saving ? 'Salvando…' : 'Salvar'}

@@ -105,6 +105,7 @@ export interface Database {
           is_verified: boolean
           status: EmpresaStatus
           address: string | null
+          zip_code: string | null
           address_visible: boolean
           mission_vision_values_html: string | null
           mission_visible: boolean

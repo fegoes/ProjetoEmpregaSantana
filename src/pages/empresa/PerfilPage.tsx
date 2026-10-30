@@ -8,6 +8,11 @@ import { PhotoGalleryField } from '@/components/PhotoGalleryField'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { CepField } from '@/components/fields/CepField'
+import { CityField } from '@/components/fields/CityField'
+import { FormError } from '@/components/auth/FormError'
+import { addressLineFromCep } from '@/lib/cep'
+import { DEFAULT_UF } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 function VisibilityToggle({
@@ -34,6 +39,10 @@ export default function EmpresaPerfilPage() {
   const [logoUrl, setLogoUrl] = React.useState(empresa?.logo_url ?? null)
 
   const [address, setAddress] = React.useState(empresa?.address ?? '')
+  const [zipCode, setZipCode] = React.useState(empresa?.zip_code ?? '')
+  const [city, setCity] = React.useState(empresa?.city ?? '')
+  const [uf, setUf] = React.useState<string>(empresa?.state ?? DEFAULT_UF)
+  const [error, setError] = React.useState<string | null>(null)
   const [addressVisible, setAddressVisible] = React.useState(empresa?.address_visible ?? true)
   const [missionHtml, setMissionHtml] = React.useState(empresa?.mission_vision_values_html ?? '')
   const [missionVisible, setMissionVisible] = React.useState(empresa?.mission_visible ?? true)
@@ -59,6 +68,9 @@ export default function EmpresaPerfilPage() {
     setDescriptionHtml(empresa.description_html ?? '')
     setLogoUrl(empresa.logo_url)
     setAddress(empresa.address ?? '')
+    setZipCode(empresa.zip_code ?? '')
+    setCity(empresa.city ?? '')
+    setUf(empresa.state ?? DEFAULT_UF)
     setAddressVisible(empresa.address_visible)
     setMissionHtml(empresa.mission_vision_values_html ?? '')
     setMissionVisible(empresa.mission_visible)
@@ -75,7 +87,8 @@ export default function EmpresaPerfilPage() {
   const handleSave = async () => {
     setSaving(true)
     setSaved(false)
-    await supabase
+    setError(null)
+    const { error: saveError } = await supabase
       .from('empresas')
       .update({
         nome_fantasia: nomeFantasia,
@@ -84,6 +97,9 @@ export default function EmpresaPerfilPage() {
         description_html: descriptionHtml,
         logo_url: logoUrl,
         address,
+        zip_code: zipCode || null,
+        city: city.trim() || null,
+        state: city.trim() ? uf : null,
         address_visible: addressVisible,
         mission_vision_values_html: missionHtml,
         mission_visible: missionVisible,
@@ -95,9 +111,13 @@ export default function EmpresaPerfilPage() {
         employee_count_visible: employeeCountVisible,
       })
       .eq('id', empresa.id)
-    await refresh()
+    if (saveError) {
+      setError('Não foi possível salvar agora. Confira sua conexão e tente de novo.')
+    } else {
+      await refresh()
+      setSaved(true)
+    }
     setSaving(false)
-    setSaved(true)
   }
 
   return (
@@ -139,12 +159,34 @@ export default function EmpresaPerfilPage() {
           <CardTitle className="text-base">Endereço</CardTitle>
           <CardDescription>Onde sua empresa está localizada</CardDescription>
         </CardHeader>
-        <CardContent className="flex flex-col gap-2">
-          <Input
-            value={address}
-            onChange={(e) => setAddress(e.target.value)}
-            placeholder="Rua, número, bairro, cidade — UF"
-          />
+        <CardContent className="flex flex-col gap-4">
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
+            <Label htmlFor="zipCode">CEP</Label>
+            <CepField
+              id="zipCode"
+              value={zipCode}
+              onChange={setZipCode}
+              onFound={(found) => {
+                setAddress(addressLineFromCep(found))
+                setCity(found.city)
+                setUf(found.uf)
+              }}
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="address">Rua, número e bairro</Label>
+            <Input
+              id="address"
+              autoComplete="street-address"
+              value={address}
+              onChange={(e) => setAddress(e.target.value)}
+              placeholder="Rua das Flores, 123, Centro"
+            />
+          </div>
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="empresaCity">Cidade</Label>
+            <CityField id="empresaCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
+          </div>
           <VisibilityToggle checked={addressVisible} onChange={setAddressVisible} />
         </CardContent>
       </Card>
@@ -204,6 +246,7 @@ export default function EmpresaPerfilPage() {
         </CardContent>
       </Card>
 
+      {error && <FormError>{error}</FormError>}
       <div className="flex items-center gap-3">
         <Button onClick={handleSave} variant="cta" disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar alterações'}

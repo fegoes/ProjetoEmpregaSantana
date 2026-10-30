@@ -7,6 +7,11 @@ import { RichTextEditor } from '@/components/RichTextEditor'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { NativeSelect } from '@/components/ui/native-select'
+import { CityField } from '@/components/fields/CityField'
+import { CurrencyInput } from '@/components/fields/MaskedInputs'
+import { FormError } from '@/components/auth/FormError'
+import { DEFAULT_UF } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { CategorySelect } from '@/components/CategorySelect'
 import { PhotoGalleryField } from '@/components/PhotoGalleryField'
@@ -37,7 +42,11 @@ export default function AutonomoPerfilPage() {
   const [category, setCategory] = React.useState('')
   const [descriptionHtml, setDescriptionHtml] = React.useState('')
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
-  const [hourlyRate, setHourlyRate] = React.useState('')
+  const [hourlyRate, setHourlyRate] = React.useState<number | null>(null)
+  const [deliveryNote, setDeliveryNote] = React.useState('')
+  const [city, setCity] = React.useState('')
+  const [uf, setUf] = React.useState<string>(DEFAULT_UF)
+  const [feedback, setFeedback] = React.useState<{ ok: boolean; text: string } | null>(null)
   const [status, setStatus] = React.useState<'active' | 'paused'>('active')
   const [portfolioUrls, setPortfolioUrls] = React.useState<string[]>([])
   const [saving, setSaving] = React.useState(false)
@@ -48,7 +57,10 @@ export default function AutonomoPerfilPage() {
     setCategory(autonomo.category ?? '')
     setDescriptionHtml(autonomo.description_html ?? '')
     setPricingModel(autonomo.pricing_model)
-    setHourlyRate(autonomo.hourly_rate?.toString() ?? '')
+    setHourlyRate(autonomo.hourly_rate)
+    setDeliveryNote(autonomo.delivery_rate_note ?? '')
+    setCity(autonomo.service_area_city ?? '')
+    setUf(autonomo.service_area_state ?? DEFAULT_UF)
     setStatus(autonomo.status)
     setPortfolioUrls(autonomo.portfolio_urls ?? [])
   }, [autonomo])
@@ -59,20 +71,25 @@ export default function AutonomoPerfilPage() {
   const handleSave = async () => {
     if (!user) return
     setSaving(true)
-    await supabase
+    setFeedback(null)
+    const { error } = await supabase
       .from('autonomo_profiles')
       .update({
         headline,
         category: category || null,
         description_html: descriptionHtml,
         pricing_model: pricingModel,
-        hourly_rate: hourlyRate ? Number(hourlyRate) : null,
+        hourly_rate: pricingModel === 'per_delivery' ? null : hourlyRate,
+        delivery_rate_note: pricingModel === 'hourly' ? null : deliveryNote.trim() || null,
+        service_area_city: city.trim() || null,
+        service_area_state: city.trim() ? uf : null,
         status,
         portfolio_urls: portfolioUrls,
       })
       .eq('id', user.id)
-    await refetch()
+    if (!error) await refetch()
     setSaving(false)
+    setFeedback(error ? { ok: false, text: 'Não foi possível salvar agora. Confira sua conexão e tente de novo.' } : { ok: true, text: 'Perfil atualizado.' })
   }
 
   return (
@@ -100,24 +117,38 @@ export default function AutonomoPerfilPage() {
           onChange={setPortfolioUrls}
           hint="Aparecem como carrossel no seu card e no perfil público. PNG ou JPG, até 5 MB cada."
         />
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="flex flex-col gap-1.5">
-            <Label htmlFor="pricingModel">Cobrança</Label>
-            <select
-              id="pricingModel"
-              className="h-9 rounded-md border border-input bg-transparent px-3 text-sm"
-              value={pricingModel}
-              onChange={(e) => setPricingModel(e.target.value as PricingModelAutonomo)}
-            >
-              <option value="hourly">Por hora</option>
-              <option value="per_delivery">Por entrega</option>
-              <option value="both">Ambos</option>
-            </select>
-          </div>
-          <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="pricingModel">Cobrança</Label>
+          <NativeSelect
+            id="pricingModel"
+            value={pricingModel}
+            onChange={(e) => setPricingModel(e.target.value as PricingModelAutonomo)}
+          >
+            <option value="hourly">Por hora</option>
+            <option value="per_delivery">Por entrega/serviço</option>
+            <option value="both">Por hora e por serviço</option>
+          </NativeSelect>
+        </div>
+        {pricingModel !== 'per_delivery' && (
+          <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
             <Label htmlFor="hourlyRate">Valor da hora</Label>
-            <Input id="hourlyRate" type="number" value={hourlyRate} onChange={(e) => setHourlyRate(e.target.value)} />
+            <CurrencyInput id="hourlyRate" value={hourlyRate} onChange={setHourlyRate} />
           </div>
+        )}
+        {pricingModel !== 'hourly' && (
+          <div className="flex flex-col gap-1.5">
+            <Label htmlFor="deliveryNote">Valor por serviço</Label>
+            <Input
+              id="deliveryNote"
+              placeholder="Ex.: a partir de R$ 150 por diária"
+              value={deliveryNote}
+              onChange={(e) => setDeliveryNote(e.target.value)}
+            />
+          </div>
+        )}
+        <div className="flex flex-col gap-1.5">
+          <Label htmlFor="serviceCity">Onde você atende?</Label>
+          <CityField id="serviceCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
         </div>
         <label className="flex items-center gap-2 text-sm">
           <input
@@ -127,7 +158,8 @@ export default function AutonomoPerfilPage() {
           />
           Visível publicamente
         </label>
-        <Button onClick={handleSave} disabled={saving}>
+        {feedback && (feedback.ok ? <p role="status" className="text-sm text-muted-foreground">{feedback.text}</p> : <FormError>{feedback.text}</FormError>)}
+        <Button onClick={handleSave} variant="cta" disabled={saving}>
           {saving ? 'Salvando…' : 'Salvar'}
         </Button>
       </CardContent>
