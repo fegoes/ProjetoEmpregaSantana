@@ -1,7 +1,7 @@
 # Unificação local das branches — 30/10/2026
 
 Origem: https://github.com/fegoes/ProjetoEmpregaSantana.git.
-O remoto foi atualizado localmente com `git fetch origin --prune`. Nenhum push nem operação no banco remoto foi realizado.
+O remoto foi atualizado localmente com `git fetch origin --prune`. Após a autorização posterior e a validação local, a unificação e o pacote de CRUD/blog foram enviados à main do GitHub (implementação em fe8bdc2). Nenhuma operação no banco remoto foi realizada.
 
 ## Estado encontrado
 
