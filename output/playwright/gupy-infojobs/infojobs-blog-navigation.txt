@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://blog.infojobs.com.br/');
+```
+### Open tabs
+- 0: (current) [Blog Infojobs](https://blog.infojobs.com.br/)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://blog.infojobs.com.br/
+- Page Title: Blog Infojobs
+- Console: 0 errors, 1 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-04-34-071Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-04-27-853Z.log#L1-L6

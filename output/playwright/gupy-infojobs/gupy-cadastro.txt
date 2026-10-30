@@ -1,0 +1,73 @@
+### Open tabs
+- 0: (current) [Gupy](https://login.gupy.io/candidates/signup)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://login.gupy.io/candidates/signup
+- Page Title: Gupy
+- Console: 1 errors, 0 warnings
+### Snapshot
+```yaml
+- generic [active] [ref=f50e1]:
+  - generic [ref=f50e3]:
+    - link "Pular para o conteúdo principal" [ref=f50e28] [cursor=pointer]:
+      - /url: "#main-content"
+    - generic [ref=f50e29]:
+      - button "Português" [ref=f50e31] [cursor=pointer]
+      - generic [ref=f50e38]:
+        - heading "Informe os dados para criar sua nova conta" [level=1] [ref=f50e39]
+        - generic [ref=f50e40]:
+          - generic [ref=f50e41]: País de origem
+          - generic [ref=f50e47] [cursor=pointer]:
+            - generic [ref=f50e48]: Brasil
+            - combobox "País de origem" [ref=f50e50]
+        - generic [ref=f50e55]:
+          - generic [ref=f50e56]:
+            - generic [ref=f50e57] [cursor=pointer]: CPF
+            - textbox "CPF" [ref=f50e60]:
+              - /placeholder: 000.000.000-00
+          - generic [ref=f50e61]: Utilizado para identificação e autenticidade das informações fornecidas.
+        - generic [ref=f50e62]:
+          - generic [ref=f50e63]:
+            - generic [ref=f50e64] [cursor=pointer]: E-mail
+            - textbox "E-mail" [ref=f50e67]
+          - generic [ref=f50e68]: Cadastre um e-mail que você tenha acesso para validar a sua nova conta.
+        - generic [ref=f50e69]:
+          - generic [ref=f50e70] [cursor=pointer]: Confirme o e-mail
+          - textbox "Confirme o e-mail" [ref=f50e73]
+        - button "Continuar" [ref=f50e74] [cursor=pointer]
+        - generic [ref=f50e75]:
+          - text: Ao se cadastrar ou vincular a sua rede social, você declara que leu e está de acordo com nossos
+          - link "Termos de Uso" [ref=f50e76] [cursor=pointer]:
+            - /url: https://www.gupy.io/termos-de-uso-recrutamento-e-selecao-candidatos
+          - text: e
+          - link "Aviso de Privacidade" [ref=f50e77] [cursor=pointer]:
+            - /url: https://www.gupy.io/aviso-de-privacidade-candidatos
+          - text: .
+        - paragraph [ref=f50e79]: "Criar conta via:"
+        - generic [ref=f50e80]:
+          - button "Criar conta via Google" [ref=f50e81] [cursor=pointer]: Google
+          - button "Criar conta via LinkedIn" [ref=f50e85] [cursor=pointer]: LinkedIn
+      - generic [ref=f50e89]:
+        - separator [ref=f50e90]
+        - paragraph [ref=f50e91]: Já tem uma conta?
+        - button "Já tem uma conta? Entrar" [ref=f50e92] [cursor=pointer]:
+          - generic [ref=f50e93]: Entrar
+      - generic [ref=f50e94]:
+        - separator [ref=f50e95]
+        - paragraph [ref=f50e96]: Precisa de ajuda?
+        - button "Falar com o suporte" [ref=f50e97] [cursor=pointer]
+      - paragraph [ref=f50e100]: Powered by Gupy
+    - link "Suporte para candidatos" [ref=f50e9] [cursor=pointer]:
+      - /url: https://suporte-candidatos.gupy.io/s/suporte?language=pt_BR
+      - text: "?"
+  - generic [ref=f50e10]:
+    - button "Abrir recursos assistivos." [ref=f50e11] [cursor=pointer]:
+      - paragraph:
+        - generic [ref=f50e14]: Recursos Assistivos
+    - button "Abrir tradutor de língua de sinais." [ref=f50e15] [cursor=pointer]:
+      - paragraph:
+        - generic [ref=f50e23]: Acessível em Libras
+  - generic:
+    - generic "Privacy Tools - Cookie Management"
+    - generic "Privacy Tools - Cookie Management - https://www.privacytools.com.br"
+```

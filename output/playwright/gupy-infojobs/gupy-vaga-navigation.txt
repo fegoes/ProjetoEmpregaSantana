@@ -1,0 +1,15 @@
+### Ran Playwright code
+```js
+await page.goto('https://vempra.gupy.io/jobs/12424148?jobBoardSource=gupy_public_page');
+```
+### Open tabs
+- 0: (current) [Página da Vaga | Automation Engineer (Pessoa Consultora de Integração)](https://vempra.gupy.io/jobs/12424148?jobBoardSource=gupy_public_page)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://vempra.gupy.io/jobs/12424148?jobBoardSource=gupy_public_page
+- Page Title: Página da Vaga | Automation Engineer (Pessoa Consultora de Integração)
+- Console: 15 errors, 0 warnings
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-09-37-435Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-09-28-777Z.log#L1-L26

@@ -1,0 +1,917 @@
+- generic [ref=e1]:
+  - dialog "Bem-vindo ao Infojobs Brasil Gestão de autorizações" [ref=e4]:
+    - document [active] [ref=e5]:
+      - generic [ref=e6]:
+        - paragraph [ref=e8]:
+          - text: "Nós e nossos parceiros usamos cookies e tecnologias semelhantes com o seu consentimento para personalizar o serviço (ex: publicidade, geolocalização e medição de audiências). Pode gerir ou retirar o seu consentimento a qualquer momento na nossa"
+          - link "Política de Privacidade" [ref=e9] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+          - text: Com o seu consentimento, nós e
+          - button "os nossos 1071 parceiros" [ref=e10] [cursor=pointer]
+          - text: usamos cookies ou tecnologias semelhantes para armazenar, aceder e processar dados pessoais como a sua visita a este sítio web, endereços IP e identificadores de cookies. Alguns parceiros não pedem o seu consentimento para processar os seus dados e baseiam-se nos seus interesses comerciais legítimos. Pode retirar o seu consentimento ou opor-se ao processamento de dados com base no seu interesse legítimo em qualquer altura, clicando em "Saiba mais" ou na nossa Política de Privacidade neste sítio web.
+        - paragraph [ref=e12]:
+          - heading "Nós e os nossos parceiros efetuamos o seguinte processamento de dados:" [level=2] [ref=e13]
+          - generic [ref=e14]: Armazenar e/ou aceder a informações num dispositivo, Dados analíticos, Dados de geolocalização precisos e identificação através da procura de dispositivos, Funcional, Marketing, Medição de públicos-alvo, Publicidade, Publicidade e conteúdos personalizados, medição de publicidade e conteúdos, estudos de audiência e desenvolvimento de serviços, Social
+      - generic [ref=e15]:
+        - button "Learn more" [ref=e16] [cursor=pointer]: Saiba mais
+        - button "Agree and close" [ref=e17] [cursor=pointer]: Aceitar
+  - navigation [ref=e18]:
+    - generic [ref=e19]:
+      - link [ref=e20] [cursor=pointer]:
+        - /url: /
+        - img "Infojobs" [ref=e21]
+      - generic [ref=e22]:
+        - list [ref=e23]:
+          - listitem [ref=e24]:
+            - link "Achar Vagas" [ref=e25] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br
+          - listitem [ref=e26]:
+            - link "Avaliações de Empresas" [ref=e27] [cursor=pointer]:
+              - /url: /ranking-melhores-empresas.aspx
+          - listitem [ref=e28]:
+            - link "Salários" [ref=e29] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/salarios
+          - listitem [ref=e30]:
+            - link "Blog" [ref=e31] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br
+          - listitem [ref=e32]:
+            - link "Recrutadores" [ref=e33] [cursor=pointer]:
+              - /url: /anunciar-vaga-de-emprego-gratis.aspx
+        - generic [ref=e34]:
+          - link "Login" [ref=e35] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/candidate/
+          - link "Anunciar Vagas" [ref=e37] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/company/insertnew.aspx?iwz=41
+          - link "Cadastrar CV" [ref=e38] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+  - main [ref=e40]:
+    - generic [ref=e41]:
+      - generic [ref=e42]:
+        - heading "Mais de 1 milhão de oportunidades para você escolher!" [level=1] [ref=e43]
+        - generic [ref=e44]:
+          - generic [ref=e45]:
+            - generic [ref=e46]: O quê?
+            - textbox "Cargo ou palavra-chave" [ref=e50]
+          - generic [ref=e52]:
+            - generic [ref=e53]: Onde?
+            - textbox "Localização" [ref=e57]
+          - button "ACHAR VAGAS" [ref=e59] [cursor=pointer]
+      - generic [ref=e63]:
+        - heading "Empresas líderes no Brasil estão contratando agora" [level=2] [ref=e65]
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - link [ref=e69] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/mc-donalds/vagas
+              - img "McDonald's Logo" [ref=e71]
+            - link [ref=e73] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/stefanini/vagas
+              - img "Stefanini Logo" [ref=e75]
+            - link [ref=e77] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/almaviva-do-brasil/vagas
+              - img "AlmavivA Experience Logo" [ref=e79]
+            - link [ref=e81] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/iron-mountain-do-brasil/vagas
+              - img "Iron Mountain do Brasil Logo" [ref=e83]
+            - link [ref=e85] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/spal-industria-brasileira-de-bebidas-sa/vagas
+              - img "FEMSA Logo" [ref=e87]
+          - generic [ref=e88]:
+            - link [ref=e90] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/lojas-eskala/vagas
+              - img "Lojas Eskala Logo" [ref=e92]
+            - link [ref=e94] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/mazzini-administracao-e-empreitas-ltda/vagas
+              - img "Mazzini Logo" [ref=e96]
+            - link [ref=e98] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/grupocarrefourbrasil/vagas
+              - img "Grupo Carrefour Brasil Logo" [ref=e100]
+            - link [ref=e102] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/algar-sa/vagas
+              - img "Grupo Algar Logo" [ref=e104]
+            - link [ref=e106] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/cinepolis-operadora-de-cinemas-do-brasil/vagas
+              - img "Cinépolis Logo" [ref=e108]
+          - generic [ref=e109]:
+            - link [ref=e111] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/emprego-americanas__-249006.aspx
+              - img "Americanas Logo" [ref=e113]
+            - link [ref=e115] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/adecco/vagas
+              - img "Adecco Logo" [ref=e117]
+            - link [ref=e119] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/wurth-do-brasil-pecas-de-fixacao-ltda/vagas
+              - img "Wurth do Brasil Logo" [ref=e121]
+            - link [ref=e123] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/tp/vagas
+              - img "TP Logo" [ref=e125]
+            - link [ref=e127] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/swift-mercado-da-carne/vagas
+              - img "Swift Logo" [ref=e129]
+          - link "Veja mais de 271.000 Empresas" [ref=e131] [cursor=pointer]:
+            - /url: /ranking-melhores-empresas.aspx
+    - generic [ref=e133]:
+      - generic [ref=e134]:
+        - heading "Áreas Profissionais mais populares" [level=2] [ref=e135]
+        - link "Ver Todas" [ref=e136] [cursor=pointer]:
+          - /url: /EmpregosMaisBuscadoscargo.aspx
+      - generic [ref=e137]:
+        - generic [ref=e138]:
+          - generic [ref=e140]:
+            - link [ref=e142] [cursor=pointer]:
+              - /url: /empregos-de-comercial-vendas.aspx
+              - generic [ref=e143]:
+                - img "Vagas de Comercial, Vendas" [ref=e144]
+                - generic [ref=e145]:
+                  - heading "Comercial, Vendas" [level=3] [ref=e146]
+                  - paragraph [ref=e147]: 43.837 vagas
+            - link [ref=e149] [cursor=pointer]:
+              - /url: /empregos-de-logistica.aspx
+              - generic [ref=e150]:
+                - img "Vagas de Logística" [ref=e151]
+                - generic [ref=e152]:
+                  - heading "Logística" [level=3] [ref=e153]
+                  - paragraph [ref=e154]: 16.912 vagas
+            - link [ref=e156] [cursor=pointer]:
+              - /url: /empregos-de-alimentacao-gastronomia.aspx
+              - generic [ref=e157]:
+                - img "Vagas de Alimentação / Gastronomia" [ref=e158]
+                - generic [ref=e159]:
+                  - heading "Alimentação / Gastronomia" [level=3] [ref=e160]
+                  - paragraph [ref=e161]: 13.676 vagas
+            - link [ref=e163] [cursor=pointer]:
+              - /url: /empregos-de-industrial-producao-fabrica.aspx
+              - generic [ref=e164]:
+                - img "Vagas de Industrial, Produção, Fábrica" [ref=e165]
+                - generic [ref=e166]:
+                  - heading "Industrial, Produção, Fábrica" [level=3] [ref=e167]
+                  - paragraph [ref=e168]: 9.780 vagas
+          - generic [ref=e170]:
+            - link [ref=e172] [cursor=pointer]:
+              - /url: /empregos-de-construcao-manutencao.aspx
+              - generic [ref=e173]:
+                - img "Vagas de Construção, Manutenção" [ref=e174]
+                - generic [ref=e175]:
+                  - heading "Construção, Manutenção" [level=3] [ref=e176]
+                  - paragraph [ref=e177]: 9.768 vagas
+            - link [ref=e179] [cursor=pointer]:
+              - /url: /empregos-de-servicos-gerais.aspx
+              - generic [ref=e180]:
+                - img "Vagas de Serviços Gerais" [ref=e181]
+                - generic [ref=e182]:
+                  - heading "Serviços Gerais" [level=3] [ref=e183]
+                  - paragraph [ref=e184]: 9.346 vagas
+            - link [ref=e186] [cursor=pointer]:
+              - /url: /empregos-de-administracao.aspx
+              - generic [ref=e187]:
+                - img "Vagas de Administração" [ref=e188]
+                - generic [ref=e189]:
+                  - heading "Administração" [level=3] [ref=e190]
+                  - paragraph [ref=e191]: 8.677 vagas
+            - link [ref=e193] [cursor=pointer]:
+              - /url: /empregos-de-contabil-financas-economia.aspx
+              - generic [ref=e194]:
+                - img "Vagas de Contábil, Finanças, Economia" [ref=e195]
+                - generic [ref=e196]:
+                  - heading "Contábil, Finanças, Economia" [level=3] [ref=e197]
+                  - paragraph [ref=e198]: 5.076 vagas
+          - generic [ref=e200]:
+            - link [ref=e202] [cursor=pointer]:
+              - /url: /empregos-de-saude.aspx
+              - generic [ref=e203]:
+                - img "Vagas de Saúde" [ref=e204]
+                - generic [ref=e205]:
+                  - heading "Saúde" [level=3] [ref=e206]
+                  - paragraph [ref=e207]: 4.228 vagas
+            - link [ref=e209] [cursor=pointer]:
+              - /url: /empregos-de-seguranca.aspx
+              - generic [ref=e210]:
+                - img "Vagas de Segurança" [ref=e211]
+                - generic [ref=e212]:
+                  - heading "Segurança" [level=3] [ref=e213]
+                  - paragraph [ref=e214]: 3.812 vagas
+            - link [ref=e216] [cursor=pointer]:
+              - /url: /empregos-de-telemarketing.aspx
+              - generic [ref=e217]:
+                - img "Vagas de Telemarketing" [ref=e218]
+                - generic [ref=e219]:
+                  - heading "Telemarketing" [level=3] [ref=e220]
+                  - paragraph [ref=e221]: 3.454 vagas
+            - link [ref=e223] [cursor=pointer]:
+              - /url: /empregos-de-transportes.aspx
+              - generic [ref=e224]:
+                - img "Vagas de Transportes" [ref=e225]
+                - generic [ref=e226]:
+                  - heading "Transportes" [level=3] [ref=e227]
+                  - paragraph [ref=e228]: 3.236 vagas
+        - button "Próxima" [ref=e230] [cursor=pointer]
+    - generic [ref=e238]:
+      - generic [ref=e239]:
+        - heading "CONHEÇA AS EMPRESAS POR DENTRO" [level=2] [ref=e240]
+        - paragraph [ref=e241]: Infojobs é o site com mais avaliações realizadas pelos colaboradores das empresas do Brasil
+        - link "BUSCAR AVALIAÇÕES DE EMPRESAS" [ref=e242] [cursor=pointer]:
+          - /url: /ranking-melhores-empresas.aspx
+      - generic [ref=e247]:
+        - generic [ref=e248]:
+          - generic [ref=e251]:
+            - generic [ref=e252]: "5"
+            - heading "UMA BOA EMPRESA" [level=3] [ref=e255]
+            - paragraph [ref=e256]: EMPRESA MUITO BOA DE SE TRABALHAR E ÓTIMOS BENEFÍCIOS
+            - paragraph [ref=e258]:
+              - text: Engenheiro de Manutenção Mecânica a menos de um ano em Mato Grosso (Ex-Funcionário) para
+              - link "Ero Brasil Caraíba" [ref=e259] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-ero-brasil-caraiba__-11131857.aspx
+          - generic [ref=e262]:
+            - generic [ref=e263]: "5"
+            - heading "Experiência profissional no monitoramento de lavouras" [level=3] [ref=e266]
+            - paragraph [ref=e267]: Minha experiência na Bom Futuro proporcionou aprendizado prático nas atividades agrícolas de campo, com participação no acompanhamento das etapas de plantio e colheita, monitoramento de lavouras e condução de áreas experimentais. Também desenvolvi conhecimentos relacionados à regulagem de implementos agrícolas e ao acompanhamento técnico da produçã...
+            - generic [ref=e268]:
+              - link [ref=e269] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/bom-futuro-agricola/availacoes
+                - img "Opiniões da empresa Grupo Bom Futuro Logo" [ref=e271]
+              - paragraph [ref=e272]:
+                - text: Monitor Técnico de Lavoura há 6 anos em Mato Grosso (Ex-Funcionário) para
+                - link "Grupo Bom Futuro" [ref=e273] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/bom-futuro-agricola/availacoes
+          - generic [ref=e276]:
+            - generic [ref=e277]: "5"
+            - heading "Meu ambiente de trabalho é bom, trabalho na praia." [level=3] [ref=e280]
+            - paragraph [ref=e281]: Não é uma empresa ja que sou vendedor autonomo eu faço meu horario.
+            - paragraph [ref=e283]:
+              - text: Vendedor Autônomo em Bahia para
+              - link "Sem nome específico" [ref=e284] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-sem-nome-especifico__-859053.aspx
+          - generic [ref=e287]:
+            - generic [ref=e288]: "5"
+            - heading "Ricoo" [level=3] [ref=e291]
+            - paragraph [ref=e292]: Ótima empresa, eu trabalhei por um bom tempo e achei muito bom
+            - paragraph [ref=e294]:
+              - text: Assistente de Monitoramento a menos de 6 meses em São Paulo (Ex-Funcionário) para
+              - link "Ricoolog" [ref=e295] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-ricoolog__-12927397.aspx
+          - generic [ref=e298]:
+            - generic [ref=e299]: "5"
+            - heading "Ótima empresa" [level=3] [ref=e302]
+            - paragraph [ref=e303]: Acolhedora e pontual com os salarios
+            - generic [ref=e304]:
+              - link [ref=e305] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/grupo-big/availacoes
+                - img "Opiniões da empresa Grupo BIG Logo" [ref=e307]
+              - paragraph [ref=e308]:
+                - text: encarregada de setor há 6 anos em Rio de Janeiro (Ex-Funcionário) para
+                - link "Grupo BIG" [ref=e309] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/grupo-big/availacoes
+          - generic [ref=e312]:
+            - generic [ref=e313]: "5"
+            - heading "Servidor efetivo - cargo comissionado" [level=3] [ref=e316]
+            - paragraph [ref=e317]: Excelente empresa para laborar.
+            - paragraph [ref=e319]:
+              - text: Analista de processos na Assessoria Jurídica da Secretaria de Estado da Defesa Civil há 9 anos em Rio de Janeiro (Ex-Funcionário) para
+              - link "Secretária de Estado do Desenvolvimento Econômico - SEDEC" [ref=e320] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-secretaria-estado-do-desenvolvimento-economico-sedec__-5656002.aspx
+          - generic [ref=e323]:
+            - generic [ref=e324]: "4"
+            - heading "Bons gestores" [level=3] [ref=e327]
+            - paragraph [ref=e328]: Me proporcionaram ótimas experiências, estive presente em todos os setores e aprendi em cada um deles.
+            - paragraph [ref=e330]:
+              - text: Auxiliar de Logística a menos de 6 meses em Minas Gerais (Ex-Funcionário) para
+              - link "Educação" [ref=e331] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/educacao/availacoes
+          - generic [ref=e334]:
+            - generic [ref=e335]: "5"
+            - heading "BOA" [level=3] [ref=e338]
+            - paragraph [ref=e339]: OPORTUNIDADE DE APRENDIZADO
+            - generic [ref=e340]:
+              - link [ref=e341] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-jmacedo__-265909.aspx
+                - img "Opiniões da empresa J.Macêdo Logo" [ref=e343]
+              - paragraph [ref=e344]:
+                - text: Vendedor há 10 anos em São Paulo (Ex-Funcionário) para
+                - link "J.Macêdo" [ref=e345] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/availacoes-jmacedo__-265909.aspx
+          - generic [ref=e348]:
+            - generic [ref=e349]: "5"
+            - heading "Positivo" [level=3] [ref=e352]
+            - paragraph [ref=e353]: Possibilidade de crescimento profissional, colegas de trabalho bom de trabalhar em equipe
+            - generic [ref=e354]:
+              - link [ref=e355] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/jasmine-alimentos/availacoes
+                - img "Opiniões da empresa JASMINE ALIMENTOS Logo" [ref=e357]
+              - paragraph [ref=e358]:
+                - text: Coordenadora Comercial há 4 anos em Paraná (Ex-Funcionário) para
+                - link "JASMINE ALIMENTOS" [ref=e359] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/jasmine-alimentos/availacoes
+          - generic [ref=e362]:
+            - generic [ref=e363]: "5"
+            - heading "Ótima" [level=3] [ref=e366]
+            - paragraph [ref=e367]: Ótimo ambiente de trabalho.
+            - generic [ref=e368]:
+              - link [ref=e369] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/wizard/availacoes
+                - img "Opiniões da empresa Wizard Logo" [ref=e371]
+              - paragraph [ref=e372]:
+                - text: Auxiliar de escritório há 2 anos em Espírito Santo (Ex-Funcionário) para
+                - link "Wizard" [ref=e373] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/wizard/availacoes
+          - generic [ref=e376]:
+            - generic [ref=e377]: "5"
+            - heading "Boa" [level=3] [ref=e380]
+            - paragraph [ref=e381]: razoável para trabalhar
+            - generic [ref=e382]:
+              - link [ref=e383] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-supergiro-distribuidora__-113597.aspx
+                - img "Opiniões da empresa Supergiro Distribuidora Logo" [ref=e385]
+              - paragraph [ref=e386]:
+                - text: Promotor de Vendas a menos de um ano em Pará (Ex-Funcionário) para
+                - link "Supergiro Distribuidora" [ref=e387] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/availacoes-supergiro-distribuidora__-113597.aspx
+          - generic [ref=e390]:
+            - generic [ref=e391]: "5"
+            - heading "Excelente" [level=3] [ref=e394]
+            - paragraph [ref=e395]: Excelente empresa, eu pedi para sair na época pois estava reta final do curso fazendo 3 estágios não estava conseguindo conciliar.
+            - paragraph [ref=e397]:
+              - text: OPERADOR DE LOJA a menos de 6 meses em Minas Gerais (Ex-Funcionário) para
+              - link "FARMCIA PAGUE MENOS" [ref=e398] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-farmcia-pague-menos__-4933268.aspx
+          - generic [ref=e401]:
+            - generic [ref=e402]: "5"
+            - heading "PERFEITA" [level=3] [ref=e405]
+            - paragraph [ref=e406]: UMA EMPRESA QUE ME SURPREENDEU BASTANTE,COM TOTAL APOIO.
+            - paragraph [ref=e408]:
+              - text: Técnico de Enfermagem há 12 anos em Rio de Janeiro (Ex-Funcionário) para
+              - link "Prontoclínica LTDA" [ref=e409] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/prontoclinica-ltda/availacoes
+          - generic [ref=e412]:
+            - generic [ref=e413]: "5"
+            - heading "Boa empresa com boas oportunidades." [level=3] [ref=e416]
+            - paragraph [ref=e417]: Empresa que trata bem seus funcionários e tem boas oportunidades.
+            - paragraph [ref=e419]:
+              - text: Supervisor de Setor a menos de 6 meses em Rio de Janeiro (Ex-Funcionário) para
+              - link "Distac Veículos" [ref=e420] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/distac-distribuidora-de-automoveis-e-comercio-ltda/availacoes
+          - generic [ref=e423]:
+            - generic [ref=e424]: "4"
+            - heading "Foundever" [level=3] [ref=e427]
+            - paragraph [ref=e428]: Oportunidades de crescimento
+            - paragraph [ref=e430]:
+              - text: Analista de Treinamento a menos de 6 meses em Paraná (Ex-Funcionário) para
+              - link "Foundever (Sitel)" [ref=e431] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-foundever-sitel__-11598591.aspx
+          - generic [ref=e434]:
+            - generic [ref=e435]: "5"
+            - heading "Aux. ADM de logística" [level=3] [ref=e438]
+            - paragraph [ref=e439]: Ótima empresa para crescimento operacional, oferecendo um plano de carreira. Liderança totalmente empenhada para auxiliar.
+            - paragraph [ref=e441]:
+              - text: Auxiliar Administrativo Operacional em São Paulo para
+              - link "CEADIS" [ref=e442] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/ceadis/availacoes
+          - generic [ref=e445]:
+            - generic [ref=e446]: "5"
+            - heading "ótimo ambiente de trabalho" [level=3] [ref=e449]
+            - paragraph [ref=e450]: a empresa tem seus fluxos bem definidos, uma boa diretoria.
+            - paragraph [ref=e452]:
+              - text: Representante Comercial em Rio Grande do Sul para
+              - link "Vale Mais Atacadista" [ref=e453] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-vale-mais-atacadista__-7666862.aspx
+          - generic [ref=e456]:
+            - generic [ref=e457]: "5"
+            - heading "BOA" [level=3] [ref=e460]
+            - paragraph [ref=e461]: MUITO BOA EMPRESA, ÓTIMOS PROFISSIONAIS
+            - paragraph [ref=e463]:
+              - text: Estagiário Legal em Rio de Janeiro para
+              - link "Unisuam - Universidade Augusto Motta" [ref=e464] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-unisuam-universidade-augusto-motta__-2459192.aspx
+          - generic [ref=e467]:
+            - generic [ref=e468]: "5"
+            - heading "Bom pra começar" [level=3] [ref=e471]
+            - paragraph [ref=e472]: entrei em 2009 e sai 2026, esse foi o meu primeiro emprego com 16 anos comecei como empacotador e sai de lá como gerente 33 anos. tive muitas oportunidades e ótimos aprendizados.
+            - generic [ref=e473]:
+              - link [ref=e474] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-hirota-food__-102208.aspx
+                - img "Opiniões da empresa Hirota Food Logo" [ref=e476]
+              - paragraph [ref=e477]:
+                - text: Gerente de Loja a menos de um ano em São Paulo (Ex-Funcionário) para
+                - link "Hirota Food" [ref=e478] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/availacoes-hirota-food__-102208.aspx
+          - generic [ref=e481]:
+            - generic [ref=e482]: "5"
+            - heading "boa" [level=3] [ref=e485]
+            - paragraph [ref=e486]: A Luft Logistics é uma empresa que proporciona oportunidades de aprendizado e desenvolvimento profissional. Minha experiência tem contribuído para aprimorar minhas habilidades administrativas, ampliar meus conhecimentos e desenvolver maior responsabilidade e organização. Considero uma experiência importante para meu crescimento profissional.
+            - generic [ref=e487]:
+              - link [ref=e488] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/luft-logistics/availacoes
+                - img "Opiniões da empresa Luft Logistics Logo" [ref=e490]
+              - paragraph [ref=e491]:
+                - text: Assistente Administrativo em São Paulo para
+                - link "Luft Logistics" [ref=e492] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/luft-logistics/availacoes
+          - generic [ref=e495]:
+            - generic [ref=e496]: "5"
+            - heading "Experiência profissional positiva, mas com oportunidades de melhoria" [level=3] [ref=e499]
+            - paragraph [ref=e500]: Trabalhei na Global TI por aproximadamente 2 anos e 5 meses. Como pontos positivos, destaco o trabalho home office, a flexibilidade e o período de descanso concedido, além de ter recebido reajuste durante minha permanência na empresa. Como pontos de melhoria, acredito que poderia haver maior investimento em treinamentos, certificações, desenvolvime...
+            - paragraph [ref=e502]:
+              - text: Analista Desenvolvedor Sênior a menos de 6 meses em São Paulo (Ex-Funcionário) para
+              - link "GLOBAL TI" [ref=e503] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-global-ti__-6481.aspx
+          - generic [ref=e506]:
+            - generic [ref=e507]: "5"
+            - heading "Empresa valoriza o funcionário bom" [level=3] [ref=e510]
+            - paragraph [ref=e511]: Empresa sempre proponha crescimento ao funcionário
+            - paragraph [ref=e513]:
+              - text: Técnico de Manutenção em São Paulo para
+              - link "VEMAN MANUTENCAO E GESTAO DE ATIVOS LTDA" [ref=e514] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-veman-manutencao-gestao-ativos-ltda__-9827640.aspx
+          - generic [ref=e517]:
+            - generic [ref=e518]: "5"
+            - heading "grande empresa" [level=3] [ref=e521]
+            - paragraph [ref=e522]: tem oportunidade de crescimento.
+            - paragraph [ref=e524]:
+              - text: Cozinheiro Industrial há 1 ano em Rio Grande do Sul (Ex-Funcionário) para
+              - link "Exal Administração de Restaurantes Empresariais e Facilities LTDA" [ref=e525] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-exal-administracao-restaurantes-empresariais-facilities-ltda__-8897780.aspx
+          - generic [ref=e528]:
+            - generic [ref=e529]: "4"
+            - heading "Possibilidades." [level=3] [ref=e532]
+            - paragraph [ref=e533]: Possibilidade de crescimento.
+            - generic [ref=e534]:
+              - link [ref=e535] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/grupo-villela/availacoes
+                - img "Opiniões da empresa Grupo Villela Logo" [ref=e537]
+              - paragraph [ref=e538]:
+                - text: Analista Jurídico Sênior em Rio Grande do Sul para
+                - link "Grupo Villela" [ref=e539] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/grupo-villela/availacoes
+          - generic [ref=e542]:
+            - generic [ref=e543]: "5"
+            - heading "Otimo lugar para trabalhar" [level=3] [ref=e546]
+            - paragraph [ref=e547]: Ambiente de trabalho excelente.
+            - paragraph [ref=e549]:
+              - text: Analista de suporte de TI Pleno a menos de 6 meses em Minas Gerais (Ex-Funcionário) para
+              - link "Ana Gaming" [ref=e550] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-ana-gaming__-13480866.aspx
+        - generic [ref=e551]:
+          - generic [ref=e554]:
+            - generic [ref=e555]: "5"
+            - heading "Boa empresa" [level=3] [ref=e558]
+            - paragraph [ref=e559]: boa empresa para se trabalhar
+            - generic [ref=e560]:
+              - link [ref=e561] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/in-haus/availacoes
+                - img "Opiniões da empresa In Haus Logo" [ref=e563]
+              - paragraph [ref=e564]:
+                - text: Supervisor de Manutenção a menos de 6 meses em Rio de Janeiro (Ex-Funcionário) para
+                - link "In Haus" [ref=e565] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/in-haus/availacoes
+          - generic [ref=e568]:
+            - generic [ref=e569]: "5"
+            - heading "Experiência profissional na área comercial do agronegócio" [level=3] [ref=e572]
+            - paragraph [ref=e573]: Minha experiência na empresa contribuiu para o desenvolvimento profissional nas áreas comercial e técnica do agronegócio. Durante esse período, pude aprimorar minhas habilidades em vendas de insumos agrícolas, atendimento a produtores rurais, gestão de carteira de clientes e assistência técnica, ampliando meus conhecimentos sobre o mercado agrícola...
+            - generic [ref=e574]:
+              - link [ref=e575] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/plantar-sa/availacoes
+                - img "Opiniões da empresa Grupo Plantar Logo" [ref=e577]
+              - paragraph [ref=e578]:
+                - text: Consultor Técnico de Vendas a menos de um ano em Mato Grosso (Ex-Funcionário) para
+                - link "Grupo Plantar" [ref=e579] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/plantar-sa/availacoes
+          - generic [ref=e582]:
+            - generic [ref=e583]: "5"
+            - heading "Empresa ótima" [level=3] [ref=e586]
+            - paragraph [ref=e587]: É uma empresa muito ótima de trabalho, tive uma ótima experiência.
+            - generic [ref=e588]:
+              - link [ref=e589] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/colegio-marista-sao-pedro/availacoes
+                - img "Opiniões da empresa Rede Marista Logo" [ref=e591]
+              - paragraph [ref=e592]:
+                - text: Analista Contábil a menos de 6 meses em Rio Grande do Sul (Ex-Funcionário) para
+                - link "Rede Marista" [ref=e593] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/colegio-marista-sao-pedro/availacoes
+          - generic [ref=e596]:
+            - generic [ref=e597]: "5"
+            - heading "BOAS OPORTUNIDADES" [level=3] [ref=e600]
+            - paragraph [ref=e601]: VALORIZAÇÃO DOS TALENTOS INTERNOS DA EMPRESA
+            - paragraph [ref=e603]:
+              - text: Executivo de Vendas a menos de um ano em Rio de Janeiro (Ex-Funcionário) para
+              - link "PagSeguro Internet Instituição de Pagamento S/A" [ref=e604] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-pagseguro-internet-instituicao-pagamento-sa__-11014990.aspx
+          - generic [ref=e607]:
+            - generic [ref=e608]: "5"
+            - heading "Uma empresa comprometida com saúde, bem-estar e qualidade no atendimento" [level=3] [ref=e611]
+            - paragraph [ref=e612]: A Academia Competition é uma empresa reconhecida no segmento fitness, voltada à promoção da saúde, do bem-estar e da qualidade de vida. Valoriza o atendimento aos alunos, a qualidade dos serviços oferecidos e a busca constante por uma boa experiência para seus clientes.
+            - paragraph [ref=e614]:
+              - text: Recepcionista em São Paulo para
+              - link "Competition Sports Club" [ref=e615] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-competition-sports-club__-9161686.aspx
+          - generic [ref=e618]:
+            - generic [ref=e619]: "5"
+            - heading "Experiência como revendedora autônoma" [level=3] [ref=e622]
+            - paragraph [ref=e623]: Minha experiência como revendedora autônoma das marcas Avon e Natura me proporcionou aprendizado na área de vendas, organização de pedidos e relacionamento com clientes. A atividade me permitiu desenvolver autonomia, responsabilidade e habilidades de comunicação.
+            - paragraph [ref=e625]:
+              - text: Revendedora autônoma de cosméticos em Bahia para
+              - link "Avon Cosméticos (Natura & Co)" [ref=e626] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-avon-cosmeticos-natura-co__-9029685.aspx
+          - generic [ref=e629]:
+            - generic [ref=e630]: "5"
+            - heading "UFRB" [level=3] [ref=e633]
+            - paragraph [ref=e634]: Possibilidade de crescimento
+            - paragraph [ref=e636]:
+              - text: Docente em Bahia para
+              - link "Universidade Federal do Recôncavo da Bahia - UFRB" [ref=e637] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-universidade-federal-do-reconcavo-da-bahia-ufrb__-1403811.aspx
+          - generic [ref=e640]:
+            - generic [ref=e641]: "5"
+            - heading "Estágio - Metrô" [level=3] [ref=e644]
+            - paragraph [ref=e645]: Minha experiência no Metrô-SP foi muito importante para meu desenvolvimento profissional e pessoal. Considero uma empresa de grande relevância para a sociedade, que me proporcionou aprendizado, contato direto com o público e a oportunidade de desenvolver habilidades como comunicação, responsabilidade, agilidade e trabalho em equipe. Foi uma experiê...
+            - paragraph [ref=e647]:
+              - text: Estagiário há 2 anos em São Paulo (Ex-Funcionário) para
+              - link "METRÔ – Cia. del Metropolitano de São Paulo /SP" [ref=e648] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-metro-cia-del-metropolitano-sao-paulo-sp__-11662747.aspx
+          - generic [ref=e651]:
+            - generic [ref=e652]: "5"
+            - heading "Positivo" [level=3] [ref=e655]
+            - paragraph [ref=e656]: Há possibilidade de crescimento profissional
+            - paragraph [ref=e658]:
+              - text: Supervisora Comercial há 2 anos em Bahia (Ex-Funcionário) para
+              - link "M.Dias Branco s/a - umana" [ref=e659] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-mdias-branco-sa-umana__-9307555.aspx
+          - generic [ref=e662]:
+            - generic [ref=e663]: "5"
+            - heading "Gostei do trabalho" [level=3] [ref=e666]
+            - paragraph [ref=e667]: Gostei do trabalhox experiência bacana.
+            - paragraph [ref=e669]:
+              - text: Auxiliar Administrativo há 6 anos em Bahia (Ex-Funcionário) para
+              - link "VITALMED EMERGÊNCIAS MÉDICAS" [ref=e670] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-vitalmed-emergencias-medicas__-685733.aspx
+          - generic [ref=e673]:
+            - generic [ref=e674]: "5"
+            - heading "Excelente empresa" [level=3] [ref=e677]
+            - paragraph [ref=e678]: Ótimas equipes, excelentes benefícios.
+            - paragraph [ref=e680]:
+              - text: Analista de TI Sênior (N2/N3) há 1 ano em Rio de Janeiro (Ex-Funcionário) para
+              - link "3CON Consultoria" [ref=e681] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-3con-consultoria__-786220.aspx
+          - generic [ref=e684]:
+            - generic [ref=e685]: "5"
+            - heading "Excelente ambiente para desenvolvimento profissional" [level=3] [ref=e688]
+            - paragraph [ref=e689]: Empresa organizada, com ambiente colaborativo e oportunidades de aprendizado contínuo. A gestão incentiva o desenvolvimento profissional, valoriza o trabalho em equipe e proporciona uma experiência enriquecedora para o crescimento na carreira.
+            - paragraph [ref=e691]:
+              - text: Analista de Saneamento em Minas Gerais para
+              - link "COPASA MG - Companhia de saneamento de Minas Gerais" [ref=e692] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-copasa-mg-companhia-saneamento-minas-gerais__-1014710.aspx
+          - generic [ref=e695]:
+            - generic [ref=e696]: "5"
+            - heading "BOA" [level=3] [ref=e699]
+            - paragraph [ref=e700]: ÓTIMO AMBIENTE DE TRABALHO
+            - paragraph [ref=e702]:
+              - text: VENDEDORA há 9 anos em Rio de Janeiro (Ex-Funcionário) para
+              - link "Vivo Mobitel Telecomunicações S/A" [ref=e703] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-vivo-mobitel-telecomunicacoes-sa__-1001359.aspx
+          - generic [ref=e706]:
+            - generic [ref=e707]: "5"
+            - heading "ARVENSE" [level=3] [ref=e710]
+            - paragraph [ref=e711]: Um ótimo lugar para adquirir boas experiências e com bastante crescimento profissional
+            - paragraph [ref=e713]:
+              - text: Apoio pedagógico a menos de um ano em Distrito Federal (Ex-Funcionário) para
+              - link "Colegio arvense" [ref=e714] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-colegio-arvense__-806122.aspx
+          - generic [ref=e717]:
+            - generic [ref=e718]: "5"
+            - heading "Boa" [level=3] [ref=e721]
+            - paragraph [ref=e722]: Otima empresa pra se trabalhar, ambiente tranquilo e acolhedor, unico ponto negativo e a possibilidade de crescimento profissional
+            - paragraph [ref=e724]:
+              - text: Auxiliar de Finanças a menos de 6 meses em Rio Grande do Sul (Ex-Funcionário) para
+              - link "BF FOODS" [ref=e725] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-bf-foods__-357507.aspx
+          - generic [ref=e728]:
+            - generic [ref=e729]: "5"
+            - heading "Muito boa" [level=3] [ref=e732]
+            - paragraph [ref=e733]: Recomendo, com certeza!
+            - paragraph [ref=e735]:
+              - text: Analista de RH há 3 anos em São Paulo (Ex-Funcionário) para
+              - link "BONA - TERCEIRIZACAO DE MAO-DE-OBRA PARA LOGISTICA LTDA - ME" [ref=e736] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-bona-terceirizacao-mao-obra-para-logistica-ltda-me__-135517.aspx
+          - generic [ref=e739]:
+            - generic [ref=e740]: "4"
+            - heading "Uma empresa boa para se trabalhar" [level=3] [ref=e743]
+            - paragraph [ref=e744]: Tem possibilidade de crescimento, porem gestão deixa a desejar
+            - paragraph [ref=e746]:
+              - text: Recuperador de Crédito a menos de 6 meses em São Paulo (Ex-Funcionário) para
+              - link "EmpresaAtento Brasil S/A" [ref=e747] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-empresaatento-brasil-sa__-9578318.aspx
+          - generic [ref=e750]:
+            - generic [ref=e751]: "5"
+            - heading "boa" [level=3] [ref=e754]
+            - paragraph [ref=e755]: Bem bom de trabalhar , recomendaria, otimos gestotes
+            - generic [ref=e756]:
+              - link [ref=e757] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-unidasul__-321093.aspx
+                - img "Opiniões da empresa Unidasul Logo" [ref=e759]
+              - paragraph [ref=e760]:
+                - text: agen(Patio) a menos de um ano em Rio Grande do Sul (Ex-Funcionário) para
+                - link "Unidasul" [ref=e761] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/availacoes-unidasul__-321093.aspx
+          - generic [ref=e764]:
+            - generic [ref=e765]: "4"
+            - heading "Boa empresa" [level=3] [ref=e768]
+            - paragraph [ref=e769]: Oportunidade de promoção. A liderança do serviço em específico não era boa.
+            - paragraph [ref=e771]:
+              - text: Psicólogo SAICA a menos de 6 meses em São Paulo (Ex-Funcionário) para
+              - link "OSC SAMARITANO SAO FRANCISCO DE ASSIS" [ref=e772] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-osc-samaritano-sao-francisco-assis__-9413706.aspx
+          - generic [ref=e775]:
+            - generic [ref=e776]: "5"
+            - heading "Bom, variaos beheficiis" [level=3] [ref=e779]
+            - paragraph [ref=e780]: boa, chance de crescimento
+            - paragraph [ref=e782]:
+              - text: MOTORISTA há 1 ano em Rio de Janeiro (Ex-Funcionário) para
+              - link "Grupo Vamos Locação" [ref=e783] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-grupo-vamos-locacao__-8147011.aspx
+          - generic [ref=e786]:
+            - generic [ref=e787]: "5"
+            - heading "Colaboradores sempre pronto a ajudar" [level=3] [ref=e790]
+            - paragraph [ref=e791]: Contratam apenas para suprir as autos demanda , temporário apenas
+            - generic [ref=e792]:
+              - link [ref=e793] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/personalcob/availacoes
+                - img "Opiniões da empresa Personalcob Logo" [ref=e795]
+              - paragraph [ref=e796]:
+                - text: Auxiliar de manutenção 2 há 1 ano em São Paulo (Ex-Funcionário) para
+                - link "Personalcob" [ref=e797] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/personalcob/availacoes
+          - generic [ref=e800]:
+            - generic [ref=e801]: "5"
+            - heading "Excelente empresa" [level=3] [ref=e804]
+            - paragraph [ref=e805]: Excelente ambiente para trabalhar!
+            - paragraph [ref=e807]:
+              - text: Analista de Marketing em São Paulo para
+              - link "L8 GROUP" [ref=e808] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-l8-group__-8663852.aspx
+          - generic [ref=e811]:
+            - generic [ref=e812]: "5"
+            - heading "boa" [level=3] [ref=e815]
+            - paragraph [ref=e816]: possibilidade de crescimento profissional
+            - paragraph [ref=e818]:
+              - text: Instrutor de musculação em São Paulo para
+              - link "academia AMC SPORTS" [ref=e819] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-academia-amc-sports__-601694.aspx
+          - generic [ref=e822]:
+            - generic [ref=e823]: "5"
+            - heading "Uma experiência de aprendizado e desenvolvimento profissional" [level=3] [ref=e826]
+            - paragraph [ref=e827]: A empresa proporciona a oportunidade de adquirir conhecimentos e desenvolver habilidades em diferentes áreas, especialmente nas atividades administrativas, acadêmicas e comerciais. A experiência contribui para o crescimento profissional, o desenvolvimento da comunicação e o contato com diferentes rotinas de trabalho.
+            - generic [ref=e828]:
+              - link [ref=e829] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/fgv/availacoes
+                - img "Opiniões da empresa FGV - Fundação Getulio Vargas Logo" [ref=e831]
+              - paragraph [ref=e832]:
+                - text: Auxiliar Administrativo em Rio de Janeiro para
+                - link "FGV - Fundação Getulio Vargas" [ref=e833] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/fgv/availacoes
+          - generic [ref=e836]:
+            - generic [ref=e837]: "5"
+            - heading "Suporte à Operação Industrial" [level=3] [ref=e840]
+            - paragraph [ref=e841]: Ambiente industrial que integra diferentes rotinas operacionais, com foco na organização, movimentação de materiais e suporte às atividades produtivas.
+            - paragraph [ref=e843]:
+              - text: Ajudante Geral há 17 anos em São Paulo (Ex-Funcionário) para
+              - link "ICL América do Sul S.A" [ref=e844] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/availacoes-icl-america-do-sul-sa__-10076269.aspx
+    - generic [ref=e846]:
+      - heading "O Infojobs te ajuda a encontrar um emprego melhor" [level=2] [ref=e847]
+      - generic [ref=e850]:
+        - heading "Veja o que os colaboradores opinam sobre uma empresa" [level=3] [ref=e851]
+        - list [ref=e852]:
+          - listitem [ref=e853]: • Acesse mais de 14 milhões de opiniões e avaliações de empresas compartilhadas pelos próprios colaboradores e ex-colaboradores.
+          - listitem [ref=e854]: "• Prepare-se com segurança para as entrevistas: veja as perguntas que podem ser feitas e analise as avaliações realizadas por participantes de processos seletivos anteriores."
+        - link "Buscar Avaliações de Empresas" [ref=e855] [cursor=pointer]:
+          - /url: /ranking-melhores-empresas.aspx
+      - generic [ref=e860]:
+        - heading "Compare-se e conheça as suas chances de sucesso" [level=3] [ref=e861]
+        - list [ref=e862]:
+          - listitem [ref=e863]: • Antes de candidatar-se à uma vaga de emprego, compare a sua pontuação em diferentes áreas com a dos outros inscritos.
+          - listitem [ref=e864]: • Saiba a porcentagem de adequação do seu perfil profissional às vagas de emprego que lhe interessam.
+        - link "Buscar Vagas de emprego" [ref=e865] [cursor=pointer]:
+          - /url: /empregos.aspx
+      - generic [ref=e872]:
+        - heading "Saiba tudo sobre as profissões que você mais gosta" [level=3] [ref=e873]
+        - list [ref=e874]:
+          - listitem [ref=e875]: • Informe-se sobre os conhecimentos necessários e sobre as formações profissionais relacionadas.
+          - listitem [ref=e876]: • Consulte e compare os salários em diferentes empresas.
+          - listitem [ref=e877]: • Acesse e inscreva-se às vagas de emprego relacionadas.
+        - link "Buscar na Guia de Cargos e Profissões" [ref=e878] [cursor=pointer]:
+          - /url: /cargo
+      - generic [ref=e883]:
+        - heading "Profissões mais populares" [level=4] [ref=e884]
+        - link "Recepcionista" [ref=e885] [cursor=pointer]:
+          - /url: /cargo/recepcionista
+        - link "Auxiliar de Escritório" [ref=e887] [cursor=pointer]:
+          - /url: /cargo/auxiliar-escritorio
+        - link "Motorista" [ref=e889] [cursor=pointer]:
+          - /url: /cargo/motorista
+        - link "Gerente Administrativo" [ref=e891] [cursor=pointer]:
+          - /url: /cargo/gerente-administrativo
+        - link "Vigilante" [ref=e893] [cursor=pointer]:
+          - /url: /cargo/vigilante
+        - link "Biomédico" [ref=e895] [cursor=pointer]:
+          - /url: /cargo/biomedico
+        - link "Arquiteto" [ref=e897] [cursor=pointer]:
+          - /url: /cargo/arquiteto
+        - link "Engenheiro Civil" [ref=e899] [cursor=pointer]:
+          - /url: /cargo/engenheiro-civil
+    - generic [ref=e904]:
+      - generic [ref=e905]: Perguntas frequentes sobre o Infojobs
+      - generic [ref=e907]:
+        - link "O que é o Infojobs?" [ref=e909] [cursor=pointer]:
+          - /url: "#HomeFaq1"
+        - link "Como procurar vagas de emprego no Infojobs?" [ref=e914] [cursor=pointer]:
+          - /url: "#HomeFaq2"
+        - link "É grátis se candidatar às vagas no Infojobs?" [ref=e919] [cursor=pointer]:
+          - /url: "#HomeFaq3"
+        - link "Como criar um currículo no Infojobs?" [ref=e924] [cursor=pointer]:
+          - /url: "#HomeFaq4"
+        - link "Quais tipos de vaga encontro no Infojobs?" [ref=e929] [cursor=pointer]:
+          - /url: "#HomeFaq5"
+        - link "MOSTRAR MAIS" [ref=e934] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br/categories/41245590479249-Candidatos
+    - generic [ref=e937]:
+      - heading "Buscas de empregos mais populares" [level=2] [ref=e938]
+      - generic [ref=e939]:
+        - link "Cargos" [ref=e940] [cursor=pointer]:
+          - /url: "#tab-cargos"
+        - link "Cidades" [ref=e941] [cursor=pointer]:
+          - /url: "#tab-cidades"
+        - link "Salários" [ref=e942] [cursor=pointer]:
+          - /url: "#tab-salarios"
+        - link "Empresas" [ref=e943] [cursor=pointer]:
+          - /url: "#tab-empresas"
+      - tabpanel [ref=e945]:
+        - generic [ref=e946]:
+          - list [ref=e948]:
+            - listitem [ref=e949]:
+              - link "Vendedor" [ref=e950] [cursor=pointer]:
+                - /url: /vagas-de-vendedor.aspx
+            - listitem [ref=e951]:
+              - link "Auxiliar de Cozinha" [ref=e952] [cursor=pointer]:
+                - /url: /vagas-de-auxiliar-cozinha.aspx
+            - listitem [ref=e953]:
+              - link "Primeiro Emprego" [ref=e954] [cursor=pointer]:
+                - /url: /vagas-de-emprego-primeiro+emprego.aspx
+            - listitem [ref=e955]:
+              - link "Enfermeiro" [ref=e956] [cursor=pointer]:
+                - /url: /vagas-de-enfermeiro.aspx
+            - listitem [ref=e957]:
+              - link "Gerente de Loja" [ref=e958] [cursor=pointer]:
+                - /url: /vagas-de-gerente-loja.aspx
+          - list [ref=e960]:
+            - listitem [ref=e961]:
+              - link "Intérprete de Libras" [ref=e962] [cursor=pointer]:
+                - /url: /vagas-de-interprete-libras.aspx
+            - listitem [ref=e963]:
+              - link "Representante Comercial" [ref=e964] [cursor=pointer]:
+                - /url: /vagas-de-representante-comercial.aspx
+            - listitem [ref=e965]:
+              - link "Analista de TI" [ref=e966] [cursor=pointer]:
+                - /url: /vagas-de-analista-ti.aspx
+            - listitem [ref=e967]:
+              - link "Estágio" [ref=e968] [cursor=pointer]:
+                - /url: /vagas-de-emprego-estagio.aspx
+            - listitem [ref=e969]:
+              - link "Assistente Comercial" [ref=e970] [cursor=pointer]:
+                - /url: /vagas-de-assistente-comercial.aspx
+          - list [ref=e972]:
+            - listitem [ref=e973]:
+              - link "Vigilante" [ref=e974] [cursor=pointer]:
+                - /url: /vagas-de-vigilante.aspx
+            - listitem [ref=e975]:
+              - link "Analista de Sistemas" [ref=e976] [cursor=pointer]:
+                - /url: /vagas-de-analista-sistemas.aspx
+            - listitem [ref=e977]:
+              - link "Auxiliar de Produção" [ref=e978] [cursor=pointer]:
+                - /url: /vagas-de-emprego-auxiliar+de+produ%c3%a7%c3%a3o.aspx
+            - listitem [ref=e979]:
+              - link "Auxiliar de Limpeza" [ref=e980] [cursor=pointer]:
+                - /url: /vagas-de-auxiliar-limpeza.aspx
+            - listitem [ref=e981]:
+              - link "Motorista" [ref=e982] [cursor=pointer]:
+                - /url: /vagas-de-motorista.aspx
+          - list [ref=e984]:
+            - listitem [ref=e985]:
+              - link "Telemarketing" [ref=e986] [cursor=pointer]:
+                - /url: /empregos-de-telemarketing.aspx
+            - listitem [ref=e987]:
+              - link "Auxiliar Administrativo" [ref=e988] [cursor=pointer]:
+                - /url: /vagas-de-auxiliar-administrativo.aspx
+            - listitem [ref=e989]:
+              - link "Ajudante Geral" [ref=e990] [cursor=pointer]:
+                - /url: /vagas-de-ajudante-geral.aspx
+            - listitem [ref=e991]:
+              - link "Jovem Aprendiz" [ref=e992] [cursor=pointer]:
+                - /url: /vagas-de-emprego-jovem+aprendiz.aspx
+            - listitem [ref=e993]:
+              - link "Operador de Loja" [ref=e994] [cursor=pointer]:
+                - /url: /vagas-de-operador-loja.aspx
+          - list [ref=e996]:
+            - listitem [ref=e997]:
+              - link "Engenheiro Civil" [ref=e998] [cursor=pointer]:
+                - /url: /vagas-de-engenheiro-civil.aspx
+            - listitem [ref=e999]:
+              - link "Representante Comercial" [ref=e1000] [cursor=pointer]:
+                - /url: /vagas-de-representante-comercial.aspx
+            - listitem [ref=e1001]:
+              - link "Técnica de Informática" [ref=e1002] [cursor=pointer]:
+                - /url: /vagas-de-tecnico-informatica.aspx
+            - listitem [ref=e1003]:
+              - link "Técnico Enfermagem" [ref=e1004] [cursor=pointer]:
+                - /url: /vagas-de-tecnico-enfermagem.aspx
+            - listitem [ref=e1005]:
+              - link "Recepcionista" [ref=e1006] [cursor=pointer]:
+                - /url: /vagas-de-recepcionista.aspx
+          - list [ref=e1008]:
+            - listitem [ref=e1009]:
+              - link "Contabilidade" [ref=e1010] [cursor=pointer]:
+                - /url: /empregos-contabilidade.aspx
+            - listitem [ref=e1011]:
+              - link "Advogado" [ref=e1012] [cursor=pointer]:
+                - /url: /vagas-de-advogado.aspx
+            - listitem [ref=e1013]:
+              - link "Recepcionista Hospitalar" [ref=e1014] [cursor=pointer]:
+                - /url: /vagas-de-recepcionista-hospitalar.aspx
+            - listitem [ref=e1015]:
+              - link "Analista de RRHH" [ref=e1016] [cursor=pointer]:
+                - /url: /vagas-de-analista-recursos-humanos.aspx
+            - listitem [ref=e1017]:
+              - link "Almoxarifado" [ref=e1018] [cursor=pointer]:
+                - /url: /vagas-de-emprego-almoxarifado.aspx
+  - contentinfo [ref=e1019]:
+    - generic [ref=e1021]:
+      - generic [ref=e1022]:
+        - link [ref=e1023] [cursor=pointer]:
+          - /url: /
+          - img "Infojobs.com.br" [ref=e1024]
+        - generic [ref=e1025]: © Infojobs Brasil Atividades de Internet, Ltda. Todos os direitos reservados.
+      - generic [ref=e1027]:
+        - heading "Institucional" [level=2] [ref=e1028]
+        - link "Quem somos?" [ref=e1029] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/ajuda/Sobre_InfoJobs__4648.aspx
+        - link "Por que usar Infojobs?" [ref=e1030] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/por-que-infojobs.aspx
+        - link "Trabalhe Conosco" [ref=e1031] [cursor=pointer]:
+          - /url: https://infojobs.pandape.infojobs.com.br
+        - link "Política de Cookies" [ref=e1032] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+        - link "Gerenciamento de Cookies" [ref=e1033] [cursor=pointer]:
+          - /url: javascript:Didomi.preferences.show()
+        - link "Fale Conosco" [ref=e1034] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+      - generic [ref=e1035]:
+        - heading "Empresas" [level=2] [ref=e1036]
+        - link "Ajuda" [ref=e1037] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+        - link "Blog" [ref=e1038] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+        - link "Anunciar Vagas" [ref=e1039] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+        - link "Buscar candidatos" [ref=e1040] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/Company/Candidate1/List.aspx
+        - link "Pandapé" [ref=e1041] [cursor=pointer]:
+          - /url: https://www.pandape.com.br/
+        - link "Aviso Legal" [ref=e1042] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/aviso-legal-para-empresas__15726.aspx
+        - link "Política de Privacidade" [ref=e1043] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-empresas__15729.aspx
+      - generic [ref=e1044]:
+        - heading "Candidatos" [level=2] [ref=e1045]
+        - link "Ajuda" [ref=e1046] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+        - link "Blog" [ref=e1047] [cursor=pointer]:
+          - /url: https://blog.infojobs.com.br
+        - link "Vagas" [ref=e1048] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/EmpregosMaisBuscados.aspx
+        - link "Guia de Cargos" [ref=e1049] [cursor=pointer]:
+          - /url: /cargo
+        - link "Aviso Legal" [ref=e1050] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+        - link "Política de Privacidade" [ref=e1051] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+        - link "Busca de emprego segura" [ref=e1052] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/proteja-se-ao-buscar-emprego__16245.aspx
+      - generic [ref=e1053]:
+        - heading "Acompanhe nossos canais oficiais" [level=2] [ref=e1054]
+        - generic [ref=e1055]:
+          - link "Facebook Infojobs" [ref=e1056] [cursor=pointer]:
+            - /url: https://www.facebook.com/infojobs.com.br/
+          - link "Twitter Infojobs" [ref=e1059] [cursor=pointer]:
+            - /url: https://twitter.com/infojobscombr
+          - link "Youtube Infojobs" [ref=e1062] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/InfoJobscombr
+          - link "Linkedin Infojobs" [ref=e1065] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/infojobs
+          - link "Instagram Infojobs" [ref=e1068] [cursor=pointer]:
+            - /url: https://www.instagram.com/infojobsbr/
+          - link "TikTok Infojobs" [ref=e1071] [cursor=pointer]:
+            - /url: https://www.tiktok.com/@infojobsbr
+        - link "Entre no grupo" [ref=e1074] [cursor=pointer]:
+          - /url: https://whatsapp.com/channel/0029VafypDK7z4kcBqQ0nl3J
+        - heading "Baixe nosso App" [level=3] [ref=e1078]
+        - generic [ref=e1079]:
+          - link "DISPONÍVEL NA App Store" [ref=e1080] [cursor=pointer]:
+            - /url: https://apps.apple.com/br/app/infojobs-vagas-de-emprego/id981457216
+          - link "DISPONÍVEL NO Google Play" [ref=e1084] [cursor=pointer]:
+            - /url: https://play.google.com/store/apps/details?id=com.infojobs.phone&hl=en_US&utm_source=infojobs_organic&utm_campaign=botones_footer&utm_medium=promo_www&referrer=origenvisita%3D644

@@ -1,0 +1,330 @@
+### Open tabs
+- 0: (current) [Como cadastrar seu currículo na Gupy: passo a passo](https://www.gupy.io/blog-do-emprego/curriculo-gupy)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://www.gupy.io/blog-do-emprego/curriculo-gupy
+- Page Title: Como cadastrar seu currículo na Gupy: passo a passo
+- Console: 0 errors, 3 warnings
+### Snapshot
+```yaml
+- generic [active] [ref=f27e1]:
+  - banner [ref=f27e2]:
+    - navigation [ref=f27e3]:
+      - generic [ref=f27e5]:
+        - link "Blog do Emprego" [ref=f27e7] [cursor=pointer]:
+          - /url: https://www.gupy.io/blog-do-emprego
+          - separator [ref=f27e15]
+        - list [ref=f27e17]:
+          - listitem [ref=f27e18]:
+            - link "Suporte" [ref=f27e19] [cursor=pointer]:
+              - /url: https://suporte-candidatos.gupy.io/s/
+          - listitem [ref=f27e20]:
+            - link "Login para Candidatos" [ref=f27e21] [cursor=pointer]:
+              - /url: https://login.gupy.io/candidates/signin
+          - listitem [ref=f27e22]:
+            - link "Buscar Vagas ->" [ref=f27e23] [cursor=pointer]:
+              - /url: https://portal.gupy.io/
+  - link "Pular para o conteúdo principal" [ref=f27e25] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=f27e26]:
+    - progressbar [ref=f27e27]
+    - generic [ref=f27e29]:
+      - img "mulher atualizando o curriculo gupy" [ref=f27e30]
+      - 'heading "Como cadastrar meu currículo na plataforma da Gupy: guia completo" [level=1] [ref=f27e31]'
+      - paragraph [ref=f27e33]: A Gupy é uma plataforma de recrutamento usada por diversas empresas. Este guia ensina como criar uma conta, preencher e atualizar o currículo, buscar vagas, acompanhar candidaturas e otimizar o seu perfil. Também mostra as opções de preenchimento de CV automático e manual.
+      - generic [ref=f27e34]:
+        - img "Juliana Paes | Gupy" [ref=f27e35]
+        - generic [ref=f27e36]:
+          - paragraph [ref=f27e37]:
+            - text: Por
+            - link "Juliana Paes | Gupy" [ref=f27e38] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+          - generic [ref=f27e39]:
+            - time [ref=f27e41]: 30 de dezembro de 2025
+            - text: 6 minutos de leitura
+      - separator [ref=f27e42]
+      - generic [ref=f27e44]:
+        - paragraph [ref=f27e45]: Muitas plataformas são utilizadas no processo de busca por vagas de emprego e participação em processos seletivos, então algumas dúvidas podem surgir em relação à como fazer o cadastro e manter os dados atualizados.
+        - paragraph [ref=f27e46]:
+          - text: Se você está em busca de novas oportunidades profissionais, a
+          - strong [ref=f27e47]: Gupy
+          - text: é uma plataforma essencial para se candidatar a vagas em diversas empresas.
+        - paragraph [ref=f27e48]: Neste tutorial, vamos te guiar passo a passo sobre como cadastrar e atualizar seu currículo na Gupy, além de fornecer dicas para otimizar seu perfil e aumentar suas chances de sucesso nos processos seletivos. Confira!
+        - heading "Por que usar a Gupy para procurar emprego?" [level=2] [ref=f27e49]
+        - paragraph [ref=f27e50]: A Gupy tem uma plataforma de recrutamento e seleção utilizada por diversas empresas para gerenciar processos seletivos. Ao se cadastrar na Gupy, você pode se candidatar a vagas, acompanhar o andamento de suas candidaturas e manter seu currículo sempre atualizado.
+        - paragraph [ref=f27e51]: A Gupy conecta pessoas candidatas a empresas de forma eficiente, transparente e intuitiva. Com uma única conta, você pode se candidatar a centenas de vagas e acompanhar todo o processo seletivo em um só lugar. Além disso, o sistema usa inteligência artificial para cruzar as informações do seu currículo com os requisitos da vaga.
+        - heading "Passo 1 – Criar uma conta na Gupy" [level=2] [ref=f27e52]
+        - paragraph [ref=f27e53]: "Antes de mais nada, é necessário ter um cadastro na plataforma. Siga o passo a passo:"
+        - heading "1. Acesse o site de pessoas candidatas da Gupy" [level=3] [ref=f27e54]
+        - list [ref=f27e55]:
+          - listitem [level=1] [ref=f27e56]:
+            - text: Vá para
+            - link [ref=f27e57] [cursor=pointer]:
+              - /url: https://www.gupy.io/
+            - link "https://login.gupy.io/candidate" [ref=f27e58] [cursor=pointer]:
+              - /url: https://login.gupy.io/candidates
+        - heading "2. Faça seu cadastro" [level=3] [ref=f27e59]
+        - list [ref=f27e60]:
+          - listitem [level=1] [ref=f27e61]:
+            - text: Clique em
+            - strong [ref=f27e62]: “Criar conta”
+            - strong
+          - listitem [level=1] [ref=f27e63]: "Preencha os campos solicitados: nome completo, email, CPF, país de origem e telefone."
+          - listitem [level=1] [ref=f27e64]: Crie uma senha segura com no mínimo 8 caracteres.
+          - listitem [level=1] [ref=f27e65]:
+            - text: Aceite os
+            - strong [ref=f27e66]: Termos de Uso
+            - text: e
+            - strong [ref=f27e67]: Política de Privacidade
+            - text: .
+          - listitem [level=1] [ref=f27e68]:
+            - text: Clique em
+            - strong [ref=f27e69]: "\"Criar conta\""
+            - text: .
+        - paragraph [ref=f27e70]: Você receberá um e-mail de verificação. Confirme o cadastro clicando no link enviado para validar sua conta.
+        - heading "Passo 2 – Acessar o painel da pessoa candidata" [level=2] [ref=f27e71]
+        - paragraph [ref=f27e72]:
+          - text: Depois de validar seu e-mail, volte ao site e faça login com seu e-mail e senha. Você será direcionado à sua
+          - strong [ref=f27e73]: área de pessoa candidata
+          - text: ", onde poderá:"
+        - list [ref=f27e74]:
+          - listitem [level=1] [ref=f27e75]:
+            - text: Procurar vagas disponíveis através do “
+            - link "Portal de Vagas" [ref=f27e76] [cursor=pointer]:
+              - /url: https://portal.gupy.io/
+            - text: ”;
+          - listitem [level=1] [ref=f27e77]: Candidatar-se a processos seletivos;
+          - listitem [level=1] [ref=f27e78]:
+            - text: Atualizar seus dados pessoais e
+            - link "currículo" [ref=f27e79] [cursor=pointer]:
+              - /url: /blog/modelo-de-curriculo
+            - text: ;
+          - listitem [level=1] [ref=f27e80]: Acompanhar o status das suas candidaturas.
+        - heading "Passo 3 – Atualizar ou inserir seus dados pessoais na Gupy" [level=2] [ref=f27e81]
+        - paragraph [ref=f27e82]: Primeiro você deve inserir seus dados e sempre mantê-los atualizados, porque será essencial para que as empresas possam entrar em contato com você.
+        - heading "Como editar seus dados pessoais:" [level=3] [ref=f27e83]
+        - list [ref=f27e84]:
+          - listitem [level=1] [ref=f27e85]:
+            - text: Clique nas três linhas
+            - strong [ref=f27e86]
+            - text: no canto superior direito e vá em “
+            - strong [ref=f27e87]: editar perfil
+            - text: ”;
+          - listitem [level=1] [ref=f27e88]:
+            - text: Selecione a opção
+            - strong [ref=f27e89]: “Editar perfil”
+            - text: ;
+          - listitem [level=1] [ref=f27e90]: Edite informações como nome, telefone, e-mail e CPF;
+          - listitem [level=1] [ref=f27e91]:
+            - text: Clique em
+            - strong [ref=f27e92]: “Salvar”
+            - text: para registrar as alterações.
+        - heading "Passo 4 – Preencher ou atualizar seu currículo na Gupy" [level=2] [ref=f27e93]
+        - paragraph [ref=f27e94]: Essa é uma das etapas mais importantes do processo, leia com atenção e se atente aos detalhes.
+        - heading "Como acessar seu currículo:" [level=3] [ref=f27e95]
+        - list [ref=f27e96]:
+          - listitem [level=1] [ref=f27e97]:
+            - text: Na área da pessoa candidata, clique nas três linhas
+            - strong [ref=f27e98]
+            - text: no canto superior direito e vá em “
+            - strong [ref=f27e99]: Meu currículo”
+            - text: .
+          - listitem [level=1] [ref=f27e100]:
+            - text: Preencha
+            - strong [ref=f27e101]: as sessões
+            - text: com seus dados e mantenha seu currículo atualizado para se candidatar às vagas;
+          - listitem [level=1] [ref=f27e102]:
+            - text: Caso realize alterações, estes ajustes serão replicados para
+            - strong [ref=f27e103]: todas as suas candidaturas ativas.
+        - heading "Escolha como preencher:" [level=3] [ref=f27e104]
+        - heading "1. Uso de arquivo de CV para preenchimento de currículo na Gupy" [level=4] [ref=f27e105]
+        - paragraph [ref=f27e106]: Você pode fazer o upload do seu currículo e a plataforma da Gupy vai preencher automaticamente suas informações com base no conteúdo do arquivo.
+        - paragraph [ref=f27e107]:
+          - text: Ao adicionar ou atualizar os dados de currículo na plataforma, você tem a opção de enviar um currículo em formato
+          - strong [ref=f27e108]: PDF, .doc ou .docx
+          - text: para que nossa Inteligência Artificial faça a leitura e preenchimento automático dos campos.
+        - paragraph [ref=f27e109]:
+          - text: No entanto, é fundamental
+          - strong [ref=f27e110]: revisar o preenchimento
+          - text: ", corrigindo quaisquer erros e fornecendo informações adicionais sempre que necessário."
+        - heading "2. Upload de CV com OpenAI" [level=4] [ref=f27e111]
+        - paragraph [ref=f27e112]:
+          - text: Visando aprimorar a experiência de preenchimento de currículos nas candidaturas, integramos a
+          - strong [ref=f27e113]: OpenAI
+          - text: como ferramenta de parser/upload de CV.
+        - paragraph [ref=f27e114]: Isso garante que as informações sejam extraídas automaticamente de arquivos PDF e DOCX, com maior assertividade para o preenchimento dos campos de currículo na plataforma.
+        - heading "3. Preencher manualmente" [level=4] [ref=f27e115]
+        - paragraph [ref=f27e116]:
+          - text: Se preferir, você pode adicionar manualmente os dados
+          - strong [ref=f27e117]: "nas seções:"
+        - list [ref=f27e118]:
+          - listitem [level=1] [ref=f27e119]: Experiência
+          - listitem [level=1] [ref=f27e120]: Dados pessoais
+          - listitem [level=1] [ref=f27e121]: Diversidade
+          - listitem [level=1] [ref=f27e122]: Habilidades
+        - generic [ref=f27e123]:
+          - strong [ref=f27e124]: "Importante:"
+          - text: na ordenação de currículos são considerados os campos de Experiência e Habilidades. Dados pessoais e sobre diversidade não são considerados na ordenação.
+        - heading "Dica:" [level=3] [ref=f27e125]
+        - text: O seu currículo deve estar completo e você pode personalizar de acordo com a vaga o campo "Apresente-se".
+        - heading "Passo 5 – Candidatar-se a vagas na Gupy" [level=2] [ref=f27e126]
+        - paragraph [ref=f27e127]:
+          - text: Com o perfil pronto, você pode procurar vagas e
+          - link "se candidatar" [ref=f27e128] [cursor=pointer]:
+            - /url: https://suporte-candidatos.gupy.io/s/article/Como-me-candidatar-pela-Gupy?language=pt_BR
+          - text: .
+        - heading "Como buscar oportunidades:" [level=3] [ref=f27e129]
+        - list [ref=f27e130]:
+          - listitem [level=1] [ref=f27e131]:
+            - text: Na sua área de pessoa candidata, clique em
+            - strong [ref=f27e132]: “Buscar novas vagas”
+            - text: ", ou através do"
+            - strong [ref=f27e133]: “
+            - link [ref=f27e134] [cursor=pointer]:
+              - /url: https://portal.gupy.io/
+              - strong [ref=f27e135]: Portal de Vagas
+            - strong [ref=f27e136]: ”.
+          - listitem [level=1] [ref=f27e137]: Utilize filtros por área de atuação, cargos, localização, nome da empresa e outras opções.
+          - listitem [level=1] [ref=f27e138]: Clique na vaga desejada e leia a descrição completa.
+          - listitem [level=1] [ref=f27e139]:
+            - text: Se estiver de acordo com os requisitos, clique em
+            - strong [ref=f27e140]: “Candidatar-se”
+            - text: .
+        - heading "Passo 6 – Acompanhar o status das suas candidaturas" [level=2] [ref=f27e141]
+        - paragraph [ref=f27e142]: Após se candidatar a uma vaga, você poderá acompanhar seu progresso diretamente na plataforma.
+        - heading "Como monitorar suas vagas:" [level=3] [ref=f27e143]
+        - list [ref=f27e144]:
+          - listitem [level=1] [ref=f27e145]:
+            - text: Vá até o menu
+            - strong [ref=f27e146]: “Minhas Candidaturas”.
+            - strong
+          - listitem [level=1] [ref=f27e147]: Veja as que estão “Em andamento”, “ Banco de talentos” e “Finalizadas”.
+          - listitem [level=1] [ref=f27e148]:
+            - text: "Você consegue visualizar cada status do processo seletivo, como por exemplo:"
+            - list [ref=f27e149]:
+              - listitem [level=2] [ref=f27e150]: Inscrição realizada;
+              - listitem [level=2] [ref=f27e151]: Testes aplicados;
+              - listitem [level=2] [ref=f27e152]: Entrevista agendada;
+              - listitem [level=2] [ref=f27e153]: Em análise e outros.
+        - paragraph [ref=f27e154]: Isso permite que você saiba exatamente em que ponto está e se prepare para as próximas etapas.
+        - heading "Dicas para otimizar seu perfil na Gupy" [level=2] [ref=f27e155]
+        - paragraph [ref=f27e156]: "Um currículo bem-feito pode ser o diferencial entre ser chamado para uma entrevista ou não. Veja algumas boas práticas:"
+        - paragraph [ref=f27e157]: 1. Use palavras-chave
+        - paragraph [ref=f27e158]: Nossos agentes de IA são interpretativos e não somente leitores de palavra chave, ou seja, se você escreveu "liderei um time" ou "fui líder", nossos agentes entenderão como habilidade de liderança.
+        - paragraph [ref=f27e159]: 2. Destaque conquistas
+        - paragraph [ref=f27e160]: "Não apenas descreva tarefas, mas mostre resultados. Exemplo: “Aumentei as vendas em 20% em 6 meses”."
+        - paragraph [ref=f27e161]: 3. Preencha tudo
+        - paragraph [ref=f27e162]: Preencha o seu perfil da forma mais completa possível. Evite deixar campos em branco, complete cada seção.
+        - heading "Problemas comuns e como resolver" [level=2] [ref=f27e163]
+        - heading "Esqueci minha senha" [level=3] [ref=f27e164]
+        - list [ref=f27e165]:
+          - listitem [level=1] [ref=f27e166]:
+            - text: Clique em
+            - strong [ref=f27e167]: “Esqueci minha senha”
+            - text: na tela de login;
+          - listitem [level=1] [ref=f27e168]: Insira seu e-mail cadastrado e siga as instruções.
+        - heading "Não consigo entrar na conta" [level=3] [ref=f27e169]
+        - list [ref=f27e170]:
+          - listitem [level=1] [ref=f27e171]: Verifique se o e-mail e senha estão corretos;
+          - listitem [level=1] [ref=f27e172]: Tente redefinir a senha, se necessário;
+          - listitem [level=1] [ref=f27e173]:
+            - text: Em último caso, entre em contato com o
+            - link "suporte da Gupy" [ref=f27e174] [cursor=pointer]:
+              - /url: https://suporte-candidatos.gupy.io/s/suporte?language=pt_BR
+            - text: .
+        - paragraph [ref=f27e175]: Cadastrar seu currículo na Gupy é um processo simples, mas que exige atenção aos detalhes. Seguindo este passo a passo, você estará pronto para disputar as melhores vagas do mercado.
+        - paragraph [ref=f27e176]:
+          - text: Não se esqueça de manter seu
+          - strong [ref=f27e177]: perfil sempre atualizado
+          - text: e acompanhar suas candidaturas regularmente.
+        - paragraph [ref=f27e178]: A Gupy é uma ponte entre você e grandes empresas — aproveite ao máximo essa ferramenta e boa sorte na sua jornada profissional!
+        - paragraph [ref=f27e179]:
+          - link [ref=f27e182] [cursor=pointer]:
+            - /url: https://www.gupy.io/cs/c/?cta_guid=e50e02a2-479b-4bee-ba36-3311a7753b85&signature=AAH58kFOPx9-52xrf0Z5LvpWIwplhyPwzg&portal_id=3299491&pageId=189253182285&placement_guid=45746d84-048c-4b65-b6d6-2e0d3ffbbf0a&click=bd3bf263-7da7-4606-8e0c-c9c0d82282ad&redirect_url=APefjpHqAdPN7cyQMT_jXWdXkWHmyl7AdbgiPDD-tzZow3UNPj8qawcua5klAY17CG-ZeIg2CBeG0gGOFCfT0USuZf7dsYNzed74bcCcEa840onZLMj7hDQzXt3X9YYv5XOmueJZxGRqjo_2SSjHPkBNELII7GezFPpsd-jhisxJZb-t5hA39nu9S6s5GtfQFgyoe0mF90Nl7qNrwWUQiZj937yHNmnP8g4xfLx5deD3-NHShCbNeLgPm-7PjFc7cd0zwoZ5MQZP&hsutk=028afb8aa209450f0b60d44c2131e7ac&canon=https%3A%2F%2Fwww.gupy.io%2Fblog-do-emprego%2Fcurriculo-gupy&ts=1792494207708&__hstc=113337176.028afb8aa209450f0b60d44c2131e7ac.1792494200336.1792494200336.1792494200336.1&__hssc=113337176.2.1792494200336&__hsfp=79c5739ad50515c389360f6c6547a567&contentType=blog-post
+            - img "Nova call to action" [ref=f27e183]
+    - region [ref=f27e184]:
+      - generic [ref=f27e185]:
+        - heading "Publicações relacionadas" [level=2] [ref=f27e186]
+        - list [ref=f27e187]:
+          - listitem [ref=f27e188]:
+            - link [ref=f27e189] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-fazer-curriculo-pelo-celular
+            - generic [ref=f27e190]:
+              - heading [level=3] [ref=f27e191]:
+                - 'link "Currículo pelo Celular: Passo a Passo para Criar o Seu" [ref=f27e192] [cursor=pointer]':
+                  - /url: https://www.gupy.io/blog-do-emprego/como-fazer-curriculo-pelo-celular
+              - paragraph [ref=f27e193]:
+                - text: por
+                - link "Bruna Guimarães | Gupy" [ref=f27e194] [cursor=pointer]:
+                  - /url: /blog-do-emprego/author/bruna-guimaraes-gupy
+                - text: em
+                - time [ref=f27e195]: 11/04/2022
+              - paragraph [ref=f27e196]: Alguns anos atrás, computadores e notebooks eram os principais meios de acesso à internet, enquanto os c...
+              - link "Leia mais" [ref=f27e197] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/como-fazer-curriculo-pelo-celular
+          - listitem [ref=f27e200]:
+            - link [ref=f27e201] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-procurar-emprego
+            - generic [ref=f27e202]:
+              - heading [level=3] [ref=f27e203]:
+                - 'link "Como procurar emprego: guia estratégico para sua recolocação" [ref=f27e204] [cursor=pointer]':
+                  - /url: https://www.gupy.io/blog-do-emprego/como-procurar-emprego
+              - paragraph [ref=f27e205]:
+                - text: por
+                - link "Juliana Paes | Gupy" [ref=f27e206] [cursor=pointer]:
+                  - /url: /blog-do-emprego/author/juliana-paes-gupy
+                - text: em
+                - time [ref=f27e207]: 25/07/2025
+              - paragraph [ref=f27e208]: A fase de procurar emprego pode ser desafiadora, especialmente quando a ansiedade bate e a vontade de vo...
+              - link "Leia mais" [ref=f27e209] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/como-procurar-emprego
+          - listitem [ref=f27e212]:
+            - link [ref=f27e213] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/nr-1
+            - generic [ref=f27e214]:
+              - heading [level=3] [ref=f27e215]:
+                - 'link "NR-1: o que é e o que muda para você ao entrar em um novo emprego" [ref=f27e216] [cursor=pointer]':
+                  - /url: https://www.gupy.io/blog-do-emprego/nr-1
+              - paragraph [ref=f27e217]:
+                - text: por
+                - link "Juliana Paes | Gupy" [ref=f27e218] [cursor=pointer]:
+                  - /url: /blog-do-emprego/author/juliana-paes-gupy
+                - text: em
+                - time [ref=f27e219]: 08/07/2025
+              - paragraph [ref=f27e220]: Você já ouviu falar na NR-1? Essa é uma das normas mais importantes para quem está começando um novo tra...
+              - link "Leia mais" [ref=f27e221] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/nr-1
+    - generic [ref=f27e226]:
+      - heading "Encontre a sua vaga de emprego" [level=2] [ref=f27e227]
+      - paragraph [ref=f27e228]: As oportunidades das empresas que mais crescem e contratam no Brasil estão na Gupy. Encontre vagas de emprego na nossa plataforma e comece a participar de processos seletivos ainda hoje!
+      - link "Buscar Vagas ->" [ref=f27e229] [cursor=pointer]:
+        - /url: https://portal.gupy.io/
+  - contentinfo [ref=f27e230]:
+    - generic [ref=f27e232]:
+      - list [ref=f27e233]:
+        - listitem [ref=f27e234]:
+          - img "Selo Reclame Aqui" [ref=f27e235]
+        - listitem [ref=f27e236]:
+          - link [ref=f27e237] [cursor=pointer]:
+            - /url: https://www.gupy.io/portal-de-privacidade
+            - img "Selo de Privacidade" [ref=f27e238]
+        - listitem [ref=f27e239]:
+          - img "Selo Handtalk" [ref=f27e240]
+        - listitem [ref=f27e241]:
+          - img "Selo Prêmio Reclame Aqui 2025" [ref=f27e242]
+      - link "Voltar ao Topo" [ref=f27e243] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=f27e247]:
+      - paragraph [ref=f27e255]: ©2015-2026 Gupy. Todos os direitos reservados.
+      - generic [ref=f27e256]:
+        - link "Política de Privacidade" [ref=f27e257] [cursor=pointer]:
+          - /url: https://www.gupy.io/aviso-de-privacidade-site
+        - text: "|"
+        - link "Portal de Privacidade" [ref=f27e258] [cursor=pointer]:
+          - /url: https://www.gupy.io/portal-de-privacidade
+  - generic:
+    - generic "Privacy Tools - Cookie Management"
+    - generic "Privacy Tools - Cookie Management - https://www.privacytools.com.br"
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-03-26-408Z.log#L73-L74

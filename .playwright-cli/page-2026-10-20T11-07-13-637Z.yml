@@ -1,0 +1,87 @@
+- generic [ref=f69e1]:
+  - generic [ref=f69e20]:
+    - generic [ref=f69e21]:
+      - link [ref=f69e22] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br
+        - img "Infojobs" [ref=f69e23]
+      - generic [ref=f69e24]:
+        - generic [ref=f69e25]:
+          - heading "O emprego que você procura está no Infojobs!" [level=2] [ref=f69e26]
+          - list [ref=f69e27]:
+            - listitem [ref=f69e28]: Candidate-se às melhores vagas do país.
+            - listitem [ref=f69e29]: Fique visível para milhares de empresas.
+            - listitem [ref=f69e30]: Receba vagas adequadas ao seu perfil.
+            - listitem [ref=f69e31]: Conheça as empresas por dentro.
+        - generic [ref=f69e32]:
+          - generic [ref=f69e33]: As melhores empresas estão aqui!
+          - generic [ref=f69e34]:
+            - img "Grupo Big" [ref=f69e35]
+            - img "Extrafarma" [ref=f69e36]
+            - img "Bimbo" [ref=f69e37]
+            - img "Carrefour" [ref=f69e38]
+            - img "Dia" [ref=f69e39]
+    - generic [ref=f69e40]:
+      - link "Voltar" [ref=f69e42] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br
+      - generic [ref=f69e47]:
+        - generic [ref=f69e48]:
+          - heading "O seu próximo emprego está aqui!" [level=1] [ref=f69e49]
+          - heading "Crie sua conta para acessar e candidate-se à milhares de vagas." [level=2] [ref=f69e50]
+        - generic [ref=f69e52]:
+          - generic [ref=f69e53]:
+            - heading "Entre e comece a se candidatar:" [level=3] [ref=f69e55]
+            - link "Google" [ref=f69e57] [cursor=pointer]:
+              - /url: /External/Challenge?provider=google
+            - link "LinkedIn" [ref=f69e67] [cursor=pointer]:
+              - /url: /External/Challenge?provider=linkedin
+            - link "Facebook" [ref=f69e75] [cursor=pointer]:
+              - /url: /External/Challenge?provider=facebook
+            - link "Apple" [ref=f69e83] [cursor=pointer]:
+              - /url: /External/Challenge?provider=apple
+            - link "Microsoft" [ref=f69e90] [cursor=pointer]:
+              - /url: /External/Challenge?provider=microsoft
+            - generic [ref=f69e99]: "Ou continue com seu e-mail:"
+          - generic [ref=f69e100]:
+            - generic [ref=f69e101]:
+              - textbox "Nome e sobrenome" [active] [ref=f69e103]
+              - textbox "E-mail" [ref=f69e105]
+              - textbox "Senha" [ref=f69e107]
+              - generic [ref=f69e109]:
+                - textbox "CEP" [ref=f69e110]
+                - button [ref=f69e112] [cursor=pointer]
+              - textbox "Cargo Desejado" [ref=f69e118]
+              - generic [ref=f69e120]:
+                - checkbox "Li e aceito as Condições Legais e a Política de Privacidade do Infojobs. Se você for uma pessoa com menos de 18 anos, informe seus pais ou responsáveis legais sobre a criação e o uso desta conta antes de continuar." [ref=f69e121]
+                - generic [ref=f69e123]:
+                  - text: Li e aceito as
+                  - link "Condições Legais" [ref=f69e124] [cursor=pointer]:
+                    - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+                  - text: e a
+                  - link "Política de Privacidade" [ref=f69e125] [cursor=pointer]:
+                    - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+                  - text: do Infojobs. Se você for uma pessoa com menos de 18 anos, informe seus pais ou responsáveis legais sobre a criação e o uso desta conta antes de continuar.
+              - generic [ref=f69e127]:
+                - checkbox "Quero receber comunicações sobre produtos, novidades, ofertas e eventos do Infojobs e de seus parceiros." [ref=f69e128]
+                - generic [ref=f69e129]: Quero receber comunicações sobre produtos, novidades, ofertas e eventos do Infojobs e de seus parceiros.
+            - generic [ref=f69e132]:
+              - button "Cadastrar-se" [ref=f69e133] [cursor=pointer]
+              - generic [ref=f69e134]:
+                - text: Você é uma empresa?
+                - link "Cadastre-se grátis aqui." [ref=f69e135] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/company/insertnew.aspx?oac=true
+      - generic [ref=f69e136]:
+        - generic [ref=f69e137]:
+          - link [ref=f69e138] [cursor=pointer]:
+            - /url: https://play.google.com/store/apps/details?id=com.infojobs.phone&referrer=xtor%3DEPR-369427104%26origenvisita%3D644&utm_source=infojobs_organic&utm_campaign=landing_alta_cv&utm_medium=promo_www
+            - img "Android" [ref=f69e139]
+          - link [ref=f69e140] [cursor=pointer]:
+            - /url: https://itunes.apple.com/br/app/infojobs-vagas-de-emprego/id981457216#?t=W251bGwsMSwxLDIxMiwiY29tLmluZm9qb2JzLnBob25lIl0
+            - img "Apple" [ref=f69e141]
+        - text: © Infojobs Brasil Atividades de Internet, Ltda. Todos os direitos reservados.
+  - status [ref=f69e142]
+  - status [ref=f69e143]
+  - status [ref=f69e144]
+  - iframe [ref=f69e147]:
+    - generic [ref=f71e6]:
+      - text: protegido por
+      - strong [ref=f71e7]: reCAPTCHA

@@ -1,0 +1,347 @@
+### Open tabs
+- 0: (current) [Blog do Emprego](https://www.gupy.io/blog-do-emprego)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://www.gupy.io/blog-do-emprego
+- Page Title: Blog do Emprego
+- Console: 0 errors, 4 warnings
+### Snapshot
+```yaml
+- generic [active] [ref=f102e1]:
+  - banner [ref=f102e2]:
+    - navigation [ref=f102e3]:
+      - generic [ref=f102e6]:
+        - link "Blog do Emprego" [ref=f102e7] [cursor=pointer]:
+          - /url: https://www.gupy.io/blog-do-emprego
+          - separator [ref=f102e15]
+        - button "menu" [ref=f102e17] [cursor=pointer]
+  - link "Pular para o conteúdo principal" [ref=f102e22] [cursor=pointer]:
+    - /url: "#main-content"
+  - main [ref=f102e23]:
+    - generic [ref=f102e26]:
+      - generic [ref=f102e27]:
+        - heading "Blog do Emprego" [level=1] [ref=f102e28]
+        - paragraph [ref=f102e29]: As principais, dicas, tendências, materiais e notícias para auxiliar na sua carreira e busca por emprego.
+      - img "homem" [ref=f102e31]
+    - generic [ref=f102e32]:
+      - heading "Publicações em Destaque" [level=2] [ref=f102e34]
+      - generic [ref=f102e36]:
+        - generic [ref=f102e38]:
+          - link [ref=f102e39] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/curriculo-gupy
+          - generic [ref=f102e40]:
+            - heading [level=3] [ref=f102e41]:
+              - 'link "Como cadastrar meu currículo na plataforma da Gupy: guia completo" [ref=f102e42] [cursor=pointer]':
+                - /url: https://www.gupy.io/blog-do-emprego/curriculo-gupy
+            - paragraph [ref=f102e43]:
+              - text: por
+              - link "Juliana Paes | Gupy" [ref=f102e44] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+              - text: em 25/04/2025
+            - paragraph [ref=f102e45]: Aprenda como criar uma conta, preencher e atualizar seu currículo na Gupy, buscar vagas e acompanhar candidaturas com ...
+            - link "Leia mais" [ref=f102e46] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/curriculo-gupy
+        - generic [ref=f102e49]:
+          - generic [ref=f102e50]:
+            - link [ref=f102e51] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/vaga-afirmativa-para-mulheres
+            - generic [ref=f102e52]:
+              - heading [level=3] [ref=f102e53]:
+                - link "O que é uma vaga afirmativa para mulheres?" [ref=f102e54] [cursor=pointer]:
+                  - /url: https://www.gupy.io/blog-do-emprego/vaga-afirmativa-para-mulheres
+              - paragraph [ref=f102e55]:
+                - text: por
+                - link "Juliana Paes | Gupy" [ref=f102e56] [cursor=pointer]:
+                  - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+                - text: em 28/03/2025
+              - paragraph [ref=f102e57]: Vagas afirmativas para mulheres são oportunidades de emprego que visam promover ...
+              - link "Leia mais" [ref=f102e58] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/vaga-afirmativa-para-mulheres
+          - generic [ref=f102e61]:
+            - link [ref=f102e62] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego//produtividade-no-trabalho
+            - generic [ref=f102e63]:
+              - heading [level=3] [ref=f102e64]:
+                - 'link "Como aumentar a produtividade no trabalho presencial: 5 dicas essenciais" [ref=f102e65] [cursor=pointer]':
+                  - /url: https://www.gupy.io/blog-do-emprego//produtividade-no-trabalho
+              - paragraph [ref=f102e66]:
+                - text: por
+                - link "Juliana Paes | Gupy" [ref=f102e67] [cursor=pointer]:
+                  - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+                - text: em 04/04/2025
+              - paragraph [ref=f102e68]: Veja 5 dicas para aumentar a produtividade no trabalho presencial. Aprenda a ...
+              - link "Leia mais" [ref=f102e69] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego//produtividade-no-trabalho
+    - generic [ref=f102e75]:
+      - heading "Publicações populares" [level=2] [ref=f102e76]
+      - generic [ref=f102e77]:
+        - generic [ref=f102e78]:
+          - link [ref=f102e79] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/lideranca-feminina
+          - generic [ref=f102e80]:
+            - heading [level=3] [ref=f102e81]:
+              - 'link "Liderança feminina: o poder de transformar ambientes e carreiras" [ref=f102e82] [cursor=pointer]':
+                - /url: https://www.gupy.io/blog-do-emprego/lideranca-feminina
+            - paragraph [ref=f102e83]:
+              - text: por
+              - link "Juliana Paes | Gupy" [ref=f102e84] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+              - text: em 07/10/2025
+            - paragraph [ref=f102e85]: Descubra o poder da liderança feminina, seus desafios e oportunidades. Veja ...
+            - link "Leia mais" [ref=f102e86] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/lideranca-feminina
+        - generic [ref=f102e89]:
+          - link [ref=f102e90] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/personal-branding
+          - generic [ref=f102e91]:
+            - heading [level=3] [ref=f102e92]:
+              - 'link "Personal branding: como construir sua reputação profissional online" [ref=f102e93] [cursor=pointer]':
+                - /url: https://www.gupy.io/blog-do-emprego/personal-branding
+            - paragraph [ref=f102e94]:
+              - text: por
+              - link "Juliana Paes | Gupy" [ref=f102e95] [cursor=pointer]:
+                - /url: https://www.gupy.io/blog-do-emprego/author/juliana-paes-gupy
+              - text: em 18/04/2025
+            - paragraph [ref=f102e96]: Descubra como construir uma marca pessoal autêntica e impactante no mundo ...
+            - link "Leia mais" [ref=f102e97] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/personal-branding
+    - generic [ref=f102e103]:
+      - heading "Encontre a sua vaga de emprego" [level=2] [ref=f102e104]
+      - paragraph [ref=f102e105]: As oportunidades das empresas que mais crescem e contratam no Brasil estão na Gupy. Encontre vagas de emprego na nossa plataforma e comece a participar de processos seletivos ainda hoje!
+      - link "Buscar Vagas ->" [ref=f102e106] [cursor=pointer]:
+        - /url: https://portal.gupy.io/
+    - heading "Últimas publicações" [level=2] [ref=f102e107]
+    - generic [ref=f102e110]:
+      - generic [ref=f102e111]:
+        - link "Mulher sorridente consultando calendário aberto na mesa para planejar férias, ilustrando como é calculado as férias, com laptop em escritório iluminado":
+          - /url: https://www.gupy.io/blog-do-emprego/como-e-calculado-as-ferias
+          - img "Mulher sorridente consultando calendário aberto na mesa para planejar férias, ilustrando como é calculado as férias, com laptop em escritório iluminado"
+        - generic [ref=f102e112]:
+          - heading [level=3] [ref=f102e113]:
+            - link "Como é calculado as férias? Guia completo com exemplos práticos" [ref=f102e114] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-e-calculado-as-ferias
+          - paragraph [ref=f102e115]:
+            - text: por
+            - link "Mariana Dias | Gupy" [ref=f102e116] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/mariana-dias-gupy
+            - text: em Sep 23, 2026, 4:48:14 PM
+          - paragraph [ref=f102e117]: "Entenda como é calculado as férias na CLT: fórmula, 1/3 constitucional, descontos de INSS e IR, faltas e casos especiais. Exemplos práticos e tabela."
+          - link "Leia mais" [ref=f102e118] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/como-e-calculado-as-ferias
+      - generic [ref=f102e121]:
+        - link "Mulher sorridente fechando o laptop em um espaço de coworking iluminado, representando o equilíbrio entre vida pessoal e profissional":
+          - /url: https://www.gupy.io/blog-do-emprego/equilibrio-entre-vida-pessoal-e-profissional
+          - img "Mulher sorridente fechando o laptop em um espaço de coworking iluminado, representando o equilíbrio entre vida pessoal e profissional"
+        - generic [ref=f102e122]:
+          - heading [level=3] [ref=f102e123]:
+            - 'link "Equilíbrio entre vida pessoal e profissional: como alcançar?" [ref=f102e124] [cursor=pointer]':
+              - /url: https://www.gupy.io/blog-do-emprego/equilibrio-entre-vida-pessoal-e-profissional
+          - paragraph [ref=f102e125]:
+            - text: por
+            - link "Mariana Dias | Gupy" [ref=f102e126] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/mariana-dias-gupy
+            - text: em Aug 30, 2026, 4:06:39 PM
+          - paragraph [ref=f102e127]: Descubra como alcançar o equilíbrio entre vida pessoal e profissional com estratégias práticas para gestores e colaboradores. Leia o artigo completo.
+          - link "Leia mais" [ref=f102e128] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/equilibrio-entre-vida-pessoal-e-profissional
+      - generic [ref=f102e131]:
+        - link "Profissional sorrindo ao analisar a tabela de desconto do Imposto de Renda em casa, com tranquilidade.":
+          - /url: https://www.gupy.io/blog-do-emprego/imposto-de-renda
+          - img "Profissional sorrindo ao analisar a tabela de desconto do Imposto de Renda em casa, com tranquilidade."
+        - generic [ref=f102e132]:
+          - heading [level=3] [ref=f102e133]:
+            - link "Tabela de desconto do Imposto de Renda" [ref=f102e134] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/imposto-de-renda
+          - paragraph [ref=f102e135]:
+            - text: por
+            - link "Bruna Guimarães | Gupy" [ref=f102e136] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/bruna-guimaraes-gupy
+            - text: em Jul 7, 2026, 4:31:14 PM
+          - paragraph [ref=f102e137]: "Entenda a tabela de desconto do Imposto de Renda: faixas, alíquotas e como calcular seu desconto de forma simples e sem complicação."
+          - link "Leia mais" [ref=f102e138] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/imposto-de-renda
+      - generic [ref=f102e141]:
+        - link "Jovem profissional confiante em coworking moderno, com laptop aberto e luz natural, representando habilidades que aumentam as chances de contratação.":
+          - /url: https://www.gupy.io/blog-do-emprego/habilidades-que-aumentam-chance-de-contratacao
+          - img "Jovem profissional confiante em coworking moderno, com laptop aberto e luz natural, representando habilidades que aumentam as chances de contratação."
+        - generic [ref=f102e142]:
+          - heading [level=3] [ref=f102e143]:
+            - link "8 habilidades que aumentam sua chance de contratação" [ref=f102e144] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/habilidades-que-aumentam-chance-de-contratacao
+          - paragraph [ref=f102e145]:
+            - text: por
+            - link "Mariana Dias | Gupy" [ref=f102e146] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/mariana-dias-gupy
+            - text: em Jun 26, 2026, 10:31:54 AM
+          - paragraph [ref=f102e147]: Descubra as 8 habilidades que aumentam sua chance de contratação e como desenvolvê-las para se destacar no processo seletivo.
+          - link "Leia mais" [ref=f102e148] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/habilidades-que-aumentam-chance-de-contratacao
+      - generic [ref=f102e151]:
+        - link "Jovem profissional em escritório multinacional moderno com equipe diversa ao fundo, ilustrando como é trabalhar em multinacionais":
+          - /url: https://www.gupy.io/blog-do-emprego/como-trabalhar-em-multinacionais
+          - img "Jovem profissional em escritório multinacional moderno com equipe diversa ao fundo, ilustrando como é trabalhar em multinacionais"
+        - generic [ref=f102e152]:
+          - heading [level=3] [ref=f102e153]:
+            - link "Como trabalhar em multinacionais? Conheça requisitos" [ref=f102e154] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-trabalhar-em-multinacionais
+          - paragraph [ref=f102e155]:
+            - text: por
+            - link "Robson Ventura | Gupy" [ref=f102e156] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/robson-ventura-gupy
+            - text: em Jun 19, 2026, 11:42:25 AM
+          - paragraph [ref=f102e157]: "Descubra estratégias para entrar em multinacionais: competências valorizadas, idiomas, currículo, networking e planejamento de carreira."
+          - link "Leia mais" [ref=f102e158] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/como-trabalhar-em-multinacionais
+      - generic [ref=f102e161]:
+        - link "Imagem para ilustrar o blogpost como conseguir emprego sem experiência. Na imagem, tem uma mulher branca de cabelos pretos sentada em uma mesa, mexendo em um notebook.":
+          - /url: https://www.gupy.io/blog-do-emprego/emprego-sem-experiencia
+          - img "Imagem para ilustrar o blogpost como conseguir emprego sem experiência. Na imagem, tem uma mulher branca de cabelos pretos sentada em uma mesa, mexendo em um notebook."
+        - generic [ref=f102e162]:
+          - heading [level=3] [ref=f102e163]:
+            - 'link "Como conseguir emprego sem experiência: guia completo para o seu 1º emprego" [ref=f102e164] [cursor=pointer]':
+              - /url: https://www.gupy.io/blog-do-emprego/emprego-sem-experiencia
+          - paragraph [ref=f102e165]:
+            - text: por
+            - link "Guilherme Dias | Gupy" [ref=f102e166] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/guilherme-dias-gupy
+            - text: em Jun 12, 2026, 10:00:02 AM
+          - paragraph [ref=f102e167]: "Descubra estratégias eficazes para o seu primeiro emprego sem experiência: currículo focado, cursos gratuitos, projetos, freelancing e networking."
+          - link "Leia mais" [ref=f102e168] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/emprego-sem-experiencia
+      - generic [ref=f102e171]:
+        - link "Administração de pessoal":
+          - /url: https://www.gupy.io/blog-do-emprego/administracao-de-pessoal
+          - img "Administração de pessoal"
+        - generic [ref=f102e172]:
+          - heading [level=3] [ref=f102e173]:
+            - 'link "Administração de pessoal: qual papel e como achar a melhor vaga" [ref=f102e174] [cursor=pointer]':
+              - /url: https://www.gupy.io/blog-do-emprego/administracao-de-pessoal
+          - paragraph [ref=f102e175]:
+            - text: por
+            - link "Guilherme Dias | Gupy" [ref=f102e176] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/guilherme-dias-gupy
+            - text: em Jun 7, 2026, 2:18:54 PM
+          - paragraph [ref=f102e177]: Descubra o papel da administração de pessoal nas empresas, suas funções essenciais e as tendências que moldam o futuro da gestão de pessoas, neste guia!
+          - link "Leia mais" [ref=f102e178] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/administracao-de-pessoal
+      - generic [ref=f102e181]:
+        - link "personalidade-infp":
+          - /url: https://www.gupy.io/blog-do-emprego/personalidade-infp
+          - img "personalidade-infp"
+        - generic [ref=f102e182]:
+          - heading [level=3] [ref=f102e183]:
+            - 'link "Personalidade INFP no trabalho: pontos fortes e melhores carreiras" [ref=f102e184] [cursor=pointer]':
+              - /url: https://www.gupy.io/blog-do-emprego/personalidade-infp
+          - paragraph [ref=f102e185]:
+            - text: por
+            - link "Jhenyffer Coutinho | Gupy" [ref=f102e186] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/jhenyffer-coutinho-gupy
+            - text: em May 29, 2026, 8:00:03 AM
+          - paragraph [ref=f102e187]: Descubra a personalidade INFP (Mediador) no trabalho. Conheça traços, pontos fortes e fracos, profissões ideais e estratégias para desenvolver potencial.
+          - link "Leia mais" [ref=f102e188] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/personalidade-infp
+      - generic [ref=f102e191]:
+        - link "3-coisas-mais-importantes-no-ambiente-de-trabalho":
+          - /url: https://www.gupy.io/blog-do-emprego/coisas-mais-importantes-no-ambiente-de-trabalho
+          - img "3-coisas-mais-importantes-no-ambiente-de-trabalho"
+        - generic [ref=f102e192]:
+          - heading [level=3] [ref=f102e193]:
+            - link "3 coisas mais importantes no ambiente de trabalho" [ref=f102e194] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/coisas-mais-importantes-no-ambiente-de-trabalho
+          - paragraph [ref=f102e195]:
+            - text: por
+            - link "Jhenyffer Coutinho | Gupy" [ref=f102e196] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/jhenyffer-coutinho-gupy
+            - text: em May 22, 2026, 8:00:02 AM
+          - paragraph [ref=f102e197]: Descubra quais são as 3 coisas mais importantes no ambiente de trabalho e saiba como responder essa pergunta em entrevistas de emprego. Veja exemplos!
+          - link "Leia mais" [ref=f102e198] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/coisas-mais-importantes-no-ambiente-de-trabalho
+      - generic [ref=f102e201]:
+        - link "jovem aprendiz":
+          - /url: https://www.gupy.io/blog-do-emprego/com-quantos-anos-pode-trabalhar-de-jovem-aprendiz
+          - img "jovem aprendiz"
+        - generic [ref=f102e202]:
+          - heading [level=3] [ref=f102e203]:
+            - link "Com quantos anos pode trabalhar de Jovem Aprendiz?" [ref=f102e204] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/com-quantos-anos-pode-trabalhar-de-jovem-aprendiz
+          - paragraph [ref=f102e205]:
+            - text: por
+            - link "Guilherme Dias | Gupy" [ref=f102e206] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/guilherme-dias-gupy
+            - text: em May 15, 2026, 3:59:05 PM
+          - paragraph [ref=f102e207]: Descubra com quantos anos pode trabalhar de Jovem Aprendiz, quem pode se inscrever, direitos, contrato e dicas para jovens e empresas. Veja o guia completo
+          - link "Leia mais" [ref=f102e208] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/com-quantos-anos-pode-trabalhar-de-jovem-aprendiz
+      - generic [ref=f102e211]:
+        - link "como-colocar-cursos-no-curriculo":
+          - /url: https://www.gupy.io/blog-do-emprego/como-colocar-cursos-no-curriculo
+          - img "como-colocar-cursos-no-curriculo"
+        - generic [ref=f102e212]:
+          - heading [level=3] [ref=f102e213]:
+            - link "Como colocar cursos no currículo e destacar seu perfil" [ref=f102e214] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-colocar-cursos-no-curriculo
+          - paragraph [ref=f102e215]:
+            - text: por
+            - link "Guilherme Dias | Gupy" [ref=f102e216] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/guilherme-dias-gupy
+            - text: em May 14, 2026, 4:19:34 PM
+          - paragraph [ref=f102e217]: Aprenda a destacar cursos no currículo e valorizar seu perfil profissional, aumentando suas chances de sucesso em processos seletivos de forma estratégica.
+          - link "Leia mais" [ref=f102e218] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/como-colocar-cursos-no-curriculo
+      - generic [ref=f102e221]:
+        - link "como-saber-o-numero-da-carteira-de-trabalho":
+          - /url: https://www.gupy.io/blog-do-emprego/como-saber-o-numero-da-carteira-de-trabalho
+          - img "como-saber-o-numero-da-carteira-de-trabalho"
+        - generic [ref=f102e222]:
+          - heading [level=3] [ref=f102e223]:
+            - link "Como saber o número da carteira de trabalho?" [ref=f102e224] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/como-saber-o-numero-da-carteira-de-trabalho
+          - paragraph [ref=f102e225]:
+            - text: por
+            - link "Jhenyffer Coutinho | Gupy" [ref=f102e226] [cursor=pointer]:
+              - /url: https://www.gupy.io/blog-do-emprego/author/jhenyffer-coutinho-gupy
+            - text: em Apr 27, 2026, 3:44:56 PM
+          - paragraph [ref=f102e227]: "Descubra como saber o número da CTPS, digital ou física, com passos simples: consulta online pelo site ou pelo celular via APP, CPF e dicas de impressão."
+          - link "Leia mais" [ref=f102e228] [cursor=pointer]:
+            - /url: https://www.gupy.io/blog-do-emprego/como-saber-o-numero-da-carteira-de-trabalho
+    - generic [ref=f102e233]:
+      - generic [ref=f102e238]: "1"
+      - link "2" [ref=f102e239] [cursor=pointer]:
+        - /url: https://www.gupy.io/blog-do-emprego/page/2
+      - link "3" [ref=f102e240] [cursor=pointer]:
+        - /url: https://www.gupy.io/blog-do-emprego/page/3
+      - link "4" [ref=f102e241] [cursor=pointer]:
+        - /url: https://www.gupy.io/blog-do-emprego/page/4
+      - link "5" [ref=f102e242] [cursor=pointer]:
+        - /url: https://www.gupy.io/blog-do-emprego/page/5
+      - link [ref=f102e243] [cursor=pointer]:
+        - /url: https://www.gupy.io/blog-do-emprego/page/2
+  - contentinfo [ref=f102e247]:
+    - generic [ref=f102e249]:
+      - list [ref=f102e250]:
+        - listitem [ref=f102e251]:
+          - img "Selo Reclame Aqui" [ref=f102e252]
+        - listitem [ref=f102e253]:
+          - link [ref=f102e254] [cursor=pointer]:
+            - /url: https://www.gupy.io/portal-de-privacidade
+            - img "Selo de Privacidade" [ref=f102e255]
+        - listitem [ref=f102e256]:
+          - img "Selo Handtalk" [ref=f102e257]
+        - listitem [ref=f102e258]:
+          - img "Selo Prêmio Reclame Aqui 2025" [ref=f102e259]
+      - link "Voltar ao Topo" [ref=f102e260] [cursor=pointer]:
+        - /url: "#"
+    - generic [ref=f102e264]:
+      - paragraph [ref=f102e272]: ©2015-2026 Gupy. Todos os direitos reservados.
+      - generic [ref=f102e273]:
+        - link "Política de Privacidade" [ref=f102e274] [cursor=pointer]:
+          - /url: https://www.gupy.io/aviso-de-privacidade-site
+        - text: "|"
+        - link "Portal de Privacidade" [ref=f102e275] [cursor=pointer]:
+          - /url: https://www.gupy.io/portal-de-privacidade
+  - generic:
+    - generic "Privacy Tools - Cookie Management"
+    - generic "Privacy Tools - Cookie Management - https://www.privacytools.com.br"
+```
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-10-00-071Z.log#L65-L70

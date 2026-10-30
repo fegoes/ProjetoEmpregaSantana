@@ -1,0 +1,13 @@
+### Ran Playwright code
+```js
+await page.setViewportSize({ width: 390, height: 844 });
+```
+### Open tabs
+- 0: (current) [Vagas de Emprego em São Paulo | Infojobs](https://www.infojobs.com.br/empregos-em-sao-paulo.aspx)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://www.infojobs.com.br/empregos-em-sao-paulo.aspx
+- Page Title: Vagas de Emprego em São Paulo | Infojobs
+- Console: 2 errors, 0 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-10-27-042Z.log#L14

@@ -1,0 +1,522 @@
+- generic [active] [ref=f64e1]:
+  - banner [ref=f64e2]:
+    - generic [ref=f64e3]:
+      - link [ref=f64e4] [cursor=pointer]:
+        - /url: https://www.infojobs.com.br/
+      - navigation "Navegação principal" [ref=f64e8]:
+        - list [ref=f64e9]:
+          - listitem [ref=f64e10]:
+            - link "Achar Vagas" [ref=f64e11] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/
+          - listitem [ref=f64e12]:
+            - link "Avaliações de Empresas" [ref=f64e13] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/ranking-melhores-empresas.aspx
+          - listitem [ref=f64e14]:
+            - link "Salários" [ref=f64e15] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/salarios
+          - listitem [ref=f64e16]:
+            - link "Blog" [ref=f64e17] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br/
+        - generic [ref=f64e18]:
+          - link "Empresas" [ref=f64e19] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+          - link "Anunciar Vaga" [ref=f64e20] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/company/insertnew.aspx
+          - link "Login" [ref=f64e21] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/Account/Login
+          - link "Cadastrar CV" [ref=f64e22] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+  - text:                  
+  - main [ref=f64e23]:
+    - article [ref=f64e24]:
+      - generic [ref=f64e27]:
+        - generic [ref=f64e28]:
+          - 'heading "Primeiro emprego: 7 dicas para jovens que estão começando a carreira" [level=1] [ref=f64e29]'
+          - paragraph [ref=f64e30]: Entrar no mercado de trabalho pode trazer muitas dúvidas, principalmente quando você ainda não teve uma experiência profissional formal. A boa notícia é que não ter trabalhado antes não significa não ter experiências, habilidades ou conhecimentos para apresentar às empresas.
+          - time [ref=f64e31]: 23 setembro 2026
+          - generic [ref=f64e32]: "Tempo de leitura: 7 minutos"
+        - figure [ref=f64e33]
+      - generic [ref=f64e34]:
+        - generic [ref=f64e35]:
+          - generic [ref=f64e36]:
+            - paragraph [ref=f64e37]:
+              - strong [ref=f64e38]: Como montar um currículo sem experiência? O que falar em uma entrevista? Quais habilidades as empresas procuram em candidatos jovens? E como usar a inteligência artificial para encontrar oportunidades?
+            - paragraph [ref=f64e39]:
+              - text: Entrar no mercado de trabalho pode trazer muitas dúvidas, principalmente quando você ainda não teve uma experiência profissional formal. A boa notícia é que
+              - strong [ref=f64e40]: não ter trabalhado antes não significa não ter experiências, habilidades ou conhecimentos para apresentar às empresas
+              - text: .
+            - paragraph [ref=f64e41]: Atividades acadêmicas, cursos, projetos, trabalhos voluntários, participação em eventos e até experiências desenvolvidas fora do ambiente profissional podem ajudar a mostrar seu potencial.
+            - paragraph [ref=f64e42]: Além disso, entender como funcionam os processos seletivos, desenvolver habilidades comportamentais e utilizar a tecnologia de forma estratégica pode fazer diferença nessa fase.
+            - paragraph [ref=f64e43]: Se você está procurando o primeiro emprego ou começando uma nova etapa profissional, confira estas 7 dicas.
+            - navigation "Sumário" [ref=f64e44]:
+              - generic [ref=f64e45]:
+                - generic [ref=f64e46]: Sumário
+                - button "Exibir sumário" [ref=f64e47] [cursor=pointer]: Exibir
+            - heading [level=2] [ref=f64e48]:
+              - strong [ref=f64e49]: Como montar um currículo mesmo sem experiência?
+            - paragraph [ref=f64e50]:
+              - text: "Uma das principais dúvidas de quem procura o primeiro emprego é:"
+              - strong [ref=f64e51]: “O que colocar no currículo se eu nunca trabalhei?”
+            - paragraph [ref=f64e52]: "A resposta é: destaque aquilo que você já aprendeu e desenvolveu, mesmo que ainda não tenha experiência profissional formal."
+            - paragraph [ref=f64e53]: "Seu currículo pode começar com um objetivo profissional claro, seguido por informações sobre:"
+            - list [ref=f64e54]:
+              - listitem [ref=f64e55]: formação acadêmica;
+            - list [ref=f64e56]:
+              - listitem [ref=f64e57]: cursos livres e profissionalizantes;
+            - list [ref=f64e58]:
+              - listitem [ref=f64e59]: conhecimentos em ferramentas e tecnologias;
+            - list [ref=f64e60]:
+              - listitem [ref=f64e61]: projetos acadêmicos;
+            - list [ref=f64e62]:
+              - listitem [ref=f64e63]: trabalhos voluntários;
+            - list [ref=f64e64]:
+              - listitem [ref=f64e65]: participação em eventos;
+            - list [ref=f64e66]:
+              - listitem [ref=f64e67]: atividades extracurriculares;
+            - list [ref=f64e68]:
+              - listitem [ref=f64e69]: idiomas;
+            - list [ref=f64e70]:
+              - listitem [ref=f64e71]: certificações;
+            - list [ref=f64e72]:
+              - listitem [ref=f64e73]: habilidades relevantes para a vaga.
+            - paragraph [ref=f64e74]: Se você está cursando uma graduação, curso técnico ou outra formação, informe o nome do curso e a instituição. Também vale indicar a previsão de conclusão.
+            - heading [level=3] [ref=f64e75]:
+              - strong [ref=f64e76]: O que colocar no objetivo do currículo?
+            - paragraph [ref=f64e77]: Evite frases muito genéricas, como “procuro uma oportunidade para crescer profissionalmente”.
+            - paragraph [ref=f64e78]: Prefira um objetivo que mostre com clareza a área ou tipo de oportunidade que você procura.
+            - paragraph [ref=f64e79]:
+              - strong [ref=f64e80]: "Exemplo:"
+            - paragraph [ref=f64e81]: “Busco minha primeira oportunidade profissional na área administrativa, na qual possa aplicar meus conhecimentos, desenvolver novas habilidades e contribuir com a equipe.”
+            - paragraph [ref=f64e82]: O mais importante é adaptar o objetivo à vaga sempre que possível.
+            - heading [level=2] [ref=f64e83]:
+              - strong [ref=f64e84]: Quais experiências podem entrar no currículo além de empregos anteriores?
+            - paragraph [ref=f64e85]: Experiência profissional não é a única maneira de demonstrar que você desenvolveu competências.
+            - paragraph [ref=f64e86]: Um projeto realizado na escola ou faculdade, por exemplo, pode demonstrar organização, trabalho em equipe e capacidade de resolver problemas.
+            - paragraph [ref=f64e87]: Da mesma forma, participar de uma iniciativa voluntária pode mostrar responsabilidade, comunicação e colaboração.
+            - paragraph [ref=f64e88]: "Antes de montar seu currículo, pense em situações nas quais você:"
+            - list [ref=f64e89]:
+              - listitem [ref=f64e90]: organizou uma atividade;
+            - list [ref=f64e91]:
+              - listitem [ref=f64e92]: trabalhou em equipe;
+            - list [ref=f64e93]:
+              - listitem [ref=f64e94]: apresentou um projeto;
+            - list [ref=f64e95]:
+              - listitem [ref=f64e96]: resolveu um problema;
+            - list [ref=f64e97]:
+              - listitem [ref=f64e98]: utilizou uma ferramenta digital;
+            - list [ref=f64e99]:
+              - listitem [ref=f64e100]: ajudou outras pessoas;
+            - list [ref=f64e101]:
+              - listitem [ref=f64e102]: participou de uma iniciativa voluntária;
+            - list [ref=f64e103]:
+              - listitem [ref=f64e104]: assumiu uma responsabilidade;
+            - list [ref=f64e105]:
+              - listitem [ref=f64e106]: aprendeu algo por conta própria.
+            - paragraph [ref=f64e107]: Essas experiências podem ajudar o recrutador a entender melhor seu perfil.
+            - paragraph [ref=f64e108]:
+              - strong [ref=f64e109]: "Dica:"
+              - text: em vez de apenas listar uma habilidade, mostre onde ela foi desenvolvida.
+            - paragraph [ref=f64e110]: Por exemplo, em vez de escrever apenas “trabalho em equipe”, você pode mencionar um projeto acadêmico realizado em grupo e explicar brevemente sua participação.
+            - heading [level=2] [ref=f64e111]:
+              - strong [ref=f64e112]: Como se preparar para uma entrevista de emprego?
+            - paragraph [ref=f64e113]: Chegar preparado para uma entrevista ajuda a diminuir a ansiedade e responder às perguntas com mais segurança.
+            - paragraph [ref=f64e114]: Antes da conversa, pesquise sobre a empresa, leia novamente a descrição da vaga e pense em exemplos que demonstrem suas habilidades.
+            - paragraph [ref=f64e115]: "Algumas perguntas são bastante comuns em processos seletivos, como:"
+            - list [ref=f64e116]:
+              - listitem [ref=f64e117]: “Fale um pouco sobre você.”
+            - list [ref=f64e118]:
+              - listitem [ref=f64e119]: “Por que você quer trabalhar nesta empresa?”
+            - list [ref=f64e120]:
+              - listitem [ref=f64e121]: “Quais são seus pontos fortes?”
+            - list [ref=f64e122]:
+              - listitem [ref=f64e123]: “O que você gostaria de desenvolver?”
+            - list [ref=f64e124]:
+              - listitem [ref=f64e125]: “Por que devemos escolher você?”
+            - list [ref=f64e126]:
+              - listitem [ref=f64e127]: “Como você trabalha em equipe?”
+            - list [ref=f64e128]:
+              - listitem [ref=f64e129]: “Como lida com desafios?”
+            - paragraph [ref=f64e130]: Você não precisa decorar respostas.
+            - paragraph [ref=f64e131]:
+              - text: O mais importante é
+              - strong [ref=f64e132]: entender sua própria trajetória e conseguir explicar, com sinceridade, o que você sabe, o que está aprendendo e o que busca desenvolver
+              - text: .
+            - heading [level=3] [ref=f64e133]:
+              - strong [ref=f64e134]: E se eu não souber responder uma pergunta?
+            - paragraph [ref=f64e135]: Não há problema em admitir que você ainda não tem determinada experiência.
+            - paragraph [ref=f64e136]: Em vez de tentar criar uma resposta que não corresponde à realidade, explique o que você já conhece e mostre disposição para aprender.
+            - paragraph [ref=f64e137]: Para quem está começando, demonstrar curiosidade, responsabilidade e vontade de se desenvolver também pode ser importante.
+            - heading [level=2] [ref=f64e138]:
+              - strong [ref=f64e139]: O que as empresas esperam de candidatos jovens?
+            - paragraph [ref=f64e140]: Cada empresa possui critérios diferentes para suas vagas, mas candidatos em início de carreira podem ser avaliados não apenas pelo conhecimento técnico.
+            - paragraph [ref=f64e141]:
+              - strong [ref=f64e142]: Comunicação, adaptabilidade e inteligência emocional
+              - text: são algumas das habilidades que aparecem com frequência nas discussões sobre preparação para o mercado de trabalho.
+            - paragraph [ref=f64e143]: "Isso significa que, além de pensar no que você sabe fazer hoje, vale desenvolver a capacidade de:"
+            - list [ref=f64e144]:
+              - listitem [ref=f64e145]: ouvir e se comunicar com clareza;
+            - list [ref=f64e146]:
+              - listitem [ref=f64e147]: trabalhar com outras pessoas;
+            - list [ref=f64e148]:
+              - listitem [ref=f64e149]: receber feedbacks;
+            - list [ref=f64e150]:
+              - listitem [ref=f64e151]: adaptar-se a mudanças;
+            - list [ref=f64e152]:
+              - listitem [ref=f64e153]: organizar suas tarefas;
+            - list [ref=f64e154]:
+              - listitem [ref=f64e155]: resolver problemas;
+            - list [ref=f64e156]:
+              - listitem [ref=f64e157]: aprender continuamente;
+            - list [ref=f64e158]:
+              - listitem [ref=f64e159]: lidar com diferentes situações.
+            - paragraph [ref=f64e160]: Não é necessário dominar tudo antes de conseguir o primeiro emprego.
+            - paragraph [ref=f64e161]: A carreira é construída justamente por meio de experiências, aprendizados e desenvolvimento contínuo.
+            - heading [level=2] [ref=f64e162]:
+              - strong [ref=f64e163]: Quais habilidades podem ajudar a se destacar?
+            - paragraph [ref=f64e164]: No início da carreira, é comum pensar que somente conhecimentos técnicos podem fazer um candidato se destacar.
+            - paragraph [ref=f64e165]: Eles são importantes, mas não são os únicos.
+            - paragraph [ref=f64e166]:
+              - text: As chamadas
+              - strong [ref=f64e167]: soft skills
+              - text: ", ou habilidades comportamentais, também podem fazer diferença na rotina profissional."
+            - paragraph [ref=f64e168]: "Entre elas estão:"
+            - heading [level=3] [ref=f64e169]:
+              - strong [ref=f64e170]: Comunicação
+            - paragraph [ref=f64e171]: Saber explicar ideias, ouvir outras pessoas e adaptar a comunicação ao contexto é importante em praticamente qualquer área.
+            - heading [level=3] [ref=f64e172]:
+              - strong [ref=f64e173]: Adaptabilidade
+            - paragraph [ref=f64e174]: O mercado de trabalho muda constantemente. Ter abertura para aprender novas ferramentas, processos e formas de trabalhar pode ajudar na trajetória profissional.
+            - heading [level=3] [ref=f64e175]:
+              - strong [ref=f64e176]: Inteligência emocional
+            - paragraph [ref=f64e177]: Reconhecer emoções, lidar com situações desafiadoras e construir relações profissionais saudáveis são competências importantes para diferentes ambientes de trabalho.
+            - heading [level=3] [ref=f64e178]:
+              - strong [ref=f64e179]: Organização
+            - paragraph [ref=f64e180]: Saber priorizar atividades, cumprir prazos e manter uma rotina organizada ajuda a transformar conhecimento em resultado.
+            - heading [level=3] [ref=f64e181]:
+              - strong [ref=f64e182]: Curiosidade e vontade de aprender
+            - paragraph [ref=f64e183]: No início da carreira, ninguém precisa saber tudo. Demonstrar interesse em aprender pode ser um diferencial importante.
+            - paragraph [ref=f64e184]:
+              - strong [ref=f64e185]: Uma boa estratégia é escolher duas ou três habilidades que você realmente possui e pensar em exemplos que comprovem isso.
+            - heading [level=2] [ref=f64e186]:
+              - strong [ref=f64e187]: Como usar a IA de forma estratégica na busca por emprego?
+            - paragraph [ref=f64e188]: A inteligência artificial já faz parte de diferentes atividades profissionais e também pode ser utilizada como apoio por quem está procurando emprego.
+            - paragraph [ref=f64e189]: "Ela pode ajudar, por exemplo, a:"
+            - list [ref=f64e190]:
+              - listitem [ref=f64e191]: revisar a estrutura do currículo;
+            - list [ref=f64e192]:
+              - listitem [ref=f64e193]: identificar pontos que podem ser mais claros;
+            - list [ref=f64e194]:
+              - listitem [ref=f64e195]: simular perguntas de uma entrevista;
+            - list [ref=f64e196]:
+              - listitem [ref=f64e197]: sugerir formas de apresentar uma experiência;
+            - list [ref=f64e198]:
+              - listitem [ref=f64e199]: ajudar a pesquisar uma empresa;
+            - list [ref=f64e200]:
+              - listitem [ref=f64e201]: organizar um plano de estudos;
+            - list [ref=f64e202]:
+              - listitem [ref=f64e203]: explorar possibilidades de carreira;
+            - list [ref=f64e204]:
+              - listitem [ref=f64e205]: encontrar oportunidades compatíveis com determinados critérios.
+            - paragraph [ref=f64e206]:
+              - text: "Mas existe uma regra importante:"
+              - strong [ref=f64e207]: a IA deve ser uma ferramenta de apoio, não substituir sua autenticidade.
+            - paragraph [ref=f64e208]: Se você utilizar uma ferramenta para melhorar seu currículo, revise o resultado e confirme se todas as informações realmente correspondem à sua trajetória.
+            - paragraph [ref=f64e209]: O mesmo vale para entrevistas. Usar IA para praticar respostas pode ser útil, mas decorar respostas prontas pode fazer sua comunicação parecer artificial.
+            - heading [level=3] [ref=f64e210]:
+              - strong [ref=f64e211]: Como usar a IA sem perder sua autenticidade?
+            - paragraph [ref=f64e212]: Comece com aquilo que é verdadeiro sobre você.
+            - paragraph [ref=f64e213]: Você pode pedir ajuda para organizar uma experiência, por exemplo, mas não deve inventar um curso que não fez, uma habilidade que não possui ou uma experiência profissional que nunca teve.
+            - paragraph [ref=f64e214]:
+              - strong [ref=f64e215]: Use a tecnologia para apresentar melhor quem você é, e não para criar um perfil que não corresponde à sua realidade.
+            - figure [ref=f64e216]:
+              - iframe [ref=f64e218]
+            - heading [level=2] [ref=f64e219]:
+              - strong [ref=f64e220]: Como escolher uma oportunidade que faça sentido para sua carreira?
+            - paragraph [ref=f64e221]: Encontrar o primeiro emprego é importante, mas aceitar qualquer oportunidade sem analisar as informações pode não ser a melhor escolha.
+            - paragraph [ref=f64e222]: "Antes de se candidatar, procure entender:"
+            - list [ref=f64e223]:
+              - listitem [ref=f64e224]: quais são as atividades da função;
+            - list [ref=f64e225]:
+              - listitem [ref=f64e226]: quais requisitos são necessários;
+            - list [ref=f64e227]:
+              - listitem [ref=f64e228]: onde fica o local de trabalho;
+            - list [ref=f64e229]:
+              - listitem [ref=f64e230]: qual é o modelo de trabalho;
+            - list [ref=f64e231]:
+              - listitem [ref=f64e232]: quais são os horários;
+            - list [ref=f64e233]:
+              - listitem [ref=f64e234]: quais conhecimentos serão utilizados;
+            - list [ref=f64e235]:
+              - listitem [ref=f64e236]: quais possibilidades de desenvolvimento existem;
+            - list [ref=f64e237]:
+              - listitem [ref=f64e238]: se a oportunidade está alinhada aos seus objetivos atuais.
+            - paragraph [ref=f64e239]: Também é importante pensar no momento da sua vida.
+            - paragraph [ref=f64e240]: Uma vaga pode ser interessante profissionalmente, mas incompatível com seus estudos, deslocamento ou outras responsabilidades.
+            - paragraph [ref=f64e241]:
+              - strong [ref=f64e242]: O primeiro emprego não precisa definir toda a sua carreira.
+              - text: Ele pode ser o começo de uma trajetória de descobertas, aprendizados e novas possibilidades.
+            - heading [level=2] [ref=f64e243]:
+              - strong [ref=f64e244]: Como se preparar melhor para o início da carreira?
+            - paragraph [ref=f64e245]: Além de buscar vagas, aproveite esse período para construir sua preparação profissional.
+            - paragraph [ref=f64e246]: "Algumas atitudes podem ajudar:"
+            - heading [level=3] [ref=f64e247]:
+              - strong [ref=f64e248]: Mantenha seu currículo atualizado
+            - paragraph [ref=f64e249]: Mesmo que você ainda não tenha experiência profissional, atualize o documento conforme concluir cursos, participar de projetos ou desenvolver novas habilidades.
+            - heading [level=3] [ref=f64e250]:
+              - strong [ref=f64e251]: Conheça diferentes áreas
+            - paragraph [ref=f64e252]: Pesquisar profissões e conversar com pessoas que trabalham em diferentes áreas pode ajudar você a entender melhor suas possibilidades.
+            - heading [level=3] [ref=f64e253]:
+              - strong [ref=f64e254]: Desenvolva conhecimentos digitais
+            - paragraph [ref=f64e255]: Ferramentas digitais fazem parte de diversas profissões. Procure conhecer aquelas que são relevantes para a área que você deseja seguir.
+            - heading [level=3] [ref=f64e256]:
+              - strong [ref=f64e257]: Acompanhe o mercado
+            - paragraph [ref=f64e258]: Observe quais competências aparecem nas vagas que despertam seu interesse. Isso pode ajudar a identificar quais conhecimentos vale desenvolver.
+            - heading [level=3] [ref=f64e259]:
+              - strong [ref=f64e260]: Aprenda com cada processo seletivo
+            - paragraph [ref=f64e261]: Nem toda candidatura resultará em contratação. Ainda assim, cada processo pode ajudar você a entender melhor o mercado, aperfeiçoar seu currículo e ganhar experiência para as próximas entrevistas.
+            - heading [level=2] [ref=f64e262]:
+              - strong [ref=f64e263]: Primeiro emprego também é sobre descobrir seu caminho
+            - paragraph [ref=f64e264]: Começar uma carreira não significa ter todas as respostas.
+            - paragraph [ref=f64e265]: É normal ainda não saber exatamente qual profissão seguir, qual área combina mais com você ou onde quer estar daqui a alguns anos.
+            - paragraph [ref=f64e266]: O importante é começar a construir essa trajetória.
+            - paragraph [ref=f64e267]: Cada curso, projeto, entrevista, conversa, candidatura e experiência pode trazer uma nova descoberta.
+            - paragraph [ref=f64e268]:
+              - text: E, para quem está entrando no mercado de trabalho,
+              - strong [ref=f64e269]: informação e preparação podem ajudar a transformar dúvidas em próximos passos
+              - text: .
+            - heading [level=2] [ref=f64e270]:
+              - strong [ref=f64e271]: O que o Infojobs Impulsiona Estudantes traz para quem está começando?
+            - paragraph [ref=f64e272]:
+              - text: Foi pensando justamente nas dúvidas de quem está entrando no mercado de trabalho que o
+              - strong [ref=f64e273]: Infojobs Impulsiona Estudantes
+              - text: chegou à sua 4ª edição.
+            - paragraph [ref=f64e274]:
+              - text: O evento é voltado para jovens de
+              - strong [ref=f64e275]: 16 a 30 anos
+              - text: que estão iniciando no mercado de trabalho ou passando por um momento de mudança de carreira. Nas edições anteriores, o evento já contou com
+              - strong [ref=f64e276]: mais de 3.000 participantes
+              - text: .
+            - paragraph [ref=f64e277]: A programação de 2026 reúne profissionais para conversar sobre alguns dos temas que mais fazem parte dessa fase da carreira.
+            - figure [ref=f64e278]:
+              - link [ref=f64e279] [cursor=pointer]:
+                - /url: https://jogosdeselecao.com.br/emprega/landing/event/infojobs
+            - paragraph [ref=f64e280]:
+              - text: Entre eles está a
+              - strong [ref=f64e281]: inteligência artificial e o início da carreira profissional
+              - text: ", com uma discussão sobre como utilizar ferramentas de IA para montar o currículo, estudar e se preparar para entrevistas sem perder a autenticidade."
+            - paragraph [ref=f64e282]:
+              - text: Outro momento será dedicado aos
+              - strong [ref=f64e283]: bastidores do processo seletivo
+              - text: ", em um formato interativo de “Pergunte ao Recrutador”, com foco no que recrutadores analisam em candidatos iniciantes e jovens aprendizes e nos erros mais comuns que podem ser evitados."
+            - paragraph [ref=f64e284]:
+              - text: O terceiro painel aborda
+              - strong [ref=f64e285]: soft skills e habilidades do futuro
+              - text: ", discutindo competências como comunicação, adaptabilidade e inteligência emocional e o que as empresas buscam além da formação teórica."
+            - paragraph [ref=f64e286]:
+              - text: Inscreva-se
+              - link "aqui" [ref=f64e287] [cursor=pointer]:
+                - /url: https://jogosdeselecao.com.br/emprega/landing/event/infojobs
+            - paragraph
+            - generic [ref=f64e288]:
+              - text: "Tags:"
+              - link "carreira" [ref=f64e289] [cursor=pointer]:
+                - /url: https://blog.infojobs.com.br/tag/carreira/
+              - text: ","
+              - link "emprego" [ref=f64e290] [cursor=pointer]:
+                - /url: https://blog.infojobs.com.br/tag/emprego/
+              - text: ","
+              - link "Infojobs" [ref=f64e291] [cursor=pointer]:
+                - /url: https://blog.infojobs.com.br/tag/infojobs/
+              - text: ","
+              - link "Vagas" [ref=f64e292] [cursor=pointer]:
+                - /url: https://blog.infojobs.com.br/tag/vagas/
+          - region [ref=f64e293]:
+            - generic [ref=f64e294]:
+              - heading "Artigos relacionados" [level=2] [ref=f64e295]
+              - generic [ref=f64e296]:
+                - article [ref=f64e297]:
+                  - 'link "Primeiro emprego em 2026: o que saber para começar sua carreira" [ref=f64e298] [cursor=pointer]':
+                    - /url: https://blog.infojobs.com.br/candidatos/dicas-primeiro-emprego-2026/
+                    - 'img "Primeiro emprego em 2026: o que saber para começar sua carreira" [ref=f64e299]'
+                  - 'link "Primeiro emprego em 2026: o que saber para começar sua carreira" [ref=f64e300] [cursor=pointer]':
+                    - /url: https://blog.infojobs.com.br/candidatos/dicas-primeiro-emprego-2026/
+                  - time [ref=f64e301]: 22 janeiro 2026
+                - article [ref=f64e302]:
+                  - link "Mudar de emprego rápido pode prejudicar sua carreira?" [ref=f64e303] [cursor=pointer]:
+                    - /url: https://blog.infojobs.com.br/candidatos/mudar-de-emprego-rapido-prejudica-a-carreira/
+                    - img "Mudar de emprego rápido pode prejudicar sua carreira?" [ref=f64e304]
+                  - link "Mudar de emprego rápido pode prejudicar sua carreira?" [ref=f64e305] [cursor=pointer]:
+                    - /url: https://blog.infojobs.com.br/candidatos/mudar-de-emprego-rapido-prejudica-a-carreira/
+                  - time [ref=f64e306]: 11 outubro 2023
+                - article [ref=f64e307]:
+                  - link "5 coisas avaliadas em entrevistas de emprego" [ref=f64e308] [cursor=pointer]:
+                    - /url: https://blog.infojobs.com.br/candidatos/5-coisas-que-os-recrutadores-avaliam-em-entrevistas-de-emprego/
+                    - img "5 coisas avaliadas em entrevistas de emprego" [ref=f64e309]
+                  - link "5 coisas avaliadas em entrevistas de emprego" [ref=f64e310] [cursor=pointer]:
+                    - /url: https://blog.infojobs.com.br/candidatos/5-coisas-que-os-recrutadores-avaliam-em-entrevistas-de-emprego/
+                  - time [ref=f64e311]: 4 outubro 2023
+        - complementary "Conteúdo complementar" [ref=f64e312]:
+          - search [ref=f64e314]:
+            - generic [ref=f64e315]: Pesquisar
+            - generic [ref=f64e316]:
+              - searchbox "Pesquisar" [ref=f64e317]
+              - button "Pesquisar" [ref=f64e318] [cursor=pointer]
+          - paragraph [ref=f64e320]:
+            - iframe [ref=f64e321]:
+              - generic [ref=f66e1]:
+                - generic [ref=f66e4]:
+                  - generic [ref=f66e5]:
+                    - img "Os mais acessados cover" [ref=f66e8] [cursor=pointer]
+                    - button "Tocar no Spotify" [ref=f66e10] [cursor=pointer]
+                    - generic [ref=f66e13]:
+                      - heading [level=1] [ref=f66e14]:
+                        - link "Os mais acessados" [ref=f66e18] [cursor=pointer]:
+                          - /url: https://open.spotify.com/playlist/1psV4HQ1e88IWcm8CgOySZ?go=1&sp_cid=1a5690e3e9f539d1a1feb504916310fe&utm_source=embed_player_p&utm_medium=desktop
+                      - heading [level=2] [ref=f66e20]:
+                        - link "Infojobs" [ref=f66e25] [cursor=pointer]:
+                          - /url: https://open.spotify.com/playlist/1psV4HQ1e88IWcm8CgOySZ?go=1&sp_cid=1a5690e3e9f539d1a1feb504916310fe&utm_source=embed_player_p&utm_medium=desktop
+                      - button "Salvar no Spotify" [ref=f66e27] [cursor=pointer]
+                    - list "Tags" [ref=f66e34]:
+                      - generic "Prévia" [ref=f66e35]
+                    - generic [ref=f66e37]:
+                      - generic [ref=f66e38]:
+                        - button "Voltar" [disabled] [ref=f66e39]
+                        - button "Avançar" [disabled] [ref=f66e43]
+                      - button "Mais" [ref=f66e48] [cursor=pointer]
+                      - button "Play" [ref=f66e53] [cursor=pointer]
+                  - list "Lista de músicas" [ref=f66e59]:
+                    - listitem [ref=f66e60]:
+                      - button "Ouvir a música" [ref=f66e62] [cursor=pointer]:
+                        - generic [ref=f66e63]: "1"
+                      - heading "O que você precisa saber para se tornar um trainee" [level=3] [ref=f66e64]
+                      - heading "Infocast" [level=4] [ref=f66e65]
+                      - generic [ref=f66e66]: 28:02
+                    - listitem [ref=f66e67]:
+                      - button "Ouvir a música" [ref=f66e69] [cursor=pointer]:
+                        - generic [ref=f66e70]: "2"
+                      - heading "Como saber a hora de mudar de emprego" [level=3] [ref=f66e71]
+                      - heading "Infocast" [level=4] [ref=f66e72]
+                      - generic [ref=f66e73]: 45:33
+                    - listitem [ref=f66e74]:
+                      - button "Ouvir a música" [ref=f66e76] [cursor=pointer]:
+                        - generic [ref=f66e77]: "3"
+                      - heading "Desafios e Oportunidades para Profissionais LGBTQIAP+" [level=3] [ref=f66e78]
+                      - heading "Infocast" [level=4] [ref=f66e79]
+                      - generic [ref=f66e80]: 43:06
+                    - listitem [ref=f66e81]:
+                      - button "Ouvir a música" [ref=f66e83] [cursor=pointer]:
+                        - generic [ref=f66e84]: "4"
+                      - heading "Porque ser proativo pode mudar a sua carreira" [level=3] [ref=f66e85]
+                      - heading "Infocast" [level=4] [ref=f66e86]
+                      - generic [ref=f66e87]: 28:54
+                    - listitem [ref=f66e88]:
+                      - button "Ouvir a música" [ref=f66e90] [cursor=pointer]:
+                        - generic [ref=f66e91]: "5"
+                      - heading "Pode ou não pode? O que os recrutadores dizem sobre as polêmicas nos processos seletivos" [level=3] [ref=f66e92]
+                      - heading "Infocast" [level=4] [ref=f66e93]
+                      - generic [ref=f66e94]: 29:44
+                    - listitem [ref=f66e95]:
+                      - button "Ouvir a música" [ref=f66e97] [cursor=pointer]:
+                        - generic [ref=f66e98]: "6"
+                      - heading "O que pode estar faltando para o seu \"SIM\" na área profissional" [level=3] [ref=f66e99]
+                      - heading "Infocast" [level=4] [ref=f66e100]
+                      - generic [ref=f66e101]: 49:04
+                - alert [ref=f66e102]
+          - figure [ref=f64e323]:
+            - link [ref=f64e324] [cursor=pointer]:
+              - /url: https://www.youtube.com/watch?v=mf83xvo3Yxg&list=PLq6Gwc5N2F37ZV3nIpCXBe27WZcFuHg8n
+              - img "Infojobs Responde" [ref=f64e325]
+          - figure [ref=f64e327]:
+            - link [ref=f64e328] [cursor=pointer]:
+              - /url: https://www.pandape.com/br/recursos/
+              - img "Materiais Gratuitos" [ref=f64e329]
+          - figure [ref=f64e331]:
+            - link [ref=f64e332] [cursor=pointer]:
+              - /url: https://www.linkedin.com/newsletters/carreira-em-foco-7036363750131544064/
+              - img "Newsletter" [ref=f64e333]
+          - figure [ref=f64e335]:
+            - link [ref=f64e336] [cursor=pointer]:
+              - /url: https://play.google.com/store/apps/details?id=com.infojobs.phone
+              - img "Baixar APP Infojobs" [ref=f64e337]
+  - contentinfo "Rodapé do Infojobs" [ref=f64e338]:
+    - generic [ref=f64e339]:
+      - region "Infojobs Brasil" [ref=f64e340]:
+        - img "Infojobs" [ref=f64e342]
+        - paragraph [ref=f64e343]: © Infojobs Brasil Atividades de Internet, Ltda.Todos os direitos reservados.
+        - generic "Prêmios e reconhecimentos" [ref=f64e344]:
+          - img "Top of Mind 2023" [ref=f64e345]
+          - img "Top of Mind 2024" [ref=f64e346]
+          - img "Top of Mind 2025" [ref=f64e347]
+          - img "Reclame Aqui" [ref=f64e348]
+          - img "Great Place to Work" [ref=f64e349]
+      - generic [ref=f64e350]:
+        - navigation [ref=f64e351]:
+          - heading "Institucional" [level=2] [ref=f64e352]
+          - link "Quem somos?" [ref=f64e353] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Sobre_InfoJobs__4648.aspx
+          - link "Por que usar Infojobs?" [ref=f64e354] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/por-que-infojobs.aspx
+          - link "Trabalhe Conosco" [ref=f64e355] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/microsite_infojobs__4631.aspx
+          - link "Política de Cookies" [ref=f64e356] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+        - navigation [ref=f64e357]:
+          - heading "Empresas" [level=2] [ref=f64e358]
+          - link "Ajuda" [ref=f64e359] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Ajuda_Empresas__1581.aspx
+          - link "Artigos" [ref=f64e360] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+          - link "Anunciar Vagas" [ref=f64e361] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+          - link "Buscar candidatos" [ref=f64e362] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/Company/Candidate1/List.aspx
+          - link "PandaPé" [ref=f64e363] [cursor=pointer]:
+            - /url: https://www.pandape.com.br/
+          - link "Aviso Legal" [ref=f64e364] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/aviso-legal-para-empresas__15726.aspx
+          - link "Política de Privacidade" [ref=f64e365] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-empresas__15729.aspx
+        - navigation [ref=f64e366]:
+          - heading "Candidatos" [level=2] [ref=f64e367]
+          - link "Ajuda" [ref=f64e368] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/ajuda/Ajuda_Candidatos__1579.aspx
+          - link "Artigos" [ref=f64e369] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/blog/blog-candidatos__10146.aspx
+          - link "Vagas" [ref=f64e370] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/EmpregosMaisBuscados.aspx
+          - link "Guia de Cargos" [ref=f64e371] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/cargo
+          - link "Aviso Legal" [ref=f64e372] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+          - link "Política de Privacidade" [ref=f64e373] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+          - link "Busca de emprego segura" [ref=f64e374] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/legal/proteja-se-ao-buscar-emprego__16245.aspx
+      - navigation [ref=f64e375]:
+        - generic [ref=f64e376]:
+          - heading "Siga-nos" [level=2] [ref=f64e377]
+          - generic [ref=f64e378]:
+            - link "WhatsApp" [ref=f64e379] [cursor=pointer]:
+              - /url: https://chat.whatsapp.com/DuMsJdhIEh62x8M2bGzbJH
+              - generic [aria-hidden] [ref=f64e380]: 
+            - link "Blog" [ref=f64e381] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+              - generic [aria-hidden] [ref=f64e382]: 
+            - link "Instagram" [ref=f64e383] [cursor=pointer]:
+              - /url: https://www.instagram.com/infojobsbr/
+              - generic [aria-hidden] [ref=f64e384]: 
+            - link "LinkedIn" [ref=f64e385] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/infojobs
+              - generic [aria-hidden] [ref=f64e386]: 
+            - link "Facebook" [ref=f64e387] [cursor=pointer]:
+              - /url: https://www.facebook.com/infojobs.com.br/
+              - generic [aria-hidden] [ref=f64e388]: 
+            - link "TikTok" [ref=f64e389] [cursor=pointer]:
+              - /url: https://www.tiktok.com/@infojobsbr
+              - generic [aria-hidden] [ref=f64e390]: 
+            - link "YouTube" [ref=f64e391] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/InfoJobscombr
+              - generic [aria-hidden] [ref=f64e392]: 
+            - link "X/Twitter" [ref=f64e393] [cursor=pointer]:
+              - /url: https://twitter.com/infojobscombr
+              - generic [aria-hidden] [ref=f64e394]: 

@@ -1,0 +1,92 @@
+
+> empregasantana@0.0.1 build
+> tsc -b && vite build
+
+vite v8.2.1 building client environment for production...
+[2Ktransforming...✓ 1931 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                     2.36 kB │ gzip:   0.86 kB
+dist/assets/index-DDsXwgVz.css                     58.63 kB │ gzip:  10.82 kB
+dist/assets/AdminLayout-BF_DTb-t.js                 0.15 kB │ gzip:   0.14 kB
+dist/assets/plus-BM3tINm-.js                        0.15 kB │ gzip:   0.15 kB
+dist/assets/arrow-right-c4jMut9p.js                 0.16 kB │ gzip:   0.16 kB
+dist/assets/JsonLd-6LzEMZeT.js                      0.20 kB │ gzip:   0.19 kB
+dist/assets/EmpresaLayout-33uhFdUt.js               0.22 kB │ gzip:   0.18 kB
+dist/assets/map-pin-15lNkS6u.js                     0.25 kB │ gzip:   0.22 kB
+dist/assets/useCategories-CniNEfSD.js               0.26 kB │ gzip:   0.21 kB
+dist/assets/wallet-BBFP2hOJ.js                      0.28 kB │ gzip:   0.21 kB
+dist/assets/graduation-cap-CXmUHryW.js              0.33 kB │ gzip:   0.24 kB
+dist/assets/PlanoPage-D0Km0grS.js                   0.33 kB │ gzip:   0.27 kB
+dist/assets/PlanoPage-B2o0Xbwv.js                   0.36 kB │ gzip:   0.29 kB
+dist/assets/BancoCurriculosPage-v6SU50e4.js         0.36 kB │ gzip:   0.30 kB
+dist/assets/building-2-24U08HmW.js                  0.43 kB │ gzip:   0.25 kB
+dist/assets/PlaceholderPage-DJwqbDJc.js             0.44 kB │ gzip:   0.29 kB
+dist/assets/CategorySelect-zLRt8N5e.js              0.57 kB │ gzip:   0.37 kB
+dist/assets/CadastroConfirmarPage-CT3FuzSh.js       0.66 kB │ gzip:   0.40 kB
+dist/assets/EmptyState-BVkk-XWC.js                  0.68 kB │ gzip:   0.37 kB
+dist/assets/label-n4DIbwI1.js                       0.74 kB │ gzip:   0.46 kB
+dist/assets/ShowMoreGrid-YI7XlzHg.js                0.75 kB │ gzip:   0.49 kB
+dist/assets/useVagas-D7FzCn2g.js                    0.75 kB │ gzip:   0.42 kB
+dist/assets/EmpresaContext-DJ6Kwl4T.js              0.78 kB │ gzip:   0.45 kB
+dist/assets/input-D6LJMGiB.js                       0.80 kB │ gzip:   0.45 kB
+dist/assets/useAutonomos-DkGZcpoe.js                0.81 kB │ gzip:   0.42 kB
+dist/assets/usePaginasInstitucionais-OaBSUNcY.js    0.85 kB │ gzip:   0.41 kB
+dist/assets/createLucideIcon-CQArXvIc.js            0.90 kB │ gzip:   0.54 kB
+dist/assets/card-Dn6aGlnx.js                        0.97 kB │ gzip:   0.42 kB
+dist/assets/useCvVariants-F_bohhg0.js               1.04 kB │ gzip:   0.42 kB
+dist/assets/useDocumentMeta-ZniKQWea.js             1.05 kB │ gzip:   0.48 kB
+dist/assets/badge-y7S4imXS.js                       1.08 kB │ gzip:   0.55 kB
+dist/assets/StaticPage-CuesDvuD.js                  1.10 kB │ gzip:   0.56 kB
+dist/assets/DashboardPage-CYQVxKEO.js               1.20 kB │ gzip:   0.58 kB
+dist/assets/useEmpresas-DbBzTZyW.js                 1.26 kB │ gzip:   0.59 kB
+dist/assets/StatusBadge-CsWMWtWI.js                 1.36 kB │ gzip:   0.55 kB
+dist/assets/AdsPage-DwaXP0W9.js                     1.52 kB │ gzip:   0.80 kB
+dist/assets/useArtigos-BrTr-azc.js                  1.66 kB │ gzip:   0.79 kB
+dist/assets/OnboardingPage-D2WQ_sUB.js              1.67 kB │ gzip:   0.84 kB
+dist/assets/ImageCarousel-DniIUcJ9.js               1.67 kB │ gzip:   0.81 kB
+dist/assets/OnboardingPage-D124OHLP.js              1.75 kB │ gzip:   0.81 kB
+dist/assets/VagasPage-SW4h6wq_.js                   1.77 kB │ gzip:   0.89 kB
+dist/assets/useEmpresaVagas-DquI9MFJ.js             1.82 kB │ gzip:   0.63 kB
+dist/assets/PainelPage-u_BSm4jK.js                  1.89 kB │ gzip:   0.73 kB
+dist/assets/ForgotPasswordPage-BG_Ii38r.js          1.94 kB │ gzip:   0.92 kB
+dist/assets/PlanosPage-CKmQGs9J.js                  1.99 kB │ gzip:   0.93 kB
+dist/assets/VagasListPage-Cs0ckiee.js               2.02 kB │ gzip:   0.88 kB
+dist/assets/PaginasPage-DFFInBQX.js                 2.03 kB │ gzip:   0.89 kB
+dist/assets/LoginPage-z7Bff813.js                   2.22 kB │ gzip:   0.99 kB
+dist/assets/useMutation-MfWkuX3S.js                 2.25 kB │ gzip:   0.93 kB
+dist/assets/EmpresasPage-B9L3HfUx.js                2.28 kB │ gzip:   1.01 kB
+dist/assets/ResetPasswordPage-DJKLrUxP.js           2.35 kB │ gzip:   1.04 kB
+dist/assets/AutonomoCard-DLQyk1wR.js                2.36 kB │ gzip:   1.11 kB
+dist/assets/PlanosPage-B2NEb8bD.js                  2.48 kB │ gzip:   0.96 kB
+dist/assets/OnboardingPage-jchNS9PY.js              2.52 kB │ gzip:   1.10 kB
+dist/assets/CvListPage-CnmLo1_D.js                  2.52 kB │ gzip:   1.11 kB
+dist/assets/PerfilContaPage-DG8uo3Bs.js             2.89 kB │ gzip:   1.06 kB
+dist/assets/EmpresaDetailPage-C9JEBjHj.js           3.06 kB │ gzip:   1.27 kB
+dist/assets/VagaCard-DJtpfcJu.js                    3.14 kB │ gzip:   1.41 kB
+dist/assets/PhotoGalleryField-BHE6aWgn.js           3.15 kB │ gzip:   1.53 kB
+dist/assets/AutonomoDetailPage-BnTJqRYE.js          3.33 kB │ gzip:   1.35 kB
+dist/assets/EmpresasDirectoryPage-DkCgAYyw.js       3.36 kB │ gzip:   1.55 kB
+dist/assets/UsuariosPage-DqwCjp7Q.js                3.65 kB │ gzip:   1.41 kB
+dist/assets/CadastroPage-DSVTYzrQ.js                3.66 kB │ gzip:   1.56 kB
+dist/assets/PerfilPage-DOC_vC4_.js                  3.84 kB │ gzip:   1.64 kB
+dist/assets/PerfilPage-DJxITAY-.js                  4.09 kB │ gzip:   1.68 kB
+dist/assets/CandidaturasPage-DFeKfMnc.js            4.20 kB │ gzip:   1.68 kB
+dist/assets/EmpresaDetailPage-6v4Ws6pS.js           4.57 kB │ gzip:   1.69 kB
+dist/assets/VagaCandidatosPage-Du0GAqgR.js          4.72 kB │ gzip:   1.67 kB
+dist/assets/VagaDetailPage-BpvLI8IH.js              6.09 kB │ gzip:   2.24 kB
+dist/assets/BlogPage-BV9T8249.js                    6.68 kB │ gzip:   2.30 kB
+dist/assets/PerfilPage-Db4S09i7.js                  7.03 kB │ gzip:   2.35 kB
+dist/assets/VagaFormPage-C_Ci1wsK.js                7.34 kB │ gzip:   2.67 kB
+dist/assets/categoryIcons-B9eqvbb6.js               7.92 kB │ gzip:   3.27 kB
+dist/assets/jsx-runtime-Cltr0gcK.js                 8.43 kB │ gzip:   3.21 kB
+dist/assets/ArtigosPage-CdspQ8Nz.js                 8.74 kB │ gzip:   2.93 kB
+dist/assets/useQuery-BZqz9r4p.js                    8.78 kB │ gzip:   3.21 kB
+dist/assets/CvEditPage-Bb8M7shH.js                  8.81 kB │ gzip:   2.38 kB
+dist/assets/HomePage-DqvPkbHi.js                   10.76 kB │ gzip:   3.21 kB
+dist/assets/ExplorarPage-CzqDKm6n.js               11.56 kB │ gzip:   3.56 kB
+dist/assets/RichTextRenderer-CHluqdph.js           27.57 kB │ gzip:  10.78 kB
+dist/assets/index-DsKjtF8l.js                     235.04 kB │ gzip:  76.15 kB
+dist/assets/RichTextEditor-BYJSy6Lj.js            327.91 kB │ gzip: 103.35 kB
+
+✓ built in 2.20s

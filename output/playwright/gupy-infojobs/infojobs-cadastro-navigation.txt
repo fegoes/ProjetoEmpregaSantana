@@ -1,0 +1,14 @@
+### Ran Playwright code
+```js
+await page.goto('https://login.infojobs.com.br/cadastrar-curriculo.aspx');
+```
+### Open tabs
+- 0: (current) [Cadastrar Curriculo GRÁTIS | Infojobs](https://login.infojobs.com.br/cadastrar-curriculo.aspx)
+- 1: [Página da Vaga | ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR](https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal)
+### Page
+- Page URL: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+- Page Title: Cadastrar Curriculo GRÁTIS | Infojobs
+### Snapshot
+- [Snapshot](.playwright-cli/page-2026-10-20T11-04-52-239Z.yml)
+### Events
+- New console entries: .playwright-cli/console-2026-10-20T11-04-45-473Z.log#L1-L4

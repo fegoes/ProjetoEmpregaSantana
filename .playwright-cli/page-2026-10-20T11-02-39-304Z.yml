@@ -1,0 +1,550 @@
+- generic [active] [ref=f1e1]:
+  - generic [ref=f1e2]:
+    - link "Pular para o conteúdo principal" [ref=f1e3] [cursor=pointer]:
+      - /url: "#main-content"
+    - navigation [ref=f1e4]:
+      - generic [ref=f1e6]:
+        - link [ref=f1e8] [cursor=pointer]:
+          - /url: /
+          - img "Gupy Acesse a página inicial do Portal de vagas da Gupy" [ref=f1e9]
+        - generic [ref=f1e10]:
+          - generic [ref=f1e15]:
+            - generic [ref=f1e16]: Digite um cargo
+            - generic [ref=f1e19]:
+              - searchbox "Busque por nome da vaga" [ref=f1e24]
+              - generic "Buscar" [ref=f1e25]:
+                - button "Buscar vaga" [ref=f1e26] [cursor=pointer]
+          - generic [ref=f1e31]:
+            - button "Filtrar" [ref=f1e33] [cursor=pointer]
+            - generic [ref=f1e39]:
+              - button "Ordenar" [ref=f1e40] [cursor=pointer]
+              - button "Local de trabalho" [ref=f1e44] [cursor=pointer]
+              - button "Modelo de trabalho" [ref=f1e48] [cursor=pointer]
+              - button "Empresa" [ref=f1e52] [cursor=pointer]
+              - paragraph [ref=f1e57]: "Exibir vagas:"
+              - button "Empresas com Selo Feedback" [ref=f1e58] [cursor=pointer]
+              - button "Afirmativas para PCD" [ref=f1e60] [cursor=pointer]
+        - button "Usuário deslogado Abrir menu de usuário" [ref=f1e65] [cursor=pointer]
+    - generic [ref=f1e71]:
+      - heading "Aplique para Vagas de emprego" [level=1] [ref=f1e72]
+      - paragraph [ref=f1e73]: 100 resultados
+    - main [ref=f1e76]:
+      - generic [ref=f1e77]:
+        - generic [ref=f1e78]:
+          - heading "Vagas" [level=2] [ref=f1e79]
+          - list [ref=f1e80]:
+            - listitem [ref=f1e81]:
+              - 'link "P.A GOLD MINERAÇÃO E METALURGIA S.A Analista de Infraestrutura Sr Peixoto de... - MT Presencial Efetivo Também p/ PcD Publicada em: 20/10/2026" [ref=f1e83] [cursor=pointer]':
+                - /url: https://pagold.gupy.io/job/eyJqb2JJZCI6MTI3MzM5ODIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e84]:
+                  - paragraph [ref=f1e86]: P.A GOLD MINERAÇÃO E METALURGIA S.A
+                  - heading "Analista de Infraestrutura Sr" [level=3] [ref=f1e87]
+                  - generic [ref=f1e89]:
+                    - generic [ref=f1e90]: Peixoto de... - MT
+                    - generic [ref=f1e94]: Presencial
+                    - generic [ref=f1e98]: Efetivo
+                    - generic [ref=f1e102]: Também p/ PcD
+                  - generic [ref=f1e108]:
+                    - separator [ref=f1e109]
+                    - paragraph [ref=f1e110]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e111]:
+              - generic [ref=f1e112]:
+                - generic "Esta empresa possui Selo de Feedback" [ref=f1e114]
+                - 'link "Petz Atendente- Petz Alphaville Barueri - SP Presencial Efetivo Publicada em: 20/10/2026" [ref=f1e115] [cursor=pointer]':
+                  - /url: https://petz.gupy.io/job/eyJqb2JJZCI6MTI3NDU5ODYsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                  - generic [ref=f1e116]:
+                    - paragraph [ref=f1e118]: Petz
+                    - heading "Atendente- Petz Alphaville" [level=3] [ref=f1e119]
+                    - generic [ref=f1e121]:
+                      - generic [ref=f1e122]: Barueri - SP
+                      - generic [ref=f1e126]: Presencial
+                      - generic [ref=f1e130]: Efetivo
+                    - generic [ref=f1e135]:
+                      - separator [ref=f1e136]
+                      - paragraph [ref=f1e137]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e138]:
+              - generic [ref=f1e139]:
+                - generic "Esta empresa possui Selo de Feedback" [ref=f1e141]
+                - 'link "Carreiras Vera Cruz Hospital Jovem Aprendiz (Farmácia) - Hospital Vera Cruz Campinas - SP Presencial Aprendiz Também p/ PcD Publicada em: 20/10/2026" [ref=f1e142] [cursor=pointer]':
+                  - /url: https://veracruzhospital.gupy.io/job/eyJqb2JJZCI6MTI3MzU5MDcsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                  - generic [ref=f1e143]:
+                    - paragraph [ref=f1e145]: Carreiras Vera Cruz Hospital
+                    - heading "Jovem Aprendiz (Farmácia) - Hospital Vera Cruz" [level=3] [ref=f1e146]
+                    - generic [ref=f1e148]:
+                      - generic [ref=f1e149]: Campinas - SP
+                      - generic [ref=f1e153]: Presencial
+                      - generic [ref=f1e157]: Aprendiz
+                      - generic [ref=f1e161]: Também p/ PcD
+                    - generic [ref=f1e167]:
+                      - separator [ref=f1e168]
+                      - paragraph [ref=f1e169]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e170]:
+              - generic [ref=f1e171]:
+                - generic "Esta empresa possui Selo de Feedback" [ref=f1e173]
+                - 'link "Petz Auxiliar de Limpeza- Petz Osasco Osasco - SP Presencial Efetivo Publicada em: 20/10/2026" [ref=f1e174] [cursor=pointer]':
+                  - /url: https://petz.gupy.io/job/eyJqb2JJZCI6MTI3NDYwNzEsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                  - generic [ref=f1e175]:
+                    - paragraph [ref=f1e177]: Petz
+                    - heading "Auxiliar de Limpeza- Petz Osasco" [level=3] [ref=f1e178]
+                    - generic [ref=f1e180]:
+                      - generic [ref=f1e181]: Osasco - SP
+                      - generic [ref=f1e185]: Presencial
+                      - generic [ref=f1e189]: Efetivo
+                    - generic [ref=f1e194]:
+                      - separator [ref=f1e195]
+                      - paragraph [ref=f1e196]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e197]:
+              - 'link "Data Engenharia ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR Sarzedo - MG Presencial Efetivo Também p/ PcD Publicada em: 20/10/2026" [ref=f1e199] [cursor=pointer]':
+                - /url: https://dataengenharia.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e200]:
+                  - paragraph [ref=f1e202]: Data Engenharia
+                  - heading "ELETRICISTA ENROLADOR - SERVIÇOS DE CAMPO MOTOR" [level=3] [ref=f1e203]
+                  - generic [ref=f1e205]:
+                    - generic [ref=f1e206]: Sarzedo - MG
+                    - generic [ref=f1e210]: Presencial
+                    - generic [ref=f1e214]: Efetivo
+                    - generic [ref=f1e218]: Também p/ PcD
+                  - generic [ref=f1e224]:
+                    - separator [ref=f1e225]
+                    - paragraph [ref=f1e226]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e227]:
+              - generic [ref=f1e228]:
+                - generic "Esta empresa possui Selo de Feedback" [ref=f1e230]
+                - 'link "Petz Auxiliar de Limpeza- Petz Giovana Pirelli Santo André - SP Presencial Efetivo Publicada em: 20/10/2026" [ref=f1e231] [cursor=pointer]':
+                  - /url: https://petz.gupy.io/job/eyJqb2JJZCI6MTI3NDYyOTEsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                  - generic [ref=f1e232]:
+                    - paragraph [ref=f1e234]: Petz
+                    - heading "Auxiliar de Limpeza- Petz Giovana Pirelli" [level=3] [ref=f1e235]
+                    - generic [ref=f1e237]:
+                      - generic [ref=f1e238]: Santo André - SP
+                      - generic [ref=f1e242]: Presencial
+                      - generic [ref=f1e246]: Efetivo
+                    - generic [ref=f1e251]:
+                      - separator [ref=f1e252]
+                      - paragraph [ref=f1e253]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e254]:
+              - 'link "Cia. da Consulta Recepcionista - Pinheiros São Paulo - SP Presencial Efetivo Publicada em: 20/10/2026" [ref=f1e256] [cursor=pointer]':
+                - /url: https://ciadaconsulta.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MTYsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e257]:
+                  - paragraph [ref=f1e259]: Cia. da Consulta
+                  - heading "Recepcionista - Pinheiros" [level=3] [ref=f1e260]
+                  - generic [ref=f1e262]:
+                    - generic [ref=f1e263]: São Paulo - SP
+                    - generic [ref=f1e267]: Presencial
+                    - generic [ref=f1e271]: Efetivo
+                  - generic [ref=f1e276]:
+                    - separator [ref=f1e277]
+                    - paragraph [ref=f1e278]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e279]:
+              - 'link "Plaenge ESTAGIARIO DE MARKETING - CPS Campinas - SP Presencial Estágio Também p/ PcD Publicada em: 20/10/2026" [ref=f1e281] [cursor=pointer]':
+                - /url: https://grupoplaenge.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDYsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e282]:
+                  - paragraph [ref=f1e284]: Plaenge
+                  - heading "ESTAGIARIO DE MARKETING - CPS" [level=3] [ref=f1e285]
+                  - generic [ref=f1e287]:
+                    - generic [ref=f1e288]: Campinas - SP
+                    - generic [ref=f1e292]: Presencial
+                    - generic [ref=f1e296]: Estágio
+                    - generic [ref=f1e300]: Também p/ PcD
+                  - generic [ref=f1e306]:
+                    - separator [ref=f1e307]
+                    - paragraph [ref=f1e308]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e309]:
+              - 'link "Cia. da Consulta Auxiliar de Limpeza - Santo Amaro e Pinheiros São José d... - SP Presencial Efetivo Também p/ PcD Publicada em: 20/10/2026" [ref=f1e311] [cursor=pointer]':
+                - /url: https://ciadaconsulta.gupy.io/job/eyJqb2JJZCI6MTI3NTA4MDUsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e312]:
+                  - paragraph [ref=f1e314]: Cia. da Consulta
+                  - heading "Auxiliar de Limpeza - Santo Amaro e Pinheiros" [level=3] [ref=f1e315]
+                  - generic [ref=f1e317]:
+                    - generic [ref=f1e318]: São José d... - SP
+                    - generic [ref=f1e322]: Presencial
+                    - generic [ref=f1e326]: Efetivo
+                    - generic [ref=f1e330]: Também p/ PcD
+                  - generic [ref=f1e336]:
+                    - separator [ref=f1e337]
+                    - paragraph [ref=f1e338]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e339]:
+              - 'link "GRUPO GR Auxiliar de Manutenção São Paulo - SP Presencial Efetivo Publicada em: 20/10/2026" [ref=f1e341] [cursor=pointer]':
+                - /url: https://vemsergr.gupy.io/job/eyJqb2JJZCI6MTI3MTY5MjcsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e342]:
+                  - paragraph [ref=f1e344]: GRUPO GR
+                  - heading "Auxiliar de Manutenção" [level=3] [ref=f1e345]
+                  - generic [ref=f1e347]:
+                    - generic [ref=f1e348]: São Paulo - SP
+                    - generic [ref=f1e352]: Presencial
+                    - generic [ref=f1e356]: Efetivo
+                  - generic [ref=f1e361]:
+                    - separator [ref=f1e362]
+                    - paragraph [ref=f1e363]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e364]:
+              - generic [ref=f1e365]:
+                - generic "Esta empresa possui Selo de Feedback" [ref=f1e367]
+                - 'link "Afip Auxiliar de Logística Afip São Paulo - SP Presencial Efetivo Também p/ PcD Publicada em: 20/10/2026" [ref=f1e368] [cursor=pointer]':
+                  - /url: https://afip.gupy.io/job/eyJqb2JJZCI6MTI3NTA3OTIsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                  - generic [ref=f1e369]:
+                    - paragraph [ref=f1e371]: Afip
+                    - heading "Auxiliar de Logística Afip" [level=3] [ref=f1e372]
+                    - generic [ref=f1e374]:
+                      - generic [ref=f1e375]: São Paulo - SP
+                      - generic [ref=f1e379]: Presencial
+                      - generic [ref=f1e383]: Efetivo
+                      - generic [ref=f1e387]: Também p/ PcD
+                    - generic [ref=f1e393]:
+                      - separator [ref=f1e394]
+                      - paragraph [ref=f1e395]: "Publicada em: 20/10/2026"
+            - listitem [ref=f1e396]:
+              - 'link "TIMAC Agro Brasil SUPERVISOR(A) REGIONAL DE VENDAS - IMPERATRIZ / MA Imperatriz - MA Presencial Efetivo Também p/ PcD Publicada em: 20/10/2026" [ref=f1e398] [cursor=pointer]':
+                - /url: https://timacagro.gupy.io/job/eyJqb2JJZCI6MTI3NTA3NjUsInNvdXJjZSI6Imd1cHlfcG9ydGFsIn0=?jobBoardSource=gupy_portal
+                - generic [ref=f1e399]:
+                  - paragraph [ref=f1e401]: TIMAC Agro Brasil
+                  - heading "SUPERVISOR(A) REGIONAL DE VENDAS - IMPERATRIZ / MA" [level=3] [ref=f1e402]
+                  - generic [ref=f1e404]:
+                    - generic [ref=f1e405]: Imperatriz - MA
+                    - generic [ref=f1e409]: Presencial
+                    - generic [ref=f1e413]: Efetivo
+                    - generic [ref=f1e417]: Também p/ PcD
+                  - generic [ref=f1e423]:
+                    - separator [ref=f1e424]
+                    - paragraph [ref=f1e425]: "Publicada em: 20/10/2026"
+        - navigation "navegação de paginação" [ref=f1e426]:
+          - list [ref=f1e427]:
+            - listitem [ref=f1e428]:
+              - button "Página anterior" [disabled]
+            - listitem [ref=f1e429]:
+              - button "Página 1" [ref=f1e430] [cursor=pointer]: "1"
+            - listitem [ref=f1e431]:
+              - button "Página 2" [ref=f1e432] [cursor=pointer]: "2"
+            - listitem [ref=f1e433]:
+              - button "Página 3" [ref=f1e434] [cursor=pointer]: "3"
+            - listitem [ref=f1e435]:
+              - button "Página 4" [ref=f1e436] [cursor=pointer]: "4"
+            - listitem [ref=f1e437]:
+              - button "Página 5" [ref=f1e438] [cursor=pointer]: "5"
+            - listitem [ref=f1e439]:
+              - generic [ref=f1e440]: …
+            - listitem [ref=f1e441]:
+              - button "Página 9" [ref=f1e442] [cursor=pointer]: "9"
+            - listitem [ref=f1e443]:
+              - button "Próxima página" [ref=f1e444] [cursor=pointer]
+      - region "Empresas encontradas" [ref=f1e447]:
+        - heading "Empresas" [level=2] [ref=f1e448]
+        - generic [ref=f1e450]:
+          - generic [ref=f1e451]:
+            - button [disabled] [aria-hidden]
+          - list [ref=f1e453]:
+            - listitem "Ir para a página de carreira" [ref=f1e454]:
+              - link [ref=f1e455] [cursor=pointer]:
+                - /url: https://pagold.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e458]: P.A GOLD MINERAÇÃO E METALURGIA S.A
+            - listitem "Ir para a página de carreira" [ref=f1e459]:
+              - link [ref=f1e460] [cursor=pointer]:
+                - /url: https://petz.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e463]: Petz
+            - listitem "Ir para a página de carreira" [ref=f1e464]:
+              - link [ref=f1e465] [cursor=pointer]:
+                - /url: https://veracruzhospital.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e468]: Carreiras Vera Cruz Hospital
+            - listitem "Ir para a página de carreira" [ref=f1e469]:
+              - link [ref=f1e470] [cursor=pointer]:
+                - /url: https://petz.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e473]: Petz
+            - listitem "Ir para a página de carreira" [ref=f1e474]:
+              - link [ref=f1e475] [cursor=pointer]:
+                - /url: https://dataengenharia.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e478]: Data Engenharia
+            - listitem "Ir para a página de carreira" [ref=f1e479]:
+              - link [ref=f1e480] [cursor=pointer]:
+                - /url: https://petz.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e483]: Petz
+            - listitem "Ir para a página de carreira" [ref=f1e484]:
+              - link [ref=f1e485] [cursor=pointer]:
+                - /url: https://ciadaconsulta.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e488]: Cia. da Consulta
+            - listitem "Ir para a página de carreira" [ref=f1e489]:
+              - link [ref=f1e490] [cursor=pointer]:
+                - /url: https://grupoplaenge.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e493]: Plaenge
+            - listitem "Ir para a página de carreira" [ref=f1e494]:
+              - link [ref=f1e495] [cursor=pointer]:
+                - /url: https://ciadaconsulta.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e498]: Cia. da Consulta
+            - listitem "Ir para a página de carreira" [ref=f1e499]:
+              - link [ref=f1e500] [cursor=pointer]:
+                - /url: https://vemsergr.gupy.io/eyJzb3VyY2UiOiJndXB5X3BvcnRhbCJ9
+                - paragraph [ref=f1e503]: GRUPO GR
+          - button [aria-hidden] [ref=f1e508] [cursor=pointer]
+    - contentinfo [ref=f1e511]:
+      - generic [ref=f1e512]:
+        - generic [ref=f1e513]:
+          - navigation [ref=f1e515]:
+            - button "Vagas por estado" [ref=f1e516] [cursor=pointer]
+            - list [ref=f1e519]:
+              - listitem [ref=f1e520]:
+                - link "Acre" [ref=f1e521] [cursor=pointer]:
+                  - /url: /job-search/state=Acre
+              - listitem [ref=f1e522]:
+                - link "Alagoas" [ref=f1e523] [cursor=pointer]:
+                  - /url: /job-search/state=Alagoas
+              - listitem [ref=f1e524]:
+                - link "Amapá" [ref=f1e525] [cursor=pointer]:
+                  - /url: /job-search/state=Amap%C3%A1
+              - listitem [ref=f1e526]:
+                - link "Amazonas" [ref=f1e527] [cursor=pointer]:
+                  - /url: /job-search/state=Amazonas
+              - listitem [ref=f1e528]:
+                - link "Bahia" [ref=f1e529] [cursor=pointer]:
+                  - /url: /job-search/state=Bahia
+              - listitem [ref=f1e530]:
+                - link "Ceará" [ref=f1e531] [cursor=pointer]:
+                  - /url: /job-search/state=Cear%C3%A1
+              - listitem [ref=f1e532]:
+                - link "Distrito Federal" [ref=f1e533] [cursor=pointer]:
+                  - /url: /job-search/state=Distrito%20Federal
+              - listitem [ref=f1e534]:
+                - link "Espírito Santo" [ref=f1e535] [cursor=pointer]:
+                  - /url: /job-search/state=Esp%C3%ADrito%20Santo
+            - list [ref=f1e536]:
+              - listitem [ref=f1e537]:
+                - link [ref=f1e538] [cursor=pointer]:
+                  - /url: /job-search/state=Goi%C3%A1s
+                  - text: Goiás
+              - listitem [ref=f1e539]:
+                - link [ref=f1e540] [cursor=pointer]:
+                  - /url: /job-search/state=Maranh%C3%A3o
+                  - text: Maranhão
+              - listitem [ref=f1e541]:
+                - link [ref=f1e542] [cursor=pointer]:
+                  - /url: /job-search/state=Mato%20Grosso
+                  - text: Mato Grosso
+              - listitem [ref=f1e543]:
+                - link [ref=f1e544] [cursor=pointer]:
+                  - /url: /job-search/state=Mato%20Grosso%20do%20Sul
+                  - text: Mato Grosso do Sul
+              - listitem [ref=f1e545]:
+                - link [ref=f1e546] [cursor=pointer]:
+                  - /url: /job-search/state=Minas%20Gerais
+                  - text: Minas Gerais
+              - listitem [ref=f1e547]:
+                - link [ref=f1e548] [cursor=pointer]:
+                  - /url: /job-search/state=Par%C3%A1
+                  - text: Pará
+              - listitem [ref=f1e549]:
+                - link [ref=f1e550] [cursor=pointer]:
+                  - /url: /job-search/state=Para%C3%ADba
+                  - text: Paraíba
+              - listitem [ref=f1e551]:
+                - link [ref=f1e552] [cursor=pointer]:
+                  - /url: /job-search/state=Paran%C3%A1
+                  - text: Paraná
+              - listitem [ref=f1e553]:
+                - link [ref=f1e554] [cursor=pointer]:
+                  - /url: /job-search/state=Pernambuco
+                  - text: Pernambuco
+              - listitem [ref=f1e555]:
+                - link [ref=f1e556] [cursor=pointer]:
+                  - /url: /job-search/state=Piau%C3%AD
+                  - text: Piauí
+              - listitem [ref=f1e557]:
+                - link [ref=f1e558] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20de%20Janeiro
+                  - text: Rio de Janeiro
+              - listitem [ref=f1e559]:
+                - link [ref=f1e560] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20Grande%20do%20Norte
+                  - text: Rio Grande do Norte
+              - listitem [ref=f1e561]:
+                - link [ref=f1e562] [cursor=pointer]:
+                  - /url: /job-search/state=Rio%20Grande%20do%20Sul
+                  - text: Rio Grande do Sul
+              - listitem [ref=f1e563]:
+                - link [ref=f1e564] [cursor=pointer]:
+                  - /url: /job-search/state=Rond%C3%B4nia
+                  - text: Rondônia
+              - listitem [ref=f1e565]:
+                - link [ref=f1e566] [cursor=pointer]:
+                  - /url: /job-search/state=Roraima
+                  - text: Roraima
+              - listitem [ref=f1e567]:
+                - link [ref=f1e568] [cursor=pointer]:
+                  - /url: /job-search/state=Santa%20Catarina
+                  - text: Santa Catarina
+              - listitem [ref=f1e569]:
+                - link [ref=f1e570] [cursor=pointer]:
+                  - /url: /job-search/state=S%C3%A3o%20Paulo
+                  - text: São Paulo
+              - listitem [ref=f1e571]:
+                - link [ref=f1e572] [cursor=pointer]:
+                  - /url: /job-search/state=Sergipe
+                  - text: Sergipe
+              - listitem [ref=f1e573]:
+                - link [ref=f1e574] [cursor=pointer]:
+                  - /url: /job-search/state=Tocantins
+                  - text: Tocantins
+          - generic [ref=f1e575]:
+            - navigation [ref=f1e576]:
+              - button "Cidades mais buscadas" [ref=f1e577] [cursor=pointer]
+              - list [ref=f1e580]:
+                - listitem [ref=f1e581]:
+                  - link "São Paulo - SP" [ref=f1e582] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=S%C3%A3o%20Paulo
+                - listitem [ref=f1e583]:
+                  - link "Recife - PE" [ref=f1e584] [cursor=pointer]:
+                    - /url: /job-search/state=Pernambuco&city%5B%5D=Recife
+              - list [ref=f1e585]:
+                - listitem [ref=f1e586]:
+                  - link [ref=f1e587] [cursor=pointer]:
+                    - /url: /job-search/state=Amazonas&city%5B%5D=Manaus
+                    - text: Manaus - AM
+                - listitem [ref=f1e588]:
+                  - link [ref=f1e589] [cursor=pointer]:
+                    - /url: /job-search/state=Bahia&city%5B%5D=Salvador
+                    - text: Salvador - BA
+                - listitem [ref=f1e590]:
+                  - link [ref=f1e591] [cursor=pointer]:
+                    - /url: /job-search/state=Sergipe&city%5B%5D=Aracaju
+                    - text: Aracaju - SE
+                - listitem [ref=f1e592]:
+                  - link [ref=f1e593] [cursor=pointer]:
+                    - /url: /job-search/state=Rio%20de%20Janeiro&city%5B%5D=Rio%20de%20Janeiro
+                    - text: Rio de Janeiro - RJ
+                - listitem [ref=f1e594]:
+                  - link [ref=f1e595] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Tatu%C3%AD
+                    - text: Tatuí - SP
+                - listitem [ref=f1e596]:
+                  - link [ref=f1e597] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Santos
+                    - text: Santos - SP
+                - listitem [ref=f1e598]:
+                  - link [ref=f1e599] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Franca
+                    - text: Franca - SP
+                - listitem [ref=f1e600]:
+                  - link [ref=f1e601] [cursor=pointer]:
+                    - /url: /job-search/state=S%C3%A3o%20Paulo&city%5B%5D=Campinas
+                    - text: Campinas - SP
+            - navigation [ref=f1e602]:
+              - button "Cargos mais buscados" [ref=f1e603] [cursor=pointer]
+              - list [ref=f1e606]:
+                - listitem [ref=f1e607]:
+                  - link "Enfermeiro" [ref=f1e608] [cursor=pointer]:
+                    - /url: /job-search/term=Enfermeiro
+                - listitem [ref=f1e609]:
+                  - link "Auxiliar" [ref=f1e610] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar
+              - list [ref=f1e611]:
+                - listitem [ref=f1e612]:
+                  - link [ref=f1e613] [cursor=pointer]:
+                    - /url: /job-search/term=Motorista
+                    - text: Motorista
+                - listitem [ref=f1e614]:
+                  - link [ref=f1e615] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar%20de%20enfermagem
+                    - text: Auxiliar de enfermagem
+                - listitem [ref=f1e616]:
+                  - link [ref=f1e617] [cursor=pointer]:
+                    - /url: /job-search/term=T%C3%A9cnico%20de%20enfermagem
+                    - text: Técnico de enfermagem
+                - listitem [ref=f1e618]:
+                  - link [ref=f1e619] [cursor=pointer]:
+                    - /url: /job-search/term=Auxiliar%20administrativo
+                    - text: Auxiliar administrativo
+                - listitem [ref=f1e620]:
+                  - link [ref=f1e621] [cursor=pointer]:
+                    - /url: /job-search/term=Recepcionista
+                    - text: Recepcionista
+                - listitem [ref=f1e622]:
+                  - link [ref=f1e623] [cursor=pointer]:
+                    - /url: /job-search/term=Analista
+                    - text: Analista
+                - listitem [ref=f1e624]:
+                  - link [ref=f1e625] [cursor=pointer]:
+                    - /url: /job-search/term=Assistente
+                    - text: Assistente
+                - listitem [ref=f1e626]:
+                  - link [ref=f1e627] [cursor=pointer]:
+                    - /url: /job-search/term=Advogado
+                    - text: Advogado
+            - navigation [ref=f1e628]:
+              - button "Mais buscados" [ref=f1e629] [cursor=pointer]
+              - list [ref=f1e632]:
+                - listitem [ref=f1e633]:
+                  - link "Home office" [ref=f1e634] [cursor=pointer]:
+                    - /url: /job-search/workplaceTypes%5B%5D=remote
+                - listitem [ref=f1e635]:
+                  - link "Jovem aprendiz" [ref=f1e636] [cursor=pointer]:
+                    - /url: /job-search/jobTypes%5B%5D=vacancy_type_apprentice
+              - list [ref=f1e637]:
+                - listitem [ref=f1e638]:
+                  - link [ref=f1e639] [cursor=pointer]:
+                    - /url: /job-search/jobTypes%5B%5D=vacancy_type_internship
+                    - text: Estágio
+                - listitem [ref=f1e640]:
+                  - link [ref=f1e641] [cursor=pointer]:
+                    - /url: /job-search/pwd=true
+                    - text: PCD
+          - generic [ref=f1e642]:
+            - paragraph [ref=f1e643]: Redes sociais
+            - navigation "Redes sociais" [ref=f1e644]:
+              - link "Instagram Portal de Vagas Gupy" [ref=f1e645] [cursor=pointer]:
+                - /url: https://www.instagram.com/portaldevagas.gupy/
+              - link "TikTok Portal de Vagas Gupy" [ref=f1e648] [cursor=pointer]:
+                - /url: https://www.tiktok.com/@portaldevagas.gupy
+              - link "YouTube Canal da Gupy" [ref=f1e651] [cursor=pointer]:
+                - /url: https://www.youtube.com/@canaldagupy
+              - link "Newsletter “À Frente com Gupy” no LinkedIn" [ref=f1e654] [cursor=pointer]:
+                - /url: https://www.linkedin.com/newsletters/7052275367725662208/
+            - navigation [ref=f1e657]:
+              - paragraph [ref=f1e658]: Sobre a Gupy
+              - list [ref=f1e659]:
+                - listitem [ref=f1e660]:
+                  - link "Sobre a Gupy" [ref=f1e661] [cursor=pointer]:
+                    - /url: https://www.gupy.io/sobre-a-gupy?_gl=1*szj8hu*_gcl_au*ODU1NzY5NjM0LjE3MjQ2OTU2MTA.
+                - listitem [ref=f1e662]:
+                  - link "Para pessoas candidatas" [ref=f1e663] [cursor=pointer]:
+                    - /url: https://www.gupy.io/manifesto-experiencia-pessoa-candidata
+                - listitem [ref=f1e664]:
+                  - link "Entenda Agentes de IA Gupy" [ref=f1e665] [cursor=pointer]:
+                    - /url: https://www.gupy.io/inteligencia-artificial
+                - listitem [ref=f1e666]:
+                  - link "Selo de Feedback" [ref=f1e667] [cursor=pointer]:
+                    - /url: https://pravoce.gupy.io/pt/como-a-gupy-incentiva-o-feedback-das-empresas?role=s_QKIrThDW7923%3Bs_vbDskKHs15288%3Bs_iWtQKQeI15046%3Bs_icuLmVfh15597
+                - listitem [ref=f1e668]:
+                  - link "Novidades" [ref=f1e669] [cursor=pointer]:
+                    - /url: https://pravoce.gupy.io/pt
+                - listitem [ref=f1e670]:
+                  - link "Central de Ajuda" [ref=f1e671] [cursor=pointer]:
+                    - /url: https://suporte-candidatos.gupy.io/s/?language=pt_BR
+                - listitem [ref=f1e672]:
+                  - link "Falar com o Suporte" [ref=f1e673] [cursor=pointer]:
+                    - /url: https://suporte-candidatos.gupy.io/s/suporte?language=pt_BR
+        - generic [ref=f1e674]:
+          - img "Logotipo da Gupy no rodapé" [ref=f1e676]
+          - generic [ref=f1e677]: ©2015-2026 Gupy. Todos os direitos reservados.
+          - navigation "Termos de uso, Política de privacidade" [ref=f1e678]:
+            - list [ref=f1e679]:
+              - listitem [ref=f1e680]:
+                - link "Termos de uso" [ref=f1e681] [cursor=pointer]:
+                  - /url: https://login.gupy.io/candidates/gupy-terms
+              - listitem [ref=f1e682]:
+                - link "Política de privacidade" [ref=f1e683] [cursor=pointer]:
+                  - /url: https://login.gupy.io/candidates/gupy-privacy
+  - alert [ref=f1e684]
+  - generic:
+    - generic "Privacy Tools - Cookie Management":
+      - dialog "cookieconsent" [ref=f1e685]:
+        - button "Fechar banner de cookies" [ref=f1e686] [cursor=pointer]: ×
+        - generic [ref=f1e687]:
+          - generic [ref=f1e689]:
+            - text: Ao clicar em “Aceitar todos os cookies”, você concorda com o armazenamento de cookies no seu dispositivo para melhorar a navegação no site, analisar o uso do site e ajudar em nossos esforços de marketing.
+            - link "Aviso de Cookies" [ref=f1e690] [cursor=pointer]:
+              - /url: https://www.gupy.io/aviso-de-cookies?_gl=1*1rylxvw*_gcl_au*NTk2NDkzOTQuMTcxNDQxMjg5Mw..
+            - link "Aviso de Privacidade" [ref=f1e691] [cursor=pointer]:
+              - /url: https://www.gupy.io/aviso-de-privacidade-site
+          - generic [ref=f1e692]:
+            - button "Rejeitar Todos" [ref=f1e694] [cursor=pointer]:
+              - generic "Rejeitar" [ref=f1e695]: Rejeitar Todos
+            - button "Aceitar Cookies" [ref=f1e696] [cursor=pointer]:
+              - generic "Aceitar" [ref=f1e697]: Aceitar Cookies
+            - button "Configurar Cookies" [ref=f1e699] [cursor=pointer]
+    - generic "Privacy Tools - Cookie Management - https://www.privacytools.com.br"

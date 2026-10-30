@@ -1,0 +1,784 @@
+- generic [active] [ref=f78e1]:
+  - navigation [ref=f78e2]:
+    - generic [ref=f78e3]:
+      - link [ref=f78e4] [cursor=pointer]:
+        - /url: /
+        - img "Infojobs" [ref=f78e5]
+      - generic [ref=f78e6]:
+        - list [ref=f78e7]:
+          - listitem [ref=f78e8]:
+            - link "Achar Vagas" [ref=f78e9] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br
+          - listitem [ref=f78e10]:
+            - link "Avaliações de Empresas" [ref=f78e11] [cursor=pointer]:
+              - /url: /ranking-melhores-empresas.aspx
+          - listitem [ref=f78e12]:
+            - link "Salários" [ref=f78e13] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/salarios
+          - listitem [ref=f78e14]:
+            - link "Blog" [ref=f78e15] [cursor=pointer]:
+              - /url: https://blog.infojobs.com.br
+          - listitem [ref=f78e16]:
+            - link "Recrutadores" [ref=f78e17] [cursor=pointer]:
+              - /url: /anunciar-vaga-de-emprego-gratis.aspx
+        - generic [ref=f78e18]:
+          - link "Login" [ref=f78e19] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/candidate/
+          - link "Anunciar Vagas" [ref=f78e21] [cursor=pointer]:
+            - /url: https://www.infojobs.com.br/company/insertnew.aspx?iwz=41
+          - link "Cadastrar CV" [ref=f78e22] [cursor=pointer]:
+            - /url: https://login.infojobs.com.br/cadastrar-curriculo.aspx
+  - main [ref=f78e24]:
+    - generic [ref=f78e25]:
+      - generic [ref=f78e28]:
+        - generic [ref=f78e29]:
+          - generic [ref=f78e30]: O quê?
+          - textbox "Cargo ou palavra-chave" [ref=f78e34]
+        - generic [ref=f78e36]:
+          - generic [ref=f78e37]: Onde?
+          - textbox "Localização" [ref=f78e41]: São Paulo
+        - button "ACHAR VAGAS" [ref=f78e43] [cursor=pointer]
+      - generic [ref=f78e49]:
+        - generic [ref=f78e51]:
+          - generic [ref=f78e52] [cursor=pointer]: Modelo de Trabalho
+          - button "Selecionar" [ref=f78e53] [cursor=pointer]
+        - generic [ref=f78e57]:
+          - generic [ref=f78e58] [cursor=pointer]: Km de você
+          - button "Selecionar" [ref=f78e59] [cursor=pointer]
+        - generic [ref=f78e63]:
+          - generic [ref=f78e64] [cursor=pointer]: Publicação
+          - button "Selecionar" [ref=f78e65] [cursor=pointer]
+        - generic [ref=f78e69]:
+          - generic [ref=f78e70] [cursor=pointer]: Salário
+          - button "Selecionar" [ref=f78e71] [cursor=pointer]
+        - generic [ref=f78e75]:
+          - generic [ref=f78e76] [cursor=pointer]: Área
+          - button "Selecionar" [ref=f78e77] [cursor=pointer]
+        - generic [ref=f78e81]:
+          - generic [ref=f78e82] [cursor=pointer]: Contrato
+          - button "Selecionar" [ref=f78e83] [cursor=pointer]
+        - generic [ref=f78e87]:
+          - generic [ref=f78e88] [cursor=pointer]: Jornada
+          - button "Selecionar" [ref=f78e89] [cursor=pointer]
+        - generic [ref=f78e93]:
+          - generic [ref=f78e94] [cursor=pointer]: Senioridade
+          - button "Selecionar" [ref=f78e95] [cursor=pointer]
+        - generic [ref=f78e99]:
+          - generic [ref=f78e100] [cursor=pointer]: PcD
+          - button "Selecionar" [ref=f78e101] [cursor=pointer]
+    - generic [ref=f78e106]:
+      - generic [ref=f78e107]:
+        - generic [ref=f78e108]:
+          - text: "65.325"
+          - heading "Vagas de Emprego em São Paulo" [level=1] [ref=f78e109]
+          - generic [ref=f78e111]:
+            - text: Relevantes
+            - link "Recentes" [ref=f78e112] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/empregos-em-sao-paulo.aspx?campo=griddate&orden=desc
+            - link "Próximas" [ref=f78e113] [cursor=pointer]:
+              - /url: empregos-em-sao-paulo.aspx?campo=distance&orden=asc
+        - generic [ref=f78e115]:
+          - generic [ref=f78e116]:
+            - generic [ref=f78e117] [cursor=pointer]:
+              - generic [ref=f78e118]:
+                - link [ref=f78e119]:
+                  - /url: /vaga-de-costureiro-a-em-sao-paulo__11894157.aspx
+                  - heading "Costureiro (A)" [level=2] [ref=f78e120]
+                - generic [ref=f78e121]: 16 out
+              - generic [ref=f78e122]:
+                - generic [ref=f78e123]: 4,1
+                - link [ref=f78e128]:
+                  - /url: https://www.infojobs.com.br/empresa-camisaria-fmw__-418133.aspx
+                  - text: Camisaria
+                  - generic [ref=f78e129]: FMW
+              - generic [ref=f78e133]: São Paulo - SP
+              - generic [ref=f78e134]:
+                - generic [ref=f78e135]: R$ 2.500,00
+                - generic [ref=f78e138]: Entre 1 e 3 anos
+                - generic [ref=f78e141]: Ensino Médio (2º Grau)
+                - generic [ref=f78e144]: Presencial
+              - generic [ref=f78e147]: A Camisaria FMW está buscando uma Costureira qualificada para integrar nossa equipe. Se você tem experiência em costura, atenção aos detalhes e busca ...
+            - link "Vagas semelhantes" [ref=f78e149] [cursor=pointer]:
+              - /url: "#collapse11894157"
+          - generic [ref=f78e153] [cursor=pointer]:
+            - generic [ref=f78e154]:
+              - link [ref=f78e155]:
+                - /url: /vaga-de-mecanico-empilhadeiras-em-sao-paulo__12066061.aspx
+                - heading "MECÂNICO DE EMPILHADEIRAS" [level=2] [ref=f78e156]
+              - generic [ref=f78e157]: 15 out
+            - generic [ref=f78e158]:
+              - generic [ref=f78e159]: 4,2
+              - link [ref=f78e164]:
+                - /url: https://www.infojobs.com.br/empresa-vamos-locacao-caminhoes,-maquinas-equipamentos-sa__-8056777.aspx
+                - text: VAMOS LOCACAO DE CAMINHOES, MAQUINAS E EQUIPAMENTOS
+                - generic [ref=f78e165]: S.A.
+            - generic [ref=f78e169]: Pirassununga - SP
+            - generic [ref=f78e170]:
+              - generic [ref=f78e171]: A combinar
+              - generic [ref=f78e174]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e177]: Presencial
+            - generic [ref=f78e180]: "RESPONSABILIDADES E ATRIBUIÇÕES DO CARGO: Montar e desmontar equipamentos; Operar instrumentos de medição mecânica; Realizar manutenção preventiva e c..."
+          - generic [ref=f78e182] [cursor=pointer]:
+            - generic [ref=f78e183]:
+              - link [ref=f78e184]:
+                - /url: /vaga-de-jovem-aprendiz-administrativo-em-sao-paulo__12121905.aspx
+                - heading "Jovem Aprendiz Administrativo" [level=2] [ref=f78e185]
+              - generic [ref=f78e186]: 15 out
+            - link [ref=f78e189]:
+              - /url: https://www.infojobs.com.br/empresa-grupo-bt-equipamentos-industriais__498152.aspx
+              - text: Grupo BT Equipamentos
+              - generic [ref=f78e190]: Industriais
+            - generic [ref=f78e194]: Tatuí - SP
+            - generic [ref=f78e195]:
+              - generic [ref=f78e196]: R$ 700,00 a R$ 762,00
+              - generic [ref=f78e199]: Sem experiência
+              - generic [ref=f78e202]: Ensino Médio (2º Grau)
+              - generic [ref=f78e205]: Presencial
+            - generic [ref=f78e208]: Missão do cargo Apoiar as rotinas administrativas da área de Compras, contribuindo para a organização, atualização de cadastros e controle de document...
+          - generic [ref=f78e210] [cursor=pointer]:
+            - generic [ref=f78e211]:
+              - link [ref=f78e212]:
+                - /url: /vaga-de-auxiliar-logistica-em-sao-paulo__12121584.aspx
+                - heading "Auxiliar De Logística" [level=2] [ref=f78e213]
+              - generic [ref=f78e214]: 15 out
+            - link [ref=f78e217]:
+              - /url: https://www.infojobs.com.br/empresa-grupo-bt-equipamentos-industriais__498152.aspx
+              - text: Grupo BT Equipamentos
+              - generic [ref=f78e218]: Industriais
+            - generic [ref=f78e222]: Louveira - SP
+            - generic [ref=f78e223]:
+              - generic [ref=f78e224]: A combinar
+              - generic [ref=f78e227]: Menos de 1 ano
+              - generic [ref=f78e230]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e233]: Presencial
+            - generic [ref=f78e236]: Estamos buscando um(a) Auxiliar de Almoxarifado para atuar no atendimento da loja in company e nas rotinas de estoque e controle de materiais. Princi...
+          - generic [ref=f78e237]:
+            - generic [ref=f78e238] [cursor=pointer]:
+              - generic [ref=f78e239]:
+                - link [ref=f78e240]:
+                  - /url: /vaga-de-vendedora-loja-retirosp-em-sao-paulo__12086910.aspx
+                  - heading "VENDEDOR(A) DE LOJA - BOM RETIRO/SP" [level=2] [ref=f78e241]
+                - generic [ref=f78e242]: 13 out
+              - generic [ref=f78e243]:
+                - generic [ref=f78e244]: 4,1
+                - link [ref=f78e249]:
+                  - /url: https://www.infojobs.com.br/empresa-camisaria-fmw__-418133.aspx
+                  - text: Camisaria
+                  - generic [ref=f78e250]: FMW
+              - generic [ref=f78e254]: São Paulo - SP
+              - generic [ref=f78e255]:
+                - generic [ref=f78e256]: R$ 2.000,00 a R$ 4.000,00
+                - generic [ref=f78e259]: Ensino Médio (2º Grau)
+                - generic [ref=f78e262]: Presencial
+              - generic [ref=f78e265]: Estamos contratando Vendedor(a) para atuar em loja de moda masculina no BOM RETIRO. A oportunidade é para quem gosta de trabalhar com atendimento ao p...
+            - link "Vagas semelhantes" [ref=f78e267] [cursor=pointer]:
+              - /url: "#collapse12086910"
+          - generic [ref=f78e271] [cursor=pointer]:
+            - generic [ref=f78e272]:
+              - link [ref=f78e273]:
+                - /url: /vaga-de-operador-telemarketing-em-sao-paulo__12102732.aspx
+                - heading "Operador De Telemarketing" [level=2] [ref=f78e274]
+              - generic [ref=f78e275]: 9 out
+            - link [ref=f78e278]:
+              - /url: https://www.infojobs.com.br/empresa-ara-group-solucoes-corporativas-ltda__633059.aspx
+              - text: ARA GROUP SOLUÇÕES CORPORATIVAS
+              - generic [ref=f78e279]: LTDA
+            - generic [ref=f78e283]: Hortolândia - SP
+            - generic [ref=f78e284]:
+              - generic [ref=f78e285]: R$ 1.621,00
+              - generic [ref=f78e288]: Sem experiência
+              - generic [ref=f78e291]: Ensino Médio (2º Grau)
+              - generic [ref=f78e294]: Presencial
+            - generic [ref=f78e297]: Responsável por executar o atendimento receptivo de clientes da empresa contratante da operação em que atua dentro dos parâmetros de qualidade e limit...
+          - generic [ref=f78e299] [cursor=pointer]:
+            - generic [ref=f78e300]:
+              - link [ref=f78e301]:
+                - /url: /vaga-de-operador-telemarketing-em-sao-paulo__12102735.aspx
+                - heading "Operador De Telemarketing" [level=2] [ref=f78e302]
+              - generic [ref=f78e303]: 9 out
+            - link [ref=f78e306]:
+              - /url: https://www.infojobs.com.br/empresa-ara-group-solucoes-corporativas-ltda__633059.aspx
+              - text: ARA GROUP SOLUÇÕES CORPORATIVAS
+              - generic [ref=f78e307]: LTDA
+            - generic [ref=f78e311]: Campinas - SP
+            - generic [ref=f78e312]:
+              - generic [ref=f78e313]: R$ 1.500,00 a R$ 1.600,00
+              - generic [ref=f78e316]: Sem experiência
+              - generic [ref=f78e319]: Ensino Médio (2º Grau)
+              - generic [ref=f78e322]: Presencial
+            - generic [ref=f78e325]: Apenas 6 horas por dia trabalhadas Não é necessário ter experiência anterior. Ótima oportunidade para crescimento profissional e plano de carreira! As...
+          - generic [ref=f78e327] [cursor=pointer]:
+            - generic [ref=f78e328]:
+              - link [ref=f78e329]:
+                - /url: /vaga-de-operador-telemarketing-em-sao-paulo__12102736.aspx
+                - heading "Operador De Telemarketing" [level=2] [ref=f78e330]
+              - generic [ref=f78e331]: 9 out
+            - link [ref=f78e334]:
+              - /url: https://www.infojobs.com.br/empresa-ara-group-solucoes-corporativas-ltda__633059.aspx
+              - text: ARA GROUP SOLUÇÕES CORPORATIVAS
+              - generic [ref=f78e335]: LTDA
+            - generic [ref=f78e339]: Monte Mor - SP
+            - generic [ref=f78e340]:
+              - generic [ref=f78e341]: R$ 1.500,00 a R$ 1.600,00
+              - generic [ref=f78e344]: Sem experiência
+              - generic [ref=f78e347]: Ensino Médio (2º Grau)
+              - generic [ref=f78e350]: Presencial
+            - generic [ref=f78e353]: Apenas 6 horas por dia trabalhadas Não é necessário ter experiência anterior. Ótima oportunidade para crescimento profissional e plano de carreira! As...
+          - generic [ref=f78e354]:
+            - generic [ref=f78e355] [cursor=pointer]:
+              - generic [ref=f78e356]:
+                - link [ref=f78e357]:
+                  - /url: /vaga-de-operadora-loja-campinas-sousas-sp-em-sao-paulo__12089769.aspx
+                  - heading "OPERADOR(A) DE LOJA - CAMPINAS - SOUSAS -SP" [level=2] [ref=f78e358]
+                - generic [ref=f78e359]: 6 out
+              - generic [ref=f78e360]:
+                - generic [ref=f78e361]: 4,0
+                - link [ref=f78e366]:
+                  - /url: https://www.infojobs.com.br/dia-brasil-sociedade-limitada
+                  - text: Dia Brasil Sociedade
+                  - generic [ref=f78e367]: Limitada
+              - generic [ref=f78e371]: Campinas - SP
+              - generic [ref=f78e372]:
+                - generic [ref=f78e373]: R$ 2.102,00
+                - generic [ref=f78e376]: Entre 1 e 3 anos
+                - generic [ref=f78e379]: Ensino Fundamental (1º grau)
+                - generic [ref=f78e382]: Presencial
+              - generic [ref=f78e385]: "RESUMO: Será responsável por garantir uma excelente experiência de compra para nossos clientes, além de auxiliar nas operações diárias da loja. Esta p..."
+            - link "Vagas semelhantes" [ref=f78e387] [cursor=pointer]:
+              - /url: "#collapse12089769"
+          - generic [ref=f78e391] [cursor=pointer]:
+            - generic [ref=f78e392]:
+              - link [ref=f78e393]:
+                - /url: /vaga-de-atendente-loja-campinas-mini-mercado-em-sao-paulo__12045020.aspx
+                - heading "Atendente De Loja - CAMPINAS - Mini Mercado" [level=2] [ref=f78e394]
+              - generic [ref=f78e395]: 6 out
+            - generic [ref=f78e396]:
+              - generic [ref=f78e397]: 3,6
+              - link [ref=f78e402]:
+                - /url: https://www.infojobs.com.br/empresa-rede-integrada-lojas-conveniencia-proximidade-sa__-9448495.aspx
+                - text: REDE INTEGRADA DE LOJAS DE CONVENIENCIA E PROXIMIDADE
+                - generic [ref=f78e403]: S.A.
+            - generic [ref=f78e407]: Campinas - SP
+            - generic [ref=f78e408]:
+              - generic [ref=f78e409]: A combinar
+              - generic [ref=f78e412]: Sem experiência
+              - generic [ref=f78e415]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e418]: Presencial
+            - generic [ref=f78e421]: A OXXO, o varejo que mais cresce no Brasil, está em busca de atendentes de loja apaixonados por atendimento e comprometidos em proporcionar experiênci...
+          - generic [ref=f78e423] [cursor=pointer]:
+            - generic [ref=f78e424]:
+              - link [ref=f78e425]:
+                - /url: /vaga-de-analista-rs-jr-temporario-oxxo-brasil-campinas-em-sao-paulo__11952570.aspx
+                - heading "Analista De R&S Jr (Temporário) - Oxxo Brasil - Campinas" [level=2] [ref=f78e426]
+              - generic [ref=f78e427]: 5 out
+            - generic [ref=f78e428]:
+              - generic [ref=f78e429]: 3,6
+              - link [ref=f78e434]:
+                - /url: https://www.infojobs.com.br/empresa-rede-integrada-lojas-conveniencia-proximidade-sa__-9448495.aspx
+                - text: REDE INTEGRADA DE LOJAS DE CONVENIENCIA E PROXIMIDADE
+                - generic [ref=f78e435]: S.A.
+            - generic [ref=f78e439]: Campinas - SP
+            - generic [ref=f78e440]:
+              - generic [ref=f78e441]: A combinar
+              - generic [ref=f78e444]: Entre 1 e 3 anos
+              - generic [ref=f78e447]: Ensino Superior
+              - generic [ref=f78e450]: Híbrido
+            - generic [ref=f78e453]: Descrição da vaga Faz parte dos atributos da nossa cultura a valorização da Diversidade e reconhecemos que ter um ambiente diverso traz maiores conexõ...
+          - generic [ref=f78e454]:
+            - generic [ref=f78e455] [cursor=pointer]:
+              - generic [ref=f78e456]:
+                - link [ref=f78e457]:
+                  - /url: /vaga-de-atendente-loja-vaga-exclusiva-pcd-campinas-em-sao-paulo__11965531.aspx
+                  - heading "Atendente De Loja - Vaga Exclusiva PCD - Campinas" [level=2] [ref=f78e458]
+                - generic [ref=f78e459]: 5 out
+              - generic [ref=f78e460]:
+                - generic [ref=f78e461]: 3,6
+                - link [ref=f78e466]:
+                  - /url: https://www.infojobs.com.br/empresa-rede-integrada-lojas-conveniencia-proximidade-sa__-9448495.aspx
+                  - text: REDE INTEGRADA DE LOJAS DE CONVENIENCIA E PROXIMIDADE
+                  - generic [ref=f78e467]: S.A.
+              - generic [ref=f78e471]: Campinas - SP
+              - generic [ref=f78e472]:
+                - generic [ref=f78e473]: R$ 2.100,00
+                - generic [ref=f78e476]: Sem experiência
+                - generic [ref=f78e479]: Ensino Fundamental (1º grau)
+                - generic [ref=f78e482]: PcD
+                - generic [ref=f78e485]: Presencial
+              - generic [ref=f78e488]: A OXXO, o varejo que mais cresce no Brasil, está em busca de Atendentes de loja apaixonados por atendimento e comprometidos em proporcionar experiênci...
+            - link "Vagas semelhantes" [ref=f78e490] [cursor=pointer]:
+              - /url: "#collapse11965531"
+          - generic [ref=f78e494] [cursor=pointer]:
+            - generic [ref=f78e495]:
+              - link [ref=f78e496]:
+                - /url: /vaga-de-motorista-rodocacamba-em-sao-paulo__12081881.aspx
+                - heading "MOTORISTA DE RODOCAÇAMBA" [level=2] [ref=f78e497]
+              - generic [ref=f78e498]: 2 out
+            - link [ref=f78e501]:
+              - /url: https://www.infojobs.com.br/empresa-consultoria-mariana-goedert-recrutamento-coaching__452132.aspx
+              - text: CONSULTORIA MARIANA GOEDERT RECRUTAMENTO &
+              - generic [ref=f78e502]: COACHING
+            - generic [ref=f78e506]: Jacareí - SP
+            - generic [ref=f78e507]:
+              - generic [ref=f78e508]: A combinar
+              - generic [ref=f78e511]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e514]: Presencial
+            - generic [ref=f78e517]: "Empresa Contratante: LOTS - LATIN AMERICA LOGISTICA E TRANSPORTE LTDA - Empresa do Grupo Scania Atividades: Responsável por realizar o transporte rodo..."
+          - generic [ref=f78e519] [cursor=pointer]:
+            - generic [ref=f78e520]:
+              - link [ref=f78e521]:
+                - /url: /vaga-de-operador-cobranca-em-sao-paulo__12081831.aspx
+                - heading "Operador De Cobrança" [level=2] [ref=f78e522]
+              - generic [ref=f78e523]: 2 out
+            - link [ref=f78e526]:
+              - /url: https://www.infojobs.com.br/empresa-bulgarelli-servicos-financeiros__887441.aspx
+              - text: BULGARELLI SERVICOS
+              - generic [ref=f78e527]: FINANCEIROS
+            - generic [ref=f78e531]: São Paulo - SP
+            - generic [ref=f78e532]:
+              - generic [ref=f78e533]: A combinar
+              - generic [ref=f78e536]: Sem experiência
+              - generic [ref=f78e539]: Ensino Médio (2º Grau)
+              - generic [ref=f78e542]: PcD
+              - generic [ref=f78e545]: Presencial
+            - generic [ref=f78e548]: "Atividades: Realizar contato com clientes inadimplentes por telefone, WhatsApp, e-mail e outros canais; Negociar débitos, acordos e formas de pagament..."
+          - generic [ref=f78e550] [cursor=pointer]:
+            - generic [ref=f78e551]:
+              - link [ref=f78e552]:
+                - /url: /vaga-de-lider-logistica-exclusivo-pessoa-deficiencia-em-sao-paulo__12036525.aspx
+                - heading "Líder De Logística Exclusivo Para Pessoa Com Deficiência" [level=2] [ref=f78e553]
+              - generic [ref=f78e554]: 2 out
+            - generic [ref=f78e555]:
+              - generic [ref=f78e556]: 4,4
+              - link "Shopee" [ref=f78e561]:
+                - /url: https://www.infojobs.com.br/empresa-shopee__-9132814.aspx
+            - generic [ref=f78e566]: Araçatuba - SP
+            - generic [ref=f78e567]:
+              - generic [ref=f78e568]: A combinar
+              - generic [ref=f78e571]: Entre 1 e 3 anos
+              - generic [ref=f78e574]: Ensino Superior
+              - generic [ref=f78e577]: PcD
+              - generic [ref=f78e580]: Presencial
+            - generic [ref=f78e583]: Atender as solicitações e os processos diariamente conforme pedidos/prioridades. Distribuir demandas/tarefas para a operação (suprimento, separação, ...
+          - generic [ref=f78e585] [cursor=pointer]:
+            - generic [ref=f78e586]:
+              - link [ref=f78e587]:
+                - /url: /vaga-de-consultor-tecnico-pl-linha-pesada-em-sao-paulo__12069585.aspx
+                - heading "CONSULTOR TÉCNICO PL - LINHA PESADA" [level=2] [ref=f78e588]
+              - generic [ref=f78e589]: 30 set
+            - generic [ref=f78e590]:
+              - generic [ref=f78e591]: 4,2
+              - link [ref=f78e596]:
+                - /url: https://www.infojobs.com.br/empresa-vamos-locacao-caminhoes,-maquinas-equipamentos-sa__-8056777.aspx
+                - text: VAMOS LOCACAO DE CAMINHOES, MAQUINAS E EQUIPAMENTOS
+                - generic [ref=f78e597]: S.A.
+            - generic [ref=f78e601]: Mogi das Cruzes - SP
+            - generic [ref=f78e602]:
+              - generic [ref=f78e603]: A combinar
+              - generic [ref=f78e606]: Ensino Médio (2º Grau)
+              - generic [ref=f78e609]: Presencial
+            - generic [ref=f78e612]: "Responsabilidades e atribuições: Avaliar orçamentos enviados pelas oficinas; Avaliar evidências dos serviços que serão realizados; Montar processos do..."
+          - generic [ref=f78e614] [cursor=pointer]:
+            - generic [ref=f78e615]:
+              - link [ref=f78e616]:
+                - /url: /vaga-de-operadora-loja-socorro-interior-sp-em-sao-paulo__12064378.aspx
+                - heading "OPERADOR(A) DE LOJA - SOCORRO INTERIOR DE SP" [level=2] [ref=f78e617]
+              - generic [ref=f78e618]: 29 set
+            - generic [ref=f78e619]:
+              - generic [ref=f78e620]: 4,0
+              - link [ref=f78e625]:
+                - /url: https://www.infojobs.com.br/dia-brasil-sociedade-limitada
+                - text: Dia Brasil Sociedade
+                - generic [ref=f78e626]: Limitada
+            - generic [ref=f78e630]: Socorro - SP
+            - generic [ref=f78e631]:
+              - generic [ref=f78e632]: R$ 2.323,00
+              - generic [ref=f78e635]: Sem experiência
+              - generic [ref=f78e638]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e641]: Presencial
+            - generic [ref=f78e644]: "RESUMO: Será responsável por garantir uma excelente experiência de compra para nossos clientes, além de auxiliar nas operações diárias da loja. Esta p..."
+          - generic [ref=f78e646] [cursor=pointer]:
+            - generic [ref=f78e647]:
+              - link [ref=f78e648]:
+                - /url: /vaga-de-motorista-rodocacamba-em-sao-paulo__12063784.aspx
+                - heading "MOTORISTA DE RODOCAÇAMBA" [level=2] [ref=f78e649]
+              - generic [ref=f78e650]: 28 set
+            - link [ref=f78e653]:
+              - /url: https://www.infojobs.com.br/empresa-consultoria-mariana-goedert-recrutamento-coaching__452132.aspx
+              - text: CONSULTORIA MARIANA GOEDERT RECRUTAMENTO &
+              - generic [ref=f78e654]: COACHING
+            - generic [ref=f78e658]: Osasco - SP
+            - generic [ref=f78e659]:
+              - generic [ref=f78e660]: A combinar
+              - generic [ref=f78e663]: Ensino Fundamental (1º grau)
+              - generic [ref=f78e666]: Presencial
+            - generic [ref=f78e669]: "Empresa Contratante: LOTS - LATIN AMERICA LOGISTICA E TRANSPORTE LTDA - Empresa do Grupo Scania Atividades: Responsável por realizar o transporte rodo..."
+          - generic [ref=f78e671] [cursor=pointer]:
+            - generic [ref=f78e672]:
+              - link [ref=f78e673]:
+                - /url: /vaga-de-ajudante-manutencao-mecanica-em-sao-paulo__12031486.aspx
+                - heading "AJUDANTE DE MANUTENÇÃO MECÂNICA" [level=2] [ref=f78e674]
+              - generic [ref=f78e675]: 18 set
+            - generic [ref=f78e676]:
+              - generic [ref=f78e677]: 4,2
+              - link [ref=f78e682]:
+                - /url: https://www.infojobs.com.br/empresa-vamos-locacao-caminhoes,-maquinas-equipamentos-sa__-8056777.aspx
+                - text: VAMOS LOCACAO DE CAMINHOES, MAQUINAS E EQUIPAMENTOS
+                - generic [ref=f78e683]: S.A.
+            - generic [ref=f78e687]: Tarumã - SP
+            - generic [ref=f78e688]:
+              - generic [ref=f78e689]: A combinar
+              - generic [ref=f78e692]: Ensino Médio (2º Grau)
+              - generic [ref=f78e695]: Presencial
+            - generic [ref=f78e698]: "RESPONSABILIDADES E ATRIBUIÇÕES DO CARGO: Auxiliar na execução de manutenções preventivas e corretivas em empilhadeiras, conforme orientação dos mecâ..."
+          - generic [ref=f78e700] [cursor=pointer]:
+            - generic [ref=f78e701]:
+              - link [ref=f78e702]:
+                - /url: /vaga-de-encarregado-loja-jundiai-sp-em-sao-paulo__11946742.aspx
+                - heading "Encarregado De Loja Jundiaí -SP" [level=2] [ref=f78e703]
+              - generic [ref=f78e704]: 24 ago
+            - generic [ref=f78e705]:
+              - generic [ref=f78e706]: 3,6
+              - link [ref=f78e711]:
+                - /url: https://www.infojobs.com.br/empresa-rede-integrada-lojas-conveniencia-proximidade-sa__-9448495.aspx
+                - text: REDE INTEGRADA DE LOJAS DE CONVENIENCIA E PROXIMIDADE
+                - generic [ref=f78e712]: S.A.
+            - generic [ref=f78e716]: Jundiaí - SP
+            - generic [ref=f78e717]:
+              - generic [ref=f78e718]: R$ 2.036,00 a R$ 2.266,00
+              - generic [ref=f78e721]: Entre 1 e 3 anos
+              - generic [ref=f78e724]: Ensino Médio (2º Grau)
+              - generic [ref=f78e727]: Presencial
+            - generic [ref=f78e730]: Como encarregado de loja, você realizará o atendimento aos clientes, oferecendo a melhor experiência de compra. Também será responsável pela organizaç...
+      - generic [ref=f78e738]:
+        - generic [ref=f78e966]:
+          - generic [ref=f78e967]:
+            - generic [ref=f78e968]:
+              - heading "Costureiro (A)" [level=2] [ref=f78e969]
+              - generic [ref=f78e970]:
+                - link "4,1" [ref=f78e971] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/empresa-camisaria-fmw__-418133.aspx
+                - link [ref=f78e976] [cursor=pointer]:
+                  - /url: https://www.infojobs.com.br/empresa-camisaria-fmw__-418133.aspx
+                  - text: Camisaria
+                  - generic [ref=f78e977]: FMW
+                - generic [ref=f78e981]: 97 avaliações
+              - generic [ref=f78e982]:
+                - generic [ref=f78e983]: São Paulo - SP
+                - generic [ref=f78e984]: R$ 2.500,00 (Bruto mensal)
+                - generic [ref=f78e985]: Presencial
+            - link [ref=f78e989] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/empresa-camisaria-fmw__-418133.aspx
+              - img "Por dentro da empresa Camisaria FMW Logo" [ref=f78e991]
+          - generic [ref=f78e992]:
+            - link "CANDIDATAR-ME" [ref=f78e994] [cursor=pointer]:
+              - /url: javascript:void(0)
+            - button "Compartilhar Vaga" [ref=f78e997] [cursor=pointer]
+            - link "Imprimir vaga" [ref=f78e1001] [cursor=pointer]:
+              - /url: /vacancydetail/print?iv=11894157
+          - generic [ref=f78e1004]:
+            - link "VAGA" [ref=f78e1005] [cursor=pointer]:
+              - /url: https://www.infojobs.com.br/vaga-de-costureiro-a-em-sao-paulo__11894157.aspx
+            - link "EMPRESA" [ref=f78e1006] [cursor=pointer]:
+              - /url: /detailvacancy/about.aspx?iv=11894157
+            - link "AVALIAÇÕES" [ref=f78e1007] [cursor=pointer]:
+              - /url: /detailvacancy/evaluations.aspx?iv=11894157
+            - link "COMPARATIVO" [ref=f78e1008] [cursor=pointer]:
+              - /url: /detailvacancy/statsmatches.aspx?iv=11894157
+        - generic [ref=f78e1009]:
+          - generic [ref=f78e1011]:
+            - generic [ref=f78e1012]:
+              - text: Sua adequação
+              - link "Visualizar" [ref=f78e1014] [cursor=pointer]:
+                - /url: javascript:void(0);
+            - generic [ref=f78e1015]:
+              - text: Total de inscritos
+              - link "Visualizar" [ref=f78e1017] [cursor=pointer]:
+                - /url: javascript:void(0);
+          - paragraph [ref=f78e1018]: "A Camisaria FMW está buscando uma Costureira qualificada para integrar nossa equipe. Se você tem experiência em costura, atenção aos detalhes e busca um ambiente de trabalho dinâmico, essa oportunidade pode ser para você! A profissional será responsável por seguir os padrões de produção e atender aos prazos estabelecidos, realizando ajustes em peças como ternos, camisas sociais, calças jeans, calças de sarja, entre outras. Entre as atividades estão a realização de barras de calça e paletó, ajustes de punhos, entrepernas, cós e pernas das calças, além de subir mangas de paletó, acinturar camisas e realizar outros ajustes de modelagem. Também será responsável pela passadoria das peças, garantindo um acabamento de qualidade, além de manter o local de trabalho limpo e organizado, seguindo as normas de segurança e higiene. Buscamos profissionais com experiência prévia como costureira, habilidade em diferentes tipos de costura, tanto manual quanto à máquina, atenção aos detalhes, comprometimento com a qualidade e capacidade de trabalhar de forma independente e em equipe. Oferecemos Day Off no aniversário, Vale-Transporte, cesta básica, treinamento, desconto em faculdades como Anhembi Morumbi e São Judas, desconto nas lojas e auxílio-compra no valor de R$ 150,00. Se você é apaixonada por costura e busca crescimento profissional, venha fazer parte da Camisaria FMW! Benefícios: -. Desconto nas lojas -. Day off no seu aniversário -. Auxilio compra no valor de 150,00 -. Desconto com Faculdades -. Cesta básica -. Vale transporte -. Treinamento"
+          - paragraph [ref=f78e1019]: "Número de vagas: 3"
+          - paragraph [ref=f78e1020]: "Tipo de contrato e Jornada: Efetivo – CLT - Período Integral"
+          - paragraph [ref=f78e1021]: "Área Profissional: Operacional em Moda - Costura"
+          - link [ref=f78e1022] [cursor=pointer]:
+            - /url: /Candidate/Premium/Contract/Contract.aspx?iscw=316
+            - img "Assine a Conta Premium agora!" [ref=f78e1023]
+            - text: Publicidade
+          - generic [ref=f78e1024]: Exigências
+          - list [ref=f78e1026]:
+            - listitem [ref=f78e1027]: "Escolaridade Mínima: Ensino Médio (2º Grau)"
+          - generic [ref=f78e1028]: Valorizado
+          - list [ref=f78e1030]:
+            - listitem [ref=f78e1031]: "Experiência desejada: Entre 1 e 3 anos"
+          - generic [ref=f78e1032]: Habilidades
+          - generic [ref=f78e1033]:
+            - generic [ref=f78e1034]: Alfaiataria
+            - generic [ref=f78e1036]: Costura
+            - generic [ref=f78e1038]: Estilista
+            - generic [ref=f78e1040]: Moda
+          - button "Denunciar vaga" [ref=f78e1042] [cursor=pointer]
+    - generic [ref=f78e741]:
+      - heading "Buscas de Empregos Relacionadas" [level=2] [ref=f78e742]
+      - generic [ref=f78e743]:
+        - heading "Localizações Próximas" [level=3] [ref=f78e744]
+        - generic [ref=f78e745]:
+          - list [ref=f78e747]:
+            - listitem [ref=f78e748]:
+              - link "São Paulo - SP" [ref=f78e749] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-sao-paulo,-sp.aspx
+            - listitem [ref=f78e750]:
+              - link "Jundiaí - SP" [ref=f78e751] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-jundiai,-sp.aspx
+            - listitem [ref=f78e752]:
+              - link "São Caetano do Sul - SP" [ref=f78e753] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-sao-caetano-do-sul,-sp.aspx
+          - list [ref=f78e755]:
+            - listitem [ref=f78e756]:
+              - link "Guarulhos - SP" [ref=f78e757] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-guarulhos,-sp.aspx
+            - listitem [ref=f78e758]:
+              - link "Santo André - SP" [ref=f78e759] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-santo-andre,-sp.aspx
+            - listitem [ref=f78e760]:
+              - link "Diadema - SP" [ref=f78e761] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-diadema,-sp.aspx
+          - list [ref=f78e763]:
+            - listitem [ref=f78e764]:
+              - link "Campinas - SP" [ref=f78e765] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-campinas,-sp.aspx
+            - listitem [ref=f78e766]:
+              - link "Sorocaba - SP" [ref=f78e767] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-sorocaba,-sp.aspx
+            - listitem [ref=f78e768]:
+              - link "São José dos Campos - SP" [ref=f78e769] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-sao-jose-campos,-sp.aspx
+          - list [ref=f78e771]:
+            - listitem [ref=f78e772]:
+              - link "Barueri - SP" [ref=f78e773] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-barueri,-sp.aspx
+            - listitem [ref=f78e774]:
+              - link "Cajamar - SP" [ref=f78e775] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-cajamar,-sp.aspx
+            - listitem [ref=f78e776]:
+              - link "Santana de Parnaíba - SP" [ref=f78e777] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-santana-parnaiba,-sp.aspx
+          - list [ref=f78e779]:
+            - listitem [ref=f78e780]:
+              - link "Osasco - SP" [ref=f78e781] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-osasco,-sp.aspx
+            - listitem [ref=f78e782]:
+              - link "Cotia - SP" [ref=f78e783] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-cotia,-sp.aspx
+            - listitem [ref=f78e784]:
+              - link "Mauá - SP" [ref=f78e785] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-maua,-sp.aspx
+          - list [ref=f78e787]:
+            - listitem [ref=f78e788]:
+              - link "São Bernardo do Campo - SP" [ref=f78e789] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-sao-bernardo-do-campo,-sp.aspx
+            - listitem [ref=f78e790]:
+              - link "Ribeirão Preto - SP" [ref=f78e791] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-ribeirao-preto,-sp.aspx
+            - listitem [ref=f78e792]:
+              - link "Indaiatuba - SP" [ref=f78e793] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/empregos-em-indaiatuba,-sp.aspx
+      - generic [ref=f78e794]:
+        - heading "Cargos Similares" [level=3] [ref=f78e795]
+        - generic [ref=f78e796]:
+          - list [ref=f78e798]:
+            - listitem [ref=f78e799]:
+              - link "Auxiliar de Limpeza" [ref=f78e800] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-limpeza-em-sao-paulo.aspx
+            - listitem [ref=f78e801]:
+              - link "Auxiliar de Cozinha" [ref=f78e802] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-cozinha-em-sao-paulo.aspx
+            - listitem [ref=f78e803]:
+              - link "Recepcionista" [ref=f78e804] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-recepcionista-em-sao-paulo.aspx
+          - list [ref=f78e806]:
+            - listitem [ref=f78e807]:
+              - link "Auxiliar de Logística" [ref=f78e808] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-logistica-em-sao-paulo.aspx
+            - listitem [ref=f78e809]:
+              - link "Consultor de Vendas" [ref=f78e810] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-consultor-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e811]:
+              - link "Ajudante Geral" [ref=f78e812] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-ajudante-geral-em-sao-paulo.aspx
+          - list [ref=f78e814]:
+            - listitem [ref=f78e815]:
+              - link "Vendedor" [ref=f78e816] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-vendedor-em-sao-paulo.aspx
+            - listitem [ref=f78e817]:
+              - link "Promotor de Vendas" [ref=f78e818] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-promotor-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e819]:
+              - link "Promotor" [ref=f78e820] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-promotor-em-sao-paulo.aspx
+          - list [ref=f78e822]:
+            - listitem [ref=f78e823]:
+              - link "Operador de Loja" [ref=f78e824] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-operador-loja-em-sao-paulo.aspx
+            - listitem [ref=f78e825]:
+              - link "Atendente de Restaurante" [ref=f78e826] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-atendente-restaurante-em-sao-paulo.aspx
+            - listitem [ref=f78e827]:
+              - link "Cozinheiro" [ref=f78e828] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-cozinheiro-em-sao-paulo.aspx
+          - list [ref=f78e830]:
+            - listitem [ref=f78e831]:
+              - link "Auxiliar de Produção" [ref=f78e832] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-producao-em-sao-paulo.aspx
+            - listitem [ref=f78e833]:
+              - link "Controlador de Acesso" [ref=f78e834] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-controlador-acesso-em-sao-paulo.aspx
+            - listitem [ref=f78e835]:
+              - link "Vendedor de Loja" [ref=f78e836] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-vendedor-loja-em-sao-paulo.aspx
+          - list [ref=f78e838]:
+            - listitem [ref=f78e839]:
+              - link "Auxiliar de Serviços Gerais" [ref=f78e840] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-servicos-gerais-em-sao-paulo.aspx
+            - listitem [ref=f78e841]:
+              - link "Auxiliar Administrativo" [ref=f78e842] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-administrativo-em-sao-paulo.aspx
+            - listitem [ref=f78e843]:
+              - link "Atendente" [ref=f78e844] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-atendente-em-sao-paulo.aspx
+      - generic [ref=f78e845]:
+        - heading "Mais Populares" [level=3] [ref=f78e846]
+        - generic [ref=f78e847]:
+          - list [ref=f78e849]:
+            - listitem [ref=f78e850]:
+              - link "Vendas" [ref=f78e851] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-emprego-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e852]:
+              - link "Gerente comercial" [ref=f78e853] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-gerente-comercial-em-sao-paulo.aspx
+            - listitem [ref=f78e854]:
+              - link "Analista comercial" [ref=f78e855] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-analista-comercial-em-sao-paulo.aspx
+          - list [ref=f78e857]:
+            - listitem [ref=f78e858]:
+              - link "Promotora de vendas" [ref=f78e859] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-emprego-promotora+de+vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e860]:
+              - link "Vendas interna" [ref=f78e861] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-emprego-vendas+interna-em-sao-paulo.aspx
+            - listitem [ref=f78e862]:
+              - link "Vendas externas" [ref=f78e863] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-emprego-vendas+externas-em-sao-paulo.aspx
+          - list [ref=f78e865]:
+            - listitem [ref=f78e866]:
+              - link "Assistente comercial" [ref=f78e867] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-assistente-comercial-em-sao-paulo.aspx
+            - listitem [ref=f78e868]:
+              - link "Assistente de vendas" [ref=f78e869] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-assistente-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e870]:
+              - link "Supervisor comercial" [ref=f78e871] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-supervisor-comercial-em-sao-paulo.aspx
+          - list [ref=f78e873]:
+            - listitem [ref=f78e874]:
+              - link "Comercial" [ref=f78e875] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-emprego-comercial-em-sao-paulo.aspx
+            - listitem [ref=f78e876]:
+              - link "Gerente de vendas" [ref=f78e877] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-gerente-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e878]:
+              - link "Consultor comercial" [ref=f78e879] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-consultor-comercial-em-sao-paulo.aspx
+          - list [ref=f78e881]:
+            - listitem [ref=f78e882]:
+              - link "Representante comercial" [ref=f78e883] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-representante-comercial-em-sao-paulo.aspx
+            - listitem [ref=f78e884]:
+              - link "Atendente comercial" [ref=f78e885] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-atendente-comercial-em-sao-paulo.aspx
+            - listitem [ref=f78e886]:
+              - link "Coordenador de vendas" [ref=f78e887] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-coordenador-vendas-em-sao-paulo.aspx
+          - list [ref=f78e889]:
+            - listitem [ref=f78e890]:
+              - link "Supervisor de vendas" [ref=f78e891] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-supervisor-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e892]:
+              - link "Auxiliar de vendas" [ref=f78e893] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-auxiliar-vendas-em-sao-paulo.aspx
+            - listitem [ref=f78e894]:
+              - link "Executivo de vendas" [ref=f78e895] [cursor=pointer]:
+                - /url: https://www.infojobs.com.br/vagas-de-executivo-vendas-em-sao-paulo.aspx
+  - contentinfo [ref=f78e896]:
+    - generic [ref=f78e898]:
+      - generic [ref=f78e899]:
+        - link [ref=f78e900] [cursor=pointer]:
+          - /url: /
+          - img "Infojobs.com.br" [ref=f78e901]
+        - generic [ref=f78e902]: © Infojobs Brasil Atividades de Internet, Ltda. Todos os direitos reservados.
+      - generic [ref=f78e904]:
+        - heading "Institucional" [level=2] [ref=f78e905]
+        - link "Quem somos?" [ref=f78e906] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/ajuda/Sobre_InfoJobs__4648.aspx
+        - link "Por que usar Infojobs?" [ref=f78e907] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/por-que-infojobs.aspx
+        - link "Trabalhe Conosco" [ref=f78e908] [cursor=pointer]:
+          - /url: https://infojobs.pandape.infojobs.com.br
+        - link "Política de Cookies" [ref=f78e909] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-cookies__15730.aspx
+        - link "Gerenciamento de Cookies" [ref=f78e910] [cursor=pointer]:
+          - /url: javascript:Didomi.preferences.show()
+        - link "Fale Conosco" [ref=f78e911] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+      - generic [ref=f78e912]:
+        - heading "Empresas" [level=2] [ref=f78e913]
+        - link "Ajuda" [ref=f78e914] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+        - link "Blog" [ref=f78e915] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/blog/blog-empresas__10147.aspx
+        - link "Anunciar Vagas" [ref=f78e916] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/anunciar-vaga-de-emprego-gratis.aspx
+        - link "Buscar candidatos" [ref=f78e917] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/Company/Candidate1/List.aspx
+        - link "Pandapé" [ref=f78e918] [cursor=pointer]:
+          - /url: https://www.pandape.com.br/
+        - link "Aviso Legal" [ref=f78e919] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/aviso-legal-para-empresas__15726.aspx
+        - link "Política de Privacidade" [ref=f78e920] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-empresas__15729.aspx
+      - generic [ref=f78e921]:
+        - heading "Candidatos" [level=2] [ref=f78e922]
+        - link "Ajuda" [ref=f78e923] [cursor=pointer]:
+          - /url: https://supportcenter.infojobs.com.br/hc/pt-br
+        - link "Blog" [ref=f78e924] [cursor=pointer]:
+          - /url: https://blog.infojobs.com.br
+        - link "Vagas" [ref=f78e925] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/EmpregosMaisBuscados.aspx
+        - link "Guia de Cargos" [ref=f78e926] [cursor=pointer]:
+          - /url: /cargo
+        - link "Aviso Legal" [ref=f78e927] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/aviso-legal-para-candidatos__15727.aspx
+        - link "Política de Privacidade" [ref=f78e928] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/politica-de-privacidade-para-candidatos__15728.aspx
+        - link "Busca de emprego segura" [ref=f78e929] [cursor=pointer]:
+          - /url: https://www.infojobs.com.br/legal/proteja-se-ao-buscar-emprego__16245.aspx
+      - generic [ref=f78e930]:
+        - heading "Acompanhe nossos canais oficiais" [level=2] [ref=f78e931]
+        - generic [ref=f78e932]:
+          - link "Facebook Infojobs" [ref=f78e933] [cursor=pointer]:
+            - /url: https://www.facebook.com/infojobs.com.br/
+          - link "Twitter Infojobs" [ref=f78e936] [cursor=pointer]:
+            - /url: https://twitter.com/infojobscombr
+          - link "Youtube Infojobs" [ref=f78e939] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/InfoJobscombr
+          - link "Linkedin Infojobs" [ref=f78e942] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/infojobs
+          - link "Instagram Infojobs" [ref=f78e945] [cursor=pointer]:
+            - /url: https://www.instagram.com/infojobsbr/
+          - link "TikTok Infojobs" [ref=f78e948] [cursor=pointer]:
+            - /url: https://www.tiktok.com/@infojobsbr
+        - link "Entre no grupo" [ref=f78e951] [cursor=pointer]:
+          - /url: https://whatsapp.com/channel/0029VafypDK7z4kcBqQ0nl3J
+        - heading "Baixe nosso App" [level=3] [ref=f78e955]
+        - generic [ref=f78e956]:
+          - link "DISPONÍVEL NA App Store" [ref=f78e957] [cursor=pointer]:
+            - /url: https://apps.apple.com/br/app/infojobs-vagas-de-emprego/id981457216
+          - link "DISPONÍVEL NO Google Play" [ref=f78e961] [cursor=pointer]:
+            - /url: https://play.google.com/store/apps/details?id=com.infojobs.phone&hl=en_US&utm_source=infojobs_organic&utm_campaign=botones_footer&utm_medium=promo_www&referrer=origenvisita%3D644
