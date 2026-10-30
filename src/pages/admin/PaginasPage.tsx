@@ -1,75 +1,183 @@
 import * as React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { ExternalLink, FilePlus2, Pencil, Trash2 } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
-import { useAllPaginasInstitucionais, useSavePaginaInstitucional } from '@/hooks/usePaginasInstitucionais'
-import { RichTextEditor } from '@/components/RichTextEditor'
+import { useAllPaginasInstitucionais, useCreatePagina, useDeletePagina } from '@/hooks/usePaginasInstitucionais'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+import { isValidSlug, pagePath, slugify, starterLayout } from '@/lib/pageLayout'
+import { cn } from '@/lib/utils'
 
-function PaginaEditor({
-  pagina,
-}: {
-  pagina: { id: string; slug: string; title: string; content_html: string }
-}) {
+function StatusBadge({ published, hasLayout }: { published: boolean; hasLayout: boolean }) {
+  return (
+    <span className="flex flex-wrap gap-1.5">
+      <span
+        className={cn(
+          'rounded-full px-2.5 py-0.5 text-xs font-semibold',
+          published ? 'bg-success/15 text-success-ink' : 'bg-muted text-muted-foreground',
+        )}
+      >
+        {published ? 'Publicada' : 'Rascunho'}
+      </span>
+      {hasLayout && <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">Em seções</span>}
+    </span>
+  )
+}
+
+function NewPageForm({ onDone }: { onDone: () => void }) {
   const { user } = useAuth()
-  const saveMutation = useSavePaginaInstitucional()
-  const [title, setTitle] = React.useState(pagina.title)
-  const [contentHtml, setContentHtml] = React.useState(pagina.content_html)
-  const [saved, setSaved] = React.useState(false)
+  const navigate = useNavigate()
+  const create = useCreatePagina()
+  const [title, setTitle] = React.useState('')
+  const [slug, setSlug] = React.useState('')
+  const [slugTouched, setSlugTouched] = React.useState(false)
+  const [error, setError] = React.useState<string | null>(null)
 
-  const handleSave = async () => {
+  const effectiveSlug = slugTouched ? slug : slugify(title)
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError(null)
     if (!user) return
-    setSaved(false)
-    await saveMutation.mutateAsync({ id: pagina.id, title, contentHtml, userId: user.id })
-    setSaved(true)
+    if (!title.trim()) return setError('Dê um nome para a página.')
+    if (!isValidSlug(effectiveSlug)) return setError('O endereço deve ter só letras minúsculas, números e hífens (ex.: fale-conosco).')
+    try {
+      const { id } = await create.mutateAsync({
+        slug: effectiveSlug,
+        title: title.trim(),
+        layout: starterLayout(title.trim()),
+        userId: user.id,
+      })
+      navigate(`/admin/paginas/${id}`)
+    } catch (err) {
+      const message = err instanceof Error ? err.message : ''
+      setError(
+        /duplicate|unique|23505/i.test(message)
+          ? 'Já existe uma página com esse endereço. Troque o endereço.'
+          : /layout|column|is_published/i.test(message)
+            ? 'O banco de dados ainda não recebeu a atualização das páginas em seções. Aplique as migrações (supabase db push) e tente de novo.'
+            : 'Não foi possível criar a página. Tente de novo.',
+      )
+    }
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-base capitalize">{pagina.slug}</CardTitle>
-        <CardDescription>Visível publicamente em /{pagina.slug}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor={`title-${pagina.id}`}>Título</Label>
-          <Input id={`title-${pagina.id}`} value={title} onChange={(e) => setTitle(e.target.value)} />
+    <form onSubmit={submit} className="flex flex-col gap-4 rounded-2xl border bg-card p-4 sm:p-5" aria-label="Nova página">
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="nova-titulo">Nome da página</Label>
+        <Input id="nova-titulo" value={title} maxLength={120} onChange={(e) => setTitle(e.target.value)} placeholder="Ex.: Fale conosco" autoFocus />
+      </div>
+      <div className="flex flex-col gap-1.5">
+        <Label htmlFor="nova-slug">Endereço</Label>
+        <div className="flex items-center gap-2">
+          <span className="shrink-0 text-sm text-muted-foreground">/pagina/</span>
+          <Input
+            id="nova-slug"
+            value={effectiveSlug}
+            maxLength={60}
+            autoCapitalize="none"
+            spellCheck={false}
+            onChange={(e) => {
+              setSlugTouched(true)
+              setSlug(e.target.value.toLowerCase())
+            }}
+          />
         </div>
-        <div className="flex flex-col gap-1.5">
-          <Label>Conteúdo</Label>
-          <RichTextEditor value={contentHtml} onChange={setContentHtml} />
-        </div>
-        <div className="flex items-center gap-3">
-          <Button onClick={handleSave} disabled={saveMutation.isPending}>
-            {saveMutation.isPending ? 'Salvando…' : 'Salvar'}
-          </Button>
-          {saved && <p className="text-sm text-muted-foreground">Alterações salvas.</p>}
-        </div>
-      </CardContent>
-    </Card>
+        <p className="text-xs text-muted-foreground">É o que aparece no link da página. Depois de criada, o endereço pode ser trocado na tela de edição.</p>
+      </div>
+      {error && (
+        <p role="alert" className="text-sm text-destructive-ink">
+          {error}
+        </p>
+      )}
+      <div className="flex flex-wrap gap-2">
+        <Button type="submit" disabled={create.isPending}>
+          {create.isPending ? 'Criando…' : 'Criar e editar'}
+        </Button>
+        <Button type="button" variant="ghost" onClick={onDone}>
+          Cancelar
+        </Button>
+      </div>
+    </form>
   )
 }
 
 export default function AdminPaginasPage() {
-  const { data: paginas, isLoading } = useAllPaginasInstitucionais()
+  const { data: paginas, isLoading, isError } = useAllPaginasInstitucionais()
+  const remove = useDeletePagina()
+  const [creating, setCreating] = React.useState(false)
+
+  const handleDelete = async (id: string, title: string) => {
+    if (!window.confirm(`Apagar a página "${title}"? Ela sai do ar e não dá para desfazer.`)) return
+    await remove.mutateAsync(id)
+  }
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-2xl font-extrabold tracking-tight">Páginas institucionais</h1>
-        <p className="text-sm text-muted-foreground">
-          Edite o conteúdo de Sobre, Termos e Privacidade sem precisar mexer em código.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight">Páginas do site</h1>
+          <p className="max-w-xl text-sm text-muted-foreground">
+            Monte páginas com seções de largura total, fundos com imagem, slides, textos e botões. Também dá para personalizar o Início, o Sobre, os
+            Termos e a Privacidade.
+          </p>
+        </div>
+        {!creating && (
+          <Button onClick={() => setCreating(true)}>
+            <FilePlus2 /> Nova página
+          </Button>
+        )}
       </div>
+
+      {creating && <NewPageForm onDone={() => setCreating(false)} />}
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
+      {isError && <p className="text-sm text-destructive-ink">Não foi possível carregar as páginas. Tente recarregar.</p>}
 
-      <div className="flex flex-col gap-6">
-        {paginas?.map((pagina) => (
-          <PaginaEditor key={pagina.id} pagina={pagina} />
-        ))}
-      </div>
+      {paginas && (
+        <ul className="flex flex-col divide-y border-y">
+          {paginas.map((pagina) => {
+            const path = pagePath(pagina.slug, pagina.is_system)
+            return (
+              <li key={pagina.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 py-3">
+                <div className="min-w-0 flex-1 basis-56">
+                  <p className="truncate font-semibold">{pagina.title}</p>
+                  <p className="truncate text-sm text-muted-foreground">
+                    {path}
+                    {pagina.is_system && ' · página do sistema'}
+                  </p>
+                </div>
+                <StatusBadge published={pagina.is_published} hasLayout={Boolean(pagina.layout)} />
+                <div className="flex items-center gap-1">
+                  <Button asChild variant="outline" size="sm">
+                    <Link to={`/admin/paginas/${pagina.id}`}>
+                      <Pencil /> Editar
+                    </Link>
+                  </Button>
+                  <Button asChild variant="ghost" size="sm">
+                    <a href={path} target="_blank" rel="noopener noreferrer" aria-label={`Ver a página ${pagina.title} no site`}>
+                      <ExternalLink /> Ver
+                    </a>
+                  </Button>
+                  {!pagina.is_system && (
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      className="text-destructive-ink"
+                      aria-label={`Apagar a página ${pagina.title}`}
+                      disabled={remove.isPending}
+                      onClick={() => handleDelete(pagina.id, pagina.title)}
+                    >
+                      <Trash2 />
+                    </Button>
+                  )}
+                </div>
+              </li>
+            )
+          })}
+        </ul>
+      )}
     </div>
   )
 }

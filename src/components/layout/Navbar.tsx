@@ -14,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { usePaginasNoMenu } from '@/hooks/usePaginasInstitucionais'
 import { panelPathFor } from '@/lib/panelNav'
 import { cn } from '@/lib/utils'
 
@@ -27,11 +28,14 @@ interface NavItem {
 // empresa, admin) fica no painel, aberto por "Meu painel".
 function useNavItems(): NavItem[] {
   const { user } = useAuth()
+  const { data: extraPages } = usePaginasNoMenu()
   const items: NavItem[] = [
     { to: '/', label: 'Início', end: true },
     { to: '/explorar', label: 'Explorar' },
   ]
-  return user ? [...items, { to: '/empresas', label: 'Empresas' }] : [...items, { to: '/planos', label: 'Planos' }]
+  const fixed = user ? [...items, { to: '/empresas', label: 'Empresas' }] : [...items, { to: '/planos', label: 'Planos' }]
+  const custom = (extraPages ?? []).filter((p) => p.show_in_header).map((p) => ({ to: `/pagina/${p.slug}`, label: p.title }))
+  return [...fixed, ...custom]
 }
 
 const DESKTOP_LINK = ({ isActive }: { isActive: boolean }) =>

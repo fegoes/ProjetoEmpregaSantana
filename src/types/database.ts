@@ -391,6 +391,13 @@ export interface Database {
           slug: string
           title: string
           content_html: string
+          /** Desenho em seções e blocos (ver lib/pageLayout.ts); nulo = só content_html */
+          layout: unknown | null
+          is_published: boolean
+          is_system: boolean
+          show_in_header: boolean
+          show_in_footer: boolean
+          seo_description: string | null
           updated_by: string | null
           created_at: string
           updated_at: string

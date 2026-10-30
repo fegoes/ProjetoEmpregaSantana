@@ -248,6 +248,14 @@ Botões, chips e o seletor de tipo são pílulas (9999px). Cards têm cantos de 
 ### Campos formatados
 - Moeda (R$ 1.518,00, dígitos entram da direita), telefone, CNPJ e CEP com máscara; CEP preenche rua, bairro, cidade e UF; cidade com UF e sugestões oficiais do IBGE.
 
+### Páginas em seções
+- Cada página do site pode ser montada no painel como uma pilha de seções. A seção tem largura da tela (o fundo vai de borda a borda) ou largura do site (painel de cantos arredondados, alinhado às margens do conteúdo), largura de conteúdo estreita, média ou larga, espaço vertical em cinco níveis, altura mínima e alinhamento à esquerda ou centralizado.
+- Fundo: cor da paleta (sem cor, branco, cinza claro, azul, azul profundo) ou foto com cobertura de cor em 0 a 90%. Com foto, a cor da cobertura fica por baixo dela, para o texto continuar legível se a imagem demorar. O tom do texto (claro ou escuro) sai do fundo; o editor avisa quando a cobertura é fraca (menos de 35%).
+- "Slides": seção de largura da tela com foto de fundo e texto centralizado ou texto com imagem ou ícones; vários slides formam um carrossel com setas, pontos e troca automática opcional (pausa ao passar o mouse ou usar o teclado, desligada para quem pede menos movimento).
+- Blocos: título, texto, imagem, botões, texto com imagem ou ícone, lista de ícones, campo de busca, vagas e profissionais. Ícones em listas ficam soltos, sem quadrado de fundo; só viram quadrado quando são o destaque do bloco.
+- Botões: laranja (destaque), azul ou só contorno; o destino é uma página do site, um endereço, WhatsApp ou telefone. Botão sem destino válido não aparece no site.
+- Os tamanhos respondem à largura da própria seção (container queries), por isso a prévia em largura de celular no painel se comporta como o celular. O primeiro título da página é o `h1`; os demais descem sem pular nível.
+
 ### Card-cartaz "VAGA NOVA" (assinatura)
 O card em destaque vira o post da marca: campo azul profundo, título e valor em branco, secundários em branco a 75%, círculo laranja de 80px saindo do canto superior direito e rótulo "★ Destaque" em laranja. Vaga publicada há até 3 dias recebe a etiqueta laranja "Vaga nova".
 

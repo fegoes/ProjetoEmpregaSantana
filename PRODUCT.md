@@ -27,7 +27,7 @@ A conexão de empregabilidade do sertão: regional (Santana do Ipanema e cidades
 - Divulgação de vagas acontece no Instagram e circula por WhatsApp; o site é para onde esses links levam.
 - Fluxo do candidato: ver vaga → criar conta → montar um ou mais currículos → candidatar-se escolhendo o currículo → acompanhar o status (enviada, em análise, entrevista, aprovada, não aprovada).
 - Fluxo da empresa: painel com vagas, candidaturas recebidas, banco de currículos (por plano).
-- Admin modera empresas, vagas, usuários, planos e páginas institucionais.
+- Superadmin modera empresas, vagas, usuários, planos e categorias, e monta as páginas do site (início, sobre, termos, privacidade e páginas novas) em seções com fundos de imagem, slides, textos e botões com link.
 
 ## Capabilities and Constraints
 

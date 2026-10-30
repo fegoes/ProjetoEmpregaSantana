@@ -1,6 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { RootLayout } from '@/components/layout/RootLayout'
+import { PageContainer, RootLayout } from '@/components/layout/RootLayout'
 import { PanelLayout } from '@/components/layout/PanelLayout'
 import { ProtectedRoute } from '@/routes/ProtectedRoute'
 
@@ -19,6 +19,8 @@ const SobrePage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ 
 const TermosPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.TermosPage })))
 const PrivacidadePage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.PrivacidadePage })))
 const LgpdPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.LgpdPage })))
+
+const CustomPage = lazy(() => import('@/pages/public/CustomPage'))
 
 const EmpresasDirectoryPage = lazy(() => import('@/pages/shared/EmpresasDirectoryPage'))
 const PerfilPage = lazy(() => import('@/pages/shared/PerfilPage'))
@@ -51,6 +53,7 @@ const AdminPlanosPage = lazy(() => import('@/pages/admin/PlanosPage'))
 const AdminVagasPage = lazy(() => import('@/pages/admin/VagasPage'))
 const AdminAdsPage = lazy(() => import('@/pages/admin/AdsPage'))
 const AdminPaginasPage = lazy(() => import('@/pages/admin/PaginasPage'))
+const AdminPaginaEditPage = lazy(() => import('@/pages/admin/PaginaEditPage'))
 const AdminCategoriasPage = lazy(() => import('@/pages/admin/CategoriasPage'))
 
 function RouteFallback() {
@@ -67,25 +70,31 @@ export default function App() {
       <Routes>
         {/* Site: cabeçalho e rodapé */}
         <Route element={<RootLayout />}>
+          {/* Páginas que o superadmin pode montar em seções: ocupam a tela inteira e cuidam das próprias margens */}
           <Route index element={<HomePage />} />
-          <Route path="vagas/:id" element={<VagaDetailPage />} />
-          <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
-          <Route path="empresas/:id" element={<EmpresaDetailPagePublic />} />
-          <Route path="explorar" element={<ExplorarPage />} />
-          <Route path="planos" element={<PlanosPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
-          <Route path="redefinir-senha" element={<ResetPasswordPage />} />
-          <Route path="cadastro" element={<CadastroPage />} />
-          <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
           <Route path="sobre" element={<SobrePage />} />
           <Route path="termos" element={<TermosPage />} />
           <Route path="privacidade" element={<PrivacidadePage />} />
           <Route path="lgpd" element={<LgpdPage />} />
+          <Route path="pagina/:slug" element={<CustomPage />} />
 
-          {/* Diretório de empresas: só logado, mas faz parte do site */}
-          <Route element={<ProtectedRoute />}>
-            <Route path="empresas" element={<EmpresasDirectoryPage />} />
+          {/* Demais telas do site: largura máxima e margens padrão */}
+          <Route element={<PageContainer />}>
+            <Route path="vagas/:id" element={<VagaDetailPage />} />
+            <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
+            <Route path="empresas/:id" element={<EmpresaDetailPagePublic />} />
+            <Route path="explorar" element={<ExplorarPage />} />
+            <Route path="planos" element={<PlanosPage />} />
+            <Route path="login" element={<LoginPage />} />
+            <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
+            <Route path="redefinir-senha" element={<ResetPasswordPage />} />
+            <Route path="cadastro" element={<CadastroPage />} />
+            <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
+
+            {/* Diretório de empresas: só logado, mas faz parte do site */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="empresas" element={<EmpresasDirectoryPage />} />
+            </Route>
           </Route>
         </Route>
 
@@ -135,6 +144,7 @@ export default function App() {
               <Route path="admin/planos" element={<AdminPlanosPage />} />
               <Route path="admin/vagas" element={<AdminVagasPage />} />
               <Route path="admin/paginas" element={<AdminPaginasPage />} />
+              <Route path="admin/paginas/:id" element={<AdminPaginaEditPage />} />
               <Route path="admin/categorias" element={<AdminCategoriasPage />} />
               <Route path="admin/ads" element={<AdminAdsPage />} />
             </Route>

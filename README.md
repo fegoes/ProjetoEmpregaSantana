@@ -5,6 +5,7 @@ Marketplace de trabalho: vagas fixas e temporárias (por hora ou por entrega) e 
 - **Documento de produto/arquitetura:** [`docs/PRD.md`](docs/PRD.md)
 - **Identidade visual (marca, paleta, tipografia):** [`docs/IDENTIDADE_VISUAL.md`](docs/IDENTIDADE_VISUAL.md)
 - **Sistema visual aplicado nas telas (tokens, componentes, regras):** [`DESIGN.md`](DESIGN.md) · contexto de produto: [`PRODUCT.md`](PRODUCT.md)
+- **Como montar páginas do site (superadmin):** [`docs/PAGINAS.md`](docs/PAGINAS.md)
 - **Skills, agentes e MCP do Claude Code:** [`docs/FERRAMENTAS_IA.md`](docs/FERRAMENTAS_IA.md)
 
 ## Stack

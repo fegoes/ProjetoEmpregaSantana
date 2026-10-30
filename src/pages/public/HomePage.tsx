@@ -4,8 +4,11 @@ import { Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PosterShape } from '@/components/PosterShape'
 import { FeedBrowser } from '@/components/feed/FeedBrowser'
+import { BuilderPage } from '@/components/pages/BuilderPage'
 import { useAuth } from '@/contexts/AuthContext'
 import { useDocumentMeta } from '@/hooks/useDocumentMeta'
+import { usePaginaInstitucional } from '@/hooks/usePaginasInstitucionais'
+import { parseLayout } from '@/lib/pageLayout'
 
 function SearchBand() {
   const [term, setTerm] = React.useState('')
@@ -65,7 +68,7 @@ function SearchBand() {
   )
 }
 
-export default function HomePage() {
+function DefaultHome() {
   const { user, profile } = useAuth()
 
   useDocumentMeta({
@@ -77,7 +80,7 @@ export default function HomePage() {
   const firstName = profile?.full_name?.split(' ')[0]
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 py-8">
       {user ? (
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight sm:text-[1.75rem]">
@@ -92,4 +95,20 @@ export default function HomePage() {
       <FeedBrowser />
     </div>
   )
+}
+
+/** Página inicial: o desenho montado no painel, se houver; senão o desenho padrão do site. */
+export default function HomePage() {
+  const { data: pagina, isLoading } = usePaginaInstitucional('inicio')
+  const layout = React.useMemo(() => parseLayout(pagina?.layout), [pagina?.layout])
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-[40vh] items-center justify-center">
+        <div className="size-6 animate-spin rounded-full border-2 border-primary/30 border-t-primary" />
+      </div>
+    )
+  }
+  if (pagina && layout && layout.sections.length > 0) return <BuilderPage pagina={pagina} layout={layout} />
+  return <DefaultHome />
 }

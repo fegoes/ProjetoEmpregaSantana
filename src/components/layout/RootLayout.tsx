@@ -1,4 +1,5 @@
 import { Link, Outlet } from 'react-router-dom'
+import { usePaginasNoMenu } from '@/hooks/usePaginasInstitucionais'
 import { Navbar } from '@/components/layout/Navbar'
 import { Logo } from '@/components/brand/Logo'
 
@@ -11,7 +12,21 @@ const FOOTER_LINKS = [
   { to: '/lgpd', label: 'LGPD' },
 ]
 
+/** Moldura padrão das telas do site: largura máxima e margens laterais. As páginas montadas no painel ocupam a tela inteira e ficam fora dela. */
+export function PageContainer() {
+  return (
+    <div className="mx-auto w-full max-w-6xl px-4 py-8">
+      <Outlet />
+    </div>
+  )
+}
+
 export function RootLayout() {
+  const { data: extraPages } = usePaginasNoMenu()
+  const footerLinks = [
+    ...FOOTER_LINKS,
+    ...(extraPages ?? []).filter((p) => p.show_in_footer).map((p) => ({ to: `/pagina/${p.slug}`, label: p.title })),
+  ]
   return (
     <div className="flex min-h-screen flex-col">
       <a
@@ -21,7 +36,7 @@ export function RootLayout() {
         Pular para o conteúdo
       </a>
       <Navbar />
-      <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
+      <main id="main-content" className="w-full flex-1">
         <Outlet />
       </main>
       <footer className="border-t bg-secondary/60">
@@ -33,7 +48,7 @@ export function RootLayout() {
             </p>
           </div>
           <nav aria-label="Rodapé" className="-mx-2 flex flex-wrap text-muted-foreground">
-            {FOOTER_LINKS.map((link) => (
+            {footerLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}

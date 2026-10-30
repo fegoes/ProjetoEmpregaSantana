@@ -73,7 +73,7 @@ export const PANEL_AREAS: Record<PanelArea, PanelAreaMeta> = {
       {
         label: 'Conteúdo e sistema',
         items: [
-          { to: '/admin/paginas', label: 'Páginas institucionais', icon: FileText },
+          { to: '/admin/paginas', label: 'Páginas do site', icon: FileText },
           { to: '/admin/categorias', label: 'Categorias', icon: Tags },
         ],
       },

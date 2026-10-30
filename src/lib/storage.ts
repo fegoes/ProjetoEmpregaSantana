@@ -49,3 +49,8 @@ export function uploadAutonomoPortfolioPhoto(file: File, autonomoId: string) {
   const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
   return uploadImage(file, `autonomos/${autonomoId}/portfolio-${unique}`)
 }
+
+export function uploadPaginaImage(file: File, paginaId: string) {
+  const unique = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`
+  return uploadImage(file, `paginas/${paginaId}/img-${unique}`)
+}
