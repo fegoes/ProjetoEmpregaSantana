@@ -87,7 +87,7 @@ export function VagaCard({ vaga, hideEmpresa = false }: { vaga: VagaCardData; hi
               <img
                 src={vaga.empresas.logo_url}
                 alt=""
-                className="size-10 shrink-0 rounded-lg border object-cover"
+                className="size-10 shrink-0 rounded-lg border object-contain"
                 loading="lazy"
                 width={40}
                 height={40}

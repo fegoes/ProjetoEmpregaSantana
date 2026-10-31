@@ -89,7 +89,7 @@ export default function AdminEmpresasPage() {
             return (
               <AdminRow
                 key={e.id}
-                avatar={e.logo_url ? <img src={e.logo_url} alt="" className="size-10 shrink-0 rounded-xl border object-cover" /> : <InitialsAvatar name={e.nome_fantasia} />}
+                avatar={e.logo_url ? <img src={e.logo_url} alt="" className="size-10 shrink-0 rounded-xl border object-contain" /> : <InitialsAvatar name={e.nome_fantasia} />}
                 title={
                   <Link to={`/admin/empresas/${e.id}`} className="hover:underline">
                     {e.nome_fantasia}

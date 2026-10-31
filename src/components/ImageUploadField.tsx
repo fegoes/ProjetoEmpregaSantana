@@ -1,4 +1,6 @@
+import { IMAGE_ACCEPT } from '@/lib/imageFormats'
 import * as React from 'react'
+import { ImageGuidance, type ImagePurpose } from './ImageGuidance'
 import { ImagePlus, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
@@ -12,6 +14,7 @@ interface ImageUploadFieldProps {
   onUploaded: (url: string) => void
   shape?: 'square' | 'banner'
   hint?: string
+  purpose?: ImagePurpose
   /** Quando informado, aparece o botão "Remover imagem" */
   onRemove?: () => void
 }
@@ -25,8 +28,10 @@ export function ImageUploadField({
   onUploaded,
   shape = 'square',
   hint,
+  purpose,
   onRemove,
 }: ImageUploadFieldProps) {
+  const id = React.useId()
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [preview, setPreview] = React.useState<string | null>(currentUrl ?? null)
   const [uploading, setUploading] = React.useState(false)
@@ -61,8 +66,8 @@ export function ImageUploadField({
 
   return (
     <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
-      <div className="flex items-center gap-4">
+      <Label htmlFor={id}>{label}</Label>
+      <div className="flex flex-wrap items-center gap-4">
         <div
           className={cn(
             'flex shrink-0 items-center justify-center overflow-hidden border bg-muted text-muted-foreground',
@@ -72,7 +77,7 @@ export function ImageUploadField({
           {uploading ? (
             <Loader2 className="size-5 animate-spin" />
           ) : preview ? (
-            <img src={preview} alt="" className="size-full object-cover" />
+            <img src={preview} alt="" className={cn("size-full", purpose === 'logo' ? 'object-contain' : 'object-cover')} />
           ) : (
             <ImagePlus className="size-5" />
           )}
@@ -97,12 +102,15 @@ export function ImageUploadField({
         </div>
         <input
           ref={inputRef}
+          id={id}
+          aria-describedby={`${id}-guide`}
           type="file"
-          accept="image/*"
+          accept={IMAGE_ACCEPT}
           className="hidden"
           onChange={handleFileChange}
         />
       </div>
+      <ImageGuidance id={`${id}-guide`} purpose={purpose ?? (shape === 'square' ? 'content' : 'banner')} src={preview} />
     </div>
   )
 }

@@ -27,7 +27,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
             <img
               src={empresa.logo_url}
               alt={empresa.nome_fantasia}
-              className="size-10 shrink-0 rounded-full border object-cover"
+              className="size-10 shrink-0 rounded-lg border object-contain"
               loading="lazy"
               width={40}
               height={40}

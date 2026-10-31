@@ -110,7 +110,7 @@ export default function VagaDetailPage() {
                     <img
                       src={vaga.empresas.logo_url}
                       alt=""
-                      className="size-14 shrink-0 rounded-xl border object-cover"
+                      className="size-14 shrink-0 rounded-xl border object-contain"
                       width={56}
                       height={56}
                     />

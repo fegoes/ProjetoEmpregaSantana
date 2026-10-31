@@ -113,9 +113,9 @@ function AppearanceTab({
 
       <PageImageField
         label="Imagem de fundo"
+        purpose="banner"
         url={bg.imageUrl}
         onChange={(imageUrl) => setBg({ imageUrl })}
-        hint="JPG ou PNG, até 5 MB. Prefira uma foto larga (1600 px ou mais)."
       />
 
       {bg.imageUrl && (

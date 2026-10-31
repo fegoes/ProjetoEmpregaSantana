@@ -120,7 +120,7 @@ export default function AutonomoPerfilPage() {
           photos={portfolioUrls}
           onUpload={(file) => uploadAutonomoPortfolioPhoto(file, autonomo.id)}
           onChange={setPortfolioUrls}
-          hint="Aparecem como carrossel no seu card e no perfil público. PNG ou JPG, até 5 MB cada."
+          hint="Aparecem como carrossel no seu card e no perfil público."
         />
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="pricingModel">Cobrança</Label>

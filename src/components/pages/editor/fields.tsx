@@ -1,4 +1,5 @@
 import * as React from 'react'
+import type { ImagePurpose } from '@/components/ImageGuidance'
 import { ImageUploadField } from '@/components/ImageUploadField'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -144,10 +145,12 @@ export function PageImageField({
   onChange,
   shape = 'banner',
   hint,
+  purpose = 'content',
 }: {
   label: string
   url: string
   onChange: (url: string) => void
+  purpose?: ImagePurpose
   shape?: 'square' | 'banner'
   hint?: string
 }) {
@@ -157,7 +160,8 @@ export function PageImageField({
       label={label}
       currentUrl={url || null}
       shape={shape}
-      hint={hint ?? 'JPG ou PNG, até 5 MB. Ideal: 1600 px de largura.'}
+      hint={hint}
+      purpose={purpose}
       onUpload={(file) => uploadPaginaImage(file, pageId)}
       onUploaded={onChange}
       onRemove={url ? () => onChange('') : undefined}

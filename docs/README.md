@@ -54,3 +54,4 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 - [CRUD do superadmin e editor do blog](SUPERADMIN_CRUD_E_BLOG.md)
 
 - [Cadastro público, SEO e edição visual](CADASTRO_PUBLICO_SEO_EDITOR.md)
+- [Orientações de imagens e fotos](IMAGENS_E_FOTOS.md)

@@ -284,7 +284,7 @@ export default function VagaFormPage() {
             photos={photoUrls}
             onUpload={(file) => uploadVagaGalleryPhoto(file, id)}
             onChange={setPhotoUrls}
-            hint="Aparecem como carrossel na vaga e no card de listagem. PNG ou JPG, até 5 MB cada."
+            hint="Aparecem como carrossel na vaga e no card de listagem."
           />
         ) : (
           <p className="text-sm text-muted-foreground">Salve a vaga como rascunho para poder adicionar fotos.</p>

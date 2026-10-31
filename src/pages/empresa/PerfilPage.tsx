@@ -141,10 +141,10 @@ export default function EmpresaPerfilPage() {
         <CardContent className="flex flex-col gap-4">
           <ImageUploadField
             label="Logo"
+            purpose="logo"
             currentUrl={logoUrl}
             onUpload={(file) => uploadEmpresaLogo(file, empresa.id)}
             onUploaded={setLogoUrl}
-            hint="PNG ou JPG, até 5 MB."
           />
             <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
           <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>

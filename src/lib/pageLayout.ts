@@ -9,8 +9,8 @@
 // editado: valor desconhecido vira o padrão e conteúdo inválido é descartado.
 // Assim um JSON malformado nunca derruba a página.
 
-import { newBlockId } from '@/lib/blocks'
-import { moveItem, safeInternalPath } from '@/lib/utils'
+import { newBlockId } from './blocks'
+import { moveItem, safeInternalPath } from './utils'
 
 export { moveItem }
 

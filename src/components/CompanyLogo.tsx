@@ -48,7 +48,7 @@ export function CompanyLogo({ name, logoUrl, size = 'md', className }: CompanyLo
         src={logoUrl}
         alt={`Logo de ${name}`}
         loading="lazy"
-        className={cn('shrink-0 border object-cover', SIZES[size], className)}
+        className={cn('shrink-0 border object-contain', SIZES[size], className)}
       />
     )
   }

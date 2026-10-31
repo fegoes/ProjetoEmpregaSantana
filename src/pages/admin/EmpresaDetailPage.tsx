@@ -38,7 +38,7 @@ export default function AdminEmpresaDetailPage() {
       </Link>
       <div className="flex items-start gap-3">
         {empresa.logo_url && (
-          <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-cover" />
+          <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-contain" />
         )}
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>

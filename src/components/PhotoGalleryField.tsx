@@ -1,4 +1,6 @@
+import { IMAGE_ACCEPT } from '@/lib/imageFormats'
 import * as React from 'react'
+import { ImageGuidance } from './ImageGuidance'
 import { ImagePlus, Loader2, X } from 'lucide-react'
 import { Label } from '@/components/ui/label'
 import { UploadError } from '@/lib/storage'
@@ -14,6 +16,7 @@ interface PhotoGalleryFieldProps {
 // Galeria simples: cada foto some do array ao remover (o arquivo em si fica
 // no storage — mesmo trade-off aceito para a logo, sem custo relevante aqui).
 export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: PhotoGalleryFieldProps) {
+  const id = React.useId()
   const inputRef = React.useRef<HTMLInputElement>(null)
   const [uploading, setUploading] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
@@ -41,7 +44,7 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
 
   return (
     <div className="flex flex-col gap-1.5">
-      <Label>{label}</Label>
+      <Label htmlFor={id}>{label}</Label>
       {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
       <div className="flex flex-wrap gap-3">
         {photos.map((url) => (
@@ -50,7 +53,7 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
             <button
               type="button"
               onClick={() => handleRemove(url)}
-              className="absolute top-1 right-1 flex size-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute top-1 right-1 flex size-5 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition-opacity group-hover:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100"
               aria-label="Remover foto"
             >
               <X className="size-3" />
@@ -67,8 +70,9 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
           <span className="text-xs">Adicionar</span>
         </button>
       </div>
+      <ImageGuidance id={`${id}-guide`} purpose="gallery" src={photos[0]} />
       {error && <p className="text-xs text-destructive">{error}</p>}
-      <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+      <input id={id} aria-describedby={`${id}-guide`} ref={inputRef} type="file" accept={IMAGE_ACCEPT} className="hidden" onChange={handleFileChange} />
     </div>
   )
 }

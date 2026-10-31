@@ -1,3 +1,4 @@
+import { IMAGE_MIME_TYPES } from './imageFormats'
 import { supabase } from '@/lib/supabase'
 
 const BUCKET = 'public-media'
@@ -6,8 +7,8 @@ const MAX_SIZE_BYTES = 5 * 1024 * 1024
 export class UploadError extends Error {}
 
 async function uploadImage(file: File, path: string) {
-  if (!file.type.startsWith('image/')) {
-    throw new UploadError('Selecione um arquivo de imagem.')
+  if (!IMAGE_MIME_TYPES.includes(file.type)) {
+    throw new UploadError('Use JPG, PNG, WebP ou AVIF. Converta fotos HEIC/HEIF do celular antes de enviar.')
   }
   if (file.size > MAX_SIZE_BYTES) {
     throw new UploadError('A imagem deve ter até 5 MB.')
@@ -56,6 +57,5 @@ export function uploadPaginaImage(file: File, paginaId: string) {
 }
 
 export function uploadEditorialImage(file: File) {
-  if (!['image/jpeg','image/png','image/webp','image/avif'].includes(file.type)) throw new UploadError('Use JPG, PNG, WebP ou AVIF.')
   return uploadImage(file, `editorial/${crypto.randomUUID()}`)
 }
