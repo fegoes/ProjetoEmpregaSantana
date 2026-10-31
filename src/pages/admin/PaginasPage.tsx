@@ -1,3 +1,4 @@
+import { AdminModal } from '@/components/admin/AdminModal'
 import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ExternalLink, FilePlus2, Pencil, Trash2 } from 'lucide-react'
@@ -25,10 +26,11 @@ function StatusBadge({ published, hasLayout }: { published: boolean; hasLayout: 
   )
 }
 
-function NewPageForm({ onDone }: { onDone: () => void }) {
+function NewPageForm({ onDone, onPending }: { onDone: () => void; onPending:(value:boolean)=>void }) {
   const { user } = useAuth()
   const navigate = useNavigate()
   const create = useCreatePagina()
+  React.useEffect(()=>{onPending(create.isPending)},[create.isPending,onPending])
   const [title, setTitle] = React.useState('')
   const [slug, setSlug] = React.useState('')
   const [slugTouched, setSlugTouched] = React.useState(false)
@@ -38,6 +40,7 @@ function NewPageForm({ onDone }: { onDone: () => void }) {
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    e.stopPropagation()
     setError(null)
     if (!user) return
     if (!title.trim()) return setError('Dê um nome para a página.')
@@ -107,6 +110,7 @@ export default function AdminPaginasPage() {
   const { data: paginas, isLoading, isError } = useAllPaginasInstitucionais()
   const remove = useDeletePagina()
   const [creating, setCreating] = React.useState(false)
+  const [modalBusy,setModalBusy]=React.useState(false)
 
   const handleDelete = async (id: string, title: string) => {
     if (!window.confirm(`Apagar a página "${title}"? Ela sai do ar e não dá para desfazer.`)) return
@@ -130,7 +134,7 @@ export default function AdminPaginasPage() {
         )}
       </div>
 
-      {creating && <NewPageForm onDone={() => setCreating(false)} />}
+      <AdminModal open={creating} onClose={()=>setCreating(false)} busy={modalBusy} title="Nova página" description="Crie o rascunho e continue no editor visual."><NewPageForm onPending={setModalBusy} onDone={() => setCreating(false)} /></AdminModal>
 
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
       {isError && <p className="text-sm text-destructive-ink">Não foi possível carregar as páginas. Tente recarregar.</p>}

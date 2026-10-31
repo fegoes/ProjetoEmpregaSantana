@@ -1,3 +1,4 @@
+import { AdminModal } from '@/components/admin/AdminModal'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -18,7 +19,7 @@ function errorMessage(error: unknown) {
   if (code === '23505') return 'Já existe um item com este identificador. Escolha outro.'
   return 'Não foi possível concluir. Confira sua conexão e permissão de administrador e tente novamente. Os campos foram preservados.'
 }
-function TaxonomyForm({ table, item, onDone }: { table: 'categories' | 'record_types'; item?: Item; onDone: (message: string) => void }) {
+function TaxonomyForm({ table, item, onDone, onPending }: { table: 'categories' | 'record_types'; item?: Item; onDone: (message: string) => void; onPending?: (pending:boolean)=>void }) {
   const client = useQueryClient()
   const nameInput = useRef<HTMLInputElement>(null)
   useEffect(() => { if (item) nameInput.current?.focus() }, [item])
@@ -40,8 +41,9 @@ function TaxonomyForm({ table, item, onDone }: { table: 'categories' | 'record_t
     if (!item) { setLabel(''); setSlug(''); setCustomSlug(false) }
     onDone(item ? 'Item atualizado.' : 'Item adicionado.')
   } })
-  function submit(event: FormEvent) { event.preventDefault(); save.mutate() }
-  return <form onSubmit={submit} className="space-y-5 rounded-xl border bg-card p-5 sm:p-6">
+  useEffect(()=>{onPending?.(save.isPending)},[onPending,save.isPending])
+  function submit(event: FormEvent) { event.preventDefault(); event.stopPropagation(); save.mutate() }
+  return <form onSubmit={submit} className="space-y-5">
     <h2 className="text-lg font-bold">{item ? 'Editar item' : 'Adicionar item'}</h2>
     <fieldset disabled={save.isPending} className="space-y-5">
       <div className="space-y-2"><Label htmlFor="taxonomy-label">Nome *</Label><Input className="min-h-11" ref={nameInput} id="taxonomy-label" required maxLength={80} value={label} onChange={e => { setLabel(e.target.value); if (!customSlug) setSlug(taxonomySlug(e.target.value)) }} /></div>
@@ -61,6 +63,8 @@ export default function TaxonomiesPage({ mode }: { mode: 'categories' | 'types' 
   const table = mode === 'categories' ? 'categories' : 'record_types'
   const client = useQueryClient()
   const [selected, setSelected] = useState<Item>()
+  const [modal,setModal]=useState(false)
+  const [busy,setBusy]=useState(false)
   const [feedback, setFeedback] = useState('')
   const [search, setSearch] = useState('')
   const [domain, setDomain] = useState('')
@@ -73,17 +77,18 @@ export default function TaxonomiesPage({ mode }: { mode: 'categories' | 'types' 
   const rows = items.filter(item => (!domain || item.kind === domain) && (!visibility || (visibility === 'active') === item.is_active) && `${item.label} ${item.slug}`.toLocaleLowerCase('pt-BR').includes(search.toLocaleLowerCase('pt-BR')))
   return <div className="space-y-6">
     <div><h1 className="text-2xl font-extrabold">{mode === 'categories' ? 'Categorias' : 'Tipos de cadastro'}</h1><p className="mt-3 max-w-3xl text-sm leading-relaxed text-muted-foreground">{mode === 'categories' ? 'Organize as áreas de atuação de profissionais, empresas e vagas. As categorias compartilhadas atendem vagas e profissionais.' : 'Defina os tipos de contratação das vagas e as classificações de profissionais e empresas. Remuneração e situação de publicação são configurações próprias dos cadastros.'}</p></div>
+    <Button type="button" onClick={()=>{setSelected(undefined);setModal(true)}}>{mode==='categories'?'Nova categoria':'Novo tipo de cadastro'}</Button>
     <nav aria-label="Configurações de classificação" className="flex flex-wrap gap-3 border-b pb-4">{[['categories','categorias','Categorias'],['types','tipos','Tipos de cadastro']].map(([key,path,label]) => <Link key={key} to={`/admin/configuracoes/${path}`} aria-current={mode === key ? 'page' : undefined} className={`rounded-md px-3 py-2 text-sm ${mode === key ? 'bg-accent font-semibold text-primary' : 'hover:bg-secondary'}`}>{label}</Link>)}</nav>
     {query.isLoading && <p role="status">Carregando configurações…</p>}
     {query.isError && <div role="alert" className="space-y-3"><p>Não foi possível carregar estas configurações. Tente novamente. Se o problema persistir, contate o responsável pela plataforma.</p><Button variant="outline" onClick={() => query.refetch()}>Tentar novamente</Button></div>}
-    {!query.isLoading && !query.isError && <div className="grid min-w-0 items-start gap-7 xl:grid-cols-[minmax(280px,340px)_minmax(0,1fr)]">
-      <TaxonomyForm key={`${table}-${selected?.id ?? 'new'}`} table={table} item={selected} onDone={message => { setSelected(undefined); setFeedback(message); remove.reset() }} />
+    {!query.isLoading && !query.isError && <div className="min-w-0">
+      <AdminModal busy={busy} open={modal} onClose={()=>setModal(false)} title={selected?'Editar item':mode==='categories'?'Nova categoria':'Novo tipo de cadastro'} description="Organize as opções disponíveis nos cadastros.">      <TaxonomyForm onPending={setBusy} key={`${table}-${selected?.id ?? 'new'}`} table={table} item={selected} onDone={message => { setModal(false); setSelected(undefined); setFeedback(message); remove.reset() }} /></AdminModal>
       <section className="min-w-0 space-y-4" aria-label="Itens cadastrados">
         {feedback && <p role="status" className="text-sm text-primary">{feedback}</p>}
         {remove.isError && <p role="alert" className="text-sm text-destructive">{errorMessage(remove.error)}</p>}
         <div className="space-y-3"><Input className="min-h-11" aria-label="Buscar configurações" placeholder="Buscar por nome ou identificador…" value={search} onChange={e => setSearch(e.target.value)} /><div className="grid gap-3 sm:grid-cols-2"><select className={control} aria-label="Filtrar por área" value={domain} onChange={e => setDomain(e.target.value)}><option value="">Todas as áreas</option>{Object.entries(TAXONOMY_DOMAINS).filter(([key]) => mode === 'categories' || key !== 'both').map(([value,label]) => <option key={value} value={value}>{label}</option>)}</select><select className={control} aria-label="Filtrar por disponibilidade" value={visibility} onChange={e => setVisibility(e.target.value)}><option value="">Ativos e inativos</option><option value="active">Ativos</option><option value="inactive">Inativos</option></select></div></div>
         <p className="text-xs text-muted-foreground">{rows.length} {rows.length === 1 ? 'item encontrado' : 'itens encontrados'}</p>
-        <div className="divide-y rounded-xl border bg-card">{rows.map(item => <article key={item.id} className="space-y-3 p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0"><h2 className="break-words font-semibold">{item.label}</h2><p className="mt-1 break-all text-xs text-muted-foreground">{item.slug}</p></div><span className="text-xs text-muted-foreground">{item.is_active ? 'Ativo' : 'Inativo'}</span></div><p className="text-sm text-muted-foreground">{TAXONOMY_DOMAINS[item.kind]}</p><div className="flex flex-wrap gap-2"><Button type="button" variant="outline" size="sm" disabled={remove.isPending} onClick={() => { setSelected(item); setFeedback(''); remove.reset() }}>Editar</Button><Button type="button" variant="ghost" size="sm" className="text-destructive" disabled={remove.isPending} onClick={() => { if (window.confirm(`Excluir “${item.label}”? A exclusão só é permitida se não houver cadastros vinculados.`)) { setFeedback(''); remove.mutate(item) } }}>Excluir</Button></div></article>)}{!rows.length && <p className="p-5 text-sm text-muted-foreground">{query.data?.length ? 'Nenhum item corresponde aos filtros.' : 'Adicione o primeiro item usando o formulário.'}</p>}</div>
+        <div className="divide-y rounded-xl border bg-card">{rows.map(item => <article key={item.id} className="space-y-3 p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div className="min-w-0"><h2 className="break-words font-semibold">{item.label}</h2><p className="mt-1 break-all text-xs text-muted-foreground">{item.slug}</p></div><span className="text-xs text-muted-foreground">{item.is_active ? 'Ativo' : 'Inativo'}</span></div><p className="text-sm text-muted-foreground">{TAXONOMY_DOMAINS[item.kind]}</p><div className="flex flex-wrap gap-2"><Button type="button" variant="outline" size="sm" disabled={remove.isPending} onClick={() => { setSelected(item); setModal(true); setFeedback(''); remove.reset() }}>Editar</Button><Button type="button" variant="ghost" size="sm" className="text-destructive" disabled={remove.isPending} onClick={() => { if (window.confirm(`Excluir “${item.label}”? A exclusão só é permitida se não houver cadastros vinculados.`)) { setFeedback(''); remove.mutate(item) } }}>Excluir</Button></div></article>)}{!rows.length && <p className="p-5 text-sm text-muted-foreground">{query.data?.length ? 'Nenhum item corresponde aos filtros.' : 'Adicione o primeiro item usando o formulário.'}</p>}</div>
       </section>
     </div>}
   </div>

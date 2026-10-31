@@ -57,3 +57,4 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 - [Orientações de imagens e fotos](IMAGENS_E_FOTOS.md)
 - [Fotos e galeria privada dos usuários — migration 0039](GALERIA_USUARIOS.md)
 - [Especificação técnica e campos separados desktop/móvel — migration 0040](IMAGENS_RESPONSIVAS.md)
+- [Cadastros por modal no superadmin](MODAIS_SUPERADMIN.md)
