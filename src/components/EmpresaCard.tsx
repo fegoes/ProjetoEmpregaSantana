@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { Link } from 'react-router-dom'
 import { BadgeCheck, MapPin } from 'lucide-react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
@@ -24,7 +25,7 @@ export function EmpresaCard({ empresa }: { empresa: EmpresaCardData }) {
       <Card className="h-full gap-3 overflow-hidden rounded-2xl py-5 shadow-none transition-colors duration-150 group-hover:border-primary/50">
         <CardHeader className="flex-row items-start gap-3">
           {empresa.logo_url ? (
-            <img
+            <ResponsiveImage
               src={empresa.logo_url}
               alt={empresa.nome_fantasia}
               className="size-10 shrink-0 rounded-lg border object-contain"

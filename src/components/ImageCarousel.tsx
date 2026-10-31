@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import * as React from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -28,7 +29,7 @@ export function ImageCarousel({ images, alt, className, loading = 'lazy' }: Imag
 
   return (
     <div className={cn('group/carousel relative size-full overflow-hidden bg-muted', className)}>
-      <img
+      <ResponsiveImage
         src={images[clampedIndex]}
         alt={alt}
         className="size-full object-cover"

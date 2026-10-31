@@ -1,3 +1,4 @@
+import { useImageVariant } from '@/hooks/useImageVariant'
 import { IMAGE_ACCEPT } from '@/lib/imageFormats'
 import * as React from 'react'
 import { ImageGuidance, type ImagePurpose } from './ImageGuidance'
@@ -9,6 +10,7 @@ import { cn } from '@/lib/utils'
 
 interface ImageUploadFieldProps {
   label: string
+  disabled?: boolean
   currentUrl: string | null | undefined
   onUpload: (file: File) => Promise<string>
   onUploaded: (url: string) => void
@@ -21,8 +23,9 @@ interface ImageUploadFieldProps {
 
 // Componente "burro": faz upload e devolve a URL via onUploaded — quem persiste
 // no banco é a página que o usa (mesmo padrão dos outros formulários).
-export function ImageUploadField({
+function SingleImageUploadField({
   label,
+  disabled = false,
   currentUrl,
   onUpload,
   onUploaded,
@@ -56,7 +59,7 @@ export function ImageUploadField({
       onUploaded(url)
       setPreview(url)
     } catch (err) {
-      setError(err instanceof UploadError ? err.message : 'Não foi possível enviar a imagem.')
+      setError(err instanceof UploadError ? err.message : err instanceof Error ? err.message : 'Não foi possível enviar a imagem.')
       setPreview(currentUrl ?? null)
     } finally {
       setUploading(false)
@@ -87,13 +90,13 @@ export function ImageUploadField({
             type="button"
             variant="outline"
             size="sm"
-            disabled={uploading}
+            disabled={uploading || disabled}
             onClick={() => inputRef.current?.click()}
           >
             {preview ? 'Trocar imagem' : 'Enviar imagem'}
           </Button>
           {preview && onRemove && (
-            <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading} onClick={onRemove}>
+            <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading || disabled} onClick={onRemove}>
               Remover imagem
             </Button>
           )}
@@ -104,6 +107,7 @@ export function ImageUploadField({
           ref={inputRef}
           id={id}
           aria-describedby={`${id}-guide`}
+          disabled={uploading || disabled}
           type="file"
           accept={IMAGE_ACCEPT}
           className="hidden"
@@ -113,4 +117,16 @@ export function ImageUploadField({
       <ImageGuidance id={`${id}-guide`} purpose={purpose ?? (shape === 'square' ? 'content' : 'banner')} src={preview} />
     </div>
   )
+}
+
+export function ImageUploadField(props: ImageUploadFieldProps) {
+ const variant=useImageVariant(props.currentUrl)
+ const [variantError,setVariantError]=React.useState('')
+ return <fieldset className="min-w-0 space-y-5"><legend className="mb-2 font-semibold">{props.label}</legend>
+  <SingleImageUploadField {...props} label={`${props.label} — Desktop`} />
+  <SingleImageUploadField disabled={!props.currentUrl} {...props} label={`${props.label} — Móvel (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
+  {!props.currentUrl&&<p className="text-sm text-muted-foreground">Envie a imagem desktop para habilitar o envio móvel.</p>}
+  {variantError&&<p role="alert" className="text-destructive">{variantError}</p>}
+  <p className="text-sm text-muted-foreground">Em telas menores que 640 px, a versão móvel é usada quando disponível; nas demais, a desktop. Sem versão móvel, a desktop é mantida.</p>
+ </fieldset>
 }

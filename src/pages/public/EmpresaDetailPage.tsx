@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { useParams } from 'react-router-dom'
 import { MapPin, Users } from 'lucide-react'
 import { useEmpresa } from '@/hooks/useEmpresas'
@@ -144,7 +145,7 @@ export default function EmpresaDetailPage() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {empresa.interior_photo_urls.map((url) => (
               <div key={url} className="aspect-square overflow-hidden rounded-xl bg-muted">
-                <img src={url} alt={`Ambiente interno da ${empresa.nome_fantasia}`} className="size-full object-cover" loading="lazy" />
+                <ResponsiveImage src={url} alt={`Ambiente interno da ${empresa.nome_fantasia}`} className="size-full object-cover" loading="lazy" />
               </div>
             ))}
           </div>

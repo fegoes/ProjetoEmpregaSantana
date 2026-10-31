@@ -147,4 +147,15 @@ try {
   assert.equal((await db.query("delete from storage.objects where bucket_id='user-gallery' returning id")).rows.length,0)
   console.log('OK galeria privada impede upload, leitura e exclusão de arquivos de outra conta.')
 
+  await db.exec('reset role')
+  await db.query("insert into storage.objects(bucket_id,name,owner,metadata) values('public-media',$1,$2,'{}'),('public-media',$3,$2,'{}'),('public-media',$4,$5,'{}')",['profiles/'+ordinary+'/desktop.jpg',ordinary,'profiles/'+ordinary+'/mobile.jpg','profiles/'+person+'/other.jpg',person])
+  await claim(ordinary)
+  const base='https://test.supabase.co/storage/v1/object/public/public-media/'
+  await db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2)',[base+'profiles/'+ordinary+'/desktop.jpg',base+'profiles/'+ordinary+'/mobile.jpg'])
+  await assert.rejects(db.query('update image_variants set mobile_url=$1',[base+'profiles/'+person+'/other.jpg']),e=>e.code==='42501')
+  await claim(person)
+  assert.equal((await db.query('delete from image_variants returning desktop_url')).rows.length,0)
+  await assert.rejects(db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2)',[base+'profiles/'+ordinary+'/mobile.jpg',base+'profiles/'+person+'/other.jpg']),e=>e.code==='42501')
+  console.log('OK variantes públicas exigem propriedade de ambas as imagens; outra conta não pode substituir ou excluir.')
+
 } finally { await db.close() }

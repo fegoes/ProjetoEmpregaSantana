@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { CompanyMembers } from '@/components/admin/CompanyMembers'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
@@ -38,7 +39,7 @@ export default function AdminEmpresaDetailPage() {
       </Link>
       <div className="flex items-start gap-3">
         {empresa.logo_url && (
-          <img src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-contain" />
+          <ResponsiveImage src={empresa.logo_url} alt={empresa.nome_fantasia} className="size-12 rounded-xl border object-contain" />
         )}
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">{empresa.nome_fantasia}</h1>

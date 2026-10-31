@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { buildJobPosting, isOpenJob } from '@/lib/jobSeo'
 import { useEmploymentLabels } from '@/hooks/useRecordTypes'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
@@ -107,7 +108,7 @@ export default function VagaDetailPage() {
                 )}
                 <div className="flex items-start gap-4">
                   {vaga.empresas?.logo_url && (
-                    <img
+                    <ResponsiveImage
                       src={vaga.empresas.logo_url}
                       alt=""
                       className="size-14 shrink-0 rounded-xl border object-contain"

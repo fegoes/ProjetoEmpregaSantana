@@ -46,6 +46,12 @@ export interface Database {
         Update: Partial<Database['public']['Tables']['blog_categories']['Row']>
         Relationships: []
       }
+      image_variants: {
+        Row: { desktop_url: string; mobile_url: string; owner_id: string; created_at: string }
+        Insert: { desktop_url: string; mobile_url: string; owner_id?: string; created_at?: string }
+        Update: { mobile_url?: string }
+        Relationships: []
+      }
       artigos: {
         Row: {
           id: string

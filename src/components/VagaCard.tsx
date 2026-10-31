@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { useEmploymentLabels } from '@/hooks/useRecordTypes'
 import { Link } from 'react-router-dom'
 import { MapPin, Star } from 'lucide-react'
@@ -84,7 +85,7 @@ export function VagaCard({ vaga, hideEmpresa = false }: { vaga: VagaCardData; hi
               )}
             </div>
             {!featured && vaga.empresas?.logo_url && (
-              <img
+              <ResponsiveImage
                 src={vaga.empresas.logo_url}
                 alt=""
                 className="size-10 shrink-0 rounded-lg border object-contain"

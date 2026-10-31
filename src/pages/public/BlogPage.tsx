@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { ArticleBody } from '@/components/ArticleBody'
 import { useBlogCategories } from '@/hooks/useBlogCategories'
 import { useState } from 'react'
@@ -12,7 +13,7 @@ import { Button } from '@/components/ui/button'
 
 function ArticleCover({ article }: { article: Pick<Artigo, 'title' | 'cover_url' | 'cover_alt' | 'category'> }) {
   const fallback = editorialImage(article.category)
-  return <img src={article.cover_url || fallback.src} alt={article.cover_url ? article.cover_alt : fallback.alt} className="aspect-[3/2] w-full rounded-2xl bg-accent/30 object-contain" loading="lazy" decoding="async" width={1536} height={1024} />
+  return <ResponsiveImage src={article.cover_url || fallback.src} alt={article.cover_url ? article.cover_alt : fallback.alt} className="aspect-[3/2] w-full rounded-2xl bg-accent/30 object-contain" loading="lazy" decoding="async" width={1536} height={1024} />
 }
 
 export default function BlogPage() {
@@ -25,7 +26,7 @@ export default function BlogPage() {
   const featured = filtered[0]
   useDocumentMeta({ title: 'Dicas de carreira', description: 'Orientação para procurar trabalho, apresentar seu talento e criar novas oportunidades.', canonical: '/blog' })
   return <div className="flex flex-col gap-8">
-    <section className="relative overflow-hidden rounded-3xl bg-accent/50 px-6 py-10 sm:px-10 lg:pr-72"><img src="/illustrations/nossa-gente.png" alt="" width="1536" height="1024" className="right-6 bottom-0 hidden h-52 w-64 object-contain lg:absolute lg:block" /><h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">Orientação para<br />o seu próximo passo.</h1><p className="mt-5 max-w-xl text-sm leading-loose text-muted-foreground">Ideias práticas para procurar trabalho, apresentar seu talento e criar novas oportunidades.</p></section>
+    <section className="relative overflow-hidden rounded-3xl bg-accent/50 px-6 py-10 sm:px-10 lg:pr-72"><ResponsiveImage src="/illustrations/nossa-gente.png" alt="" width="1536" height="1024" className="right-6 bottom-0 hidden h-52 w-64 object-contain lg:absolute lg:block" /><h1 className="max-w-3xl text-3xl leading-tight font-extrabold tracking-tight text-brand-ink sm:text-5xl">Orientação para<br />o seu próximo passo.</h1><p className="mt-5 max-w-xl text-sm leading-loose text-muted-foreground">Ideias práticas para procurar trabalho, apresentar seu talento e criar novas oportunidades.</p></section>
     {query.isLoading && <p role="status">Carregando orientações…</p>}
     {query.isError && <div role="alert" className="rounded-xl border p-6"><p>Não foi possível carregar os artigos.</p><Button onClick={() => query.refetch()} variant="outline" className="mt-4">Tentar novamente</Button></div>}
     {!query.isLoading && !query.isError && <>

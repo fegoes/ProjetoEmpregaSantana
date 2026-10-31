@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { cn } from '@/lib/utils'
 
 // Empresa sem logo deixava um buraco no card — ou, pior, um ícone genérico de
@@ -44,7 +45,7 @@ interface CompanyLogoProps {
 export function CompanyLogo({ name, logoUrl, size = 'md', className }: CompanyLogoProps) {
   if (logoUrl) {
     return (
-      <img
+      <ResponsiveImage
         src={logoUrl}
         alt={`Logo de ${name}`}
         loading="lazy"

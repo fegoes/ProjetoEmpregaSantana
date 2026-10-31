@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { cn } from '@/lib/utils'
 
 // Paleta restrita à identidade da marca: azul-marinho, tons neutros e laranja —
@@ -36,7 +37,7 @@ const SIZES = {
 }
 
 export function InitialsAvatar({ name, imageUrl, size = 'md', className }: InitialsAvatarProps) {
-  if (imageUrl) return <img src={imageUrl} alt={`Foto de ${name}`} className={cn('shrink-0 rounded-full object-cover', SIZES[size], className)} />
+  if (imageUrl) return <ResponsiveImage src={imageUrl} alt={`Foto de ${name}`} className={cn('shrink-0 rounded-full object-cover', SIZES[size], className)} />
   return (
     <div
       className={cn(

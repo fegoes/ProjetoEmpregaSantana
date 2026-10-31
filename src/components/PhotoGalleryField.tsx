@@ -1,3 +1,5 @@
+import { useImageVariant } from '@/hooks/useImageVariant'
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { IMAGE_ACCEPT } from '@/lib/imageFormats'
 import * as React from 'react'
 import { ImageGuidance } from './ImageGuidance'
@@ -44,12 +46,12 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
 
   return (
     <div className="flex flex-col gap-1.5">
-      <Label htmlFor={id}>{label}</Label>
+      <Label htmlFor={id}>{label} — Desktop</Label>
       {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
       <div className="flex flex-wrap gap-3">
         {photos.map((url) => (
-          <div key={url} className="group relative size-24 shrink-0 overflow-hidden rounded-lg border">
-            <img src={url} alt="" className="size-full object-cover" />
+          <div key={url} className="group relative w-48 shrink-0 space-y-2 rounded-lg border p-2">
+            <ResponsiveImage src={url} alt="" className="aspect-video w-full object-cover" />
             <button
               type="button"
               onClick={() => handleRemove(url)}
@@ -58,6 +60,7 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
             >
               <X className="size-3" />
             </button>
+            <GalleryMobileUpload desktop={url} upload={onUpload} />
           </div>
         ))}
         <button
@@ -75,4 +78,13 @@ export function PhotoGalleryField({ label, photos, onUpload, onChange, hint }: P
       <input id={id} aria-describedby={`${id}-guide`} ref={inputRef} type="file" accept={IMAGE_ACCEPT} className="hidden" onChange={handleFileChange} />
     </div>
   )
+}
+
+function GalleryMobileUpload({desktop,upload}:{desktop:string;upload:(file:File)=>Promise<string>}) {
+ const variant=useImageVariant(desktop)
+ const [busy,setBusy]=React.useState(false),[error,setError]=React.useState('')
+ return <div className="space-y-1"><label className="block text-sm">Imagem móvel (opcional)<input className="block max-w-full text-xs" type="file" accept={IMAGE_ACCEPT} disabled={busy} onChange={async e=>{
+ const file=e.target.files?.[0];e.target.value='';if(!file)return;setBusy(true);setError('')
+ try{await variant.save(await upload(file))}catch(e){setError(e instanceof Error?e.message:'Não foi possível enviar a versão móvel.')}finally{setBusy(false)}
+ }} /></label>{variant.data&&<img src={variant.data} alt="Prévia da versão móvel" className="h-20 w-full object-contain" />}{busy&&<p role="status">Enviando…</p>}{error&&<p role="alert" className="text-sm text-destructive">{error}</p>}</div>
 }

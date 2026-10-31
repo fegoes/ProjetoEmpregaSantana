@@ -1,3 +1,4 @@
+import { ResponsiveImage } from '@/components/ResponsiveImage'
 import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Pause, Play, Search } from 'lucide-react'
@@ -167,7 +168,7 @@ function MediaView({ media, tone, size }: { media: MediaRef; tone: Tone; size: '
       ) : null
     }
     return (
-      <img
+      <ResponsiveImage
         src={media.imageUrl}
         alt={media.alt}
         loading="lazy"
@@ -296,7 +297,7 @@ function ImageView({ block, align }: { block: ImageBlock; align: Align }) {
     ) : null
   }
   return (
-    <img
+    <ResponsiveImage
       src={block.imageUrl}
       alt={block.alt}
       loading="lazy"
@@ -480,7 +481,7 @@ function Surface({
     >
       {bg.imageUrl && (
         <>
-          <img
+          <ResponsiveImage
             src={bg.imageUrl}
             alt=""
             loading="lazy"
