@@ -10,7 +10,7 @@
 // Assim um JSON malformado nunca derruba a página.
 
 import { newBlockId } from './blocks.js'
-import { moveItem, safeInternalPath } from './utils.js'
+import { moveItem, safeInternalPath } from './portableUtils.js'
 
 export { moveItem }
 

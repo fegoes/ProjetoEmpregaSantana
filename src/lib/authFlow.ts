@@ -1,5 +1,5 @@
 import type { UserRole } from '../types/database.js'
-import { safeInternalPath } from './utils.js'
+import { safeInternalPath } from './portableUtils.js'
 
 export function inferRegistrationRole(requested?:string|null):UserRole {
   const next=safeInternalPath(requested)
