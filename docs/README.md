@@ -55,3 +55,4 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 
 - [Cadastro público, SEO e edição visual](CADASTRO_PUBLICO_SEO_EDITOR.md)
 - [Orientações de imagens e fotos](IMAGENS_E_FOTOS.md)
+- [Fotos e galeria privada dos usuários — migration 0039](GALERIA_USUARIOS.md)

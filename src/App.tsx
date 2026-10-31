@@ -24,6 +24,7 @@ const LgpdPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ d
 const CustomPage = lazy(() => import('@/pages/public/CustomPage'))
 
 const EmpresasDirectoryPage = lazy(() => import('@/pages/shared/EmpresasDirectoryPage'))
+const GaleriaPage = lazy(() => import('@/pages/shared/GaleriaPage'))
 const PerfilPage = lazy(() => import('@/pages/shared/PerfilPage'))
 const PerfilContaPage = lazy(() => import('@/pages/shared/PerfilContaPage'))
 const ProcessoPage = lazy(() => import('@/pages/shared/ProcessoPage'))
@@ -124,6 +125,7 @@ export default function App() {
           <Route element={<PanelLayout />}>
             {/* Minha conta (todos os perfis) */}
             <Route path="perfil" element={<PerfilPage />} />
+            <Route path="perfil/galeria" element={<GaleriaPage />} />
             <Route path="perfil/conta" element={<PerfilContaPage />} />
 
             {/* Candidato */}

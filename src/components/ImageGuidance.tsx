@@ -16,11 +16,12 @@ export function ImageGuidance({ purpose, src, id }: { purpose: ImagePurpose; src
   const [dimensions, setDimensions] = useState<{ src: string; width: number; height: number } | null>(null)
   const advice = guidance[purpose]
   return <div id={id ?? fallbackId} className="space-y-1 text-sm text-muted-foreground">
-    <p>{advice.ideal}</p>
-    <p>JPG, PNG, WebP ou AVIF · até 5 MB por imagem. Aceita imagens horizontais, verticais e quadradas; as dimensões acima são sugestões.</p>
+    <p>Imagem desktop: 1920 × 1080 px (horizontal) | Imagem móvel: 320 × 480 px (vertical).</p>
+    {purpose === 'logo' && <p>Para logo ou foto de perfil, prefira uma imagem quadrada de 512 × 512 px.</p>}
+    <p>Somente JPG e PNG · até 5 MB por imagem. Aceita imagens horizontais, verticais e quadradas; as dimensões acima são sugestões.</p>
     <details className="pt-1">
       <summary className="min-h-11 cursor-pointer py-2 font-medium text-foreground">Exibição no celular e no computador</summary>
-      <p className="pb-2">Se a foto do celular estiver em HEIC/HEIF, converta para JPG, PNG, WebP ou AVIF antes de enviar.</p>
+      <p className="pb-2">Se a foto do celular estiver em HEIC/HEIF, converta para JPG ou PNG antes de enviar.</p>
       <p className="pb-2">{advice.display} O arquivo original é mantido, sem esticar ou deformar a foto.</p>
       {src && <div className="space-y-2">
         <p>Imagem original (sem recorte):</p>

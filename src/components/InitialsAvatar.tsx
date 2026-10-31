@@ -23,6 +23,7 @@ function paletteIndexOf(name: string) {
 }
 
 interface InitialsAvatarProps {
+  imageUrl?: string | null
   name: string
   size?: 'sm' | 'md' | 'lg'
   className?: string
@@ -34,7 +35,8 @@ const SIZES = {
   lg: 'size-14 text-lg',
 }
 
-export function InitialsAvatar({ name, size = 'md', className }: InitialsAvatarProps) {
+export function InitialsAvatar({ name, imageUrl, size = 'md', className }: InitialsAvatarProps) {
+  if (imageUrl) return <img src={imageUrl} alt={`Foto de ${name}`} className={cn('shrink-0 rounded-full object-cover', SIZES[size], className)} />
   return (
     <div
       className={cn(

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link, NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
-import { Briefcase, Check, ChevronsUpDown, ExternalLink, LogOut, Menu, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
+import { Images, UserRound, Briefcase, Check, ChevronsUpDown, ExternalLink, LogOut, Menu, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import { InitialsAvatar } from '@/components/InitialsAvatar'
 import { Button } from '@/components/ui/button'
@@ -69,6 +69,7 @@ function AreaSwitcher({ area, collapsed }: { area: PanelArea; collapsed: boolean
             </Link>
           </DropdownMenuItem>
         ))}
+        <DropdownMenuItem asChild><Link to="/perfil/galeria" className="h-10">Minha galeria</Link></DropdownMenuItem>
         <DropdownMenuItem asChild>
           <Link to="/perfil" className="h-10">
             <span className="size-4" />
@@ -161,13 +162,15 @@ function PanelSidebar({
             </ul>
           </div>
         ))}
+        <NavLink to="/perfil/galeria" onClick={onNavigate} title="Minha galeria" className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm text-white hover:bg-white/10"><Images className="size-5 shrink-0" />{collapsed ? <span className="sr-only">Minha galeria</span> : 'Minha galeria'}</NavLink>
+        <NavLink to="/perfil" end onClick={onNavigate} title="Minha foto e conta" className="flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm text-white hover:bg-white/10"><UserRound className="size-5 shrink-0" /><span className={collapsed ? 'sr-only' : ''}>Minha foto e conta</span></NavLink>
       </nav>
 
       {onToggle&&<button type="button" onClick={onToggle} aria-expanded={!collapsed} aria-label={collapsed?'Expandir menu':'Recolher menu'} title={collapsed?'Expandir menu':'Recolher menu'} className="mx-3 flex min-h-11 items-center justify-center gap-2 rounded-lg px-2 text-sm text-white/85 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white">{collapsed?<PanelLeftOpen className="size-5" />:<PanelLeftClose className="size-5" />}{!collapsed&&'Recolher menu'}</button>}
       <div className={cn('shrink-0 border-t border-white/10 p-3', collapsed && 'flex flex-col items-center')}>
         {!collapsed && (
           <div className="mb-2 flex items-center gap-3 px-1">
-            <InitialsAvatar name={profile?.full_name ?? 'Usuário'} size="sm" className="bg-white/15 text-white" />
+            <InitialsAvatar imageUrl={profile?.avatar_url} name={profile?.full_name ?? 'Usuário'} size="sm" className="bg-white/15 text-white" />
             <div className="min-w-0">
               <p className="truncate text-sm font-semibold">{profile?.full_name ?? 'Minha conta'}</p>
               <p className="truncate text-xs text-white/70">{user?.email}</p>
@@ -286,7 +289,7 @@ export function PanelLayout() {
               <span className="sm:hidden">Site</span>
             </Link>
           </Button>
-          <InitialsAvatar name={profile?.full_name ?? 'Usuário'} size="sm" className="hidden sm:flex" />
+          <InitialsAvatar imageUrl={profile?.avatar_url} name={profile?.full_name ?? 'Usuário'} size="sm" className="hidden sm:flex" />
         </header>
 
         <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 lg:px-8 lg:py-8">

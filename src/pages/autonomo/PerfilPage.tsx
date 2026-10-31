@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -102,6 +103,7 @@ export default function AutonomoPerfilPage() {
         <CardTitle>Meu perfil de autônomo</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
+        <ProfilePhotoField />
         <div className="space-y-2"><Label htmlFor="professional-type">Tipo de profissional</Label><RecordTypeSelect id="professional-type" kind="autonomo" value={typeSlug} onChange={setTypeSlug} /></div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="headline">Título</Label>

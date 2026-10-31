@@ -17,7 +17,7 @@ export interface AutonomoCardData {
   service_area_state: string | null
   is_featured: boolean
   created_at?: string
-  profiles: { full_name: string | null } | null
+  profiles: { full_name: string | null; avatar_url?: string | null } | null
   categories?: { label: string } | null
   portfolio_urls?: string[] | null
   description_html?: string | null
@@ -49,7 +49,7 @@ export function AutonomoCard({ autonomo }: { autonomo: AutonomoCardData }) {
 
         <div className="relative flex flex-1 flex-col gap-3 p-5">
           <div className={cn('flex items-center gap-3', featured && photos.length === 0 && 'pr-9')}>
-            <InitialsAvatar name={name} size="md" className={featured ? 'bg-white/15 text-white' : undefined} />
+            <InitialsAvatar imageUrl={autonomo.profiles?.avatar_url} name={name} size="md" className={featured ? 'bg-white/15 text-white' : undefined} />
             <div className="min-w-0">
               <h3 className="line-clamp-2 text-[15px] leading-snug font-semibold decoration-2 group-hover:underline">{name}</h3>
               <p className={cn('truncate text-sm', featured ? 'text-white/75' : 'text-muted-foreground')}>

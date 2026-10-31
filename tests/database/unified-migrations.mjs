@@ -137,4 +137,14 @@ try {
   assert.equal((await db.query('select count(*)::int as n from user_roles where user_id=$1',[injected])).rows[0].n,0)
   console.log('OK cadastro público cria telefone e papel público na transação do Auth, sem permitir privilégio via metadata.')
 
+
+  await db.exec(`reset role; alter table storage.objects enable row level security; grant select,insert,delete on storage.objects to authenticated;`)
+  await claim(ordinary)
+  await db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('user-gallery',$1,$2,'{"mimetype":"image/jpeg"}')`,[ordinary+'/own.jpg',ordinary])
+  await assert.rejects(db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('user-gallery',$1,$2,'{"mimetype":"image/png"}')`,[person+'/other.png',ordinary]), e=>e.code==='42501')
+  await claim(person)
+  assert.equal((await db.query("select count(*)::int n from storage.objects where bucket_id='user-gallery'")).rows[0].n,0)
+  assert.equal((await db.query("delete from storage.objects where bucket_id='user-gallery' returning id")).rows.length,0)
+  console.log('OK galeria privada impede upload, leitura e exclusão de arquivos de outra conta.')
+
 } finally { await db.close() }

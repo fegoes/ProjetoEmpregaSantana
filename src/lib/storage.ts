@@ -8,13 +8,13 @@ export class UploadError extends Error {}
 
 async function uploadImage(file: File, path: string) {
   if (!IMAGE_MIME_TYPES.includes(file.type)) {
-    throw new UploadError('Use JPG, PNG, WebP ou AVIF. Converta fotos HEIC/HEIF do celular antes de enviar.')
+    throw new UploadError('Use somente JPG ou PNG. Converta fotos HEIC/HEIF do celular antes de enviar.')
   }
   if (file.size > MAX_SIZE_BYTES) {
     throw new UploadError('A imagem deve ter até 5 MB.')
   }
 
-  const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg'
+  const ext = file.type === 'image/png' ? 'png' : 'jpg'
   const fullPath = `${path}.${ext}`
 
   const { error } = await supabase.storage.from(BUCKET).upload(fullPath, file, {
@@ -58,4 +58,8 @@ export function uploadPaginaImage(file: File, paginaId: string) {
 
 export function uploadEditorialImage(file: File) {
   return uploadImage(file, `editorial/${crypto.randomUUID()}`)
+}
+
+export function uploadProfilePhoto(file: File, userId: string) {
+  return uploadImage(file, `profiles/${userId}/${crypto.randomUUID()}`)
 }

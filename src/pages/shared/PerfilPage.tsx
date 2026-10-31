@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { Link } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
@@ -71,6 +72,8 @@ export default function PerfilPage() {
         <p className="mt-1 text-sm text-muted-foreground">Estes são os seus perfis no EmpregaSantana.</p>
       </div>
 
+      <ProfilePhotoField />
+      <Link to="/perfil/galeria" className="font-semibold text-primary underline">Minha galeria de imagens</Link>
       {isAdmin && (
         <section className="flex flex-col gap-3">
           <h2 className="text-lg font-bold">Superadmin</h2>

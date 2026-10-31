@@ -109,7 +109,7 @@ export default function AutonomoDetailPage() {
         <article className="min-w-0 flex-1">
           <header className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <InitialsAvatar name={name} size="lg" />
+              <InitialsAvatar imageUrl={autonomo.profiles?.avatar_url} name={name} size="lg" />
               <div className="min-w-0">
                 <h1 className="text-2xl leading-tight font-extrabold tracking-tight text-balance sm:text-3xl">{name}</h1>
                 <p className="mt-0.5 text-[15px] text-muted-foreground">{autonomo.headline}</p>
