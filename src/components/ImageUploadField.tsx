@@ -1,5 +1,5 @@
+import { ImageSourcePicker } from './ImageSourcePicker'
 import { useImageVariant } from '@/hooks/useImageVariant'
-import { IMAGE_ACCEPT } from '@/lib/imageFormats'
 import * as React from 'react'
 import { ImageGuidance, type ImagePurpose } from './ImageGuidance'
 import { ImagePlus, Loader2 } from 'lucide-react'
@@ -35,21 +35,14 @@ function SingleImageUploadField({
   onRemove,
 }: ImageUploadFieldProps) {
   const id = React.useId()
-  const inputRef = React.useRef<HTMLInputElement>(null)
   const [preview, setPreview] = React.useState<string | null>(currentUrl ?? null)
   const [uploading, setUploading] = React.useState(false)
-  const [error, setError] = React.useState<string | null>(null)
 
   React.useEffect(() => {
     setPreview(currentUrl ?? null)
   }, [currentUrl])
 
-  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    e.target.value = ''
-    if (!file) return
-
-    setError(null)
+  const handleFile = async (file: File) => {
     setUploading(true)
     const objectUrl = URL.createObjectURL(file)
     setPreview(objectUrl)
@@ -59,8 +52,8 @@ function SingleImageUploadField({
       onUploaded(url)
       setPreview(url)
     } catch (err) {
-      setError(err instanceof UploadError ? err.message : err instanceof Error ? err.message : 'Não foi possível enviar a imagem.')
       setPreview(currentUrl ?? null)
+      throw err instanceof Error ? err : new UploadError('Não foi possível enviar a imagem. Confira conexão e permissão.')
     } finally {
       setUploading(false)
       URL.revokeObjectURL(objectUrl)
@@ -86,34 +79,16 @@ function SingleImageUploadField({
           )}
         </div>
         <div className="flex flex-col gap-1.5">
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            disabled={uploading || disabled}
-            onClick={() => inputRef.current?.click()}
-          >
-            {preview ? 'Trocar imagem' : 'Enviar imagem'}
-          </Button>
           {preview && onRemove && (
             <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading || disabled} onClick={onRemove}>
               Remover imagem
             </Button>
           )}
           {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-          {error && <p className="text-xs text-destructive">{error}</p>}
         </div>
-        <input
-          ref={inputRef}
-          id={id}
-          aria-describedby={`${id}-guide`}
-          disabled={uploading || disabled}
-          type="file"
-          accept={IMAGE_ACCEPT}
-          className="hidden"
-          onChange={handleFileChange}
-        />
+
       </div>
+      <ImageSourcePicker inputId={id} label={label} disabled={uploading||disabled} onFile={handleFile} />
       <ImageGuidance id={`${id}-guide`} purpose={purpose ?? (shape === 'square' ? 'content' : 'banner')} src={preview} />
     </div>
   )

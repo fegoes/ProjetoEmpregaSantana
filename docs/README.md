@@ -59,3 +59,4 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 - [Especificação técnica e campos separados desktop/móvel — migration 0040](IMAGENS_RESPONSIVAS.md)
 - [Cadastros por modal no superadmin](MODAIS_SUPERADMIN.md)
 - [Prévia dos posts em desktop e celular](PREVIA_POSTS_DISPOSITIVOS.md)
+- [Envio de imagens por arquivo local ou link](ENVIO_IMAGENS_LOCAL_LINK.md)
