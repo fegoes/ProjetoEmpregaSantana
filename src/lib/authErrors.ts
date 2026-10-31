@@ -2,6 +2,7 @@
 // Aqui elas viram texto em português que diz o problema e o que fazer.
 
 const RULES: { test: RegExp; message: string }[] = [
+  { test: /error sending confirmation|smtp|email.*not authorized/i, message: 'O serviço de e-mail não conseguiu enviar a confirmação. A equipe precisa verificar o envio; tente novamente mais tarde.' },
   { test: /invalid login credentials/i, message: 'E-mail ou senha incorretos. Confira e tente de novo.' },
   {
     test: /email not confirmed/i,

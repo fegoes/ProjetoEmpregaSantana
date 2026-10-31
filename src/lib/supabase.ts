@@ -12,6 +12,8 @@ export const supabaseConfigurado = Boolean(supabaseUrl && supabaseAnonKey)
 // resultado era uma página em branco, sem nenhuma mensagem para o usuário. Agora a
 // ausência de credencial vira uma tela explicativa (ver `main.tsx`), e o cliente é
 // criado com valores inertes só para o módulo poder ser importado.
+export const authLandingUrl = typeof window === 'undefined' ? null : window.location.href
+
 export const supabase = createClient<Database>(
   supabaseUrl || 'http://configuracao-ausente.invalid',
   supabaseAnonKey || 'configuracao-ausente',

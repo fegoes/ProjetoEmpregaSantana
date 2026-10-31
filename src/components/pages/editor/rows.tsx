@@ -1,3 +1,4 @@
+import { DragHandle, useSortableItem } from '@/components/admin/Sortable'
 import * as React from 'react'
 import { ArrowDown, ArrowUp, ChevronDown, Copy, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -6,6 +7,7 @@ import { cn } from '@/lib/utils'
 /** Linha que abre e fecha (sanfona): usada para seções, slides e blocos. */
 export function EditorRow({
   id,
+  sortableId,
   label,
   summary,
   open,
@@ -13,20 +15,23 @@ export function EditorRow({
   children,
 }: {
   id: string
+  sortableId?: string
   label: string
   summary?: string
   open: boolean
   onToggle: () => void
   children: React.ReactNode
 }) {
+  const sort=useSortableItem(sortableId??id)
   return (
-    <li id={id} className="py-1">
+    <li id={id} {...sort?.target} className={cn("py-1",sort?.over&&"rounded-lg ring-2 ring-primary")}>
+      <div className="flex items-center"><DragHandle id={sortableId??id} label={label} />
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={open}
         aria-controls={`${id}-corpo`}
-        className="flex min-h-12 w-full items-center gap-2 rounded-lg px-1 text-left transition-colors hover:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
+        className="flex min-h-12 min-w-0 flex-1 items-center gap-2 rounded-lg px-1 text-left transition-colors hover:bg-muted focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
       >
         <ChevronDown
           aria-hidden
@@ -34,7 +39,7 @@ export function EditorRow({
         />
         <span className="shrink-0 text-sm font-semibold">{label}</span>
         {summary && <span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">{summary}</span>}
-      </button>
+      </button></div>
       {open && (
         <div id={`${id}-corpo`} className="flex flex-col gap-4 pt-2 pb-3 sm:pl-8">
           {children}

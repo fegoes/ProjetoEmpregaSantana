@@ -40,12 +40,11 @@ function AreaSwitcher({ area, collapsed }: { area: PanelArea; collapsed: boolean
   const meta = PANEL_AREAS[area]
   const label = area === 'admin' ? <SuperadminChip /> : <span className="truncate font-display font-bold">{meta.title}</span>
 
-  if (collapsed) return null
 
   // Um perfil só (e já estamos nele): só o nome, sem menu
   const others = areas.filter((a) => a !== area)
   if (others.length === 0) {
-    return <div className="flex h-11 items-center px-3 text-white">{label}</div>
+    return collapsed ? null : <div className="flex h-11 items-center px-3 text-white">{label}</div>
   }
 
   return (
@@ -56,7 +55,7 @@ function AreaSwitcher({ area, collapsed }: { area: PanelArea; collapsed: boolean
           className="flex h-11 w-full items-center justify-between gap-2 rounded-lg px-3 text-left text-white transition-colors hover:bg-white/10 focus-visible:ring-[3px] focus-visible:ring-white/40 focus-visible:outline-none"
           aria-label={`Perfil atual: ${meta.title}. Trocar de perfil`}
         >
-          {label}
+          {collapsed ? <span className="sr-only">{meta.title}</span> : label}
           <ChevronsUpDown className="size-4 shrink-0 text-white/70" />
         </button>
       </DropdownMenuTrigger>
@@ -85,10 +84,12 @@ function PanelSidebar({
   area,
   collapsed = false,
   onNavigate,
+  onToggle,
 }: {
   area: PanelArea
   collapsed?: boolean
   onNavigate?: () => void
+  onToggle?: () => void
 }) {
   const { user, profile, signOut } = useAuth()
   const navigate = useNavigate()
@@ -119,7 +120,7 @@ function PanelSidebar({
         </Link>
       </div>
 
-      <div className={cn('px-3 pb-2', collapsed && 'hidden')}>
+      <div className="px-3 pb-2">
         <AreaSwitcher area={area} collapsed={collapsed} />
       </div>
 
@@ -162,6 +163,7 @@ function PanelSidebar({
         ))}
       </nav>
 
+      {onToggle&&<button type="button" onClick={onToggle} aria-expanded={!collapsed} aria-label={collapsed?'Expandir menu':'Recolher menu'} title={collapsed?'Expandir menu':'Recolher menu'} className="mx-3 flex min-h-11 items-center justify-center gap-2 rounded-lg px-2 text-sm text-white/85 hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-white">{collapsed?<PanelLeftOpen className="size-5" />:<PanelLeftClose className="size-5" />}{!collapsed&&'Recolher menu'}</button>}
       <div className={cn('shrink-0 border-t border-white/10 p-3', collapsed && 'flex flex-col items-center')}>
         {!collapsed && (
           <div className="mb-2 flex items-center gap-3 px-1">
@@ -227,12 +229,13 @@ export function PanelLayout() {
       </a>
 
       <aside
+        id="panel-sidebar"
         className={cn(
           'sticky top-0 hidden h-dvh shrink-0 transition-[width] duration-200 ease-out motion-reduce:transition-none lg:block',
           collapsed ? 'w-[4.5rem]' : 'w-72',
         )}
       >
-        <PanelSidebar area={area} collapsed={collapsed} />
+        <PanelSidebar area={area} collapsed={collapsed} onToggle={toggleCollapsed} />
       </aside>
 
       <DialogPrimitive.Root open={drawerOpen} onOpenChange={setDrawerOpen}>
@@ -266,10 +269,12 @@ export function PanelLayout() {
             type="button"
             onClick={toggleCollapsed}
             aria-label={collapsed ? 'Expandir menu' : 'Recolher menu'}
-            aria-pressed={collapsed}
-            className="-ml-2 hidden size-10 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:flex"
+            aria-expanded={!collapsed}
+            aria-controls="panel-sidebar"
+            className="-ml-2 hidden min-h-11 items-center justify-center gap-2 rounded-full px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground lg:flex"
           >
             {collapsed ? <PanelLeftOpen className="size-5" /> : <PanelLeftClose className="size-5" />}
+            <span>{collapsed?'Expandir menu':'Recolher menu'}</span>
           </button>
 
           <p className="min-w-0 flex-1 truncate font-display text-base font-bold lg:text-lg">{meta.title}</p>

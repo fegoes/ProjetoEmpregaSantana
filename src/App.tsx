@@ -14,6 +14,7 @@ const LoginPage = lazy(() => import('@/pages/public/LoginPage'))
 const ForgotPasswordPage = lazy(() => import('@/pages/public/ForgotPasswordPage'))
 const ResetPasswordPage = lazy(() => import('@/pages/public/ResetPasswordPage'))
 const CadastroPage = lazy(() => import('@/pages/public/CadastroPage'))
+const AuthConfirmPage = lazy(() => import('@/pages/public/AuthConfirmPage'))
 const CadastroConfirmarPage = lazy(() => import('@/pages/public/CadastroConfirmarPage'))
 const SobrePage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.SobrePage })))
 const TermosPage = lazy(() => import('@/pages/public/StaticPage').then((m) => ({ default: m.TermosPage })))
@@ -110,12 +111,11 @@ export default function App() {
             <Route path="esqueci-senha" element={<ForgotPasswordPage />} />
             <Route path="redefinir-senha" element={<ResetPasswordPage />} />
             <Route path="cadastro" element={<CadastroPage />} />
+            <Route path="auth/confirmar" element={<AuthConfirmPage />} />
             <Route path="cadastro/confirmar" element={<CadastroConfirmarPage />} />
 
             {/* Diretório de empresas: só logado, mas faz parte do site */}
-            <Route element={<ProtectedRoute />}>
-              <Route path="empresas" element={<EmpresasDirectoryPage />} />
-            </Route>
+            <Route path="empresas" element={<EmpresasDirectoryPage />} />
           </Route>
         </Route>
 

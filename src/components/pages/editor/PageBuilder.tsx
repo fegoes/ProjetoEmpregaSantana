@@ -1,3 +1,4 @@
+import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
 import { Plus } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -61,10 +62,11 @@ function SlidesEditor({ section, onChange }: { section: SlidesSection; onChange:
         )}
       </div>
 
-      <ul className="flex flex-col divide-y border-y">
+      <Sortable items={section.slides} onChange={setSlides} label="Slides"><ul className="flex flex-col divide-y border-y">
         {section.slides.map((slide, index) => (
           <EditorRow
             key={slide.id}
+            sortableId={slide.id}
             id={`slide-${slide.id}`}
             label={`Slide ${index + 1}`}
             summary={sectionSummary(slide)}
@@ -98,7 +100,7 @@ function SlidesEditor({ section, onChange }: { section: SlidesSection; onChange:
             />
           </EditorRow>
         ))}
-      </ul>
+      </ul></Sortable>
 
       {section.slides.length < MAX_SLIDES && (
         <Button
@@ -162,10 +164,11 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
       {sections.length === 0 ? (
         <p className="text-sm text-muted-foreground">A página está vazia. Escolha um modelo para a primeira seção.</p>
       ) : (
-        <ul className="flex flex-col divide-y border-y">
+        <Sortable items={sections} onChange={onChange} label="Seções"><ul className="flex flex-col divide-y border-y">
           {sections.map((section, index) => (
             <EditorRow
               key={section.id}
+            sortableId={section.id}
               id={`secao-${section.id}`}
               label={`${index + 1}. ${sectionLabel(section)}`}
               summary={sectionSummary(section)}
@@ -194,7 +197,7 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
               />
             </EditorRow>
           ))}
-        </ul>
+        </ul></Sortable>
       )}
 
       {sections.length < MAX_SECTIONS &&

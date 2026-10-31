@@ -124,4 +124,17 @@ try {
   console.log('OK CRUD administrativo de seleções, autorização, sincronização e exclusão do candidato preservando sua empresa e conta.')
 
 
+  await db.exec("reset role;select set_config('request.jwt.claim.sub','',false);select set_config('request.jwt.claim.role','service_role',false)")
+  const signupId='00000000-0000-4000-8000-000000000010'
+  await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[signupId,'signup@example.test',{full_name:'Cadastro público',contact_phone:'82999990000',initial_role:'candidato',is_admin:true}])
+  assert.equal((await db.query('select phone from profiles where id=$1',[signupId])).rows[0].phone,'82999990000')
+  assert.equal((await db.query('select is_admin from profiles where id=$1',[signupId])).rows[0].is_admin,false)
+  assert.equal((await db.query('select count(*)::int as n from candidato_profiles where id=$1',[signupId])).rows[0].n,1)
+  assert.equal((await db.query("select count(*)::int as n from user_roles where user_id=$1 and role='candidato'",[signupId])).rows[0].n,1)
+  const injected='00000000-0000-4000-8000-000000000011'
+  await db.query('insert into auth.users(id,email,raw_user_meta_data) values($1,$2,$3)',[injected,'injected@example.test',{initial_role:'admin',is_admin:true}])
+  assert.equal((await db.query('select is_admin from profiles where id=$1',[injected])).rows[0].is_admin,false)
+  assert.equal((await db.query('select count(*)::int as n from user_roles where user_id=$1',[injected])).rows[0].n,0)
+  console.log('OK cadastro público cria telefone e papel público na transação do Auth, sem permitir privilégio via metadata.')
+
 } finally { await db.close() }

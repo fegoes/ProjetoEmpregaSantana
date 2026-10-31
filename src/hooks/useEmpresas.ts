@@ -52,6 +52,7 @@ export function useEmpresa(id: string | undefined) {
           .select('*')
           .eq('empresa_id', id as string)
           .eq('status', 'published')
+          .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
           .order('is_featured', { ascending: false })
           .order('created_at', { ascending: false }),
       ])

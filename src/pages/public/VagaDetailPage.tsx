@@ -1,3 +1,4 @@
+import { buildJobPosting, isOpenJob } from '@/lib/jobSeo'
 import { useEmploymentLabels } from '@/hooks/useRecordTypes'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { Briefcase, CalendarDays, MapPin, SearchX } from 'lucide-react'
@@ -21,12 +22,7 @@ import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 
 // https://schema.org/JobPosting employmentType usa um enum próprio, diferente do nosso.
-const SCHEMA_EMPLOYMENT_TYPE: Record<string, string> = {
-  clt: 'FULL_TIME',
-  pj: 'CONTRACTOR',
-  temporario: 'TEMPORARY',
-  freelance: 'CONTRACTOR',
-}
+
 
 function DetailSkeleton() {
   return (
@@ -43,7 +39,7 @@ export default function VagaDetailPage() {
   const employmentLabels = useEmploymentLabels()
   const { id } = useParams<{ id: string }>()
   const [searchParams] = useSearchParams()
-  const { data: vaga, isLoading } = useVaga(id)
+  const { data: vaga, isLoading, isError, refetch } = useVaga(id)
   const modalidades = useModalidadeLabels()
 
   useDocumentMeta({
@@ -54,9 +50,11 @@ export default function VagaDetailPage() {
       : undefined,
     image: vaga?.photo_url ?? vaga?.empresas?.logo_url ?? undefined,
     type: 'website',
+    noindex: !isLoading && !isError && (!vaga || !isOpenJob(vaga)),
   })
 
   if (isLoading) return <DetailSkeleton />
+  if (isError) return <div role="alert" className="space-y-4"><p>Não foi possível carregar esta vaga.</p><Button variant="outline" onClick={()=>refetch()}>Tentar novamente</Button></div>
   if (!vaga) {
     return (
       <EmptyState
@@ -72,64 +70,12 @@ export default function VagaDetailPage() {
     )
   }
 
-  const jobPostingJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'JobPosting',
-    title: vaga.title,
-    description: vaga.description_html || vaga.title,
-    datePosted: vaga.created_at,
-    ...(vaga.expires_at ? { validThrough: vaga.expires_at } : {}),
-    employmentType: SCHEMA_EMPLOYMENT_TYPE[vaga.employment_type],
-    hiringOrganization: {
-      '@type': 'Organization',
-      name: vaga.empresas?.nome_fantasia ?? 'EmpregaSantana',
-      ...(vaga.empresas?.logo_url ? { logo: vaga.empresas.logo_url } : {}),
-    },
-    ...(vaga.is_remote
-      ? {
-          jobLocationType: 'TELECOMMUTE',
-          applicantLocationRequirements: { '@type': 'Country', name: 'BR' },
-        }
-      : {
-          jobLocation: {
-            '@type': 'Place',
-            address: {
-              '@type': 'PostalAddress',
-              addressLocality: vaga.location_city ?? undefined,
-              addressRegion: vaga.location_state ?? undefined,
-              addressCountry: 'BR',
-            },
-          },
-        }),
-    ...(vaga.pricing_model === 'fixed_salary' && vaga.salary_min
-      ? {
-          baseSalary: {
-            '@type': 'MonetaryAmount',
-            currency: 'BRL',
-            value: {
-              '@type': 'QuantitativeValue',
-              minValue: vaga.salary_min,
-              ...(vaga.salary_max ? { maxValue: vaga.salary_max } : {}),
-              unitText: 'MONTH',
-            },
-          },
-        }
-      : {}),
-    ...(vaga.pricing_model === 'hourly' && vaga.hourly_rate
-      ? {
-          baseSalary: {
-            '@type': 'MonetaryAmount',
-            currency: 'BRL',
-            value: { '@type': 'QuantitativeValue', value: vaga.hourly_rate, unitText: 'HOUR' },
-          },
-        }
-      : {}),
-  }
+  const jobPostingJsonLd = buildJobPosting(vaga, `${window.location.origin}/vagas/${vaga.id}`)
 
   const empresaNome = vaga.empresas?.nome_fantasia ?? null
   const local = modalidadeLocal(vaga, modalidades)
   const pay = formatVagaPay(vaga)
-  const open = vaga.status === 'published'
+  const open = isOpenJob(vaga)
   const photos = vaga.photo_urls?.length ? vaga.photo_urls : vaga.photo_url ? [vaga.photo_url] : []
   const shareText = `Vaga: ${vaga.title}${empresaNome ? ` na ${empresaNome}` : ''}. ${pay}, ${local}. Vi no EmpregaSantana:`
   const published = timeAgo(vaga.created_at)
@@ -143,7 +89,7 @@ export default function VagaDetailPage() {
     >
       {(apply) => (
         <div className="flex flex-col gap-4">
-          <JsonLd data={jobPostingJsonLd} />
+          {open && <JsonLd data={jobPostingJsonLd} />}
           <BackLink fallback="/" label="Voltar para as vagas" />
 
           {photos.length > 0 && (

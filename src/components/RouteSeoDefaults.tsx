@@ -1,9 +1,10 @@
+import { isPrivatePath } from '@/lib/authFlow'
 import { useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 export function RouteSeoDefaults() {
  const {pathname}=useLocation()
  useLayoutEffect(()=>{
-  const privatePage=/^\/(admin|perfil|candidato|autonomo|empresa|login|cadastro|redefinir-senha|esqueci-senha)(\/|$)/.test(pathname)||pathname==='/empresas'
+  const privatePage=isPrivatePath(pathname)
   const meta=(attr:string,key:string,value:string)=>{let tag=document.querySelector(`meta[${attr}="${key}"]`);if(!tag){tag=document.createElement('meta');tag.setAttribute(attr,key);document.head.appendChild(tag)}tag.setAttribute('content',value)}
   document.title='EmpregaSantana — trabalho e serviços na sua região'
   const description='Encontre oportunidades de trabalho e profissionais em Santana do Ipanema e região.'

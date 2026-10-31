@@ -1,33 +1,19 @@
-// Vercel Edge Middleware — pré-renderização pra bots/crawlers sem JS.
-//
-// O app é uma SPA client-rendered: título, meta description, JSON-LD e o
-// conteúdo de vaga/autônomo/empresa só existem depois que o React monta e
-// consulta o Supabase. O Googlebot executa JS e indexa mesmo assim (com
-// atraso, numa segunda passada), mas a maioria dos outros crawlers — Bing e
-// praticamente todo bot de IA (GPTBot, ClaudeBot, PerplexityBot etc.) — só
-// lê o HTML bruto da primeira resposta. Pra esses, hoje a página é uma
-// casca vazia.
-//
-// Esse middleware detecta esses agentes pelo User-Agent e, só pras rotas
-// públicas de conteúdo, devolve HTML já pronto (buscado direto do Supabase
-// via REST, sem depender do bundle React) com título, meta description,
-// JSON-LD e o texto da vaga/autônomo/empresa em markup semântico simples.
-// Usuário comum (e o próprio Googlebot, que já funciona) passa direto pra
-// SPA de sempre — o middleware não muda nada pra eles.
-
+import { publicLayoutHtml } from './src/lib/publicLayoutHtml'
+import { buildJobPosting, isOpenJob, type PublicJob } from './src/lib/jobSeo'
+import { isPrivatePath } from './src/lib/authFlow'
+// HTML sem JavaScript para buscadores e prévias de link, sempre consultando
+// apenas dados públicos com a chave anônima. Humanos continuam na aplicação
+// React; metadata e JobPosting usam a mesma função nas duas renderizações.
 import { next } from '@vercel/edge'
 
 
 export const config = {
-  matcher: ['/((?!assets|.*\\..*).*)'],
+  matcher: ['/sitemap.xml', '/robots.txt', '/((?!assets|.*\\..*).*)'],
 }
 
-// Bots que NÃO executam JavaScript e por isso precisam do HTML pronto.
-// Deliberadamente não inclui Googlebot/Bing-render — esses já renderizam
-// JS e o site já funciona pra eles; interceptar à toa só adicionaria
-// latência sem necessidade.
+// Google, Bing, leitores sem JavaScript e agentes de prévia de links.
 const NO_JS_BOT_PATTERN =
-  /GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|Perplexity-User|CCBot|Google-Extended|Applebot-Extended|Bytespider|Amazonbot|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|Slackbot|WhatsApp|TelegramBot|DuckDuckBot|YandexBot|Baiduspider|SemrushBot|AhrefsBot|MJ12bot/i
+  /Googlebot|Google-InspectionTool|bingbot|BingPreview|GPTBot|ChatGPT-User|OAI-SearchBot|ClaudeBot|Claude-Web|anthropic-ai|PerplexityBot|Perplexity-User|CCBot|Google-Extended|Applebot-Extended|Bytespider|Amazonbot|facebookexternalhit|Facebot|Twitterbot|LinkedInBot|Slackbot|WhatsApp|TelegramBot|DuckDuckBot|YandexBot|Baiduspider|SemrushBot|AhrefsBot|MJ12bot/i
 
 function isNoJsBot(userAgent: string | null): boolean {
   if (!userAgent) return false
@@ -119,11 +105,11 @@ ${bodyHtml}
 async function supabaseSelect<T>(path: string): Promise<T[]> {
   const projectUrl = process.env.VITE_SUPABASE_URL
   const publicKey = process.env.VITE_SUPABASE_ANON_KEY
-  if (!projectUrl || !publicKey) return []
+  if (!projectUrl || !publicKey) throw new Error('Configuração pública ausente')
   const res = await fetch(`${projectUrl}/rest/v1/${path}`, {
-    headers: { apikey: publicKey },
+    headers: { apikey: publicKey }, signal: AbortSignal.timeout(8000),
   })
-  if (!res.ok) return []
+  if (!res.ok) throw new Error('Consulta pública indisponível')
   return res.json()
 }
 
@@ -134,26 +120,14 @@ const EMPLOYMENT_LABELS: Record<string, string> = {
   freelance: 'Freelance',
 }
 
-interface VagaRow {
-  title: string
-  description_html: string | null
-  employment_type: string
-  location_city: string | null
-  location_state: string | null
-  is_remote: boolean
-  salary_visible: boolean
-  salary_min: number | null
-  salary_max: number | null
-  created_at: string
-  empresas: { nome_fantasia: string; city: string | null; state: string | null; logo_url: string | null } | null
-}
+type VagaRow = PublicJob
 
 async function renderVaga(id: string, path: string, siteUrl: string): Promise<Response | null> {
   const rows = await supabaseSelect<VagaRow>(
-    `vagas?id=eq.${id}&status=eq.published&select=title,description_html,employment_type,location_city,location_state,is_remote,salary_visible,salary_min,salary_max,created_at,updated_at,empresas(nome_fantasia,city,state,logo_url)`,
+    `vagas?id=eq.${encodeURIComponent(id)}&status=eq.published&or=(expires_at.is.null,expires_at.gt.${new Date().toISOString()})&select=title,description_html,status,expires_at,pricing_model,hourly_rate,employment_type,location_city,location_state,is_remote,salary_visible,salary_min,salary_max,created_at,updated_at,empresas(nome_fantasia,city,state,logo_url)`,
   )
   const vaga = rows[0]
-  if (!vaga) return null
+  if (!vaga || !isOpenJob(vaga)) return new Response('Vaga não disponível', {status:404,headers:{'content-type':'text/plain; charset=utf-8','X-Robots-Tag':'noindex'}})
 
   const local = vaga.is_remote
     ? 'Remoto'
@@ -161,48 +135,14 @@ async function renderVaga(id: string, path: string, siteUrl: string): Promise<Re
   const empresaNome = vaga.empresas?.nome_fantasia ?? 'EmpregaSantana'
   const description = stripHtml(vaga.description_html) || `${vaga.title} em ${empresaNome}.`
 
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'JobPosting',
-    title: vaga.title,
-    description: stripHtml(vaga.description_html, 5000) || vaga.title,
-    datePosted: vaga.created_at,
-    ...(vaga.employment_type && { employmentType: vaga.employment_type.toUpperCase() }),
-    hiringOrganization: { '@type': 'Organization', name: empresaNome },
-    jobLocation: vaga.is_remote
-      ? undefined
-      : {
-          '@type': 'Place',
-          address: {
-            '@type': 'PostalAddress',
-            addressLocality: vaga.location_city,
-            addressRegion: vaga.location_state,
-            addressCountry: 'BR',
-          },
-        },
-    ...(vaga.is_remote && {
-      jobLocationType: 'TELECOMMUTE',
-      applicantLocationRequirements: { '@type': 'Country', name: 'BR' },
-    }),
-    ...(vaga.salary_visible && vaga.salary_min && {
-      baseSalary: {
-        '@type': 'MonetaryAmount',
-        currency: 'BRL',
-        value: {
-          '@type': 'QuantitativeValue',
-          minValue: vaga.salary_min,
-          maxValue: vaga.salary_max ?? vaga.salary_min,
-          unitText: 'MONTH',
-        },
-      },
-    }),
-  }
+  const jsonLd = buildJobPosting(vaga, `${siteUrl}${path}`)
 
   const bodyHtml = `
 <article>
 <h1>${escapeHtml(vaga.title)}</h1>
 <p>${escapeHtml(empresaNome)} — ${escapeHtml(local)}${vaga.employment_type ? ` — ${escapeHtml(EMPLOYMENT_LABELS[vaga.employment_type] ?? vaga.employment_type)}` : ''}</p>
-<div>${escapeHtml(stripHtml(vaga.description_html, 5000)).replace(/\n/g, '<br />')}</div>
+<div>${escapeHtml(stripHtml(vaga.description_html, Number.MAX_SAFE_INTEGER)).replace(/\n/g, '<br />')}</div>
+<p><a href="/login?redirect=${encodeURIComponent(path+'?candidatar=1')}">Candidatar-se a esta vaga</a></p>
 </article>`
 
   return new Response(
@@ -230,7 +170,7 @@ interface AutonomoRow {
 
 async function renderAutonomo(id: string, path: string, siteUrl: string): Promise<Response | null> {
   const rows = await supabaseSelect<AutonomoRow>(
-    `autonomo_profiles?id=eq.${id}&status=eq.active&select=headline,description_html,service_area_city,service_area_state,pricing_model,hourly_rate,profiles(full_name),categories(label)`,
+    `autonomo_profiles?id=eq.${encodeURIComponent(id)}&status=eq.active&select=headline,description_html,service_area_city,service_area_state,pricing_model,hourly_rate,profiles(full_name),categories(label)`,
   )
   const autonomo = rows[0]
   if (!autonomo) return null
@@ -278,13 +218,13 @@ interface EmpresaRow {
 
 async function renderEmpresa(id: string, path: string, siteUrl: string): Promise<Response | null> {
   const rows = await supabaseSelect<EmpresaRow>(
-    `empresas?id=eq.${id}&status=eq.active&select=nome_fantasia,description_html,sector,city,state,logo_url,website`,
+    `empresas?id=eq.${encodeURIComponent(id)}&status=eq.active&select=nome_fantasia,description_html,sector,city,state,logo_url,website`,
   )
   const empresa = rows[0]
   if (!empresa) return null
 
   const vagas = await supabaseSelect<{ id: string; title: string }>(
-    `vagas?empresa_id=eq.${id}&status=eq.published&select=id,title&order=is_featured.desc,created_at.desc&limit=20`,
+    `vagas?empresa_id=eq.${encodeURIComponent(id)}&status=eq.published&or=(expires_at.is.null,expires_at.gt.${new Date().toISOString()})&select=id,title&order=is_featured.desc,created_at.desc&limit=20`,
   )
 
   const description = stripHtml(empresa.description_html) || `${empresa.nome_fantasia} no EmpregaSantana.`
@@ -320,56 +260,37 @@ async function renderEmpresa(id: string, path: string, siteUrl: string): Promise
   )
 }
 
-interface VagaListItem {
-  id: string
-  title: string
-  location_city: string | null
-  location_state: string | null
-  is_remote: boolean
-  empresas: { nome_fantasia: string } | null
-}
-
 async function renderHome(path: string, siteUrl: string): Promise<Response> {
-  const vagas = await supabaseSelect<VagaListItem>(
-    `vagas?status=eq.published&select=id,title,employment_type,location_city,location_state,is_remote,empresas(nome_fantasia)&order=is_featured.desc,created_at.desc&limit=40`,
-  )
-  const items = vagas
-    .map((v) => {
-      const local = v.is_remote ? 'Remoto' : [v.location_city, v.location_state].filter(Boolean).join(', ')
-      return `<li><a href="/vagas/${v.id}">${escapeHtml(v.title)}</a> — ${escapeHtml(v.empresas?.nome_fantasia ?? '')} (${escapeHtml(local || 'A combinar')})</li>`
-    })
-    .join('')
-
-  const bodyHtml = `
-<h1>Vagas e autônomos no sertão alagoano</h1>
-<p>Somos muito mais que uma página: somos a sua conexão de empregabilidade no sertão. Vagas fixas, trabalhos temporários e autônomos — tudo em um só lugar.</p>
-<h2>Vagas em destaque</h2>
-<ul>${items || '<li>Nenhuma vaga publicada no momento.</li>'}</ul>
-<p><a href="/explorar">Ver todas as vagas e autônomos</a> · <a href="/blog">Dicas de carreira</a></p>`
-
-  return new Response(
-    renderPage({
-      siteUrl,
-      title: 'EmpregaSantana — vagas e autônomos em um só lugar',
-      description:
-        'Somos muito mais que uma página, somos a sua conexão de empregabilidade no sertão. Vagas fixas e temporárias, e profissionais autônomos, em um só lugar.',
-      path,
-      bodyHtml,
-    }),
-    { headers: { 'content-type': 'text/html; charset=utf-8' } },
-  )
+  const rows=await supabaseSelect<PaginaRow>('paginas_institucionais?slug=eq.inicio&select=title,content_html,layout,seo_description')
+  const custom=rows[0]
+  const layout=publicLayoutHtml(custom?.layout)
+  const bodyHtml=layout?`<h1>${escapeHtml(custom.title)}</h1>${layout}`:`
+    <h1>Seu próximo passo começa perto de casa.</h1>
+    <p>Quem procura trabalho e quem precisa de um profissional têm um lugar para se encontrar. Vagas, serviços e conexões que movimentam o nosso sertão.</p>
+    <img src="/illustrations/nossa-gente.png" alt="Uma candidata, um profissional de serviços e uma empresária da região, juntos." />
+    <p><a href="/explorar">Encontrar oportunidades</a></p>
+    <h2>Um lugar. Diferentes caminhos.</h2>
+    <h3>Para quem quer trabalhar.</h3><p>Encontre vagas na região e escolha o currículo certo para cada oportunidade.</p><img src="/illustrations/curriculo.jpg" alt="Uma candidata prepara seu currículo." />
+    <h3>Para quem faz acontecer.</h3><p>Apresente seu serviço, mostre seu portfólio e deixe claro onde você atende.</p><img src="/illustrations/servicos.jpg" alt="Um profissional apresenta seu trabalho." />
+    <h3>Para quem precisa contratar.</h3><p>Divulgue oportunidades e organize as candidaturas recebidas.</p><img src="/illustrations/contratacao.jpg" alt="Uma empresária conversa com um candidato." />
+    <p><a href="/cadastro?perfil=empresa">Publicar uma vaga</a> · <a href="/blog">Dicas de carreira</a></p>`
+  return new Response(renderPage({siteUrl,path,title:`${layout?custom.title:'Seu próximo passo começa perto de casa'} | EmpregaSantana`,description:custom?.seo_description||'Vagas, serviços e conexões que movimentam o nosso sertão. Conheça o EmpregaSantana.',bodyHtml}),{headers:{'content-type':'text/html; charset=utf-8'}})
 }
 
 interface PaginaRow {
   title: string
   content_html: string
+  layout?: unknown
+  seo_description?: string
 }
 
 async function renderStaticPage(slug: string, path: string, siteUrl: string, fallbackTitle: string): Promise<Response> {
-  const rows = await supabaseSelect<PaginaRow>(`paginas_institucionais?slug=eq.${slug}&select=title,content_html`)
+  const rows = await supabaseSelect<PaginaRow>(`paginas_institucionais?slug=eq.${encodeURIComponent(slug)}&select=title,content_html,layout,seo_description`)
   const pagina = rows[0]
+  if (!pagina && path.startsWith('/pagina/')) return new Response('Página não encontrada',{status:404,headers:{'X-Robots-Tag':'noindex'}})
+  const layout=publicLayoutHtml(pagina?.layout)
   const title = pagina?.title ?? fallbackTitle
-  const description = stripHtml(pagina?.content_html) || fallbackTitle
+  const description = pagina?.seo_description || stripHtml(pagina?.content_html) || fallbackTitle
 
   return new Response(
     renderPage({
@@ -377,7 +298,7 @@ async function renderStaticPage(slug: string, path: string, siteUrl: string, fal
       title: `${title} | EmpregaSantana`,
       description,
       path,
-      bodyHtml: `<article><h1>${escapeHtml(title)}</h1><div>${escapeHtml(stripHtml(pagina?.content_html, 5000)).replace(/\n/g, '<br />')}</div></article>`,
+      bodyHtml: `<article><h1>${escapeHtml(title)}</h1><div>${layout || escapeHtml(stripHtml(pagina?.content_html, Number.MAX_SAFE_INTEGER)).replace(/\n/g, '<br />')}</div></article>`,
     }),
     { headers: { 'content-type': 'text/html; charset=utf-8' } },
   )
@@ -411,8 +332,44 @@ async function renderBlog(path: string, siteUrl: string, slug?: string): Promise
   return new Response(renderPage({ siteUrl, title: `${article?.seo_title || title} | EmpregaSantana`, description: article?.seo_description || description, path, image: article?.social_image_url || article?.cover_url, socialTitle: article?.social_title || article?.title, socialDescription: article?.social_description || article?.excerpt, imageAlt: article?.social_image_alt || article?.cover_alt, canonicalUrl: article?.canonical_url, noindex: article?.noindex, keywords: article?.keywords, article: Boolean(article), jsonLd, bodyHtml }), { headers: { 'content-type': 'text/html; charset=utf-8' } })
 }
 
+async function renderSitemap(siteUrl: string): Promise<Response> {
+  try {
+    const collect = async (table: string, filters: string, path: (row: {id:string;slug?:string;updated_at?:string})=>string) => {
+      const entries: string[]=[]
+      for(let offset=0;offset<50000;offset+=1000){
+        const rows=await supabaseSelect<{id:string;slug?:string;updated_at?:string}>(`${table}?${filters}&limit=1000&offset=${offset}`)
+        for(const row of rows)entries.push(`<url><loc>${escapeHtml(siteUrl+path(row))}</loc>${row.updated_at?`<lastmod>${escapeHtml(new Date(row.updated_at).toISOString())}</lastmod>`:''}</url>`)
+        if(rows.length<1000)break
+      }
+      return entries
+    }
+    const [jobs,professionals,companies,posts,pages]=await Promise.all([
+      collect('vagas',`select=id,updated_at&status=eq.published&or=(expires_at.is.null,expires_at.gt.${new Date().toISOString()})&order=id`,r=>`/vagas/${r.id}`),
+      collect('autonomo_profiles','select=id,updated_at&status=eq.active&order=id',r=>`/autonomos/${r.id}`),
+      collect('empresas','select=id,updated_at&status=eq.active&order=id',r=>`/empresas/${r.id}`),
+      collect('artigos',`select=id,slug,updated_at&status=eq.published&noindex=eq.false&published_at=lte.${new Date().toISOString()}&order=id`,r=>`/blog/${r.slug}`),
+      collect('paginas_institucionais','select=id,slug,updated_at&is_published=eq.true&is_system=eq.false&order=id',r=>`/pagina/${r.slug}`),
+    ])
+    const staticPaths=['','/explorar','/empresas','/blog','/sobre','/planos','/termos','/privacidade','/lgpd']
+    const entries=[...staticPaths.map(p=>`<url><loc>${escapeHtml(siteUrl+p)}</loc></url>`),...jobs,...professionals,...companies,...posts,...pages]
+    if(entries.length>50000)throw new Error('Sitemap requer particionamento')
+    return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${entries.join('')}</urlset>`,{headers:{'content-type':'application/xml; charset=utf-8','Cache-Control':'public, max-age=60, s-maxage=300'}})
+  } catch {return new Response('Sitemap temporariamente indisponível',{status:503,headers:{'Retry-After':'60'}})}
+}
+
+async function renderCompanyDirectory(path:string,siteUrl:string) {
+  const rows=await supabaseSelect<{id:string;nome_fantasia:string;city:string|null;state:string|null}>('empresas?select=id,nome_fantasia,city,state&status=eq.active&order=nome_fantasia&limit=1000')
+  return new Response(renderPage({siteUrl,path,title:'Empresas da região | EmpregaSantana',description:'Conheça empresas e oportunidades em Santana do Ipanema e região.',bodyHtml:`<h1>Empresas cadastradas</h1><ul>${rows.map(c=>`<li><a href="/empresas/${encodeURIComponent(c.id)}">${escapeHtml(c.nome_fantasia)}</a> ${escapeHtml([c.city,c.state].filter(Boolean).join(', '))}</li>`).join('')}</ul>`}),{headers:{'content-type':'text/html; charset=utf-8'}})
+}
+
 export default async function middleware(request: Request) {
-  if (/^\/(admin|perfil|candidato|autonomo|empresa|login|cadastro|redefinir-senha)(\/|$)/.test(new URL(request.url).pathname)) {
+  const incoming = new URL(request.url)
+  if (incoming.pathname === '/sitemap.xml') return await renderSitemap(incoming.origin)
+  if (incoming.pathname === '/robots.txt') return new Response(`User-agent: *
+Allow: /
+Sitemap: ${incoming.origin}/sitemap.xml
+`, {headers:{'content-type':'text/plain; charset=utf-8'}})
+  if (isPrivatePath(incoming.pathname)) {
     const response = next(); response.headers.set('X-Robots-Tag','noindex, nofollow'); return response
   }
   const userAgent = request.headers.get('user-agent')
@@ -423,6 +380,9 @@ export default async function middleware(request: Request) {
   const siteUrl = url.origin
 
   try {
+    const customPage = path.match(/^\/pagina\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)
+    if (customPage) return await renderStaticPage(customPage[1],path,siteUrl,'Página')
+    if (path === '/empresas') return await renderCompanyDirectory(path,siteUrl)
     if (path === '/blog') return await renderBlog(path, siteUrl) ?? next()
     const blogMatch = path.match(/^\/blog\/([a-z0-9]+(?:-[a-z0-9]+)*)$/)
     if (blogMatch) return await renderBlog(path, siteUrl, blogMatch[1]) ?? next()
@@ -459,7 +419,7 @@ export default async function middleware(request: Request) {
   } catch {
     // Se o Supabase falhar por qualquer motivo, cai pra SPA normal em vez
     // de mostrar erro pro bot.
-    return next()
+    return new Response('Serviço temporariamente indisponível. Tente novamente.',{status:503,headers:{'Retry-After':'60','content-type':'text/plain; charset=utf-8'}})
   }
 
   return next()

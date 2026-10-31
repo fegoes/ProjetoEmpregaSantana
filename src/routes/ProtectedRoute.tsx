@@ -22,11 +22,12 @@ function CheckingAccess() {
  * candidato ou autônomo (quem tem os dois perfis troca de painel no menu).
  */
 export function ProtectedRoute({ roles, adminOnly = false }: ProtectedRouteProps) {
-  const { user, roles: userRoles, isAdmin, loading } = useAuth()
+  const { user, roles: userRoles, isAdmin, loading, authError, refreshProfile, signOut } = useAuth()
   const location = useLocation()
 
   if (loading) return <CheckingAccess />
 
+  if (user && authError) return <div role="alert" className="space-y-4"><p>{authError}</p><button className="min-h-11 rounded border px-4" onClick={()=>void refreshProfile()}>Tentar novamente</button><button className="min-h-11 px-4" onClick={()=>void signOut()}>Sair</button></div>
   if (!user) {
     const destination = `${location.pathname}${location.search}`
     return <Navigate to={`/login?redirect=${encodeURIComponent(destination)}`} replace />

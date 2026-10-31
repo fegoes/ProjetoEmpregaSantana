@@ -1,7 +1,8 @@
+import { safeInternalPath } from '@/lib/utils'
 import { CategorySelect } from '@/components/CategorySelect'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import { Button } from '@/components/ui/button'
@@ -14,7 +15,9 @@ import { isValidCnpj } from '@/lib/masks'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
 export default function EmpresaOnboardingPage() {
-  const { user } = useAuth()
+  const { user, refreshProfile } = useAuth()
+  const [params] = useSearchParams()
+  const returnTo = safeInternalPath(params.get('voltar'))
   const navigate = useNavigate()
   const [nomeFantasia, setNomeFantasia] = React.useState('')
   const [cnpj, setCnpj] = React.useState('')
@@ -52,7 +55,8 @@ export default function EmpresaOnboardingPage() {
       )
       return
     }
-    navigate('/empresa/painel')
+    await refreshProfile()
+    navigate(returnTo ?? '/empresa/painel')
   }
 
   return (

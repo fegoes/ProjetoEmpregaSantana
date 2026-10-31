@@ -1,6 +1,6 @@
 import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
 import { useEmpresa } from '@/contexts/EmpresaContext'
@@ -49,7 +49,7 @@ export default function VagaFormPage() {
   const { id } = useParams<{ id: string }>()
   const isEditing = Boolean(id)
   const { user } = useAuth()
-  const { empresa } = useEmpresa()
+  const { empresa, loading: companyLoading } = useEmpresa()
   const navigate = useNavigate()
   const { data: existing } = useVagaToEdit(id)
   const saveVaga = useSaveVaga()
@@ -152,6 +152,10 @@ export default function VagaFormPage() {
       setError('Não foi possível salvar agora. Confira sua conexão e tente de novo.')
     }
   }
+
+  if (companyLoading) return <p role="status">Carregando a empresa…</p>
+  if (!empresa) return <Navigate to="/empresa/onboarding?voltar=%2Fempresa%2Fvagas%2Fnova" replace />
+  if (empresa.status !== 'active') return <Card className="mx-auto max-w-2xl"><CardHeader><CardTitle>{empresa.status==='pending'?'Empresa aguardando aprovação':'Publicação indisponível para esta empresa'}</CardTitle></CardHeader><CardContent className="space-y-4"><p className="text-sm text-muted-foreground">{empresa.status==='pending'?'O cadastro da empresa foi recebido. A publicação de vagas será liberada após a aprovação pela equipe do EmpregaSantana.':'O cadastro está suspenso. Entre em contato com a equipe para regularizar a situação.'}</p><Button asChild variant="outline"><Link to="/empresa/painel">Voltar ao painel da empresa</Link></Button></CardContent></Card>
 
   return (
     <Card className="mx-auto max-w-2xl">

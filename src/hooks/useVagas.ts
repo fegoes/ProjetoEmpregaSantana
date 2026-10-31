@@ -9,11 +9,13 @@ export interface VagaFilters {
 export function useVagasPublicadas(filters: VagaFilters = {}) {
   return useQuery({
     queryKey: ['vagas', 'list', filters],
+    staleTime: 30_000, refetchOnWindowFocus: true, refetchInterval: 60_000,
     queryFn: async () => {
       let query = supabase
         .from('vagas')
         .select('*, empresas ( id, nome_fantasia, logo_url, city, state )')
         .eq('status', 'published')
+        .or(`expires_at.is.null,expires_at.gt.${new Date().toISOString()}`)
         .order('is_featured', { ascending: false })
         .order('created_at', { ascending: false })
 
@@ -30,13 +32,14 @@ export function useVagasPublicadas(filters: VagaFilters = {}) {
 export function useVaga(id: string | undefined) {
   return useQuery({
     queryKey: ['vagas', 'detail', id],
+    staleTime: 30_000, refetchOnWindowFocus: true,
     enabled: Boolean(id),
     queryFn: async () => {
       const { data, error } = await supabase
         .from('vagas')
         .select('*, empresas ( id, nome_fantasia, logo_url, city, state, description_html )')
         .eq('id', id as string)
-        .single()
+        .maybeSingle()
       if (error) throw error
       return data
     },

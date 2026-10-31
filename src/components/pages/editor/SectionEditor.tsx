@@ -1,3 +1,4 @@
+import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
 import { Plus } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -206,10 +207,11 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
         {section.blocks.length === 0 ? (
           <p className="text-sm text-muted-foreground">Esta seção ainda não tem blocos. Adicione um abaixo.</p>
         ) : (
-          <ul className="flex flex-col divide-y border-y">
+          <Sortable items={section.blocks} onChange={setBlocks} label="Blocos"><ul className="flex flex-col divide-y border-y">
             {section.blocks.map((block, index) => (
               <EditorRow
                 key={block.id}
+            sortableId={block.id}
                 id={`bloco-${block.id}`}
                 label={blockLabel(block.type)}
                 summary={blockSummary(block)}
@@ -234,7 +236,7 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
                 />
               </EditorRow>
             ))}
-          </ul>
+          </ul></Sortable>
         )}
 
         {section.blocks.length < MAX_BLOCKS && (

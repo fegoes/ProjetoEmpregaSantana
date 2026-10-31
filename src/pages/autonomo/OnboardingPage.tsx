@@ -1,5 +1,6 @@
+import { safeInternalPath } from '@/lib/utils'
 import * as React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
 import type { PricingModelAutonomo } from '@/types/database'
@@ -17,6 +18,8 @@ import { CategorySelect } from '@/components/CategorySelect'
 export default function AutonomoOnboardingPage() {
   const { user, roles, addRole } = useAuth()
   const navigate = useNavigate()
+  const [params] = useSearchParams()
+  const returnTo = safeInternalPath(params.get('voltar'))
   const [headline, setHeadline] = React.useState('')
   const [category, setCategory] = React.useState('')
   const [pricingModel, setPricingModel] = React.useState<PricingModelAutonomo>('hourly')
@@ -58,7 +61,7 @@ export default function AutonomoOnboardingPage() {
       setError('Não foi possível publicar agora. Confira sua conexão e tente de novo.')
       return
     }
-    navigate('/autonomo/perfil')
+    navigate(returnTo ?? '/autonomo/perfil')
   }
 
   return (

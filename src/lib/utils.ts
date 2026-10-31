@@ -19,6 +19,10 @@ export function stripHtml(html: string | null | undefined, maxLength = 160): str
 /** Aceita só caminhos internos ("/vagas/1?x=y") vindos da URL — nunca "//site.com" ou "https://…". */
 export function safeInternalPath(path: string | null | undefined): string | null {
   if (!path || !path.startsWith('/') || path.startsWith('//') || path.startsWith('/\\')) return null
+  try {
+    const decoded=decodeURIComponent(path)
+    if(decoded.startsWith('//') || [...decoded].some(char=>char==='\\'||char.charCodeAt(0)<32||char.charCodeAt(0)===127))return null
+  } catch { return null }
   return path
 }
 

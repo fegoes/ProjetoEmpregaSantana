@@ -52,3 +52,5 @@ Scripts: `dev`, `build` (`tsc -b && vite build`), `preview`, `lint`, `test`.
 
 - [Unificação das branches](UNIFICACAO_BRANCHES.md)
 - [CRUD do superadmin e editor do blog](SUPERADMIN_CRUD_E_BLOG.md)
+
+- [Cadastro público, SEO e edição visual](CADASTRO_PUBLICO_SEO_EDITOR.md)

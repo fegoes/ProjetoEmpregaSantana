@@ -1,3 +1,4 @@
+import { isPrivatePath } from '@/lib/authFlow'
 import { useEffect } from 'react'
 
 interface DocumentMetaOptions {
@@ -40,7 +41,7 @@ export function useDocumentMeta({ title, description = 'Vagas, serviços e oport
       setMetaTag('name', 'twitter:description', description)
     }
     setMetaTag('name', 'keywords', (keywords ?? []).join(', '))
-    setMetaTag('name', 'robots', noindex ? 'noindex, follow' : 'index, follow')
+    setMetaTag('name', 'robots', (noindex || isPrivatePath(window.location.pathname)) ? 'noindex, follow' : 'index, follow')
     {
       const canonicalPath = canonical || window.location.pathname
       let link = document.querySelector<HTMLLinkElement>('link[rel="canonical"]')

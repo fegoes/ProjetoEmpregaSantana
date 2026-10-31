@@ -34,7 +34,7 @@ function useNavItems(): NavItem[] {
     { to: '/explorar', label: 'Explorar' },
     { to: '/blog', label: 'Conteúdos' },
   ]
-  const fixed = user ? [...items, { to: '/empresas', label: 'Empresas' }] : [...items, { to: '/planos', label: 'Planos' }]
+  const fixed = [...items, { to: '/empresas', label: 'Empresas' }, ...(!user ? [{ to: '/planos', label: 'Planos' }] : [])]
   const custom = (extraPages ?? []).filter((p) => p.show_in_header).map((p) => ({ to: `/pagina/${p.slug}`, label: p.title }))
   return [...fixed, ...custom]
 }

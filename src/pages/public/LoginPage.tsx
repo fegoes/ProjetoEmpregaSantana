@@ -17,6 +17,7 @@ export default function LoginPage() {
   const redirect = safeInternalPath(searchParams.get('redirect'))
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
+  const [needsConfirmation,setNeedsConfirmation] = React.useState(false)
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState(false)
 
@@ -24,9 +25,11 @@ export default function LoginPage() {
     e.preventDefault()
     setLoading(true)
     setError(null)
+    setNeedsConfirmation(false)
     const { error: signInError, destination, access } = await signIn(email, password)
     setLoading(false)
     if (signInError) {
+      setNeedsConfirmation(signInError.includes('Confirme seu e-mail'))
       setError(signInError)
       return
     }
@@ -79,6 +82,7 @@ export default function LoginPage() {
           />
         </div>
         {error && <FormError>{error}</FormError>}
+        {needsConfirmation&&<Link className="min-h-11 text-sm font-semibold text-primary underline" state={{email:email.trim()}} to={`/cadastro/confirmar${redirect?'?'+new URLSearchParams({redirect}):''}`}>Reenviar o e-mail de confirmação</Link>}
         <Button type="submit" variant="cta" size="lg" className="mt-1" disabled={loading}>
           {loading ? 'Entrando…' : 'Entrar'}
         </Button>

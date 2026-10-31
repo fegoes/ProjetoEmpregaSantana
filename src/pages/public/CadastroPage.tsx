@@ -1,3 +1,5 @@
+import { registrationDestination, inferRegistrationRole } from '@/lib/authFlow'
+import { PhoneInput } from '@/components/fields/MaskedInputs'
 import * as React from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { Briefcase, HardHat, UserRound, type LucideIcon } from 'lucide-react'
@@ -39,26 +41,29 @@ export default function CadastroPage() {
   const { signUp } = useAuth()
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
-  const initialRole = ROLE_OPTIONS.find((o) => o.param === searchParams.get('perfil'))?.role ?? 'candidato'
+  const redirect = safeInternalPath(searchParams.get('redirect'))
+  const initialRole = ROLE_OPTIONS.find((o) => o.param === searchParams.get('perfil'))?.role ?? inferRegistrationRole(redirect)
   const [role, setRole] = React.useState<UserRole>(initialRole)
   const [fullName, setFullName] = React.useState('')
   const [email, setEmail] = React.useState('')
+  const [phone,setPhone] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [error, setError] = React.useState<string | null>(null)
   const [loading, setLoading] = React.useState(false)
-  const redirect = safeInternalPath(searchParams.get('redirect'))
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true)
     setError(null)
-    const { error: signUpError } = await signUp(email, password, role, fullName)
+    if (!fullName.trim() || phone.replace(/\D/g,'').length < 10) { setError('Informe seu nome e um telefone válido com DDD.'); return }
+    setLoading(true)
+    const { error: signUpError } = await signUp(email, password, role, fullName, phone, registrationDestination(role,redirect))
     setLoading(false)
     if (signUpError) {
       setError(signUpError)
       return
     }
-    navigate('/cadastro/confirmar')
+    const params=new URLSearchParams({redirect:registrationDestination(role,redirect)})
+    navigate(`/cadastro/confirmar?${params}`,{replace:true,state:{email:email.trim(),fromSignup:true}})
   }
 
   return (
@@ -111,12 +116,14 @@ export default function CadastroPage() {
           <Input
             id="fullName"
             autoComplete="name"
+            maxLength={180}
             autoCapitalize="words"
             required
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
           />
         </div>
+        <div className="flex flex-col gap-1.5"><Label htmlFor="phone">Telefone com DDD</Label><PhoneInput id="phone" required value={phone} onChange={setPhone} /></div>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="email">E-mail</Label>
           <Input

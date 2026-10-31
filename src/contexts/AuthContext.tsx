@@ -1,3 +1,4 @@
+import { confirmationRedirect } from '@/lib/authFlow'
 import * as React from 'react'
 import type { Session, User } from '@supabase/supabase-js'
 import { supabase } from '@/lib/supabase'
@@ -16,13 +17,16 @@ interface AuthContextValue {
   roles: UserRole[]
   isAdmin: boolean
   loading: boolean
+  authError: string | null
   signIn: (email: string, password: string) => Promise<{ error: string | null; destination?: string; access?: PanelUser }>
   signUp: (
     email: string,
     password: string,
     initialRole: UserRole,
     fullName?: string,
-  ) => Promise<{ error: string | null }>
+    phone?: string,
+    redirect?: string,
+  ) => Promise<{ error: string | null; confirmationRequired?: boolean }>
   signOut: () => Promise<void>
   addRole: (role: UserRole) => Promise<{ error: string | null }>
   refreshProfile: () => Promise<void>
@@ -33,11 +37,13 @@ interface AuthContextValue {
 const AuthContext = React.createContext<AuthContextValue | undefined>(undefined)
 
 async function loadProfileAndRoles(userId: string) {
-  const [{ data: profile }, { data: roleRows }] = await Promise.all([
+  const [{ data: profile, error: profileError }, { data: roleRows, error: rolesError }] = await Promise.all([
     supabase.from('profiles').select('*').eq('id', userId).single(),
     supabase.from('user_roles').select('role').eq('user_id', userId),
   ])
 
+  if (profileError || rolesError) throw profileError ?? rolesError
+  if (!profile) throw new Error('Perfil não encontrado')
   return {
     profile: profile ?? null,
     roles: (roleRows ?? []).map((r) => r.role as UserRole),
@@ -50,14 +56,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [roles, setRoles] = React.useState<UserRole[]>([])
   const [loading, setLoading] = React.useState(true)
 
+  const [authError,setAuthError] = React.useState<string|null>(null)
   const hydrationVersion = React.useRef(0)
   const sessionUserId = React.useRef<string | null>(null)
   const validatedSession = React.useRef<{ userId: string; token: string } | null>(null)
-  const hydrate = React.useCallback(async (nextSession: Session | null) => {
+  const hydrate = React.useCallback(async (nextSession: Session | null, defer = false) => {
     const version = ++hydrationVersion.current
     validatedSession.current = null
     const nextUserId = nextSession?.user.id ?? null
     setLoading(true)
+    setAuthError(null)
     setSession(nextSession)
     setProfile(null)
     setRoles([])
@@ -67,9 +75,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
     try {
       if (!nextSession?.user) return
+      if (defer) await new Promise(resolve=>setTimeout(resolve,0))
+      if (version !== hydrationVersion.current) return
       const { profile: nextProfile, roles: nextRoles } = await loadProfileAndRoles(nextSession.user.id)
       if (version !== hydrationVersion.current) return
-      if (!nextProfile || !nextProfile.is_active) {
+      if (!nextProfile.is_active) {
         await supabase.auth.signOut()
         if (version === hydrationVersion.current) setSession(null)
         return
@@ -78,7 +88,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setRoles(nextRoles)
       validatedSession.current = { userId: nextSession.user.id, token: nextSession.access_token }
     } catch {
-      if (version === hydrationVersion.current) setSession(null)
+      if (version === hydrationVersion.current) setAuthError('Não foi possível carregar seus dados. Confira a conexão e tente novamente.')
     } finally {
       if (version === hydrationVersion.current) setLoading(false)
     }
@@ -99,7 +109,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // validated with this exact token must not unmount in-progress forms.
       // New tokens, account changes, explicit refreshes and sign-out still hydrate.
       if (event === 'SIGNED_IN' && nextSession?.access_token && validatedSession.current?.userId === nextSession.user.id && validatedSession.current.token === nextSession.access_token) return
-      hydrate(nextSession)
+      void hydrate(nextSession, true)
     })
 
     return () => {
@@ -109,17 +119,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [hydrate])
 
   const signIn: AuthContextValue['signIn'] = async (email, password) => {
+    try {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) return { error: translateAuthError(error.message) }
 
     let destination: string | undefined
     let access: PanelUser | undefined
     if (data.user) {
-      const [{ data: profileRow }, { data: roleRows }] = await Promise.all([
+      const [{ data: profileRow, error: profileError }, { data: roleRows, error: rolesError }] = await Promise.all([
         supabase.from('profiles').select('is_active, is_admin').eq('id', data.user.id).single(),
         supabase.from('user_roles').select('role').eq('user_id', data.user.id),
       ])
-      if (!profileRow || !profileRow.is_active) {
+      if (profileError || rolesError || !profileRow) return { error: 'Não foi possível carregar seu perfil. Tente novamente.' }
+      if (!profileRow.is_active) {
         await supabase.auth.signOut()
         return { error: 'Sua conta foi desativada. Entre em contato com o suporte.' }
       }
@@ -128,24 +140,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     return { error: null, destination, access }
+    } catch { return { error: 'Não foi possível entrar. Confira sua conexão e tente novamente.' } }
   }
 
-  const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName) => {
+  const signUp: AuthContextValue['signUp'] = async (email, password, initialRole, fullName, phone, redirect) => {
     if (!isPublicRole(initialRole)) return { error: 'Escolha um perfil público válido.' }
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: { data: { full_name: fullName } },
-    })
-
-    if (error) return { error: error.message }
-    if (!data.user) return { error: null }
-
-    const { error: roleError } = await supabase
-      .from('user_roles')
-      .insert({ user_id: data.user.id, role: initialRole })
-
-    return { error: roleError?.message ?? null }
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: email.trim(), password,
+        options: { emailRedirectTo: confirmationRedirect(redirect), data: { full_name: fullName?.trim(), contact_phone: phone, initial_role: initialRole } },
+      })
+      if (error) return { error: translateAuthError(error.message) }
+      // Com confirmação ativa não há sessão. Nunca tente escrever user_roles
+      // pelo navegador anônimo: handle_new_user realiza isso atomicamente.
+      if (data.session) {
+        await supabase.auth.signOut()
+        return { error: 'O serviço não exigiu confirmação de e-mail. A equipe precisa revisar a configuração de confirmação antes de continuar.' }
+      }
+      return { error: null, confirmationRequired: true }
+    } catch { return { error: 'Não foi possível criar a conta. Confira a conexão e tente novamente.' } }
   }
 
   const signOut = async () => {
@@ -185,6 +198,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     roles: profile?.id === session?.user.id ? roles : [],
     isAdmin: hasAdminAccess(session?.user ?? null, profile),
     loading,
+    authError,
     signIn,
     signUp,
     signOut,

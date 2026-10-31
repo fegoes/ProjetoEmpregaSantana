@@ -1,3 +1,4 @@
+import { useDocumentMeta } from '@/hooks/useDocumentMeta'
 import * as React from 'react'
 import { Building2, Search } from 'lucide-react'
 import { Input } from '@/components/ui/input'
@@ -7,6 +8,7 @@ import { ShowMoreGrid } from '@/components/ShowMoreGrid'
 import { useEmpresasDiretorio } from '@/hooks/useEmpresas'
 
 export default function EmpresasDirectoryPage() {
+  useDocumentMeta({title:'Empresas da região',description:'Conheça as empresas e suas oportunidades de trabalho em Santana do Ipanema e região.'})
   const [search, setSearch] = React.useState('')
   const { data: empresas, isLoading } = useEmpresasDiretorio(search)
 

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { AuthProvider, useAuth } from './AuthContext'
@@ -20,7 +21,8 @@ vi.mock('@/lib/supabase', () => ({ supabase: {
 
 function Probe() {
   const auth = useAuth()
-  return <><output data-testid="state">{JSON.stringify({ id: auth.user?.id, admin: auth.isAdmin, loading: auth.loading })}</output><button onClick={() => auth.signUp('test@example.test', 'local-test-only', 'admin' as UserRole)}>Cadastro inválido</button><button onClick={() => auth.addRole('admin' as UserRole)}>Papel inválido</button></>
+  const [result,setResult]=useState('')
+  return <><button onClick={async()=>{const r=await auth.signUp('person@example.test','test-password','candidato','Pessoa','(82) 99999-0000','/candidato/onboarding?voltar=%2Fvagas%2F123');setResult(r.error??'Cadastro solicitado')}}>Cadastro válido</button><p>{result}</p><output data-testid="state">{JSON.stringify({ id: auth.user?.id, admin: auth.isAdmin, loading: auth.loading, error: auth.authError })}</output><button onClick={() => auth.signUp('test@example.test', 'local-test-only', 'admin' as UserRole)}>Cadastro inválido</button><button onClick={() => auth.addRole('admin' as UserRole)}>Papel inválido</button></>
 }
 const read = () => JSON.parse(screen.getByTestId('state').textContent ?? '{}')
 const session = (id: string) => ({ user: { id } })
@@ -107,5 +109,37 @@ describe('isolamento da sessão administrativa', () => {
     render(<AuthProvider><Probe /></AuthProvider>)
     await waitFor(() => expect(read()).toMatchObject({ admin: false, loading: false }))
     expect(read().id).toBeUndefined()
+  })
+})
+
+
+describe('falha temporária de perfil',()=>{
+ it('permite tentar novamente sem apagar a sessão nem liberar administração',async()=>{
+  controls.getSession.mockResolvedValue({data:{session:session('ordinary-b')}})
+  controls.profiles.set('ordinary-b',Promise.resolve({data:null,error:{code:'503'}}))
+  render(<AuthProvider><Probe /></AuthProvider>)
+  await waitFor(()=>expect(read().error).toBeTruthy())
+  expect(read()).toMatchObject({id:'ordinary-b',admin:false,loading:false})
+ })
+})
+
+describe('cadastro com confirmação habilitada',()=>{
+  it('não tenta gravar papéis com sessão anônima e transmite o retorno no e-mail',async()=>{
+    controls.signUp.mockResolvedValue({data:{user:{id:'new-user'},session:null},error:null})
+    render(<AuthProvider><Probe /></AuthProvider>)
+    await waitFor(()=>expect(read().loading).toBe(false))
+    fireEvent.click(screen.getByRole('button',{name:'Cadastro válido'}))
+    await screen.findByText('Cadastro solicitado')
+    expect(controls.from).not.toHaveBeenCalled()
+    expect(controls.signUp.mock.calls[0][0].options.data).toMatchObject({initial_role:'candidato',contact_phone:'(82) 99999-0000'})
+    expect(new URL(controls.signUp.mock.calls[0][0].options.emailRedirectTo).pathname).toBe('/auth/confirmar')
+  })
+  it('não informa envio de confirmação se o serviço cria uma sessão automaticamente',async()=>{
+    controls.signUp.mockResolvedValue({data:{user:{id:'new-user'},session:{user:{id:'new-user'}}},error:null})
+    render(<AuthProvider><Probe /></AuthProvider>)
+    await waitFor(()=>expect(read().loading).toBe(false))
+    fireEvent.click(screen.getByRole('button',{name:'Cadastro válido'}))
+    await screen.findByText(/não exigiu confirmação/)
+    expect(controls.from).not.toHaveBeenCalled()
   })
 })

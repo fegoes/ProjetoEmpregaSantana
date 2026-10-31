@@ -176,7 +176,7 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
                     </ul>
                   </div>
                 )}
-                <PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} />
+                <div className="grid min-w-0 items-start gap-6 xl:grid-cols-2"><div className="min-w-0"><p className="mb-4 text-sm text-muted-foreground">Arraste as seções e os blocos pela alça para reordenar. Também é possível usar os botões Subir e Descer.</p><PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} /></div><aside className="min-w-0 space-y-3 xl:sticky xl:top-20"><h2 className="font-semibold">Prévia em tempo real</h2><p className="text-xs text-muted-foreground">As alterações aparecem aqui antes de salvar. Use a aba Visualizar para ampliar.</p><div className="max-h-[75vh] overflow-auto rounded-xl border bg-background"><PageRenderer layout={layout} title={title} preview /></div></aside></div>
                 {pagina.slug === 'inicio' && (
                   <div>
                     <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" onClick={resetHome}>
@@ -188,8 +188,8 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
             ) : pagina.slug === 'inicio' ? (
               <div className="flex max-w-xl flex-col gap-3">
                 <p className="text-sm text-muted-foreground">
-                  Hoje a página inicial mostra o desenho padrão do site: uma faixa azul com a busca e, abaixo, a lista de vagas e profissionais. Para
-                  mudar, comece por uma cópia desse desenho e ajuste as seções, as cores e as imagens.
+                  Hoje a página inicial mostra o desenho padrão do site: a apresentação do projeto e as imagens editoriais. Para
+                  mudar, comece por um modelo em seções e revise os textos, as cores e as imagens antes de publicar.
                 </p>
                 <Button type="button" className="self-start" onClick={() => startLayout(homeStarterLayout())}>
                   Personalizar a página inicial
