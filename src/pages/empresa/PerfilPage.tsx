@@ -1,9 +1,11 @@
+import { CnpjInput } from '@/components/fields/MaskedInputs'
+import { isValidCnpj } from '@/lib/masks'
 import { CategorySelect } from '@/components/CategorySelect'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { supabase } from '@/lib/supabase'
-import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo } from '@/lib/storage'
+import { uploadEmpresaInteriorPhoto, uploadEmpresaLogo, uploadEmpresaCover } from '@/lib/storage'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { BlocksEditor } from '@/components/BlocksEditor'
 import { SegmentSelect } from '@/components/SegmentSelect'
@@ -36,6 +38,11 @@ function VisibilityToggle({
 
 export default function EmpresaPerfilPage() {
   const { empresa, refresh } = useEmpresa()
+  const [razaoSocial,setRazaoSocial]=React.useState(empresa?.razao_social??'')
+  const [cnpj,setCnpj]=React.useState(empresa?.cnpj??'')
+  const [cover,setCover]=React.useState(empresa?.cover_url??null)
+  const [uploads,setUploads]=React.useState(0)
+  const uploading=(busy:boolean)=>setUploads(n=>Math.max(0,n+(busy?1:-1)))
   const [nomeFantasia, setNomeFantasia] = React.useState(empresa?.nome_fantasia ?? '')
   const [category, setCategory] = React.useState(empresa?.category ?? '')
   const [typeSlug, setTypeSlug] = React.useState(empresa?.type_slug ?? '')
@@ -72,6 +79,7 @@ export default function EmpresaPerfilPage() {
     setCategory(empresa.category ?? '')
     setTypeSlug(empresa.type_slug ?? '')
     setSector(empresa.sector ?? '')
+    setRazaoSocial(empresa.razao_social??'');setCnpj(empresa.cnpj??'');setCover(empresa.cover_url)
     setWebsite(empresa.website ?? '')
     setDescriptionHtml(empresa.description_html ?? '')
     setLogoUrl(empresa.logo_url)
@@ -93,6 +101,8 @@ export default function EmpresaPerfilPage() {
   if (!empresa) return <p className="text-sm text-muted-foreground">Carregando…</p>
 
   const handleSave = async () => {
+    if(uploads>0)return
+    if(cnpj&&!isValidCnpj(cnpj)){setError('Confira o CNPJ informado.');return}
     setSaving(true)
     setSaved(false)
     setError(null)
@@ -100,6 +110,9 @@ export default function EmpresaPerfilPage() {
     const { error: saveError } = await supabase
       .from('empresas')
       .update({
+        razao_social:razaoSocial.trim()||null,
+        cnpj:cnpj||null,
+        cover_url:cover,
         nome_fantasia: nomeFantasia,
         sector,
         category: category || null,
@@ -140,12 +153,17 @@ export default function EmpresaPerfilPage() {
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <ImageUploadField
+            disabled={saving}
+            onUploadingChange={uploading}
             label="Logo"
             purpose="logo"
             currentUrl={logoUrl}
             onUpload={(file) => uploadEmpresaLogo(file, empresa.id)}
             onUploaded={setLogoUrl}
           />
+          <ImageUploadField disabled={saving} onUploadingChange={uploading} label="Capa da empresa" shape="banner" purpose="banner" currentUrl={cover} onUpload={file=>uploadEmpresaCover(file,empresa.id)} onUploaded={setCover} onRemove={()=>setCover(null)} />
+          <div className="space-y-2"><Label htmlFor="company-razao">Razão social</Label><Input id="company-razao" value={razaoSocial} onChange={e=>setRazaoSocial(e.target.value)} /></div>
+          <div className="space-y-2"><Label htmlFor="company-cnpj">CNPJ</Label><CnpjInput id="company-cnpj" value={cnpj} onChange={setCnpj} /></div>
             <div className="flex flex-col gap-1.5"><Label htmlFor="company-category">Categoria da empresa</Label><CategorySelect id="company-category" kind="empresa" value={category} onChange={setCategory} /></div>
           <div className="flex flex-col gap-1.5"><Label htmlFor="company-type">Tipo de empresa</Label><RecordTypeSelect id="company-type" kind="empresa" value={typeSlug} onChange={setTypeSlug} /></div>
         <div className="flex flex-col gap-1.5">
@@ -235,13 +253,13 @@ export default function EmpresaPerfilPage() {
           <CardDescription>Mostre o dia a dia e o ambiente de trabalho</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-2">
-          <PhotoGalleryField
+          <fieldset disabled={saving}><PhotoGalleryField onUploadingChange={uploading}
             label=""
             photos={interiorPhotos}
             onUpload={(file) => uploadEmpresaInteriorPhoto(file, empresa.id)}
             onChange={setInteriorPhotos}
           />
-          <VisibilityToggle checked={interiorPhotosVisible} onChange={setInteriorPhotosVisible} />
+          </fieldset><VisibilityToggle checked={interiorPhotosVisible} onChange={setInteriorPhotosVisible} />
         </CardContent>
       </Card>
 
@@ -261,7 +279,7 @@ export default function EmpresaPerfilPage() {
 
       {error && <FormError>{error}</FormError>}
       <div className="flex items-center gap-3">
-        <Button onClick={handleSave} variant="cta" disabled={saving}>
+        <Button onClick={handleSave} variant="cta" disabled={saving||uploads>0}>
           {saving ? 'Salvando…' : 'Salvar alterações'}
         </Button>
         {saved && <p className="text-sm text-muted-foreground">Perfil atualizado.</p>}

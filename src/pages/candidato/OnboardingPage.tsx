@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import * as React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
@@ -52,6 +53,7 @@ export default function CandidatoOnboardingPage() {
         <CardDescription>Você poderá criar vários currículos depois disso.</CardDescription>
       </CardHeader>
       <CardContent>
+        <ProfilePhotoField />
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="headline">Título profissional</Label>

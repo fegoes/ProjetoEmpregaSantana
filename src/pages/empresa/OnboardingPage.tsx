@@ -1,3 +1,5 @@
+import { ImageUploadField } from '@/components/ImageUploadField'
+import { uploadEmpresaLogo } from '@/lib/storage'
 import { safeInternalPath } from '@/lib/utils'
 import { CategorySelect } from '@/components/CategorySelect'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
@@ -19,6 +21,10 @@ export default function EmpresaOnboardingPage() {
   const [params] = useSearchParams()
   const returnTo = safeInternalPath(params.get('voltar'))
   const navigate = useNavigate()
+  const [companyId]=React.useState(()=>crypto.randomUUID())
+  const [logo,setLogo]=React.useState<string|null>(null)
+  const [uploads,setUploads]=React.useState(0)
+  const uploading=(busy:boolean)=>setUploads(n=>Math.max(0,n+(busy?1:-1)))
   const [nomeFantasia, setNomeFantasia] = React.useState('')
   const [cnpj, setCnpj] = React.useState('')
   const [category, setCategory] = React.useState('')
@@ -29,7 +35,7 @@ export default function EmpresaOnboardingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!user) return
+    if (!user||uploads>0) return
     setError(null)
     if (cnpj && !isValidCnpj(cnpj)) {
       setError('Esse CNPJ não parece válido. Confira os 14 números.')
@@ -38,6 +44,8 @@ export default function EmpresaOnboardingPage() {
     setLoading(true)
 
     const { error: insertError } = await supabase.from('empresas').insert({
+      id:companyId,
+      logo_url:logo,
       owner_id: user.id,
       nome_fantasia: nomeFantasia,
       cnpj: cnpj || null,
@@ -83,8 +91,9 @@ export default function EmpresaOnboardingPage() {
             <Label htmlFor="sector">Segmento</Label>
             <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
+          <ImageUploadField disabled={loading} label="Logo da empresa" purpose="logo" currentUrl={logo} onUpload={file=>uploadEmpresaLogo(file,companyId)} onUploaded={setLogo} onRemove={()=>setLogo(null)} onUploadingChange={uploading} />
           {error && <FormError>{error}</FormError>}
-          <Button type="submit" variant="cta" disabled={loading}>
+          <Button type="submit" variant="cta" disabled={loading||uploads>0}>
             {loading ? 'Criando…' : 'Criar empresa'}
           </Button>
         </form>

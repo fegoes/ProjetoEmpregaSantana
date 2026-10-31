@@ -1,4 +1,5 @@
-import { ResponsiveImage } from '@/components/ResponsiveImage'
+import { ImageCarousel } from '@/components/ImageCarousel'
+import { ExpandableImage } from '@/components/ImageLightbox'
 import { useParams } from 'react-router-dom'
 import { MapPin, Users } from 'lucide-react'
 import { useEmpresa } from '@/hooks/useEmpresas'
@@ -53,6 +54,7 @@ export default function EmpresaDetailPage() {
     <div className="flex flex-col gap-8">
       <JsonLd data={organizationJsonLd} />
       <BackLink fallback="/" />
+      {empresa.cover_url&&<ImageCarousel images={[empresa.cover_url]} alt={`Capa da ${empresa.nome_fantasia}`} className="aspect-video w-full rounded-xl sm:aspect-[21/9]" />}
       <div className="flex items-start gap-4">
         <CompanyLogo name={empresa.nome_fantasia} logoUrl={empresa.logo_url} size="lg" />
         <div>
@@ -143,9 +145,9 @@ export default function EmpresaDetailPage() {
         <div>
           <h2 className="mb-3 text-lg font-bold">Conheça o ambiente</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {empresa.interior_photo_urls.map((url) => (
+            {empresa.interior_photo_urls.map((url,index) => (
               <div key={url} className="aspect-square overflow-hidden rounded-xl bg-muted">
-                <ResponsiveImage src={url} alt={`Ambiente interno da ${empresa.nome_fantasia}`} className="size-full object-cover" loading="lazy" />
+                <ExpandableImage wrapperClassName="size-full" images={empresa.interior_photo_urls} initialIndex={index} src={url} alt={`Ambiente interno da ${empresa.nome_fantasia}`} className="size-full object-contain" loading="lazy" />
               </div>
             ))}
           </div>

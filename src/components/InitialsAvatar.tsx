@@ -37,7 +37,7 @@ const SIZES = {
 }
 
 export function InitialsAvatar({ name, imageUrl, size = 'md', className }: InitialsAvatarProps) {
-  if (imageUrl) return <ResponsiveImage src={imageUrl} alt={`Foto de ${name}`} className={cn('shrink-0 rounded-full object-cover', SIZES[size], className)} />
+  if (imageUrl) return <ResponsiveImage src={imageUrl} alt={`Foto de ${name}`} className={cn('shrink-0 rounded-lg border bg-muted p-1 object-contain', SIZES[size], className)} />
   return (
     <div
       className={cn(

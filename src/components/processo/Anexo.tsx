@@ -25,7 +25,7 @@ export function Anexo({ anexo }: { anexo: AnexoDaMensagem }) {
     <div className="flex flex-col gap-2">
       {imagem && previa.data && (
         <button type="button" onClick={() => void abrir(path)} className="block w-fit overflow-hidden rounded-lg" aria-label={`Abrir ${nome}`}>
-          <img src={previa.data} alt={nome} loading="lazy" className="max-h-52 max-w-full rounded-lg object-cover" />
+          <img src={previa.data} alt={nome} loading="lazy" className="max-h-52 max-w-full rounded-lg object-contain" />
         </button>
       )}
       <div className="flex items-center gap-3">

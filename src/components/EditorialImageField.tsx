@@ -1,3 +1,4 @@
+import { ExpandableImage } from './ImageLightbox'
 import { useImageVariant } from '@/hooks/useImageVariant'
 import { ImageGuidance, type ImagePurpose } from './ImageGuidance'
 import { useState } from 'react'
@@ -5,7 +6,7 @@ import { uploadEditorialImage } from '@/lib/storage'
 import { ImageSourcePicker } from './ImageSourcePicker'
 function SingleEditorialImageField({label,value,onChange,onUploadingChange,purpose='content',disabled=false}:{label:string;value:string;onChange:(url:string)=>void|Promise<void>;onUploadingChange?:(busy:boolean)=>void;purpose?:ImagePurpose;disabled?:boolean}) {
  const [busy,setBusy]=useState(false)
- return <section className="space-y-3"><h4 className="text-sm font-medium">{label}</h4><ImageSourcePicker label={label} disabled={disabled||busy} onBusyChange={value=>{setBusy(value);onUploadingChange?.(value)}} onFile={async file=>{await onChange(await uploadEditorialImage(file))}} />{value&&<><img src={value} alt={`Prévia: ${label}`} className="max-h-40 max-w-full rounded-lg object-contain" /><button type="button" disabled={disabled||busy} className="min-h-11 text-sm text-destructive underline" onClick={()=>{void onChange('')}}>Remover imagem</button></>}<ImageGuidance purpose={purpose} src={value} /></section>
+ return <section className="space-y-3"><h4 className="text-sm font-medium">{label}</h4><ImageSourcePicker label={label} disabled={disabled||busy} onBusyChange={value=>{setBusy(value);onUploadingChange?.(value)}} onFile={async file=>{await onChange(await uploadEditorialImage(file))}} />{value&&<><ExpandableImage src={value} alt={`Prévia: ${label}`} className="max-h-40 max-w-full rounded-lg object-contain" /><button type="button" disabled={disabled||busy} className="min-h-11 text-sm text-destructive underline" onClick={()=>{void onChange('')}}>Remover imagem</button></>}<ImageGuidance purpose={purpose} src={value} /></section>
 }
 
 export function EditorialImageField(props: Parameters<typeof SingleEditorialImageField>[0]) {

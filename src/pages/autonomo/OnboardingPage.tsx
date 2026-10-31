@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { safeInternalPath } from '@/lib/utils'
 import * as React from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
@@ -71,6 +72,7 @@ export default function AutonomoOnboardingPage() {
         <CardDescription>Seu perfil aparecerá publicamente na Home para contratação direta.</CardDescription>
       </CardHeader>
       <CardContent>
+        <ProfilePhotoField />
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="headline">O que você faz?</Label>

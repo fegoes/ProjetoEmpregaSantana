@@ -1,3 +1,4 @@
+import { ExpandableImage } from './ImageLightbox'
 import { ImageSourcePicker } from './ImageSourcePicker'
 import { useImageVariant } from '@/hooks/useImageVariant'
 import * as React from 'react'
@@ -10,6 +11,7 @@ import { cn } from '@/lib/utils'
 
 interface ImageUploadFieldProps {
   label: string
+  onUploadingChange?: (busy:boolean)=>void
   disabled?: boolean
   currentUrl: string | null | undefined
   onUpload: (file: File) => Promise<string>
@@ -25,6 +27,7 @@ interface ImageUploadFieldProps {
 // no banco é a página que o usa (mesmo padrão dos outros formulários).
 function SingleImageUploadField({
   label,
+  onUploadingChange,
   disabled = false,
   currentUrl,
   onUpload,
@@ -73,7 +76,7 @@ function SingleImageUploadField({
           {uploading ? (
             <Loader2 className="size-5 animate-spin" />
           ) : preview ? (
-            <img src={preview} alt="" className={cn("size-full", purpose === 'logo' ? 'object-contain' : 'object-cover')} />
+            <ExpandableImage wrapperClassName="size-full" src={preview} alt="" className={cn("size-full", purpose === 'logo' ? 'object-contain' : 'object-contain')} />
           ) : (
             <ImagePlus className="size-5" />
           )}
@@ -88,7 +91,7 @@ function SingleImageUploadField({
         </div>
 
       </div>
-      <ImageSourcePicker inputId={id} label={label} disabled={uploading||disabled} onFile={handleFile} />
+      <ImageSourcePicker inputId={id} label={label} disabled={uploading||disabled} onBusyChange={onUploadingChange} onFile={handleFile} />
       <ImageGuidance id={`${id}-guide`} purpose={purpose ?? (shape === 'square' ? 'content' : 'banner')} src={preview} />
     </div>
   )

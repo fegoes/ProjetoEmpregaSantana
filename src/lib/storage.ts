@@ -29,7 +29,7 @@ async function uploadImage(file: File, path: string) {
 }
 
 export function uploadEmpresaLogo(file: File, empresaId: string) {
-  return uploadImage(file, `empresas/${empresaId}/logo`)
+  return uploadImage(file, `empresas/${empresaId}/logo-${crypto.randomUUID()}`)
 }
 
 export function uploadVagaPhoto(file: File, vagaId: string) {
@@ -62,4 +62,8 @@ export function uploadEditorialImage(file: File) {
 
 export function uploadProfilePhoto(file: File, userId: string) {
   return uploadImage(file, `profiles/${userId}/${crypto.randomUUID()}`)
+}
+
+export function uploadEmpresaCover(file: File, empresaId: string) {
+  return uploadImage(file, `empresas/${empresaId}/cover-${crypto.randomUUID()}`)
 }

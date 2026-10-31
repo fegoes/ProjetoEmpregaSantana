@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { Link, useNavigate } from 'react-router-dom'
 import { FileText } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
@@ -33,6 +34,7 @@ export default function CvListPage() {
 
   return (
     <div className="flex flex-col gap-6">
+      <ProfilePhotoField />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">Meus currículos</h1>

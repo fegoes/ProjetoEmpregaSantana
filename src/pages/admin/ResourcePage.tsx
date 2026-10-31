@@ -1,3 +1,7 @@
+import { ImageUploadField } from '@/components/ImageUploadField'
+import { PhotoGalleryField } from '@/components/PhotoGalleryField'
+import { AdminAvatarField } from '@/components/admin/AdminAvatarField'
+import { uploadEmpresaLogo, uploadEmpresaCover, uploadEmpresaInteriorPhoto, uploadVagaGalleryPhoto, uploadAutonomoPortfolioPhoto } from '@/lib/storage'
 import { QuickCreateTaxonomy } from '@/components/admin/QuickCreateTaxonomy'
 import { useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
@@ -17,7 +21,7 @@ import { StatusBadge } from '@/components/StatusBadge'
 
 export type Resource = 'vagas' | 'profissionais' | 'empresas'
 type Values = Record<string, string | boolean>
-type RecordItem = { id: string; title: string; subtitle: string; status: string; values: Values }
+type RecordItem = { id: string; title: string; subtitle: string; status: string; values: Values; media?: {logo?:string|null;cover?:string|null;photos?:string[]} }
 type Option = [string, string]
 type Field = { key: string; label: string; type?: 'text' | 'email' | 'url' | 'number' | 'select' | 'rich' | 'checkbox' | 'datetime-local'; required?: boolean; options?: Option[]; disabled?: boolean; hint?: string; placeholder?: string }
 const TITLES = { vagas: ['Vagas', 'vaga', 'nova'], profissionais: ['Profissionais', 'profissional', 'novo'], empresas: ['Empresas', 'empresa', 'nova'] }
@@ -31,16 +35,16 @@ function useRecords(resource: Resource) {
     if (resource === 'vagas') {
       const { data, error } = await supabase.from('vagas').select('*, empresas(nome_fantasia)').order('created_at', { ascending: false })
       if (error) throw error
-      return (data ?? []).map(row => ({ id: row.id, title: row.title, subtitle: row.empresas?.nome_fantasia ?? 'Sem empresa vinculada', status: row.status, values: { title: row.title, empresa_id: row.empresa_id ?? '', description_html: row.description_html ?? '', employment_type: row.employment_type, expires_at: toLocalDateTime(row.expires_at), pricing_model: row.pricing_model, status: row.status, category: row.category ?? '', location_city: row.location_city ?? '', location_state: row.location_state ?? '', salary_min: str(row.salary_min), salary_max: str(row.salary_max), hourly_rate: str(row.hourly_rate), salary_visible: row.salary_visible, is_remote: row.is_remote, modalidade: row.modalidade ?? '', is_featured: row.is_featured } }))
+      return (data ?? []).map(row => ({ id: row.id, media:{photos:row.photo_urls?.length?row.photo_urls:row.photo_url?[row.photo_url]:[]}, title: row.title, subtitle: row.empresas?.nome_fantasia ?? 'Sem empresa vinculada', status: row.status, values: { title: row.title, empresa_id: row.empresa_id ?? '', description_html: row.description_html ?? '', employment_type: row.employment_type, expires_at: toLocalDateTime(row.expires_at), pricing_model: row.pricing_model, status: row.status, category: row.category ?? '', location_city: row.location_city ?? '', location_state: row.location_state ?? '', salary_min: str(row.salary_min), salary_max: str(row.salary_max), hourly_rate: str(row.hourly_rate), salary_visible: row.salary_visible, is_remote: row.is_remote, modalidade: row.modalidade ?? '', is_featured: row.is_featured } }))
     }
     if (resource === 'empresas') {
       const { data, error } = await supabase.from('empresas').select('*').order('created_at', { ascending: false })
       if (error) throw error
-      return (data ?? []).map(row => ({ id: row.id, title: row.nome_fantasia, subtitle: [row.sector, row.city, row.state].filter(Boolean).join(' · '), status: row.status, values: { owner_id: row.owner_id, nome_fantasia: row.nome_fantasia, razao_social: row.razao_social ?? '', cnpj: row.cnpj ?? '', sector: row.sector ?? '', category: row.category ?? '', type_slug: row.type_slug ?? '', city: row.city ?? '', state: row.state ?? '', website: row.website ?? '', description_html: row.description_html ?? '', status: row.status, is_verified: row.is_verified } }))
+      return (data ?? []).map(row => ({ id: row.id, media:{logo:row.logo_url,cover:row.cover_url,photos:row.interior_photo_urls??[]}, title: row.nome_fantasia, subtitle: [row.sector, row.city, row.state].filter(Boolean).join(' · '), status: row.status, values: { address:row.address??'', zip_code:row.zip_code??'', address_visible:row.address_visible, mission_vision_values_html:row.mission_vision_values_html??'', mission_visible:row.mission_visible, org_chart_html:row.org_chart_html??'', org_chart_visible:row.org_chart_visible, employee_count:row.employee_count??'', employee_count_visible:row.employee_count_visible, interior_photos_visible:row.interior_photos_visible, owner_id: row.owner_id, nome_fantasia: row.nome_fantasia, razao_social: row.razao_social ?? '', cnpj: row.cnpj ?? '', sector: row.sector ?? '', category: row.category ?? '', type_slug: row.type_slug ?? '', city: row.city ?? '', state: row.state ?? '', website: row.website ?? '', description_html: row.description_html ?? '', status: row.status, is_verified: row.is_verified } }))
     }
     const { data, error } = await supabase.from('autonomo_profiles').select('*, profiles(full_name,email)').order('created_at', { ascending: false })
     if (error) throw error
-    return (data ?? []).map(row => ({ id: row.id, title: row.profiles?.full_name ?? row.profiles?.email ?? 'Profissional', subtitle: row.headline ?? 'Perfil sem título', status: row.status, values: { account_id: row.id, type_slug: row.type_slug ?? '', headline: row.headline ?? '', category: row.category ?? '', description_html: row.description_html ?? '', pricing_model: row.pricing_model, hourly_rate: str(row.hourly_rate), delivery_rate_note: row.delivery_rate_note ?? '', service_area_city: row.service_area_city ?? '', service_area_state: row.service_area_state ?? '', serves_remote: row.serves_remote, status: row.status, is_featured: row.is_featured } }))
+    return (data ?? []).map(row => ({ id: row.id, media:{photos:row.portfolio_urls??[]}, title: row.profiles?.full_name ?? row.profiles?.email ?? 'Profissional', subtitle: row.headline ?? 'Perfil sem título', status: row.status, values: { account_id: row.id, type_slug: row.type_slug ?? '', headline: row.headline ?? '', category: row.category ?? '', description_html: row.description_html ?? '', pricing_model: row.pricing_model, hourly_rate: str(row.hourly_rate), delivery_rate_note: row.delivery_rate_note ?? '', service_area_city: row.service_area_city ?? '', service_area_state: row.service_area_state ?? '', serves_remote: row.serves_remote, status: row.status, is_featured: row.is_featured } }))
   } })
 }
 
@@ -50,34 +54,45 @@ function ResourceEditor({ resource, record, fields, onSave, onRefreshOptions, re
   const client = useQueryClient()
   const [values, setValues] = useState<Values>(record?.values ?? { status: resource === 'vagas' ? 'draft' : resource === 'empresas' ? 'pending' : 'paused', pricing_model: resource === 'vagas' ? 'fixed_salary' : 'hourly', employment_type: '', salary_visible: true })
   const [validation, setValidation] = useState('')
+  const [mediaId]=useState(()=>record?.id??crypto.randomUUID())
+  const [created,setCreated]=useState(false)
+  const [logo,setLogo]=useState(record?.media?.logo??null)
+  const [cover,setCover]=useState(record?.media?.cover??null)
+  const [photos,setPhotos]=useState<string[]>(record?.media?.photos??[])
+  const [avatar,setAvatar]=useState<string|null|undefined>(undefined)
+  const [uploadCount,setUploadCount]=useState(0)
+  const uploading=(busy:boolean)=>setUploadCount(n=>Math.max(0,n+(busy?1:-1)))
   const visibleFields = fields.filter(field => {
     if (resource === 'vagas' && ['salary_min', 'salary_max'].includes(field.key)) return values.pricing_model === 'fixed_salary'
     if (field.key === 'hourly_rate') return resource === 'vagas' ? values.pricing_model === 'hourly' : values.pricing_model === 'hourly' || values.pricing_model === 'both'
     if (resource === 'profissionais' && field.key === 'delivery_rate_note') return values.pricing_model === 'per_delivery' || values.pricing_model === 'both'
     return true
   })
-  const set = (key: string, value: string | boolean) => setValues(v => ({ ...v, [key]: value }))
+  const set = (key: string, value: string | boolean) => {if(key==='account_id'&&values.account_id&&values.account_id!==value)setAvatar(undefined);setValues(v => ({ ...v, [key]: value }))}
   const save = useMutation({ mutationFn: async () => {
     if (!user) throw new Error('Entre novamente para salvar.')
     if (resource === 'vagas') {
-      const payload = { title: str(values.title).trim(), empresa_id: nullable(values.empresa_id), description_html: str(values.description_html), employment_type: str(values.employment_type) as EmploymentType, expires_at: values.expires_at ? new Date(str(values.expires_at)).toISOString() : null, pricing_model: str(values.pricing_model) as PricingModelVaga, status: str(values.status) as VagaStatus, category: nullable(values.category), location_city: nullable(values.location_city), location_state: nullable(values.location_state)?.toUpperCase() ?? null, salary_min: values.pricing_model === 'fixed_salary' ? number(values.salary_min) : null, salary_max: values.pricing_model === 'fixed_salary' ? number(values.salary_max) : null, hourly_rate: values.pricing_model === 'hourly' ? number(values.hourly_rate) : null, salary_visible: Boolean(values.salary_visible), is_remote: values.modalidade === 'modalidade-remota', modalidade: nullable(values.modalidade), is_featured: Boolean(values.is_featured) }
-      const query = record ? supabase.from('vagas').update(payload).eq('id', record.id) : supabase.from('vagas').insert({ ...payload, created_by: user.id })
+      const payload = { photo_urls:photos, photo_url:photos[0]??null, title: str(values.title).trim(), empresa_id: nullable(values.empresa_id), description_html: str(values.description_html), employment_type: str(values.employment_type) as EmploymentType, expires_at: values.expires_at ? new Date(str(values.expires_at)).toISOString() : null, pricing_model: str(values.pricing_model) as PricingModelVaga, status: str(values.status) as VagaStatus, category: nullable(values.category), location_city: nullable(values.location_city), location_state: nullable(values.location_state)?.toUpperCase() ?? null, salary_min: values.pricing_model === 'fixed_salary' ? number(values.salary_min) : null, salary_max: values.pricing_model === 'fixed_salary' ? number(values.salary_max) : null, hourly_rate: values.pricing_model === 'hourly' ? number(values.hourly_rate) : null, salary_visible: Boolean(values.salary_visible), is_remote: values.modalidade === 'modalidade-remota', modalidade: nullable(values.modalidade), is_featured: Boolean(values.is_featured) }
+      const query = record||created ? supabase.from('vagas').update(payload).eq('id', mediaId) : supabase.from('vagas').insert({ ...payload, id:mediaId, created_by: user.id })
       const { error } = await query.select('id').single()
       if (error) throw error
     } else if (resource === 'empresas') {
-      const payload = { owner_id: str(values.owner_id), nome_fantasia: str(values.nome_fantasia).trim(), razao_social: nullable(values.razao_social), cnpj: nullable(values.cnpj), sector: nullable(values.sector), category: nullable(values.category), type_slug: nullable(values.type_slug), city: nullable(values.city), state: nullable(values.state)?.toUpperCase() ?? null, website: nullable(values.website), description_html: str(values.description_html), status: str(values.status) as EmpresaStatus, is_verified: Boolean(values.is_verified) }
-      const query = record ? supabase.from('empresas').update(payload).eq('id', record.id) : supabase.from('empresas').insert({ ...payload, owner_id: str(values.owner_id) })
+      const payload = { logo_url:logo, cover_url:cover, address:nullable(values.address), zip_code:nullable(values.zip_code), address_visible:Boolean(values.address_visible), mission_vision_values_html:str(values.mission_vision_values_html), mission_visible:Boolean(values.mission_visible), org_chart_html:str(values.org_chart_html), org_chart_visible:Boolean(values.org_chart_visible), employee_count:nullable(values.employee_count), employee_count_visible:Boolean(values.employee_count_visible), interior_photo_urls:photos, interior_photos_visible:Boolean(values.interior_photos_visible), owner_id: str(values.owner_id), nome_fantasia: str(values.nome_fantasia).trim(), razao_social: nullable(values.razao_social), cnpj: nullable(values.cnpj), sector: nullable(values.sector), category: nullable(values.category), type_slug: nullable(values.type_slug), city: nullable(values.city), state: nullable(values.state)?.toUpperCase() ?? null, website: nullable(values.website), description_html: str(values.description_html), status: str(values.status) as EmpresaStatus, is_verified: Boolean(values.is_verified) }
+      const query = record||created ? supabase.from('empresas').update(payload).eq('id', mediaId) : supabase.from('empresas').insert({ ...payload, id:mediaId, owner_id: str(values.owner_id) })
       const { error } = await query.select('id').single()
       if (error) throw error
     } else {
-      const payload = { headline: nullable(values.headline), type_slug: nullable(values.type_slug), category: nullable(values.category), description_html: str(values.description_html), pricing_model: str(values.pricing_model) as PricingModelAutonomo, hourly_rate: values.pricing_model === 'per_delivery' ? null : number(values.hourly_rate), delivery_rate_note: nullable(values.delivery_rate_note), service_area_city: nullable(values.service_area_city), service_area_state: nullable(values.service_area_state)?.toUpperCase() ?? null, serves_remote: Boolean(values.serves_remote), status: str(values.status) as 'active' | 'paused', is_featured: Boolean(values.is_featured) }
-      const query = record ? supabase.from('autonomo_profiles').update(payload).eq('id', record.id) : supabase.from('autonomo_profiles').insert({ ...payload, id: str(values.account_id) })
+      const payload = { portfolio_urls:photos, headline: nullable(values.headline), type_slug: nullable(values.type_slug), category: nullable(values.category), description_html: str(values.description_html), pricing_model: str(values.pricing_model) as PricingModelAutonomo, hourly_rate: values.pricing_model === 'per_delivery' ? null : number(values.hourly_rate), delivery_rate_note: nullable(values.delivery_rate_note), service_area_city: nullable(values.service_area_city), service_area_state: nullable(values.service_area_state)?.toUpperCase() ?? null, serves_remote: Boolean(values.serves_remote), status: str(values.status) as 'active' | 'paused', is_featured: Boolean(values.is_featured) }
+      const query = record||created ? supabase.from('autonomo_profiles').update(payload).eq('id', record?.id??str(values.account_id)) : supabase.from('autonomo_profiles').insert({ ...payload, id: str(values.account_id) })
       const { error } = await query.select('id').single()
       if (error) throw error
     }
+    setCreated(true)
+    if(resource==='profissionais'&&avatar!==undefined){const {error}=await supabase.from('profiles').update({avatar_url:avatar}).eq('id',record?.id??str(values.account_id)).select('id').single();if(error)throw error}
   }, onSuccess: async () => { await client.invalidateQueries(); onSave() } })
   function submit(e: FormEvent) {
     e.preventDefault()
+    if(uploadCount>0)return
     setValidation('')
     for (const field of visibleFields) {
       if (field.required && !str(values[field.key]).trim()) { setValidation(`Preencha ${field.label.toLocaleLowerCase('pt-BR')}.`); return }
@@ -104,7 +119,8 @@ function ResourceEditor({ resource, record, fields, onSave, onRefreshOptions, re
   const groups = [
     { title: 'Identificação e conteúdo', keys: ['title','empresa_id','nome_fantasia','owner_id','account_id','headline','razao_social','cnpj','website','description_html'] },
     { title: 'Classificação', keys: ['category','employment_type','type_slug','sector'] },
-    { title: 'Localização e atendimento', keys: ['location_city','location_state','city','state','service_area_city','service_area_state','is_remote','modalidade','serves_remote'] },
+    { title: 'Localização e atendimento', keys: ['address','zip_code','address_visible','location_city','location_state','city','state','service_area_city','service_area_state','is_remote','modalidade','serves_remote'] },
+    { title: 'Informações institucionais e visibilidade', keys:['mission_vision_values_html','mission_visible','org_chart_html','org_chart_visible','employee_count','employee_count_visible'] },
     { title: 'Remuneração', keys: ['pricing_model','salary_min','salary_max','hourly_rate','delivery_rate_note','salary_visible'] },
   ]
   const publication = ['status','expires_at','is_featured','is_verified']
@@ -112,12 +128,17 @@ function ResourceEditor({ resource, record, fields, onSave, onRefreshOptions, re
     <div className="min-w-0 space-y-6">
       <p className="text-sm text-muted-foreground">{resource === 'vagas' ? 'Campos com * são obrigatórios. Você pode salvar como rascunho e publicar depois.' : 'Campos com * são obrigatórios. Revise a classificação e a situação do cadastro antes de salvar.'}</p>
       {resource !== 'vagas' && !record && <p className="text-sm leading-relaxed text-muted-foreground">Vincule o cadastro a uma conta existente. Os dados de acesso são preservados.</p>}
+      <fieldset disabled={save.isPending} className="min-w-0 space-y-5 rounded-xl border bg-card p-5"><legend className="px-2 font-semibold">{resource==='empresas'?'Logo da empresa':resource==='vagas'?'Fotos da vaga':'Foto e portfólio do profissional'}</legend>
+      {resource==='empresas'?<><ImageUploadField label="Logo da empresa" purpose="logo" currentUrl={logo} onUpload={file=>uploadEmpresaLogo(file,mediaId)} onUploaded={setLogo} onRemove={()=>setLogo(null)} onUploadingChange={uploading} /><ImageUploadField label="Capa da empresa" purpose="banner" shape="banner" currentUrl={cover} onUpload={file=>uploadEmpresaCover(file,mediaId)} onUploaded={setCover} onRemove={()=>setCover(null)} onUploadingChange={uploading} /><PhotoGalleryField label="Fotos da empresa" photos={photos} onChange={setPhotos} onUploadingChange={uploading} onUpload={file=>uploadEmpresaInteriorPhoto(file,mediaId)} /><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={Boolean(values.interior_photos_visible)} onChange={e=>set('interior_photos_visible',e.target.checked)} />Exibir fotos da empresa no perfil público</label></>:<>
+      {resource==='profissionais'&&<AdminAvatarField userId={record?.id||str(values.account_id)||undefined} value={avatar} onChange={setAvatar} onUploadingChange={uploading} label="Foto do profissional" />}
+      <fieldset disabled={resource==='profissionais'&&!record&&!values.account_id}><PhotoGalleryField label={resource==='vagas'?'Fotos da vaga':'Fotos do portfólio'} photos={photos} onChange={setPhotos} onUploadingChange={uploading} onUpload={file=>resource==='vagas'?uploadVagaGalleryPhoto(file,mediaId):uploadAutonomoPortfolioPhoto(file,record?.id||str(values.account_id)||mediaId)} /></fieldset>
+      </>}<p className="text-sm text-muted-foreground">As imagens são associadas ao cadastro ao salvar. Você pode adicioná-las antes de criar o registro.</p></fieldset>
       {groups.map(group => { const members = visibleFields.filter(field => group.keys.includes(field.key)); return members.length ? <fieldset key={group.title} disabled={save.isPending} className="min-w-0 rounded-xl border bg-card p-5 sm:p-6"><legend className="px-2 font-semibold">{group.title}</legend><div className="grid min-w-0 gap-5 sm:grid-cols-2">{members.map(fieldControl)}</div>{group.title === 'Classificação' && <div className="mt-5 space-y-3"><div className="flex flex-wrap items-center gap-3"><Link to="/admin/configuracoes/categorias" target="_blank" rel="noopener noreferrer" className="text-sm text-primary underline underline-offset-4">Ver todas as categorias e tipos</Link><Button type="button" variant="outline" size="sm" disabled={refreshingOptions || save.isPending} onClick={onRefreshOptions}>{refreshingOptions ? 'Atualizando…' : 'Atualizar opções'}</Button></div><p className="text-xs leading-relaxed text-muted-foreground">Use os botões junto aos campos para criar opções sem sair. As listas são atualizadas automaticamente. Se alterar opções em outra aba, use “Atualizar opções”.</p></div>}</fieldset> : null })}
     </div>
     <aside className="min-w-0 space-y-5 rounded-xl border bg-card p-5 xl:sticky xl:top-6">
       <h2 className="text-lg font-bold">Publicação</h2><fieldset disabled={save.isPending} className="space-y-5">{visibleFields.filter(field => publication.includes(field.key)).map(fieldControl)}</fieldset>
       {(validation || save.isError) && <p role="alert" className="text-sm text-destructive">{validation || 'Não foi possível salvar. Confira os dados e sua permissão. Os campos foram preservados.'}</p>}
-      <div className="flex flex-col gap-3"><Button variant="cta" disabled={save.isPending}>{save.isPending ? 'Salvando…' : 'Salvar cadastro'}</Button><Button type="button" variant="outline" disabled={save.isPending} onClick={() => navigate(`/admin/${resource === 'profissionais' ? 'autonomos' : resource}`)}>Voltar à lista</Button></div>
+      <div className="flex flex-col gap-3"><Button variant="cta" disabled={save.isPending||uploadCount>0}>{save.isPending ? 'Salvando…' : 'Salvar cadastro'}</Button><Button type="button" variant="outline" disabled={save.isPending} onClick={() => navigate(`/admin/${resource === 'profissionais' ? 'autonomos' : resource}`)}>Voltar à lista</Button></div>
     </aside>
   </form>
 }
@@ -165,6 +186,10 @@ export default function ResourcePage({ resource }: { resource: Resource }) {
     { key: 'nome_fantasia', label: 'Nome da empresa', required: true }, { key: 'owner_id', label: 'Conta responsável', type: 'select', required: true, options, hint: 'Ao trocar o responsável, o anterior permanece na equipe até ser desvinculado nos detalhes da empresa.' },
     { key: 'razao_social', label: 'Razão social' }, { key: 'cnpj', label: 'CNPJ' }, { key: 'category', label: 'Categoria da empresa', type: 'select', options: categoryOptions }, { key: 'type_slug', label: 'Tipo de empresa', type: 'select', options: typeOptions }, { key: 'sector', label: 'Setor (detalhamento)', hint: 'Complemento livre; não substitui a categoria.' }, { key: 'website', label: 'Site (https://…)', type: 'url' },
     { key: 'city', label: 'Cidade' }, { key: 'state', label: 'UF', type: 'select', options: states }, { key: 'status', label: 'Situação', type: 'select', required: true, options: statuses },
+    {key:'address',label:'Endereço completo'},{key:'zip_code',label:'CEP'},{key:'address_visible',label:'Exibir endereço no perfil público',type:'checkbox'},
+    {key:'mission_vision_values_html',label:'Missão, visão e valores',type:'rich'},{key:'mission_visible',label:'Exibir missão, visão e valores',type:'checkbox'},
+    {key:'org_chart_html',label:'Organograma',type:'rich'},{key:'org_chart_visible',label:'Exibir organograma',type:'checkbox'},
+    {key:'employee_count',label:'Número de funcionários'},{key:'employee_count_visible',label:'Exibir número de funcionários',type:'checkbox'},
     { key: 'is_verified', label: 'Empresa verificada', type: 'checkbox' }, { key: 'description_html', label: 'Descrição da empresa', type: 'rich' },
   ]
   else fields = [

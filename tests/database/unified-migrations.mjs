@@ -158,4 +158,46 @@ try {
   await assert.rejects(db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2)',[base+'profiles/'+ordinary+'/mobile.jpg',base+'profiles/'+person+'/other.jpg']),e=>e.code==='42501')
   console.log('OK variantes públicas exigem propriedade de ambas as imagens; outra conta não pode substituir ou excluir.')
 
+  await claim(admin)
+  await db.query('update profiles set avatar_url=$1 where id=$2',['https://example.test/admin-managed.jpg',person])
+  await claim(ordinary)
+  assert.equal((await db.query('update profiles set avatar_url=$1 where id=$2 returning id',['https://example.test/not-allowed.jpg',person])).rows.length,0)
+  await db.exec('reset role')
+  assert.equal((await db.query('select avatar_url from profiles where id=$1',[person])).rows[0].avatar_url,'https://example.test/admin-managed.jpg')
+  console.log('OK foto do usuário pode ser vinculada pelo administrador; outra conta comum não pode alterá-la.')
+
+  await db.exec('reset role')
+  const mediaCompany='00000000-0000-4000-8000-000000000020'
+  const otherCompany='00000000-0000-4000-8000-000000000021'
+  await db.query('insert into empresas(id,owner_id,nome_fantasia) values($1,$2,$3)',[mediaCompany,ordinary,'Empresa de imagens'])
+  const companyLogo=base+'empresas/'+mediaCompany+'/logo.jpg'
+  const ownerMobile=base+'empresas/'+mediaCompany+'/mobile-owner.jpg'
+  const adminMobile=base+'empresas/'+mediaCompany+'/mobile-admin.jpg'
+  await db.query("insert into storage.objects(bucket_id,name,owner,metadata) values('public-media',$1,$2,'{}'),('public-media',$3,$4,'{}'),('public-media',$5,$2,'{}')",['empresas/'+mediaCompany+'/logo.jpg',admin,'empresas/'+mediaCompany+'/mobile-owner.jpg',ordinary,'empresas/'+mediaCompany+'/mobile-admin.jpg'])
+  await claim(ordinary)
+  await db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2) on conflict(desktop_url) do update set desktop_url=excluded.desktop_url,mobile_url=excluded.mobile_url',[companyLogo,ownerMobile])
+  await db.query("update empresas set address='Endereço editado pelo empresário',mission_vision_values_html='<p>Missão</p>',org_chart_html='<p>Equipe</p>',employee_count='10-20',status='active',is_verified=true where id=$1",[mediaCompany])
+  const ownerCompany=(await db.query('select address,status,is_verified from empresas where id=$1',[mediaCompany])).rows[0]
+  assert.equal(ownerCompany.address,'Endereço editado pelo empresário');assert.equal(ownerCompany.status,'pending');assert.equal(ownerCompany.is_verified,false)
+  await claim(admin)
+  await db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2) on conflict(desktop_url) do update set desktop_url=excluded.desktop_url,mobile_url=excluded.mobile_url',[companyLogo,adminMobile])
+  await db.query("update empresas set address='Endereço revisado pelo superadmin',status='active',is_verified=true where id=$1",[mediaCompany])
+  assert.equal((await db.query('select is_verified from empresas where id=$1',[mediaCompany])).rows[0].is_verified,true)
+  assert.equal((await db.query("select count(*)::int n from storage.objects where bucket_id='user-gallery' and name=$1",[ordinary+'/own.jpg'])).rows[0].n,0)
+  await db.exec('reset role')
+  await db.query('insert into empresas(id,owner_id,nome_fantasia,logo_url) values($1,$2,$3,$4)',[otherCompany,person,'Outra empresa',companyLogo])
+  await claim(person)
+  assert.equal((await db.query('select can_manage_public_image($1) allowed',[companyLogo])).rows[0].allowed,false)
+  assert.equal((await db.query('update image_variants set mobile_url=$1 where desktop_url=$2 returning desktop_url',[base+'profiles/'+person+'/other.jpg',companyLogo])).rows.length,0)
+  assert.equal((await db.query("update empresas set address='Alteração não autorizada' where id=$1 returning id",[mediaCompany])).rows.length,0)
+  console.log('OK empresário edita a própria empresa, superadmin modera qualquer empresa e ambos gerenciam suas imagens; terceiros e galeria privada continuam isolados.')
+
+  await claim(admin)
+  await db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('public-media',$1,$2,'{"mimetype":"image/jpeg"}')`,['profiles/'+person+'/admin-upload.jpg',admin])
+  await claim(ordinary)
+  await assert.rejects(db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('public-media',$1,$2,'{"mimetype":"image/jpeg"}')`,['profiles/'+person+'/forbidden.jpg',ordinary]),e=>e.code==='42501')
+  await claim(person)
+  await db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2)',[base+'profiles/'+person+'/admin-upload.jpg',base+'profiles/'+person+'/other.jpg'])
+  console.log('OK superadmin envia foto para a pasta do usuário, o titular pode editar a variante e terceiros não podem enviar para essa pasta.')
+
 } finally { await db.close() }

@@ -2,7 +2,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 export function useImageVariant(url?: string | null) {
  const client=useQueryClient()
- const query=useQuery({queryKey:['image-variant',url],enabled:!!url&&/^https:\/\//.test(url),staleTime:300000,retry:false,queryFn:async()=>{
+ const query=useQuery({queryKey:['image-variant',url],enabled:!!url&&/^https:\/\//.test(url)&&!url.includes('/storage/v1/object/sign/'),staleTime:300000,retry:false,queryFn:async()=>{
    const {data,error}=await supabase.from('image_variants').select('mobile_url').eq('desktop_url',url!).maybeSingle()
    if(error)throw error
    return data?.mobile_url??null

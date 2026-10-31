@@ -174,7 +174,7 @@ function MediaView({ media, tone, size }: { media: MediaRef; tone: Tone; size: '
         loading="lazy"
         decoding="async"
         className={cn(
-          'rounded-2xl object-cover',
+          'rounded-2xl object-contain',
           size === 'item' ? 'size-16' : cn('h-auto w-full', size === 'sm' && 'mx-auto max-w-48'),
         )}
       />
@@ -486,7 +486,7 @@ function Surface({
             alt=""
             loading="lazy"
             decoding="async"
-            className={cn('absolute inset-0 -z-10 size-full object-cover', IMAGE_FOCUS[bg.imageFocus])}
+            className={cn('absolute inset-0 -z-10 size-full object-contain', IMAGE_FOCUS[bg.imageFocus])}
           />
           <span
             aria-hidden

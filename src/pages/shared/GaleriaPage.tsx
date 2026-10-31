@@ -1,3 +1,4 @@
+import { ExpandableImage } from '@/components/ImageLightbox'
 import { ImageSourcePicker } from '@/components/ImageSourcePicker'
 import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
@@ -35,6 +36,6 @@ export default function GaleriaPage() {
     {(error||gallery.isError)&&<p role="alert" className="text-destructive">{error||'Não foi possível carregar a galeria. Confira a conexão e a configuração do armazenamento.'} <button className="underline" onClick={()=>gallery.refetch()}>Tentar novamente</button></p>}
     {gallery.isLoading&&<p role="status">Carregando suas imagens…</p>}
     {gallery.data?.length===0&&<p>Sua galeria está vazia. Adicione a primeira imagem acima.</p>}
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gallery.data?.map(image=><figure key={image.path} className="space-y-2"><img src={image.url} alt={`Imagem ${image.name.startsWith('mobile-')?'móvel':'desktop'} da sua galeria pessoal`} className="aspect-video w-full rounded-lg bg-muted object-contain" /><Button variant="outline" disabled={busy} onClick={async()=>{setBusy(true);setError('');try{const {error}=await supabase.storage.from('user-gallery').remove([image.path]);if(error)throw error;await gallery.refetch()}catch{setError('Não foi possível remover a imagem. Tente novamente.')}finally{setBusy(false)}}}>Remover da galeria</Button></figure>)}</div>
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gallery.data?.map((image,index)=><figure key={image.path} className="space-y-2"><ExpandableImage images={gallery.data?.map(item=>item.url)} initialIndex={index} src={image.url} alt={`Imagem ${image.name.startsWith('mobile-')?'móvel':'desktop'} da sua galeria pessoal`} className="aspect-video w-full rounded-lg bg-muted object-contain" /><Button variant="outline" disabled={busy} onClick={async()=>{setBusy(true);setError('');try{const {error}=await supabase.storage.from('user-gallery').remove([image.path]);if(error)throw error;await gallery.refetch()}catch{setError('Não foi possível remover a imagem. Tente novamente.')}finally{setBusy(false)}}}>Remover da galeria</Button></figure>)}</div>
   </section>
 }

@@ -53,6 +53,8 @@ export default function AutonomoPerfilPage() {
   const [status, setStatus] = React.useState<'active' | 'paused'>('active')
   const [portfolioUrls, setPortfolioUrls] = React.useState<string[]>([])
   const [saving, setSaving] = React.useState(false)
+  const [uploads,setUploads]=React.useState(0)
+  const uploading=(busy:boolean)=>setUploads(n=>Math.max(0,n+(busy?1:-1)))
 
   React.useEffect(() => {
     if (!autonomo) return
@@ -73,6 +75,7 @@ export default function AutonomoPerfilPage() {
   if (!autonomo) return <Navigate to="/autonomo/onboarding" replace />
 
   const handleSave = async () => {
+    if(uploads>0)return
     if (!user) return
     setSaving(true)
     setFeedback(null)
@@ -117,13 +120,13 @@ export default function AutonomoPerfilPage() {
           <Label>Sobre o seu trabalho</Label>
           <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="autonomo" />
         </div>
-        <PhotoGalleryField
+        <fieldset disabled={saving}><PhotoGalleryField onUploadingChange={uploading}
           label="Fotos de trabalhos (opcional)"
           photos={portfolioUrls}
           onUpload={(file) => uploadAutonomoPortfolioPhoto(file, autonomo.id)}
           onChange={setPortfolioUrls}
           hint="Aparecem como carrossel no seu card e no perfil público."
-        />
+        /></fieldset>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="pricingModel">Cobrança</Label>
           <NativeSelect
@@ -166,7 +169,7 @@ export default function AutonomoPerfilPage() {
           Visível publicamente
         </label>
         {feedback && (feedback.ok ? <p role="status" className="text-sm text-muted-foreground">{feedback.text}</p> : <FormError>{feedback.text}</FormError>)}
-        <Button onClick={handleSave} variant="cta" disabled={saving}>
+        <Button onClick={handleSave} variant="cta" disabled={saving||uploads>0}>
           {saving ? 'Salvando…' : 'Salvar'}
         </Button>
       </CardContent>

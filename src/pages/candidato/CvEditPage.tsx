@@ -1,3 +1,4 @@
+import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import * as React from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '@/contexts/AuthContext'
@@ -152,6 +153,7 @@ export default function CvEditPage() {
           <CardDescription>Em que tipo de vaga você quer trabalhar? Escolha quantas quiser.</CardDescription>
         </CardHeader>
         <CardContent>
+        <ProfilePhotoField />
           <div role="group" aria-label="Áreas de interesse" className="flex flex-wrap gap-2">
             {activeFor(categories, 'vaga').map((category) => {
               const selected = interests.includes(category.slug)

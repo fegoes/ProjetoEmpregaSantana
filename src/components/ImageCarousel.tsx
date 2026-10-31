@@ -1,6 +1,7 @@
+import { ImageLightbox } from './ImageLightbox'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import * as React from 'react'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Expand } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface ImageCarouselProps {
@@ -16,6 +17,7 @@ interface ImageCarouselProps {
 // Usado dentro de cards que são <Link>: os controles precisam de
 // stopPropagation + preventDefault pra não disparar a navegação do card.
 export function ImageCarousel({ images, alt, className, loading = 'lazy' }: ImageCarouselProps) {
+  const [open,setOpen]=React.useState(false)
   const [index, setIndex] = React.useState(0)
   const clampedIndex = Math.min(index, images.length - 1)
 
@@ -32,10 +34,12 @@ export function ImageCarousel({ images, alt, className, loading = 'lazy' }: Imag
       <ResponsiveImage
         src={images[clampedIndex]}
         alt={alt}
-        className="size-full object-cover"
+        className="size-full object-contain"
         loading={loading}
         fetchPriority={loading === 'eager' ? 'high' : undefined}
       />
+      <button type="button" aria-label="Ampliar fotos" onClick={e=>{e.preventDefault();e.stopPropagation();setOpen(true)}} className="absolute right-2 bottom-2 flex min-h-11 items-center gap-2 rounded-full bg-black/65 px-3 text-sm text-white"><Expand className="size-4" />Ampliar</button>
+      <ImageLightbox images={images} alt={alt} open={open} onClose={()=>setOpen(false)} initialIndex={clampedIndex} />
       {images.length > 1 && (
         <>
           <button

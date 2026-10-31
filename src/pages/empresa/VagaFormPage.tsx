@@ -47,6 +47,9 @@ function useVagaToEdit(id: string | undefined) {
 export default function VagaFormPage() {
   const types = useRecordTypes()
   const { id } = useParams<{ id: string }>()
+  const [mediaId]=React.useState(()=>id??crypto.randomUUID())
+  const [uploads,setUploads]=React.useState(0)
+  const uploading=(busy:boolean)=>setUploads(n=>Math.max(0,n+(busy?1:-1)))
   const isEditing = Boolean(id)
   const { user } = useAuth()
   const { empresa, loading: companyLoading } = useEmpresa()
@@ -93,11 +96,11 @@ export default function VagaFormPage() {
     setLocationState(existing.location_state ?? DEFAULT_UF)
     setModalidade(vagaModalidade(existing))
     setEtapas(lerModelo(existing.etapas_selecao) ?? MODELO_PADRAO.map((e) => ({ ...e })))
-    setPhotoUrls(existing.photo_urls ?? [])
+    setPhotoUrls(existing.photo_urls?.length?existing.photo_urls:existing.photo_url?[existing.photo_url]:[])
   }, [existing])
 
   const handleSave = async (status: VagaStatus) => {
-    if (!user || !empresa) return
+    if (!user || !empresa || uploads>0) return
     if (types.isLoading || types.isError) { setError('Aguarde o carregamento dos tipos de contratação ou recarregue a página.'); return }
     setError(null)
 
@@ -129,7 +132,7 @@ export default function VagaFormPage() {
 
     try {
       const saved = await saveVaga.mutateAsync({
-        id,
+        id:id??mediaId,
         empresa_id: empresa.id,
         created_by: user.id,
         title: title.trim(),
@@ -145,6 +148,7 @@ export default function VagaFormPage() {
         ...(hasManagedModalidades ? { modalidade } : {}),
         ...(etapasMexidas || existing?.etapas_selecao ? { etapas_selecao: modeloParaSalvar(etapas) } : {}),
         photo_urls: photoUrls,
+        photo_url:photoUrls[0]??null,
         status,
       })
       navigate(`/empresa/vagas/${saved.id}/editar`)
@@ -278,25 +282,15 @@ export default function VagaFormPage() {
           />
         </div>
 
-        {id ? (
-          <PhotoGalleryField
-            label="Fotos (opcional)"
-            photos={photoUrls}
-            onUpload={(file) => uploadVagaGalleryPhoto(file, id)}
-            onChange={setPhotoUrls}
-            hint="Aparecem como carrossel na vaga e no card de listagem."
-          />
-        ) : (
-          <p className="text-sm text-muted-foreground">Salve a vaga como rascunho para poder adicionar fotos.</p>
-        )}
+        <fieldset disabled={saveVaga.isPending}><PhotoGalleryField label="Fotos da vaga (opcional)" photos={photoUrls} onUpload={file=>uploadVagaGalleryPhoto(file,id??mediaId)} onChange={setPhotoUrls} onUploadingChange={uploading} hint="Você pode adicionar fotos antes de salvar. Elas aparecem no carrossel da vaga e na listagem." /></fieldset>
 
         {error && <FormError>{error}</FormError>}
 
         <div className="flex flex-col gap-2 sm:flex-row">
-          <Button variant="outline" onClick={() => handleSave('draft')} disabled={saveVaga.isPending}>
+          <Button variant="outline" onClick={() => handleSave('draft')} disabled={saveVaga.isPending||uploads>0}>
             Salvar rascunho
           </Button>
-          <Button variant="cta" onClick={() => handleSave('published')} disabled={saveVaga.isPending}>
+          <Button variant="cta" onClick={() => handleSave('published')} disabled={saveVaga.isPending||uploads>0}>
             {saveVaga.isPending ? 'Salvando…' : 'Publicar vaga'}
           </Button>
         </div>
