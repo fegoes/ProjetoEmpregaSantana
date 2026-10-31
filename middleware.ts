@@ -1,6 +1,6 @@
-import { publicLayoutHtml } from './src/lib/publicLayoutHtml'
-import { buildJobPosting, isOpenJob, type PublicJob } from './src/lib/jobSeo'
-import { isPrivatePath } from './src/lib/authFlow'
+import { publicLayoutHtml } from './src/lib/publicLayoutHtml.js'
+import { buildJobPosting, isOpenJob, type PublicJob } from './src/lib/jobSeo.js'
+import { isPrivatePath } from './src/lib/authFlow.js'
 // HTML sem JavaScript para buscadores e prévias de link, sempre consultando
 // apenas dados públicos com a chave anônima. Humanos continuam na aplicação
 // React; metadata e JobPosting usam a mesma função nas duas renderizações.

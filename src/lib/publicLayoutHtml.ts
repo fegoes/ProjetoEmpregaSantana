@@ -1,4 +1,4 @@
-import {parseLayout,resolveLink,type Block,type ButtonItem} from './pageLayout'
+import {parseLayout,resolveLink,type Block,type ButtonItem} from './pageLayout.js'
 const escape=(s:string)=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')
 const text=(s:string)=>escape(s.replace(/<[^>]*>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim())
 function image(url:string,alt:string){return url?`<img src="${escape(url)}" alt="${escape(alt)}" loading="lazy" />`:''}
