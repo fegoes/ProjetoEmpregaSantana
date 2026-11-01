@@ -1,3 +1,4 @@
+import { useDraftImages } from '@/contexts/draftImagesContext'
 import { createPortal } from 'react-dom'
 import Image from '@tiptap/extension-image'
 import { EditorialImageField } from '@/components/EditorialImageField'
@@ -26,6 +27,7 @@ interface RichTextEditorProps {
 // Wrapper Tiptap usado em descrições de vaga/empresa/autônomo e resumo de currículo.
 // A saída HTML é sempre sanitizada no render via <RichTextRenderer /> (nunca aqui).
 export function RichTextEditor({ onUploadingChange, allowImages = false, disabled = false, ariaLabel, value, onChange, placeholder, className }: RichTextEditorProps) {
+  const draftImages=useDraftImages()
   const [selectionPosition, setSelectionPosition] = useState<{ left: number; top: number; width: number } | null>(null)
   const [linkOpen, setLinkOpen] = useState(false)
   const [linkUrl, setLinkUrl] = useState('')
@@ -109,6 +111,6 @@ export function RichTextEditor({ onUploadingChange, allowImages = false, disable
       }}>Aplicar link</button><button type="button" disabled={disabled} className="min-h-11 px-3 text-sm text-primary" onClick={() => { editor?.chain().focus().extendMarkRange('link').unsetLink().run(); setLinkOpen(false) }}>Remover link</button><button type="button" className="min-h-11 px-3 text-sm" onClick={() => setLinkOpen(false)}>Cancelar</button></div>
     </div>}
     <EditorContent editor={editor} />
-    {allowImages && <details className="rounded-lg border p-3"><summary className="cursor-pointer text-sm font-medium">Inserir imagem no texto</summary><div className="mt-4 space-y-3"><EditorialImageField onUploadingChange={onUploadingChange} label="Imagem para inserir no texto" value={imageUrl} onChange={setImageUrl} /><label className="block text-sm">Descrição da imagem<input className="mt-2 min-h-11 w-full rounded border px-3" value={imageAlt} onChange={e=>setImageAlt(e.target.value)} /></label><button type="button" disabled={disabled || !editor || !/^https:\/\//.test(imageUrl) || !imageAlt.trim()} className="min-h-11 rounded border px-3 text-sm disabled:opacity-50" onClick={()=>{editor?.chain().focus().setImage({src:imageUrl,alt:imageAlt.trim()}).run();setImageUrl('');setImageAlt('')}}>Inserir na posição do cursor</button><p className="text-xs text-muted-foreground">Posicione o cursor entre os parágrafos antes de abrir este painel. Selecione a imagem no texto e use Delete para remover.</p></div></details>}
+    {allowImages && <details className="rounded-lg border p-3"><summary className="cursor-pointer text-sm font-medium">Inserir imagem no texto</summary><div className="mt-4 space-y-3"><EditorialImageField onUploadingChange={onUploadingChange} label="Imagem para inserir no texto" value={imageUrl} onChange={setImageUrl} /><label className="block text-sm">Descrição da imagem<input className="mt-2 min-h-11 w-full rounded border px-3" value={imageAlt} onChange={e=>setImageAlt(e.target.value)} /></label><button type="button" disabled={disabled || !editor || (!/^https:\/\//.test(imageUrl) && !draftImages?.store.isLocal(imageUrl)) || !imageAlt.trim()} className="min-h-11 rounded border px-3 text-sm disabled:opacity-50" onClick={()=>{editor?.chain().focus().setImage({src:imageUrl,alt:imageAlt.trim()}).run();setImageUrl('');setImageAlt('')}}>Inserir na posição do cursor</button><p className="text-xs text-muted-foreground">Posicione o cursor entre os parágrafos antes de abrir este painel. Selecione a imagem no texto e use Delete para remover.</p></div></details>}
   </div>
 }

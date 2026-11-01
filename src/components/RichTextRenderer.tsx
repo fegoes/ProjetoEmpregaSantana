@@ -1,3 +1,4 @@
+import { useDraftImages } from '@/contexts/draftImagesContext'
 import { supabase } from '@/lib/supabase'
 import { RICH_TEXT_CLASS } from '@/lib/richText'
 import * as React from 'react'
@@ -12,18 +13,31 @@ interface RichTextRendererProps {
 // Regra fixa do projeto (docs/PRD.md seção 5): todo HTML gerado por usuário
 // (Tiptap) passa por DOMPurify antes de ir para dangerouslySetInnerHTML.
 export function RichTextRenderer({ html, className }: RichTextRendererProps) {
+  const draft=useDraftImages()
   const container=React.useRef<HTMLDivElement>(null)
-  const sanitized = React.useMemo(() => DOMPurify.sanitize(html ?? ''), [html])
+  const sanitized = React.useMemo(() => {
+    let source = html ?? ''
+    const refs = draft?.store.localRefs() ?? []
+    const placeholders = refs.map(ref => [ref, `https://draft-preview.invalid/${encodeURIComponent(ref)}`] as const)
+    for (const [ref, placeholder] of placeholders) source = source.replaceAll(ref, placeholder)
+    let cleaned = DOMPurify.sanitize(source)
+    for (const [ref, placeholder] of placeholders) cleaned = cleaned.replaceAll(placeholder, ref)
+    return cleaned
+  }, [html, draft])
 
   React.useEffect(()=>{
     let cancelled=false
     const element=container.current
-    const images=Array.from(element?.querySelectorAll('img')??[]).filter(i=>i.src.startsWith('https://'))
-    const urls=[...new Set(images.map(i=>i.src))]
-    if(urls.length)void (async()=>{
-      const {data,error}=await supabase.from('image_variants').select('desktop_url,mobile_url').in('desktop_url',urls)
-      if(error||cancelled)return
-      const lookup=new Map(data?.map(x=>[x.desktop_url,x.mobile_url]))
+    const images=Array.from(element?.querySelectorAll('img')??[]).filter(i=>i.src.startsWith('https://')||draft?.store.isLocal(i.src))
+    const urls=[...new Set(images.filter(i=>i.src.startsWith('https://')&&!draft?.store.variants.has(i.src)).map(i=>i.src))]
+    if(images.length)void (async()=>{
+      const lookup=new Map<string,string|null>()
+      if(urls.length){
+        const {data}=await supabase.from('image_variants').select('desktop_url,mobile_url').in('desktop_url',urls)
+        data?.forEach(x=>lookup.set(x.desktop_url,x.mobile_url))
+      }
+      if(cancelled)return
+      draft?.store.variants.forEach((mobile,desktop)=>lookup.set(desktop,mobile))
       for(const img of images){const mobile=lookup.get(img.src);if(!mobile||!img.parentNode)continue
         const picture=document.createElement('picture'),source=document.createElement('source')
         picture.dataset.responsiveImage='true';source.media='(max-width: 639px)';source.srcset=mobile
@@ -31,7 +45,7 @@ export function RichTextRenderer({ html, className }: RichTextRendererProps) {
       }
     })().catch(()=>{})
     return ()=>{cancelled=true;element?.querySelectorAll('picture[data-responsive-image]').forEach(p=>{const img=p.querySelector('img');if(img)p.replaceWith(img)})}
-  },[sanitized])
+  },[sanitized,draft])
   if (!sanitized) return null
 
   return (

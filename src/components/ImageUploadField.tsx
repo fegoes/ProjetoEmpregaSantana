@@ -102,7 +102,7 @@ export function ImageUploadField(props: ImageUploadFieldProps) {
  const [variantError,setVariantError]=React.useState('')
  return <fieldset className="min-w-0 space-y-5"><legend className="mb-2 font-semibold">{props.label}</legend>
   <SingleImageUploadField {...props} label={`${props.label} — Desktop`} />
-  <SingleImageUploadField disabled={!props.currentUrl} {...props} label={`${props.label} — Móvel (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
+  <SingleImageUploadField {...props} disabled={props.disabled||!props.currentUrl} label={`${props.label} — Móvel (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
   {!props.currentUrl&&<p className="text-sm text-muted-foreground">Envie a imagem desktop para habilitar o envio móvel.</p>}
   {variantError&&<p role="alert" className="text-destructive">{variantError}</p>}
   <p className="text-sm text-muted-foreground">Em telas menores que 640 px, a versão móvel é usada quando disponível; nas demais, a desktop. Sem versão móvel, a desktop é mantida.</p>
