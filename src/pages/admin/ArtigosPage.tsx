@@ -1,3 +1,4 @@
+import { postContentIssues } from '@/lib/postSections'
 import { PostPreviewFrame, PreviewDeviceSwitch, type PreviewDevice } from '@/components/admin/PostPreview'
 import { QuickCreateTaxonomy } from '@/components/admin/QuickCreateTaxonomy'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
@@ -37,11 +38,13 @@ function ArticleEditor({ article, close }: { article?: ArtigoInput; close: () =>
     e.preventDefault()
     setValidation('')
     if (form.status === 'published') {
+      const issues = postContentIssues(form.content_html ?? '')
+      if (issues.length) { setValidation(issues.join(' ')); return }
       const doc = new DOMParser().parseFromString(form.content_html ?? '', 'text/html')
       if (Array.from(doc.querySelectorAll('figure[data-image-block]')).some(figure=>!figure.querySelector('img[src]')) || Array.from(doc.querySelectorAll('img')).some(img=>!img.getAttribute('src')?.trim()||!img.getAttribute('alt')?.trim())) { setValidation('Complete a imagem e sua descrição em cada bloco antes de publicar.'); return }
     }
     if (form.status === 'published' && !form.category_ids?.length) { setValidation('Selecione ao menos uma categoria de postagem.'); return }
-    if (form.status === 'published' && !stripHtml(form.content_html)) { setValidation('Escreva o conteúdo antes de publicar.'); return }
+    if (form.status === 'published' && !stripHtml(form.content_html) && !new DOMParser().parseFromString(form.content_html ?? '', 'text/html').querySelector('img[src]')) { setValidation('Escreva o conteúdo antes de publicar.'); return }
     if (form.social_image_url && !form.social_image_alt?.trim()) { setValidation('Descreva a imagem de compartilhamento.'); return }
     if (form.cover_url && !form.cover_alt?.trim()) { setValidation('Descreva a imagem de capa para quem usa leitor de tela.'); return }
     save.mutate({ ...form, keywords: keywordText.split(',').map(v=>v.trim()).filter(Boolean), title: form.title.trim(), slug: form.slug.trim(), author_name: form.author_name.trim(), category: categoryNames[0] || form.category?.trim(), cover_url: form.cover_url?.trim() || null }, { onSuccess: close })

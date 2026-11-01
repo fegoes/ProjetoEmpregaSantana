@@ -163,3 +163,4 @@
 
 /* Links editoriais herdam a cor da seção sem recolorir cards de vagas ou o painel. */
 .page-section-richtext a { color: var(--section-link, currentColor) !important; }
+.post-content-section .post-rich-text a { color: var(--post-link, currentColor); }

@@ -97,11 +97,11 @@ export default function App() {
           <Route path="privacidade" element={<PrivacidadePage />} />
           <Route path="lgpd" element={<LgpdPage />} />
           <Route path="pagina/:slug" element={<CustomPage />} />
+          <Route path="blog/:slug" element={<BlogArticlePage />} />
 
           {/* Demais telas do site: largura máxima e margens padrão */}
           <Route element={<PageContainer />}>
             <Route path="blog" element={<BlogPage />} />
-            <Route path="blog/:slug" element={<BlogArticlePage />} />
             <Route path="*" element={<NaoEncontradaPage />} />
             <Route path="vagas/:id" element={<VagaDetailPage />} />
             <Route path="autonomos/:id" element={<AutonomoDetailPage />} />
