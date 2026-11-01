@@ -127,7 +127,7 @@ interface PageBuilderProps {
 
 /** Lista de seções da página: modelos para começar, ordem, duplicar, apagar e edição de cada uma. */
 export function PageBuilder({ sections, onChange }: PageBuilderProps) {
-  const [openIds, setOpenIds] = React.useState<Set<string>>(() => new Set())
+  const [openIds, setOpenIds] = React.useState<Set<string>>(() => new Set(sections[0] ? [sections[0].id] : []))
   const [picking, setPicking] = React.useState(sections.length === 0)
 
   const toggle = (id: string) =>

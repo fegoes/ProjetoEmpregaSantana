@@ -37,7 +37,7 @@ export function EditorRow({
           aria-hidden
           className={cn('size-5 shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none', open && 'rotate-180')}
         />
-        <span className="shrink-0 text-sm font-semibold">{label}</span>
+        <span className="max-w-[70%] min-w-0 truncate text-sm font-semibold">{label}</span>
         {summary && <span className="min-w-0 flex-1 truncate text-sm text-muted-foreground">{summary}</span>}
       </button></div>
       {open && (

@@ -416,3 +416,33 @@ describe('headingOutline', () => {
     expect(headingOutline(com).items).toEqual({ l: 'h3' })
   })
 })
+
+describe('configuração integrada de seções', () => {
+  it('normaliza cores e impede CSS arbitrário, tags e dimensões inválidas', () => {
+    const layout = normalizeLayout({ sections: [{ type: 'section', style: { element: 'script', customMinHeight: -10, colors: { background: '#ABCDEF', text: 'url(javascript:alert(1))', link: 'red' }, contentWidth: 'full', minHeight: 'custom' }, blocks: [] }] })
+    const section = layout.sections[0] as ContentSection
+    expect(section.style.element).toBe('section')
+    expect(section.style.colors).toMatchObject({ background: '#abcdef', text: '', link: '' })
+    expect(section.style.customMinHeight).toBe(120)
+    expect(section.style.contentWidth).toBe('full')
+    expect(normalizeLayout(layout)).toEqual(layout)
+  })
+  it('mantém a altura dos modelos antigos e permite tela inteira nas novas seções', () => {
+    const layout = normalizeLayout({ sections: ['screen', 'viewport'].map(minHeight => ({ type: 'section', style: { minHeight }, blocks: [] })) })
+    expect(layout.sections.map(section => (section as ContentSection).style.minHeight)).toEqual(['screen', 'viewport'])
+  })
+  it('inclui aviso de contraste no fluxo de publicação e não afirma medir sobre fotos', () => {
+    const raw = { sections: [{ type: 'section', style: { colors: { background: '#ffffff', text: '#ffffff', link: '#ffffff', button: '#000000', buttonText: '#000000' } }, blocks: [{ type: 'heading', title: 'Título' }] }] }
+    expect(collectIssues(normalizeLayout(raw)).filter(x => x.includes('contraste'))).toHaveLength(3)
+    Object.assign(raw.sections[0].style, { background: { imageUrl: 'https://example.test/foto.png' } })
+    expect(collectIssues(normalizeLayout(raw)).filter(x => x.includes('contraste'))).toHaveLength(1)
+  })
+  it('oferece cabeçalho, artigo e encerramento com itens editáveis', () => {
+    for (const key of ['cabecalho', 'artigo', 'encerramento']) {
+      const section = SECTION_TEMPLATES.find(template => template.key === key)!.build() as ContentSection
+      expect(section.blocks.length).toBeGreaterThan(1)
+      expect(section.style.name).toBeTruthy()
+      expect(normalizeLayout({ sections: [section] }).sections[0]).toEqual(section)
+    }
+  })
+})

@@ -10,6 +10,9 @@ import {
   headingOutline,
   resolveLink,
   sectionTone,
+  safeSectionColor,
+  contrastRatio,
+  type SectionColors,
   type Align,
   type BackgroundColor,
   type Block,
@@ -46,6 +49,7 @@ interface RenderState {
 }
 
 const RenderContext = React.createContext<RenderState>({ outline: { h1: null, text: {}, items: {} }, h1Id: null, preview: false })
+const SectionColorsContext = React.createContext<SectionColors | undefined>(undefined)
 const useRender = () => React.useContext(RenderContext)
 
 // ---------------------------------------------------------------------------
@@ -74,6 +78,8 @@ const MIN_HEIGHT: Record<MinHeight, string> = {
   md: 'min-h-[22rem]',
   lg: 'min-h-[30rem]',
   screen: 'min-h-[min(44rem,85svh)]',
+  viewport: 'min-h-dvh',
+  custom: '',
 }
 
 const PADDING_Y: Record<Spacing, string> = {
@@ -192,6 +198,8 @@ const hasMedia = (media: MediaRef, preview: boolean) =>
 
 function PageButton({ item, tone }: { item: ButtonItem; tone: Tone }) {
   const { preview } = useRender()
+  const colors = React.useContext(SectionColorsContext)
+  const buttonStyle: React.CSSProperties = { backgroundColor: safeSectionColor(colors?.button) || undefined, color: safeSectionColor(colors?.buttonText) || undefined, borderColor: safeSectionColor(colors?.button) || undefined }
   const label = item.label.trim()
   const resolved = resolveLink(item.link)
   if (!label || (!resolved && !preview)) return null
@@ -206,20 +214,20 @@ function PageButton({ item, tone }: { item: ButtonItem; tone: Tone }) {
 
   if (!resolved || preview) {
     return (
-      <Button type="button" size="lg" variant={variant} className={className} onClick={(e) => e.preventDefault()}>
+      <Button type="button" size="lg" variant={variant} className={className} style={buttonStyle} onClick={(e) => e.preventDefault()}>
         {label}
       </Button>
     )
   }
   if (resolved.internal) {
     return (
-      <Button asChild size="lg" variant={variant} className={className}>
+      <Button asChild size="lg" variant={variant} className={className} style={buttonStyle}>
         <Link to={resolved.href}>{label}</Link>
       </Button>
     )
   }
   return (
-    <Button asChild size="lg" variant={variant} className={className}>
+    <Button asChild size="lg" variant={variant} className={className} style={buttonStyle}>
       <a href={resolved.href} {...(resolved.newTab ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
         {label}
       </a>
@@ -246,7 +254,7 @@ function ButtonRow({ items, tone, align }: { items: ButtonItem[]; tone: Tone; al
 function richClass(tone: Tone, size: keyof typeof TEXT_SIZE, align: Align) {
   return cn(
     TEXT_SIZE[size],
-    'max-w-[68ch] [&_a]:text-current',
+    'page-section-richtext max-w-[68ch] [&_a]:text-current',
     tone === 'light' && '[&_li]:marker:text-current',
     align === 'center' && 'mx-auto',
   )
@@ -260,6 +268,7 @@ function useHeadingTag(id: string): 'h1' | 'h2' {
 
 function HeadingView({ block, tone, align }: { block: HeadingBlock; tone: Tone; align: Align }) {
   const Tag = useHeadingTag(block.id)
+  const colors = React.useContext(SectionColorsContext)
   if (!block.title.trim() && !block.subtitle.trim()) return null
   return (
     <div className={cn('w-full max-w-3xl', align === 'center' && 'mx-auto')}>
@@ -269,7 +278,7 @@ function HeadingView({ block, tone, align }: { block: HeadingBlock; tone: Tone; 
         </Tag>
       )}
       {block.subtitle.trim() && (
-        <p className={cn('mt-3 text-base text-pretty @2xl:text-lg', tone === 'light' ? 'text-white/85' : 'text-muted-foreground')}>
+        <p style={colors?.text ? { color: 'inherit' } : undefined} className={cn('mt-3 text-base text-pretty @2xl:text-lg', tone === 'light' ? 'text-white/85' : 'text-muted-foreground')}>
           {block.subtitle}
         </p>
       )}
@@ -342,6 +351,7 @@ function MediaTextView({ block, tone }: { block: MediaTextBlock; tone: Tone }) {
 }
 
 function IconListView({ block, tone, align }: { block: IconListBlock; tone: Tone; align: Align }) {
+  const colors = React.useContext(SectionColorsContext)
   const { outline } = useRender()
   if (block.items.length === 0) return null
   const Title = outline.items[block.id] ?? 'h3'
@@ -356,7 +366,7 @@ function IconListView({ block, tone, align }: { block: IconListBlock; tone: Tone
           <div className="flex min-w-0 flex-col gap-1.5">
             {item.title.trim() && <Title className="font-display text-lg leading-snug font-bold">{item.title}</Title>}
             {item.text.trim() && (
-              <p className={cn('text-[15px] leading-relaxed', tone === 'light' ? 'text-white/85' : 'text-muted-foreground')}>{item.text}</p>
+              <p style={colors?.text ? { color: 'inherit' } : undefined} className={cn('text-[15px] leading-relaxed', tone === 'light' ? 'text-white/85' : 'text-muted-foreground')}>{item.text}</p>
             )}
           </div>
         </li>
@@ -366,6 +376,7 @@ function IconListView({ block, tone, align }: { block: IconListBlock; tone: Tone
 }
 
 function SearchView({ block, align }: { block: SearchBlock; align: Align }) {
+  const colors = React.useContext(SectionColorsContext)
   const navigate = useNavigate()
   const { preview } = useRender()
   const [term, setTerm] = React.useState('')
@@ -395,7 +406,7 @@ function SearchView({ block, align }: { block: SearchBlock; align: Align }) {
           className="h-12 w-full rounded-full border border-input bg-card pr-4 pl-12 text-base text-foreground shadow-sm outline-none placeholder:text-muted-foreground focus-visible:ring-[3px] focus-visible:ring-brand-orange/70"
         />
       </div>
-      <Button type="submit" size="lg" variant="cta" className="h-12 px-6">
+      <Button type="submit" size="lg" variant="cta" className="h-12 px-6" style={{ backgroundColor: safeSectionColor(colors?.button) || undefined, color: safeSectionColor(colors?.buttonText) || undefined }}>
         {block.buttonLabel}
       </Button>
     </form>
@@ -459,16 +470,28 @@ function Surface({
 }) {
   const { style, blocks } = section
   const bg = style.background
-  const tone = sectionTone(bg)
-  const surfaced = Boolean(bg.imageUrl) || bg.color !== 'none'
+  const customBackground = safeSectionColor(style.colors?.background)
+  const tone = !bg.imageUrl && customBackground ? (contrastRatio('#ffffff', customBackground) >= contrastRatio('#333333', customBackground) ? 'light' : 'dark') : sectionTone(bg)
+  const surfaced = Boolean(bg.imageUrl) || Boolean(style.colors?.background) || bg.color !== 'none'
   const paddingY = roomForControls ? bumpPadding(style.paddingY) : style.paddingY
 
   const widthClass =
-    style.contentWidth === 'narrow' ? 'max-w-2xl' : style.contentWidth === 'normal' ? 'max-w-4xl' : span === 'screen' ? 'max-w-6xl' : 'max-w-none'
+    style.contentWidth === 'full' ? 'max-w-none' : style.contentWidth === 'narrow' ? 'max-w-2xl' : style.contentWidth === 'normal' ? 'max-w-4xl' : span === 'screen' ? 'max-w-6xl' : 'max-w-none'
   const sideClass = span === 'screen' ? 'px-4' : surfaced ? 'px-5 @2xl:px-10' : 'px-0'
 
+  const Element = style.element ?? 'section'
+  const colors = style.colors
+  const css: React.CSSProperties & { '--section-link'?: string } = {
+    backgroundColor: safeSectionColor(colors?.background) || undefined,
+    color: safeSectionColor(colors?.text) || undefined,
+    '--section-link': safeSectionColor(colors?.link) || undefined,
+    minHeight: style.minHeight === 'custom' ? `${Math.min(2000, Math.max(120, style.customMinHeight ?? 560))}px` : undefined,
+  }
   return (
-    <section
+    <SectionColorsContext.Provider value={colors}>
+    <Element
+      data-page-section={section.id}
+      style={css}
       className={cn(
         '@container relative isolate flex flex-col justify-center overflow-clip',
         embedded && 'h-full',
@@ -508,7 +531,8 @@ function Surface({
           <BlockView key={block.id} block={block} tone={tone} align={style.align} />
         ))}
       </div>
-    </section>
+    </Element>
+    </SectionColorsContext.Provider>
   )
 }
 

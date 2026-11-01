@@ -1,12 +1,15 @@
 import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
 import { Plus } from 'lucide-react'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Input } from '@/components/ui/input'
+import { NativeSelect } from '@/components/ui/native-select'
 import { BlockForm } from '@/components/pages/editor/BlockForms'
-import { OptionGroup, PageImageField, SwatchGroup } from '@/components/pages/editor/fields'
+import { Field, OptionGroup, PageImageField, SwatchGroup } from '@/components/pages/editor/fields'
 import { EditorRow, RowActions } from '@/components/pages/editor/rows'
 import {
   BLOCK_TYPES,
+  emptySectionColors,
+  sectionColorWarnings,
   MAX_BLOCKS,
   blockLabel,
   blockSummary,
@@ -46,13 +49,23 @@ function AppearanceTab({
   variant: 'section' | 'slide'
   onChange: (style: SectionStyle) => void
 }) {
+  const id = React.useId()
   const set = (patch: Partial<SectionStyle>) => onChange({ ...style, ...patch })
-  const setBg = (patch: Partial<SectionBackground>) => onChange({ ...style, background: { ...style.background, ...patch } })
+  const setBg = (patch: Partial<SectionBackground>) => onChange({ ...style, background: { ...style.background, ...patch }, ...(patch.color ? { colors: { ...(style.colors ?? emptySectionColors()), background: '' } } : {}) })
   const bg = style.background
   const warning = readabilityWarning(bg)
 
   return (
     <div className="flex flex-col gap-5">
+      <details className="border-b pb-3"><summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">Nome, tipo e dimensões</summary><div className="flex flex-col gap-5 pt-3">
+      <Field label="Nome da seção" hint="Identifique esta parte no editor. O nome não aparece na página.">
+        <Input value={style.name ?? ''} maxLength={80} onChange={e => set({ name: e.target.value })} />
+      </Field>
+      <Field label="Tipo de seção" hint="Cabeçalho, artigo e encerramento pertencem a esta página; não alteram o menu global do site.">
+        <NativeSelect value={style.element ?? 'section'} onChange={e => set({ element: e.target.value as SectionStyle['element'] })}>
+          <option value="section">Seção de conteúdo</option><option value="header">Cabeçalho da página</option><option value="article">Artigo</option><option value="footer">Encerramento da página</option>
+        </NativeSelect>
+      </Field>
       {variant === 'section' && (
         <OptionGroup
           label="Largura da seção"
@@ -72,6 +85,7 @@ function AppearanceTab({
           { value: 'narrow', label: 'Estreita' },
           { value: 'normal', label: 'Média' },
           { value: 'wide', label: 'Larga' },
+          { value: 'full', label: 'Toda a seção' },
         ]}
         onChange={(contentWidth) => set({ contentWidth })}
         hint="Estreita é boa para ler texto; larga acompanha o menu do topo."
@@ -95,10 +109,14 @@ function AppearanceTab({
           { value: 'auto', label: 'Pelo conteúdo' },
           { value: 'md', label: 'Média' },
           { value: 'lg', label: 'Alta' },
-          { value: 'screen', label: 'Quase a tela toda' },
+          { value: 'screen', label: 'Compacta de destaque (modelo anterior)' },
+          { value: 'viewport', label: 'Uma tela inteira · 100%' },
+          { value: 'custom', label: 'Personalizada em pixels' },
         ]}
         onChange={(minHeight) => set({ minHeight })}
       />
+      {style.minHeight === 'custom' && <Field label="Altura mínima em pixels" hint="Entre 120 e 2.000 px. O conteúdo pode aumentar a altura, sem ser cortado."><Input type="number" min={120} max={2000} value={style.customMinHeight ?? 560} onChange={e => set({ customMinHeight: Math.min(2000, Math.max(120, Number(e.target.value) || 120)) })} /></Field>}
+      <p className="text-xs text-muted-foreground">A altura é mínima: textos e imagens podem aumentar a seção. Tela inteira acompanha a tela do dispositivo.</p>
       <OptionGroup
         label="Alinhamento"
         value={style.align}
@@ -109,8 +127,30 @@ function AppearanceTab({
         onChange={(align) => set({ align })}
       />
 
-      <SwatchGroup label="Cor de fundo" value={bg.color} options={COLOR_OPTIONS} onChange={(color) => setBg({ color })} />
+      </div></details>
+      <SwatchGroup<BackgroundColor | ''> label="Cor de fundo" value={style.colors?.background ? '' : bg.color} options={COLOR_OPTIONS} onChange={(color) => { if (color) setBg({ color }) }} />
 
+      <fieldset className="space-y-3 border-y py-4">
+        <legend className="px-1 text-sm font-semibold">Cores da seção e dos itens</legend>
+        <p className="text-xs text-muted-foreground">Deixe uma cor em Automática para manter o padrão do tema. As alterações aparecem na prévia enquanto você edita os blocos.</p>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Combinações de cores">
+          {[
+            { label: 'Azul', background: '#1e63b6', text: '#ffffff', link: '#ffffff', button: '#ffffff', buttonText: '#0d3a66' },
+            { label: 'Claro', background: '#edf3fa', text: '#0d3a66', link: '#1e63b6', button: '#1e63b6', buttonText: '#ffffff' },
+            { label: 'Profundo', background: '#0d3a66', text: '#ffffff', link: '#ffffff', button: '#ffffff', buttonText: '#0d3a66' },
+          ].map(({ label, ...colors }) => <button type="button" key={label} className="min-h-11 rounded-full border px-3 text-sm hover:bg-accent" onClick={() => set({ colors })}>{label}</button>)}
+        </div>
+        {([{ key: 'background', label: 'Fundo da seção' }, { key: 'text', label: 'Texto' }, { key: 'link', label: 'Links' }, { key: 'button', label: 'Fundo dos botões' }, { key: 'buttonText', label: 'Texto dos botões' }] as const).map(({ key, label }) => {
+          const colors = style.colors ?? emptySectionColors()
+          return <div key={key} className="flex flex-wrap items-center justify-between gap-2 border-b py-2">
+            <label htmlFor={`${id}-${key}`} className="text-sm">{label}</label>
+            <div className="flex items-center gap-2"><input id={`${id}-${key}`} type="color" aria-label={label} value={colors[key] || (key === 'text' || key === 'buttonText' ? '#333333' : '#ffffff')} className="h-11 w-12 cursor-pointer rounded-md border bg-card p-1" onChange={e => set({ colors: { ...colors, [key]: e.target.value } })} /><button type="button" className="min-h-11 px-2 text-xs text-primary underline underline-offset-4" onClick={() => set({ colors: { ...colors, [key]: '' } })}>{colors[key] ? 'Restaurar automática' : 'Automática'}</button></div>
+          </div>
+        })}
+        {sectionColorWarnings(style).map(warning => <p key={warning} role="status" className="text-sm text-destructive-ink">{warning}</p>)}
+        {bg.imageUrl && <p className="text-xs text-muted-foreground">Sobre fotos, confira a leitura na prévia: o contraste depende também da imagem e da cobertura.</p>}
+      </fieldset>
+      <details><summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">Imagem de fundo e cobertura</summary><div className="flex flex-col gap-5 pt-3">
       <PageImageField
         label="Imagem de fundo"
         purpose="banner"
@@ -155,6 +195,7 @@ function AppearanceTab({
           </div>
         </>
       )}
+      </div></details>
     </div>
   )
 }
@@ -193,17 +234,14 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
   }
 
   return (
-    <Tabs defaultValue="conteudo">
-      <TabsList className="h-11 w-full sm:w-fit">
-        <TabsTrigger value="conteudo" className="px-5">
-          Conteúdo
-        </TabsTrigger>
-        <TabsTrigger value="aparencia" className="px-5">
-          Aparência
-        </TabsTrigger>
-      </TabsList>
-
-      <TabsContent value="conteudo" className="flex flex-col gap-3 pt-2">
+    <div className="flex min-w-0 flex-col gap-6">
+      <details className="rounded-xl border p-4" open>
+        <summary className="cursor-pointer text-sm font-semibold">Configuração, dimensões e cores</summary>
+        <div className="pt-5"><AppearanceTab style={section.style} variant={variant} onChange={(style) => onChange({ ...section, style })} /></div>
+      </details>
+      <div className="flex min-w-0 flex-col gap-3">
+        <h3 className="text-base font-semibold">Conteúdo e itens da seção</h3>
+        <p className="text-xs text-muted-foreground">Adicione, edite ou arraste os blocos. Eles usam as cores desta seção e aparecem na prévia em tempo real.</p>
         {section.blocks.length === 0 ? (
           <p className="text-sm text-muted-foreground">Esta seção ainda não tem blocos. Adicione um abaixo.</p>
         ) : (
@@ -254,11 +292,7 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
             ))}
           </div>
         )}
-      </TabsContent>
-
-      <TabsContent value="aparencia" className="pt-3">
-        <AppearanceTab style={section.style} variant={variant} onChange={(style) => onChange({ ...section, style })} />
-      </TabsContent>
-    </Tabs>
+      </div>
+    </div>
   )
 }

@@ -27,9 +27,9 @@ export const MAX_BUTTONS = 4
 // ---------------------------------------------------------------------------
 
 export type SectionSpan = 'screen' | 'page'
-export type ContentWidth = 'narrow' | 'normal' | 'wide'
+export type ContentWidth = 'narrow' | 'normal' | 'wide' | 'full'
 export type Spacing = 'none' | 'sm' | 'md' | 'lg' | 'xl'
-export type MinHeight = 'auto' | 'md' | 'lg' | 'screen'
+export type MinHeight = 'auto' | 'md' | 'lg' | 'screen' | 'viewport' | 'custom'
 export type Align = 'left' | 'center'
 export type BackgroundColor = 'none' | 'white' | 'soft' | 'blue' | 'ink'
 export type OverlayColor = 'ink' | 'black' | 'blue' | 'white'
@@ -45,7 +45,48 @@ export interface SectionBackground {
   overlayOpacity: number
 }
 
+export interface SectionColors {
+  background: string
+  text: string
+  link: string
+  button: string
+  buttonText: string
+}
+
+export const emptySectionColors = (): SectionColors => ({ background: '', text: '', link: '', button: '', buttonText: '' })
+/** Somente cor hexadecimal: nunca CSS arbitrário vindo do JSON. Vazio herda o tema. */
+export function safeSectionColor(value: unknown): string {
+  return typeof value === 'string' && /^#[0-9a-f]{6}$/i.test(value) ? value.toLowerCase() : ''
+}
+export function contrastRatio(a: string, b: string): number {
+  const luminance = (hex: string) => {
+    const c = hex.slice(1).match(/../g)!.map(v => parseInt(v, 16) / 255).map(v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4)
+    return c[0] * .2126 + c[1] * .7152 + c[2] * .0722
+  }
+  if (!safeSectionColor(a) || !safeSectionColor(b)) return 0
+  const x = luminance(a), y = luminance(b)
+  return (Math.max(x, y) + .05) / (Math.min(x, y) + .05)
+}
+export function sectionColorWarnings(style: SectionStyle): string[] {
+  const c = style.colors
+  if (!c) return []
+  const warnings: string[] = []
+  const check = (label: string, a: string, b: string) => {
+    if (a && b && contrastRatio(a, b) < 4.5) warnings.push(`${label}: contraste ${contrastRatio(a, b).toFixed(1)}:1. Ajuste as cores para melhorar a leitura (mínimo recomendado: 4,5:1).`)
+  }
+  if (!style.background.imageUrl) {
+    check('Texto', c.text, c.background)
+    check('Links', c.link || c.text, c.background)
+  }
+  check('Botões', c.buttonText, c.button)
+  return warnings
+}
+
 export interface SectionStyle {
+  name?: string
+  element?: 'section' | 'header' | 'article' | 'footer'
+  colors?: SectionColors
+  customMinHeight?: number
   /** screen = o fundo vai de uma borda da tela à outra; page = acompanha a largura do site */
   span: SectionSpan
   contentWidth: ContentWidth
@@ -246,6 +287,10 @@ export function defaultBackground(): SectionBackground {
 
 export function defaultStyle(): SectionStyle {
   return {
+    name: '',
+    element: 'section',
+    colors: emptySectionColors(),
+    customMinHeight: 560,
     span: 'page',
     contentWidth: 'wide',
     paddingY: 'md',
@@ -276,9 +321,9 @@ export function newIconItem(patch: Partial<IconItem> = {}): IconItem {
 // ---------------------------------------------------------------------------
 
 const SPANS = ['screen', 'page'] as const
-const WIDTHS = ['narrow', 'normal', 'wide'] as const
+const WIDTHS = ['narrow', 'normal', 'wide', 'full'] as const
 const SPACINGS = ['none', 'sm', 'md', 'lg', 'xl'] as const
-const HEIGHTS = ['auto', 'md', 'lg', 'screen'] as const
+const HEIGHTS = ['auto', 'md', 'lg', 'screen', 'viewport', 'custom'] as const
 const ALIGNS = ['left', 'center'] as const
 const COLORS = ['none', 'white', 'soft', 'blue', 'ink'] as const
 const OVERLAYS = ['ink', 'black', 'blue', 'white'] as const
@@ -311,6 +356,10 @@ function normStyle(raw: unknown): SectionStyle {
   const d = defaultStyle()
   if (!isRec(raw)) return d
   return {
+    name: text(raw.name, 80),
+    element: oneOf(raw.element, ['section', 'header', 'article', 'footer'] as const, 'section'),
+    customMinHeight: typeof raw.customMinHeight === 'number' && Number.isFinite(raw.customMinHeight) ? Math.min(2000, Math.max(120, Math.round(raw.customMinHeight))) : 560,
+    colors: Object.fromEntries(Object.keys(emptySectionColors()).map(key => [key, safeSectionColor(isRec(raw.colors) ? raw.colors[key] : '')])) as unknown as SectionColors,
     span: oneOf(raw.span, SPANS, d.span),
     contentWidth: oneOf(raw.contentWidth, WIDTHS, d.contentWidth),
     paddingY: oneOf(raw.paddingY, SPACINGS, d.paddingY),
@@ -711,6 +760,9 @@ const darkBg = (color: BackgroundColor = 'ink'): Partial<SectionStyle> => ({
 })
 
 export const SECTION_TEMPLATES: SectionTemplate[] = [
+  { key: 'cabecalho', label: 'Cabeçalho da página', description: 'Apresentação com título, texto e botões; edite conteúdo e cores juntos', build: () => newSection({ style: { name: 'Cabeçalho', element: 'header', span: 'screen', paddingY: 'lg', background: { ...defaultBackground(), color: 'blue' } }, blocks: [newBlock('heading'), newBlock('text'), newBlock('buttons')] }) },
+  { key: 'artigo', label: 'Artigo', description: 'Título, texto de leitura e imagem para um conteúdo independente', build: () => newSection({ style: { name: 'Artigo', element: 'article', contentWidth: 'narrow' }, blocks: [newBlock('heading'), newBlock('text'), newBlock('image')] }) },
+  { key: 'encerramento', label: 'Encerramento da página', description: 'Mensagem final e botões de ação', build: () => newSection({ style: { name: 'Encerramento', element: 'footer', paddingY: 'lg' }, blocks: [newBlock('heading'), newBlock('text'), newBlock('buttons')] }) },
   {
     key: 'slide-centro',
     label: 'Slide com texto no centro',
@@ -981,6 +1033,10 @@ export function blockSummary(block: Block): string {
 
 export function sectionLabel(section: Section): string {
   if (section.type === 'slides') return section.slides.length > 1 ? 'Carrossel de slides' : 'Slide'
+  if (section.style.name?.trim()) return section.style.name
+  if (section.style.element === 'header') return 'Cabeçalho'
+  if (section.style.element === 'article') return 'Artigo'
+  if (section.style.element === 'footer') return 'Encerramento'
   const bg = section.style.background
   if (section.style.span === 'screen' && (bg.imageUrl || bg.color !== 'none')) return 'Slide'
   return 'Seção'
@@ -1020,6 +1076,7 @@ export function collectIssues(layout: PageLayout): string[] {
 
   const checkSection = (section: ContentSection, where: string) => {
     if (section.blocks.length === 0) issues.push(`${where}: está vazia e não aparece no site.`)
+    sectionColorWarnings(section.style).forEach(warning => issues.push(`${where}: ${warning}`))
     const readability = readabilityWarning(section.style.background)
     if (readability) issues.push(`${where}: ${readability}`)
 

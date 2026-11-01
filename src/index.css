@@ -160,3 +160,6 @@
 
 :root { --button-radius: 9999px; }
 [data-slot="button"] { border-radius: var(--button-radius); }
+
+/* Links editoriais herdam a cor da seção sem recolorir cards de vagas ou o painel. */
+.page-section-richtext a { color: var(--section-link, currentColor) !important; }

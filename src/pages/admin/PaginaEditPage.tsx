@@ -12,7 +12,7 @@ import {
 import { EditorContext } from '@/components/pages/editor/editorContext'
 import { CheckField, Field, OptionGroup } from '@/components/pages/editor/fields'
 import { PageBuilder } from '@/components/pages/editor/PageBuilder'
-import { PageRenderer } from '@/components/pages/PageRenderer'
+import { PagePreview } from '@/components/pages/editor/PagePreview'
 import { EmptyState } from '@/components/EmptyState'
 import { RichTextEditor } from '@/components/RichTextEditor'
 import { Button } from '@/components/ui/button'
@@ -176,7 +176,10 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
                     </ul>
                   </div>
                 )}
-                <div className="grid min-w-0 items-start gap-6 xl:grid-cols-2"><div className="min-w-0"><p className="mb-4 text-sm text-muted-foreground">Arraste as seções e os blocos pela alça para reordenar. Também é possível usar os botões Subir e Descer.</p><PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} /></div><aside className="min-w-0 space-y-3 xl:sticky xl:top-20"><h2 className="font-semibold">Prévia em tempo real</h2><p className="text-xs text-muted-foreground">As alterações aparecem aqui antes de salvar. Use a aba Visualizar para ampliar.</p><div className="max-h-[75vh] overflow-auto rounded-xl border bg-background"><PageRenderer layout={layout} title={title} preview /></div></aside></div>
+                <div className="grid min-w-0 items-start gap-6 xl:grid-cols-2">
+                  <div id="edicao-pagina" className="min-w-0 scroll-mt-20"><a href="#previa-pagina" className="mb-3 inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Ver prévia das alterações</a><p className="mb-4 text-sm text-muted-foreground">Crie seções, escolha as cores e edite seus itens no mesmo lugar. Arraste seções e blocos pela alça ou use Subir e Descer.</p><PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} /></div>
+                  <aside id="previa-pagina" className="min-w-0 scroll-mt-20 space-y-3 xl:sticky xl:top-6"><a href="#edicao-pagina" className="inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Voltar à edição das seções</a><h2 className="font-semibold">Prévia em tempo real</h2><OptionGroup label="Dispositivo da prévia" value={device} options={[{ value: 'desktop', label: 'Computador' }, { value: 'mobile', label: 'Celular' }]} onChange={setDevice} /><p className="text-xs text-muted-foreground">Conteúdo, cores e dimensões aparecem aqui antes de salvar. Use Visualizar para ampliar.</p><PagePreview layout={layout} title={title} device={device} /></aside>
+                </div>
                 {pagina.slug === 'inicio' && (
                   <div>
                     <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" onClick={resetHome}>
@@ -226,11 +229,7 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
               hint="É uma prévia do que está na tela agora, mesmo sem salvar. As listas de vagas aparecem só como aviso."
             />
             {layout && (
-              <div className={cn('mx-auto w-full overflow-hidden rounded-2xl border bg-background', device === 'mobile' && 'max-w-[390px]')}>
-                <div className="max-h-[75vh] overflow-y-auto">
-                  <PageRenderer layout={layout} title={title} preview />
-                </div>
-              </div>
+              <PagePreview layout={layout} title={title} device={device} />
             )}
           </TabsContent>
 
