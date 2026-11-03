@@ -1,3 +1,4 @@
+import { uploadPrivateImage } from './privateGallery'
 import { IMAGE_MIME_TYPES } from './imageFormats'
 import { supabase } from '@/lib/supabase'
 
@@ -13,6 +14,9 @@ async function uploadImage(file: File, path: string) {
   if (file.size > MAX_SIZE_BYTES) {
     throw new UploadError('A imagem deve ter até 5 MB.')
   }
+
+  // Original privado reutilizável; somente a cópia usada na publicação é pública.
+  await uploadPrivateImage(file)
 
   const ext = file.type === 'image/png' ? 'png' : 'jpg'
   const fullPath = `${path}.${ext}`

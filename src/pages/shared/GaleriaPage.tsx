@@ -1,41 +1,40 @@
 import { ExpandableImage } from '@/components/ImageLightbox'
 import { ImageSourcePicker } from '@/components/ImageSourcePicker'
 import { useState } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '@/contexts/AuthContext'
+import { usePrivateGallery } from '@/hooks/usePrivateGallery'
+import { GALLERY_BUCKET, uploadPrivateImage } from '@/lib/privateGallery'
 import { supabase } from '@/lib/supabase'
-import { IMAGE_MIME_TYPES } from '@/lib/imageFormats'
 import { ImageGuidance } from '@/components/ImageGuidance'
 import { Button } from '@/components/ui/button'
 
 export default function GaleriaPage() {
   const { user } = useAuth()
-  const [error,setError] = useState('')
-  const [busy,setBusy] = useState(false)
-  const gallery=useQuery({queryKey:['my-image-gallery',user?.id],enabled:!!user,queryFn:async()=>{
-    const {data,error}=await supabase.storage.from('user-gallery').list(user!.id,{limit:1000,sortBy:{column:'created_at',order:'desc'}})
-    if(error)throw error
-    return Promise.all((data??[]).filter(x=>x.id).map(async item=>{
-      const path=`${user!.id}/${item.name}`
-      const {data,error}=await supabase.storage.from('user-gallery').createSignedUrl(path,300)
-      if(error)throw error
-      return {path,url:data.signedUrl,name:item.name}
-    }))
-  },refetchInterval:240000})
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [page, setPage] = useState(0)
+  const gallery = usePrivateGallery(page)
+  const client = useQueryClient()
+  const refresh = () => client.invalidateQueries({ queryKey: ['my-image-gallery', user?.id] })
   return <section className="max-w-4xl space-y-5">
     <h1 className="text-2xl font-bold">Minha galeria de imagens</h1>
-    <p>Somente você tem acesso a esta galeria. As imagens ficam disponíveis para visualização e remoção no seu acesso. Fotos publicadas no perfil, blog ou portfólio são gerenciadas nos respectivos formulários.</p>
-    <ImageGuidance purpose="gallery" />
-    {(['desktop','mobile'] as const).map(device=><ImageSourcePicker key={device} label={`Imagem ${device==='desktop'?'desktop':'móvel'} — galeria privada`} disabled={busy||!user} onFile={async file=>{
-      if(!user)throw new Error('Entre na sua conta para enviar imagens.')
-      if(!IMAGE_MIME_TYPES.includes(file.type)||file.size>5242880)throw new Error('Use somente JPG ou PNG, até 5 MB.')
-      setError('');setBusy(true)
-      try{const path=`${user.id}/${device}-${crypto.randomUUID()}.${file.type==='image/png'?'png':'jpg'}`;const {error}=await supabase.storage.from('user-gallery').upload(path,file);if(error)throw new Error('Não foi possível salvar na sua galeria. Confira a conexão e a configuração do armazenamento.');await gallery.refetch()}finally{setBusy(false)}
-    }} />)}
-    {busy&&<p role="status">Enviando imagem…</p>}
-    {(error||gallery.isError)&&<p role="alert" className="text-destructive">{error||'Não foi possível carregar a galeria. Confira a conexão e a configuração do armazenamento.'} <button className="underline" onClick={()=>gallery.refetch()}>Tentar novamente</button></p>}
-    {gallery.isLoading&&<p role="status">Carregando suas imagens…</p>}
-    {gallery.data?.length===0&&<p>Sua galeria está vazia. Adicione a primeira imagem acima.</p>}
-    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gallery.data?.map((image,index)=><figure key={image.path} className="space-y-2"><ExpandableImage images={gallery.data?.map(item=>item.url)} initialIndex={index} src={image.url} alt={`Imagem ${image.name.startsWith('mobile-')?'móvel':'desktop'} da sua galeria pessoal`} className="aspect-video w-full rounded-lg bg-muted object-contain" /><Button variant="outline" disabled={busy} onClick={async()=>{setBusy(true);setError('');try{const {error}=await supabase.storage.from('user-gallery').remove([image.path]);if(error)throw error;await gallery.refetch()}catch{setError('Não foi possível remover a imagem. Tente novamente.')}finally{setBusy(false)}}}>Remover da galeria</Button></figure>)}</div>
+    <p className="text-sm text-muted-foreground">Sua biblioteca é privada. Reutilize as fotos nos campos de imagem escolhendo “Minha galeria”. Novos uploads nas publicações também ficam guardados aqui. Ao publicar, uma cópia da foto fica visível na publicação; remover o original desta galeria não remove essa cópia.</p>
+    <details className="rounded-xl border p-4"><summary className="cursor-pointer font-medium">Adicionar imagem</summary><div className="space-y-4 pt-4"><ImageGuidance purpose="gallery" />
+      <ImageSourcePicker allowGallery={false} label="Imagem da galeria" disabled={busy || !user} onBusyChange={setBusy} onFile={async file => { await uploadPrivateImage(file); setPage(0); await refresh() }} />
+    </div></details>
+    {(error || gallery.isError) && <p role="alert" className="text-destructive">{error || 'Não foi possível carregar a galeria. Confira a conexão e o armazenamento privado.'} <button type="button" className="underline" onClick={() => { setError(''); void gallery.refetch() }}>Tentar novamente</button></p>}
+    {gallery.isPending && <p role="status">Carregando suas imagens…</p>}
+    {gallery.data?.images.length === 0 && <p>Sua galeria está vazia nesta página. Adicione uma imagem acima.</p>}
+    <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gallery.data?.images.map((image, index) => <figure key={image.path} className="space-y-2">
+      <ExpandableImage images={gallery.data.images.map(item => item.url)} initialIndex={index} src={image.url} alt={`Imagem ${index + 1} da sua galeria pessoal`} className="aspect-video w-full rounded-lg bg-muted object-contain" />
+      <figcaption className="truncate text-xs text-muted-foreground" title={image.name}>{image.name.replace(/^[a-f0-9-]{36}--/, '')}</figcaption>
+      <Button variant="outline" disabled={busy} onClick={async () => {
+        if (!window.confirm('Remover o original da galeria? As fotos já usadas em publicações continuarão disponíveis.')) return
+        setBusy(true); setError('')
+        try { const { error } = await supabase.storage.from(GALLERY_BUCKET).remove([image.path]); if (error) throw error; if (gallery.data.images.length === 1 && page > 0) setPage(page - 1); await refresh() } catch { setError('Não foi possível remover a imagem. Tente novamente.') } finally { setBusy(false) }
+      }}>Remover da galeria</Button>
+    </figure>)}</div>
+    {(page > 0 || gallery.data?.hasMore) && <div className="flex items-center gap-3"><Button type="button" variant="outline" disabled={page === 0 || busy || gallery.isFetching} onClick={() => setPage(page - 1)}>Anterior</Button><span className="text-sm">Página {page + 1}</span><Button type="button" variant="outline" disabled={!gallery.data?.hasMore || busy || gallery.isFetching} onClick={() => setPage(page + 1)}>Próxima</Button></div>}
   </section>
 }
