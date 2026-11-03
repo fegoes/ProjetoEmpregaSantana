@@ -23,3 +23,20 @@ describe('conteúdo publicado no editor de páginas',()=>{
   expect(r.status).toBe(200);expect(await r.text()).toContain('Página criada pela equipe')
  })
 })
+
+it('a inicial vazia salva não restaura o modelo antigo para buscadores', async () => {
+ setup({ title: 'Inicial atual', content_html: 'Texto legado oculto', layout: { version: 1, sections: [] } })
+ const response = await middleware(new Request('https://site.test/', { headers: { 'user-agent': 'Googlebot' } }))
+ const html = await response.text()
+ expect(html).toContain('Inicial atual')
+ expect(html).not.toContain('Texto legado oculto')
+ expect(html).not.toContain('Seu próximo passo começa perto de casa')
+ expect(response.headers.get('cache-control')).toBe('no-store')
+})
+it('a inicial textual salva também é respeitada por buscadores', async () => {
+ setup({ title: 'Inicial atual', content_html: '<p>Conteúdo atual do banco</p>', layout: null })
+ const response = await middleware(new Request('https://site.test/', { headers: { 'user-agent': 'Googlebot' } }))
+ const html = await response.text()
+ expect(html).toContain('Conteúdo atual do banco')
+ expect(html).not.toContain('Seu próximo passo começa perto de casa')
+})

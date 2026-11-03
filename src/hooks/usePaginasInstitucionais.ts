@@ -9,6 +9,11 @@ const KEY = ['paginas-institucionais'] as const
 export function usePaginaInstitucional(slug: string) {
   return useQuery({
     queryKey: [...KEY, 'by-slug', slug],
+    // Conteúdo editorial deve ser revalidado em cada acesso, sem herdar
+    // os 30 minutos de cache das demais consultas do sistema.
+    staleTime: 0,
+    refetchOnMount: 'always',
+    refetchOnWindowFocus: true,
     queryFn: async () => {
       const { data, error } = await supabase.from('paginas_institucionais').select('*').eq('slug', slug).maybeSingle()
       if (error) throw error

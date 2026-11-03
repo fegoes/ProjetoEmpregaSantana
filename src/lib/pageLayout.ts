@@ -821,7 +821,7 @@ export const SECTION_TEMPLATES: SectionTemplate[] = [
   {
     key: 'texto-imagem',
     label: 'Texto com imagem',
-    description: 'Texto de um lado e imagem do outro, em fundo claro',
+    description: 'Duas colunas: texto de um lado e imagem do outro, empilhadas no celular',
     build: () =>
       newSection({
         style: { paddingY: 'lg', background: { ...defaultBackground(), color: 'white' } },

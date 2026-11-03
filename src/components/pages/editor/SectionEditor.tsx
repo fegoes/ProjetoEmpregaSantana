@@ -1,6 +1,6 @@
+import { InsertDropZone, VisualInsertItem } from './VisualInserter'
 import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
-import { Plus } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { NativeSelect } from '@/components/ui/native-select'
 import { BlockForm } from '@/components/pages/editor/BlockForms'
@@ -221,10 +221,18 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
       return next
     })
 
-  const addBlock = (type: Block['type']) => {
+  const addBlock = (type: Block['type'], index = section.blocks.length) => {
+    if (section.blocks.length >= MAX_BLOCKS) return
     const block = newBlock(type)
-    setBlocks([...section.blocks, block])
+    const next = [...section.blocks]
+    next.splice(index, 0, block)
+    setBlocks(next)
     setOpenIds((current) => new Set(current).add(block.id))
+  }
+
+  const drop = (value: string, index: number) => {
+    const item = BLOCK_TYPES.find(item => item.type === value)
+    if (item) addBlock(item.type, index)
   }
 
   const removeBlock = (block: Block) => {
@@ -247,8 +255,9 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
         ) : (
           <Sortable items={section.blocks} onChange={setBlocks} label="Blocos"><ul className="flex flex-col divide-y border-y">
             {section.blocks.map((block, index) => (
+              <React.Fragment key={block.id}>
+              {section.blocks.length < MAX_BLOCKS && <li className="list-none"><InsertDropZone kind="block" label="Arraste um elemento para inserir aqui" onInsert={value => drop(value, index)} /></li>}
               <EditorRow
-                key={block.id}
             sortableId={block.id}
                 id={`bloco-${block.id}`}
                 label={blockLabel(block.type)}
@@ -272,24 +281,17 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
                   onRemove={() => removeBlock(block)}
                   removeLabel="Apagar bloco"
                 />
-              </EditorRow>
+              </EditorRow></React.Fragment>
             ))}
           </ul></Sortable>
         )}
 
         {section.blocks.length < MAX_BLOCKS && (
-          <div role="group" aria-label="Adicionar bloco" className="flex flex-wrap gap-2">
-            {BLOCK_TYPES.map((t) => (
-              <button
-                key={t.type}
-                type="button"
-                title={t.description}
-                onClick={() => addBlock(t.type)}
-                className="inline-flex h-10 items-center gap-1.5 rounded-full border bg-card px-3.5 text-sm font-medium transition-colors hover:border-primary/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
-              >
-                <Plus className="size-4" aria-hidden /> {t.label}
-              </button>
-            ))}
+          <div role="group" aria-label="Adicionar bloco" className="space-y-3">
+            <InsertDropZone kind="block" label="Arraste um elemento para adicionar ao final da seção" onInsert={value => drop(value, section.blocks.length)} />
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+              {BLOCK_TYPES.map(t => <VisualInsertItem key={t.type} kind="block" value={t.type} label={t.label} description={t.description} onInsert={() => addBlock(t.type)} />)}
+            </div>
           </div>
         )}
       </div>

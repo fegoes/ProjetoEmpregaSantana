@@ -264,7 +264,9 @@ async function renderHome(path: string, siteUrl: string): Promise<Response> {
   const rows=await supabaseSelect<PaginaRow>('paginas_institucionais?slug=eq.inicio&select=title,content_html,layout,seo_description')
   const custom=rows[0]
   const layout=publicLayoutHtml(custom?.layout)
-  const bodyHtml=layout?`<h1>${escapeHtml(custom.title)}</h1>${layout}`:`
+  const hasSavedLayout = Boolean(custom?.layout && typeof custom.layout === 'object' && Array.isArray((custom.layout as { sections?: unknown }).sections))
+  const hasCustomContent = hasSavedLayout || Boolean(custom?.content_html?.trim())
+  const bodyHtml=hasCustomContent?`<h1>${escapeHtml(custom.title)}</h1>${hasSavedLayout ? (layout ?? '') : escapeHtml(stripHtml(custom.content_html, Number.MAX_SAFE_INTEGER))}`:`
     <h1>Seu próximo passo começa perto de casa.</h1>
     <p>Quem procura trabalho e quem precisa de um profissional têm um lugar para se encontrar. Vagas, serviços e conexões que movimentam o nosso sertão.</p>
     <img src="/illustrations/nossa-gente.png" alt="Uma candidata, um profissional de serviços e uma empresária da região, juntos." />
@@ -274,7 +276,7 @@ async function renderHome(path: string, siteUrl: string): Promise<Response> {
     <h3>Para quem faz acontecer.</h3><p>Apresente seu serviço, mostre seu portfólio e deixe claro onde você atende.</p><img src="/illustrations/servicos.jpg" alt="Um profissional apresenta seu trabalho." />
     <h3>Para quem precisa contratar.</h3><p>Divulgue oportunidades e organize as candidaturas recebidas.</p><img src="/illustrations/contratacao.jpg" alt="Uma empresária conversa com um candidato." />
     <p><a href="/cadastro?perfil=empresa">Publicar uma vaga</a> · <a href="/blog">Dicas de carreira</a></p>`
-  return new Response(renderPage({siteUrl,path,title:`${layout?custom.title:'Seu próximo passo começa perto de casa'} | EmpregaSantana`,description:custom?.seo_description||'Vagas, serviços e conexões que movimentam o nosso sertão. Conheça o EmpregaSantana.',bodyHtml}),{headers:{'content-type':'text/html; charset=utf-8'}})
+  return new Response(renderPage({siteUrl,path,title:`${hasCustomContent?custom.title:'Seu próximo passo começa perto de casa'} | EmpregaSantana`,description:custom?.seo_description||'Vagas, serviços e conexões que movimentam o nosso sertão. Conheça o EmpregaSantana.',bodyHtml}),{headers:{'content-type':'text/html; charset=utf-8','Cache-Control':'no-store'}})
 }
 
 interface PaginaRow {

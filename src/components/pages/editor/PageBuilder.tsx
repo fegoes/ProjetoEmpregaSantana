@@ -1,3 +1,4 @@
+import { InsertDropZone, VisualInsertItem } from './VisualInserter'
 import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
 import { Plus } from 'lucide-react'
@@ -140,9 +141,12 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
 
   const update = (next: Section) => onChange(sections.map((s) => (s.id === next.id ? next : s)))
 
-  const add = (build: () => Section) => {
+  const add = (build: () => Section, index = sections.length) => {
+    if (sections.length >= MAX_SECTIONS) return
     const section = build()
-    onChange([...sections, section])
+    const next = [...sections]
+    next.splice(index, 0, section)
+    onChange(next)
     setOpenIds((current) => new Set(current).add(section.id))
     setPicking(false)
     window.setTimeout(() => {
@@ -151,6 +155,11 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       })
     }, 80)
+  }
+
+  const drop = (value: string, index: number) => {
+    const template = SECTION_TEMPLATES.find(item => item.key === value)
+    if (template) add(template.build, index)
   }
 
   const remove = (section: Section) => {
@@ -166,8 +175,9 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
       ) : (
         <Sortable items={sections} onChange={onChange} label="Seções"><ul className="flex flex-col divide-y border-y">
           {sections.map((section, index) => (
+            <React.Fragment key={section.id}>
+            {sections.length < MAX_SECTIONS && <li className="list-none"><InsertDropZone kind="section" label="Arraste um modelo para inserir uma seção aqui" onInsert={value => drop(value, index)} /></li>}
             <EditorRow
-              key={section.id}
             sortableId={section.id}
               id={`secao-${section.id}`}
               label={`${index + 1}. ${sectionLabel(section)}`}
@@ -195,10 +205,12 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
                 onRemove={() => remove(section)}
                 removeLabel="Apagar seção"
               />
-            </EditorRow>
+            </EditorRow></React.Fragment>
           ))}
         </ul></Sortable>
       )}
+
+      {sections.length < MAX_SECTIONS && <InsertDropZone kind="section" label="Arraste um modelo para adicionar uma seção ao final" onInsert={value => drop(value, sections.length)} />}
 
       {sections.length < MAX_SECTIONS &&
         (picking ? (
@@ -211,18 +223,9 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
                 </Button>
               )}
             </div>
-            <div className="grid gap-2 sm:grid-cols-2">
-              {SECTION_TEMPLATES.map((t) => (
-                <button
-                  key={t.key}
-                  type="button"
-                  onClick={() => add(t.build)}
-                  className="flex flex-col gap-0.5 rounded-xl border bg-card p-3.5 text-left transition-colors hover:border-primary/50 focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-none"
-                >
-                  <span className="text-sm font-semibold">{t.label}</span>
-                  <span className="text-sm text-muted-foreground">{t.description}</span>
-                </button>
-              ))}
+            <p className="text-xs text-muted-foreground">Clique no modelo ou arraste até um dos espaços entre as seções. Passe o mouse ou foque para conhecer a composição.</p>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+              {SECTION_TEMPLATES.map(t => <VisualInsertItem key={t.key} kind="section" value={t.key} label={t.label} description={t.description} onInsert={() => add(t.build)} />)}
             </div>
           </div>
         ) : (

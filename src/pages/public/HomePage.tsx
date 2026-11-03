@@ -1,3 +1,4 @@
+import { RichTextRenderer } from '@/components/RichTextRenderer'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import { BuilderPage } from '@/components/pages/BuilderPage'
 import { usePaginaInstitucional } from '@/hooks/usePaginasInstitucionais'
@@ -45,8 +46,19 @@ function IllustratedHome() {
 }
 
 export default function HomePage() {
-  const { data: pagina } = usePaginaInstitucional('inicio')
+  const { data: pagina, isPending, isFetching, isError, refetch } = usePaginaInstitucional('inicio')
   const layout = useMemo(() => parseLayout(pagina?.layout), [pagina?.layout])
-  if (pagina && layout && layout.sections.length > 0) return <BuilderPage pagina={pagina} layout={layout} />
+  // Nunca desenhar a versão padrão (nem uma versão em cache) antes de
+  // confirmar o conteúdo atual. Erros de rede também não são ausência de página.
+  if (isPending || isFetching) return <div role="status" aria-live="polite" className="mx-auto min-h-64 w-full max-w-6xl px-4 py-12 text-sm text-muted-foreground">Carregando página…</div>
+  if (isError) return <div role="alert" className="mx-auto min-h-64 w-full max-w-6xl space-y-4 px-4 py-12"><p>Não foi possível carregar a página atual.</p><Button variant="outline" onClick={() => void refetch()}>Tentar novamente</Button></div>
+  // Um desenho vazio salvo é intencional: não restaurar as seções antigas.
+  if (pagina && layout) return <BuilderPage pagina={pagina} layout={layout} />
+  if (pagina?.content_html?.trim()) return <HomeTextPage title={pagina.title} html={pagina.content_html} description={pagina.seo_description} />
   return <IllustratedHome />
+}
+
+function HomeTextPage({ title, html, description }: { title: string; html: string; description: string | null }) {
+  useDocumentMeta({ title, description: description || undefined })
+  return <article className="mx-auto w-full max-w-6xl px-4 py-8"><h1 className="mb-6 text-3xl font-bold">{title}</h1><RichTextRenderer html={html} /></article>
 }
