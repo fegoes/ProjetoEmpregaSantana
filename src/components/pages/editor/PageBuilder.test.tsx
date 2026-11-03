@@ -14,6 +14,11 @@ function transfer() {
  return { get types() { return [...data.keys()] }, setData: (type: string, value: string) => data.set(type, value), getData: (type: string) => data.get(type) ?? '', effectAllowed: '', dropEffect: '' }
 }
 describe('paleta visual de seções', () => {
+ it('inicia com as seções recolhidas', () => {
+  render(<Harness />)
+  expect(screen.queryByText('Editar conteúdo inserido')).not.toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /^1\. Seção existente/ })).toHaveAttribute('aria-expanded', 'false')
+ })
  it('insere o modelo escolhido por clique e abre a edição', () => {
   render(<Harness />)
   fireEvent.click(screen.getByRole('button', { name: 'Adicionar seção' }))
@@ -22,7 +27,7 @@ describe('paleta visual de seções', () => {
   expect(tile).toHaveAccessibleDescription(/Duas colunas/)
   fireEvent.click(tile)
   expect(screen.getByTestId('order')).toHaveTextContent('vazia|media_text')
-  expect(screen.getAllByText('Editar conteúdo inserido')).toHaveLength(2)
+  expect(screen.getAllByText('Editar conteúdo inserido')).toHaveLength(1)
  })
  it('arrasta um novo modelo para antes de uma seção existente', () => {
   render(<Harness />)

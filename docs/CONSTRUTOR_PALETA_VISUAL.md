@@ -1,6 +1,6 @@
 # Paleta visual do construtor de páginas
 
-Os modelos de seção e os elementos agora aparecem como botões compactos com ícone, nome e descrição por hover ou foco. O modelo Texto com imagem informa sua composição em duas colunas, empilhadas no celular.
+Os modelos de seção e os elementos agora aparecem como botões compactos de ícone; nome e descrição aparecem por hover ou foco. O modelo Texto com imagem informa sua composição em duas colunas, empilhadas no celular.
 
 Clique para acrescentar e abrir a edição, ou arraste o botão para os espaços de inserção entre seções ou entre blocos. O espaço final também aceita inserção. As áreas distinguem modelos de seção de elementos, ignoram arquivos externos e respeitam os limites existentes. A ordenação dos itens já criados continua pelas alças e pelos botões Subir/Descer. No celular ou teclado, use o clique e os controles de ordenação.
 

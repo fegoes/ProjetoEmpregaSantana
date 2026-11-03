@@ -217,7 +217,7 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
     setOpenIds((current) => {
       const next = new Set(current)
       if (next.has(id)) next.delete(id)
-      else next.add(id)
+      else return new Set([id])
       return next
     })
 
@@ -227,7 +227,7 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
     const next = [...section.blocks]
     next.splice(index, 0, block)
     setBlocks(next)
-    setOpenIds((current) => new Set(current).add(block.id))
+    setOpenIds(new Set([block.id]))
   }
 
   const drop = (value: string, index: number) => {
@@ -243,20 +243,20 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
 
   return (
     <div className="flex min-w-0 flex-col gap-6">
-      <details className="rounded-xl border p-4" open>
+      <details className="rounded-xl border p-4">
         <summary className="cursor-pointer text-sm font-semibold">Configuração, dimensões e cores</summary>
         <div className="pt-5"><AppearanceTab style={section.style} variant={variant} onChange={(style) => onChange({ ...section, style })} /></div>
       </details>
       <div className="flex min-w-0 flex-col gap-3">
-        <h3 className="text-base font-semibold">Conteúdo e itens da seção</h3>
-        <p className="text-xs text-muted-foreground">Adicione, edite ou arraste os blocos. Eles usam as cores desta seção e aparecem na prévia em tempo real.</p>
+        <h3 className="text-base font-semibold">Conteúdo</h3>
+
         {section.blocks.length === 0 ? (
           <p className="text-sm text-muted-foreground">Esta seção ainda não tem blocos. Adicione um abaixo.</p>
         ) : (
           <Sortable items={section.blocks} onChange={setBlocks} label="Blocos"><ul className="flex flex-col divide-y border-y">
             {section.blocks.map((block, index) => (
               <React.Fragment key={block.id}>
-              {section.blocks.length < MAX_BLOCKS && <li className="list-none"><InsertDropZone kind="block" label="Arraste um elemento para inserir aqui" onInsert={value => drop(value, index)} /></li>}
+              {section.blocks.length < MAX_BLOCKS && <li className="list-none has-[[hidden]]:hidden"><InsertDropZone kind="block" label="Arraste um elemento para inserir aqui" onInsert={value => drop(value, index)} /></li>}
               <EditorRow
             sortableId={block.id}
                 id={`bloco-${block.id}`}
@@ -275,7 +275,7 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
                     const next = [...section.blocks]
                     next.splice(index + 1, 0, copy)
                     setBlocks(next)
-                    setOpenIds((current) => new Set(current).add(copy.id))
+                    setOpenIds(new Set([copy.id]))
                   }}
                   canDuplicate={section.blocks.length < MAX_BLOCKS}
                   onRemove={() => removeBlock(block)}
@@ -287,12 +287,12 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
         )}
 
         {section.blocks.length < MAX_BLOCKS && (
-          <div role="group" aria-label="Adicionar bloco" className="space-y-3">
+          <details className="rounded-xl border p-3"><summary className="cursor-pointer text-sm font-medium">Adicionar elemento</summary><div role="group" aria-label="Adicionar bloco" className="space-y-3 pt-3">
             <InsertDropZone kind="block" label="Arraste um elemento para adicionar ao final da seção" onInsert={value => drop(value, section.blocks.length)} />
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="flex flex-wrap gap-2">
               {BLOCK_TYPES.map(t => <VisualInsertItem key={t.type} kind="block" value={t.type} label={t.label} description={t.description} onInsert={() => addBlock(t.type)} />)}
             </div>
-          </div>
+          </div></details>
         )}
       </div>
     </div>

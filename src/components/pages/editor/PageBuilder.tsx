@@ -27,7 +27,7 @@ function SlidesEditor({ section, onChange }: { section: SlidesSection; onChange:
     setOpenIds((current) => {
       const next = new Set(current)
       if (next.has(id)) next.delete(id)
-      else next.add(id)
+      else return new Set([id])
       return next
     })
 
@@ -88,7 +88,7 @@ function SlidesEditor({ section, onChange }: { section: SlidesSection; onChange:
                 const next = [...section.slides]
                 next.splice(index + 1, 0, copy)
                 setSlides(next)
-                setOpenIds((current) => new Set(current).add(copy.id))
+                setOpenIds(new Set([copy.id]))
               }}
               canDuplicate={section.slides.length < MAX_SLIDES}
               onRemove={() => {
@@ -128,14 +128,14 @@ interface PageBuilderProps {
 
 /** Lista de seções da página: modelos para começar, ordem, duplicar, apagar e edição de cada uma. */
 export function PageBuilder({ sections, onChange }: PageBuilderProps) {
-  const [openIds, setOpenIds] = React.useState<Set<string>>(() => new Set(sections[0] ? [sections[0].id] : []))
+  const [openIds, setOpenIds] = React.useState<Set<string>>(() => new Set())
   const [picking, setPicking] = React.useState(sections.length === 0)
 
   const toggle = (id: string) =>
     setOpenIds((current) => {
       const next = new Set(current)
       if (next.has(id)) next.delete(id)
-      else next.add(id)
+      else return new Set([id])
       return next
     })
 
@@ -147,7 +147,7 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
     const next = [...sections]
     next.splice(index, 0, section)
     onChange(next)
-    setOpenIds((current) => new Set(current).add(section.id))
+    setOpenIds(new Set([section.id]))
     setPicking(false)
     window.setTimeout(() => {
       document.getElementById(`secao-${section.id}`)?.scrollIntoView({
@@ -176,7 +176,7 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
         <Sortable items={sections} onChange={onChange} label="Seções"><ul className="flex flex-col divide-y border-y">
           {sections.map((section, index) => (
             <React.Fragment key={section.id}>
-            {sections.length < MAX_SECTIONS && <li className="list-none"><InsertDropZone kind="section" label="Arraste um modelo para inserir uma seção aqui" onInsert={value => drop(value, index)} /></li>}
+            {sections.length < MAX_SECTIONS && <li className="list-none has-[[hidden]]:hidden"><InsertDropZone kind="section" label="Arraste um modelo para inserir uma seção aqui" onInsert={value => drop(value, index)} /></li>}
             <EditorRow
             sortableId={section.id}
               id={`secao-${section.id}`}
@@ -199,7 +199,7 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
                   const next = [...sections]
                   next.splice(index + 1, 0, copy)
                   onChange(next)
-                  setOpenIds((current) => new Set(current).add(copy.id))
+                  setOpenIds(new Set([copy.id]))
                 }}
                 canDuplicate={sections.length < MAX_SECTIONS}
                 onRemove={() => remove(section)}
@@ -224,7 +224,7 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
               )}
             </div>
             <p className="text-xs text-muted-foreground">Clique no modelo ou arraste até um dos espaços entre as seções. Passe o mouse ou foque para conhecer a composição.</p>
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="flex flex-wrap gap-2">
               {SECTION_TEMPLATES.map(t => <VisualInsertItem key={t.key} kind="section" value={t.key} label={t.label} description={t.description} onInsert={() => add(t.build)} />)}
             </div>
           </div>

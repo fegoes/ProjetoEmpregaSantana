@@ -169,23 +169,23 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
                 {issues.length > 0 && (
                   <div role="status" className="rounded-xl bg-brand-orange/12 p-4 text-sm">
                     <p className="font-semibold">Vale conferir antes de publicar</p>
-                    <ul className="mt-1.5 list-disc pl-5 text-muted-foreground">
+                    <details className="mt-2"><summary className="cursor-pointer">Ver {issues.length} orientações</summary><ul className="mt-1.5 list-disc pl-5 text-muted-foreground">
                       {issues.map((issue) => (
                         <li key={issue}>{issue}</li>
                       ))}
-                    </ul>
+                    </ul></details>
                   </div>
                 )}
                 <div className="grid min-w-0 items-start gap-6 xl:grid-cols-2">
-                  <div id="edicao-pagina" className="min-w-0 scroll-mt-20"><a href="#previa-pagina" className="mb-3 inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Ver prévia das alterações</a><p className="mb-4 text-sm text-muted-foreground">Crie seções, escolha as cores e edite seus itens no mesmo lugar. Arraste seções e blocos pela alça ou use Subir e Descer.</p><PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} /></div>
-                  <aside id="previa-pagina" className="min-w-0 scroll-mt-20 space-y-3 xl:sticky xl:top-6"><a href="#edicao-pagina" className="inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Voltar à edição das seções</a><h2 className="font-semibold">Prévia em tempo real</h2><OptionGroup label="Dispositivo da prévia" value={device} options={[{ value: 'desktop', label: 'Computador' }, { value: 'mobile', label: 'Celular' }]} onChange={setDevice} /><p className="text-xs text-muted-foreground">Conteúdo, cores e dimensões aparecem aqui antes de salvar. Use Visualizar para ampliar.</p><PagePreview layout={layout} title={title} device={device} /></aside>
+                  <div id="edicao-pagina" className="min-w-0 scroll-mt-20"><a href="#previa-pagina" className="mb-3 inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Ver prévia das alterações</a><p className="mb-4 text-sm text-muted-foreground">Selecione uma seção para editar.</p><PageBuilder sections={layout.sections} onChange={(sections) => setLayout({ ...layout, sections })} /></div>
+                  <aside id="previa-pagina" className="min-w-0 scroll-mt-20 space-y-3 xl:sticky xl:top-6"><a href="#edicao-pagina" className="inline-flex min-h-11 items-center text-sm text-primary underline xl:hidden">Voltar à edição das seções</a><h2 className="font-semibold">Prévia em tempo real</h2><OptionGroup label="Dispositivo da prévia" value={device} options={[{ value: 'desktop', label: 'Computador' }, { value: 'mobile', label: 'Celular' }]} onChange={setDevice} /><PagePreview layout={layout} title={title} device={device} /></aside>
                 </div>
                 {pagina.slug === 'inicio' && (
-                  <div>
+                  <details><summary className="cursor-pointer text-xs text-muted-foreground">Restaurar página inicial</summary>
                     <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" onClick={resetHome}>
                       Voltar ao desenho padrão do site
                     </Button>
-                  </div>
+                  </details>
                 )}
               </>
             ) : pagina.slug === 'inicio' ? (
