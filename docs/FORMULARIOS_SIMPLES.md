@@ -21,7 +21,7 @@ Orientações longas de vagas, currículos e imagens foram removidas ou reduzida
 
 Novas postagens começam com um editor de texto contínuo. Não exigem criar seções ou blocos. A barra usa ícones de formatação e o texto aceita imagens, galerias, slides, vídeos e anúncios entre os parágrafos. As mídias são inseridas por modal e selecionadas no texto para edição. As configurações de endereço, resumo e publicação ficam recolhidas.
 
-Posts salvos em seções/blocos continuam com o editor compatível; não há conversão nem perda automática de cores, layout ou conteúdo antigos. A prévia desktop/celular e o envio de imagens apenas no salvamento dos posts continuam disponíveis.
+Posts salvos em seções/blocos também abrem no editor contínuo, mantendo textos e mídias em ordem. Abrir não grava alterações. Ao editar e salvar, deixam de usar a antiga organização por seções e suas configurações visuais. Não existe mais um modo de criação em blocos ou seções. A prévia desktop/celular e o envio de imagens apenas no salvamento dos posts continuam disponíveis.
 
 ## Validação e publicação
 

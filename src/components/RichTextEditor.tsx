@@ -68,7 +68,7 @@ function RichTextEditorContent({ onUploadingChange, allowPostMedia = false, allo
     },
   })
 
-  useEffect(() => { editor?.setEditable(!disabled) }, [editor, disabled])
+  useEffect(() => { editor?.setEditable(!disabled, false) }, [editor, disabled])
 
   useEffect(() => {
     if (editor && editor.getHTML() !== value) editor.commands.setContent(value, false)
