@@ -16,3 +16,17 @@ describe('imagens do rascunho',()=>{
  it('adia a remoção da versão móvel de uma imagem existente',async()=>{const store=new DraftImageStore(),upload=vi.fn(),save=vi.fn();store.setVariant('https://storage.test/desktop.jpg',null);expect(save).not.toHaveBeenCalled();await store.prepare({cover_url:'https://storage.test/desktop.jpg'},upload,save);expect(upload).not.toHaveBeenCalled();expect(save).toHaveBeenCalledWith('https://storage.test/desktop.jpg',null)})
  it('recusa formatos e links inválidos sem enviar nada',async()=>{const store=new DraftImageStore();expect(()=>store.stageFile(new File(['gif'],'x.gif',{type:'image/gif'}))).toThrow('JPG ou PNG');expect(()=>store.stageLink('http://origin.test/foto.jpg')).toThrow('HTTPS');const ref=store.stageLink('https://origin.test/foto.gif'),upload=vi.fn();remote.mockResolvedValue(new File(['gif'],'x.gif',{type:'image/gif'}));await expect(store.prepare({cover_url:ref},upload,vi.fn())).rejects.toThrow('JPG ou PNG');expect(upload).not.toHaveBeenCalled()})
 })
+
+it('envia vídeos apenas ao salvar e reutiliza o envio em uma nova tentativa',async()=>{
+ const store=new DraftImageStore(),ref=store.stageVideo(new File(['video'],'video.mp4',{type:'video/mp4'})),imageUpload=vi.fn(),videoUpload=vi.fn().mockResolvedValue('https://storage.test/video.mp4')
+ expect(store.isVideo(ref)).toBe(true)
+ expect(videoUpload).not.toHaveBeenCalled()
+ const form={content_html:`<div data-post-video><a href="${ref}">Vídeo</a></div>`}
+ const result=await store.prepare(form,imageUpload,vi.fn(),videoUpload)
+ await store.prepare(form,imageUpload,vi.fn(),videoUpload)
+ expect(result.content_html).toContain('https://storage.test/video.mp4')
+ expect(result.content_html).not.toContain('blob:')
+ expect(imageUpload).not.toHaveBeenCalled()
+ expect(videoUpload).toHaveBeenCalledTimes(1)
+ store.dispose()
+})

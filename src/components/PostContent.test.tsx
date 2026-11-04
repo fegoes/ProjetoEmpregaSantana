@@ -8,3 +8,12 @@ describe('leitura das postagens',()=>{
  it('somente cria o player permitido após a escolha de carregar o vídeo',()=>{const {container}=render(<PostContent html={'<section data-post-block><div data-post-video><a href="https://youtube.com/watch?v=M7lc1UVf-VE">Vídeo</a></div></section>'}/>);expect(container.querySelector('iframe')).toBeNull();fireEvent.click(screen.getByRole('button',{name:'Carregar vídeo'}));expect(container.querySelector('iframe')).toHaveAttribute('src','https://www.youtube.com/embed/M7lc1UVf-VE')})
  it('orienta corrigir vídeos e galerias vazias antes de publicar',()=>{expect(postContentIssues('<div data-post-video><a href="javascript:alert(1)">X</a></div><figure data-post-gallery="grid"></figure>')).toHaveLength(2);expect(postContentIssues('<p>Conteúdo normal</p>')).toEqual([])})
 })
+
+it('renderiza vídeo direto com controles e posicionamento escolhido',()=>{
+ const {container}=render(<PostContent html={'<div data-post-video data-media-align="right" data-media-width="50%"><a href="https://example.test/video.mp4">Vídeo</a></div>'}/>)
+ const video=container.querySelector('video')!
+ expect(video).toHaveAttribute('controls')
+ expect(video).toHaveAttribute('preload','none')
+ expect(video).toHaveAttribute('src','https://example.test/video.mp4')
+ expect(video.parentElement).toHaveStyle({width:'50%',marginLeft:'auto',marginRight:'0px'})
+})

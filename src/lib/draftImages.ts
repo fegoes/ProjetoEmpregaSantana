@@ -1,3 +1,4 @@
+import { validatePostVideo } from './videoFormats'
 import { remoteImageFile } from './remoteImage'
 import { IMAGE_MIME_TYPES } from './imageFormats'
 export function validateDraftImage(file: File) {
@@ -8,8 +9,11 @@ const escaped = (s: string) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;')
 export class DraftImageStore {
   private pending = new Map<string, File | string>()
   private uploaded = new Map<string, string>()
+  private videos = new Set<string>()
   readonly variants = new Map<string, string | null>()
   stageFile(file: File): string { validateDraftImage(file); const ref = URL.createObjectURL(file); this.pending.set(ref, file); return ref }
+  stageVideo(file: File): string { validatePostVideo(file); const ref = URL.createObjectURL(file); this.pending.set(ref, file); this.videos.add(ref); return ref }
+  isVideo(ref: string): boolean { return this.videos.has(ref) }
   stageLink(value: string): string {
     if (!value) return ''
     const url = new URL(value)
@@ -19,7 +23,7 @@ export class DraftImageStore {
   isLocal(ref: string): boolean { return this.pending.get(ref) instanceof File }
   localRefs(): string[] { return [...this.pending.keys()].filter(ref => this.isLocal(ref)) }
   setVariant(desktop: string, mobile: string | null) { this.variants.set(desktop, mobile) }
-  async prepare<T>(value: T, upload: (file: File) => Promise<string>, saveVariant: (desktop: string, mobile: string | null) => Promise<void>): Promise<T> {
+  async prepare<T>(value: T, upload: (file: File) => Promise<string>, saveVariant: (desktop: string, mobile: string | null) => Promise<void>, uploadVideo?: (file: File) => Promise<string>): Promise<T> {
     let serialized = JSON.stringify(value)
     const used = (ref: string) => serialized.includes(ref) || serialized.includes(escaped(ref))
     const active = new Set([...this.pending.keys()].filter(used))
@@ -29,8 +33,11 @@ export class DraftImageStore {
       if (this.uploaded.has(ref)) continue
       const source = this.pending.get(ref)!
       const file = typeof source === 'string' ? await remoteImageFile(source) : source
-      validateDraftImage(file)
-      this.uploaded.set(ref, await upload(file))
+      if (this.videos.has(ref)) {
+        validatePostVideo(file)
+        if (!uploadVideo) throw new Error('O envio de vídeos não está configurado.')
+        this.uploaded.set(ref, await uploadVideo(file))
+      } else { validateDraftImage(file); this.uploaded.set(ref, await upload(file)) }
     }
     for (const [desktop, mobile] of variants) await saveVariant(this.uploaded.get(desktop) ?? desktop, mobile ? this.uploaded.get(mobile) ?? mobile : null)
     for (const ref of active) {
@@ -39,5 +46,5 @@ export class DraftImageStore {
     }
     return JSON.parse(serialized) as T
   }
-  dispose() { for (const ref of this.localRefs()) URL.revokeObjectURL(ref); this.pending.clear(); this.uploaded.clear(); this.variants.clear() }
+  dispose() { for (const ref of this.localRefs()) URL.revokeObjectURL(ref); this.pending.clear(); this.uploaded.clear(); this.variants.clear(); this.videos.clear() }
 }

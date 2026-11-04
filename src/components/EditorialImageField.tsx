@@ -15,16 +15,19 @@ function SingleEditorialImageField({label,value,onChange,onUploadingChange,purpo
 
 function EditorialImageFieldContent(props: Parameters<typeof SingleEditorialImageField>[0]) {
  const variant=useImageVariant(props.value)
- return <fieldset className="min-w-0 space-y-5"><legend className="mb-2 font-semibold">{props.label}</legend>
+ return <fieldset className="min-w-0 space-y-5"><legend className="sr-only">{props.label}</legend>
  <SingleEditorialImageField {...props} label={`${props.label} — Computador`} />
+ <details className="border-t pt-2"><summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">Imagem para celular (opcional)</summary><div className="space-y-3 pt-2">
  <SingleEditorialImageField {...props} disabled={props.disabled||!props.value} label={`${props.label} — Celular (opcional)`} value={variant.data??''} onChange={async url=>{await variant.save(url||null)}} />
  {!props.value&&<p className="text-sm text-muted-foreground">Adicione a imagem para computador primeiro.</p>}
+ </div></details>
 
  </fieldset>
 }
 
-export function EditorialImageField(props: Parameters<typeof SingleEditorialImageField>[0]) {
+export function EditorialImageField(props: Parameters<typeof SingleEditorialImageField>[0] & { inline?: boolean }) {
  const [uploads, setUploads] = useState(0)
+ if(props.inline)return <EditorialImageFieldContent {...props} />
  return <FieldDialog label={props.label} kind="image" summary={props.value ? 'Imagem adicionada' : 'Opcional'} busy={uploads > 0} disabled={props.disabled}>
   <EditorialImageFieldContent {...props} onUploadingChange={busy => { setUploads(count => Math.max(0, count + (busy ? 1 : -1))); props.onUploadingChange?.(busy) }} />
  </FieldDialog>

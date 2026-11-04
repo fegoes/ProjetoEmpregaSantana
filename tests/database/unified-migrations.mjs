@@ -200,4 +200,21 @@ try {
   await db.query('insert into image_variants(desktop_url,mobile_url) values($1,$2)',[base+'profiles/'+person+'/admin-upload.jpg',base+'profiles/'+person+'/other.jpg'])
   console.log('OK superadmin envia foto para a pasta do usuário, o titular pode editar a variante e terceiros não podem enviar para essa pasta.')
 
+  await db.exec('reset role')
+  const videoBucket=(await db.query("select public,file_size_limit::int as max_size,allowed_mime_types from storage.buckets where id='post-videos'")).rows[0]
+  assert.equal(videoBucket.public,true)
+  assert.equal(videoBucket.max_size,52428800)
+  assert.deepEqual(videoBucket.allowed_mime_types,['video/mp4','video/webm'])
+  await claim(ordinary)
+  await assert.rejects(db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('post-videos',$1,$2,'{"mimetype":"video/mp4"}')`,[ordinary+'/forbidden.mp4',ordinary]),e=>e.code==='42501')
+  await claim(admin)
+  await db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('post-videos',$1,$2,'{"mimetype":"video/mp4"}')`,[admin+'/post.mp4',admin])
+  await assert.rejects(db.query(`insert into storage.objects(bucket_id,name,owner,metadata) values('post-videos',$1,$2,'{"mimetype":"image/jpeg"}')`,[admin+'/wrong.jpg',admin]),e=>e.code==='42501')
+  await claim(ordinary)
+  assert.equal((await db.query("select count(*)::int n from storage.objects where bucket_id='post-videos'")).rows[0].n,0)
+  assert.equal((await db.query("delete from storage.objects where bucket_id='post-videos' returning id")).rows.length,0)
+  await claim(admin)
+  assert.equal((await db.query("delete from storage.objects where bucket_id='post-videos' returning id")).rows.length,1)
+  console.log('OK vídeos de posts: bucket MP4/WebM de 50 MB, envio e remoção exclusivos do superadmin e fotos inalteradas.')
+
 } finally { await db.close() }

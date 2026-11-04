@@ -101,10 +101,12 @@ function SingleImageUploadField({
 function ImageUploadFieldContent(props: ImageUploadFieldProps) {
  const variant=useImageVariant(props.currentUrl)
  const [variantError,setVariantError]=React.useState('')
- return <fieldset className="min-w-0 space-y-5"><legend className="mb-2 font-semibold">{props.label}</legend>
+ return <fieldset className="min-w-0 space-y-5"><legend className="sr-only">{props.label}</legend>
   <SingleImageUploadField {...props} label={`${props.label} — Computador`} />
+ <details className="border-t pt-2"><summary className="min-h-11 cursor-pointer py-2 text-sm font-medium">Imagem para celular (opcional)</summary><div className="space-y-3 pt-2">
   <SingleImageUploadField {...props} disabled={props.disabled||!props.currentUrl} label={`${props.label} — Celular (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
   {!props.currentUrl&&<p className="text-sm text-muted-foreground">Adicione a imagem para computador primeiro.</p>}
+ </div></details>
   {variantError&&<p role="alert" className="text-destructive">{variantError}</p>}
 
  </fieldset>

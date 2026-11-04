@@ -1,3 +1,4 @@
+import { uploadEditorialVideo } from '@/lib/postVideoUpload'
 import { confirmAction } from '@/lib/confirmAction'
 import { useQueryClient } from '@tanstack/react-query'
 import { DraftImagesProvider } from '@/components/DraftImagesProvider'
@@ -50,7 +51,7 @@ function ArticleEditorForm({ article, close }: { article?: ArtigoInput; close: (
     setValidation('')
     if (saving || uploadCount > 0) return
     if (form.status === 'published') {
-      const issues = postContentIssues(form.content_html ?? '')
+      const issues = postContentIssues(form.content_html ?? '', url => draft.store.isVideo(url))
       if (issues.length) { setValidation(issues.join(' ')); return }
       const doc = new DOMParser().parseFromString(form.content_html ?? '', 'text/html')
       if (Array.from(doc.querySelectorAll('figure[data-image-block]')).some(figure=>!figure.querySelector('img[src]')) || Array.from(doc.querySelectorAll('img')).some(img=>!img.getAttribute('src')?.trim()||!img.getAttribute('alt')?.trim())) { setValidation('Complete a imagem e sua descrição em cada bloco antes de publicar.'); return }
@@ -64,7 +65,7 @@ function ArticleEditorForm({ article, close }: { article?: ArtigoInput; close: (
       const prepared = await draft.store.prepare(form, uploadEditorialImage, async (desktop, mobile) => {
         const { error } = mobile ? await supabase.from('image_variants').upsert({ desktop_url: desktop, mobile_url: mobile }) : await supabase.from('image_variants').delete().eq('desktop_url', desktop)
         if (error) throw new Error('Não foi possível salvar a imagem móvel. Suas escolhas foram mantidas; tente salvar novamente.')
-      })
+      }, uploadEditorialVideo)
       await save.mutateAsync({ ...prepared, keywords: keywordText.split(',').map(v=>v.trim()).filter(Boolean), title: prepared.title.trim(), slug: prepared.slug.trim(), author_name: prepared.author_name.trim(), category: categoryNames[0] || prepared.category?.trim(), cover_url: prepared.cover_url?.trim() || null })
       await queryClient.invalidateQueries({queryKey:['image-variant']})
       close()

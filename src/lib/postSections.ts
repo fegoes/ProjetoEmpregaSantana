@@ -1,3 +1,4 @@
+import { directPostVideo } from './videoFormats'
 import { safeSectionColor } from './pageLayout'
 import { newBlockId } from './blocks'
 export interface PostSection { id: string; name: string; background: string; color: string; link: string; width: 'reading' | 'wide' | 'screen'; contentWidth: 'reading' | 'wide' | 'full'; spacing: number; height: 'auto' | 'screen'; html: string }
@@ -22,9 +23,9 @@ export function postVideo(value: string): { provider: string; href: string; embe
     return null
   } catch { return null }
 }
-export function postContentIssues(html: string): string[] {
+export function postContentIssues(html: string, isLocalVideo: (url: string) => boolean = () => false): string[] {
   const doc = new DOMParser().parseFromString(html, 'text/html'), issues: string[] = []
-  for (const video of doc.querySelectorAll('[data-post-video]')) if (!postVideo(video.querySelector('a')?.getAttribute('href') || '')) issues.push('Complete o link de cada vídeo com um endereço válido do YouTube, Vimeo ou Instagram.')
+  for (const video of doc.querySelectorAll('[data-post-video]')) { const href = video.querySelector('a')?.getAttribute('href') || ''; if (!postVideo(href) && !directPostVideo(href) && !isLocalVideo(href)) issues.push('Envie um vídeo ou informe um link válido.') }
   for (const gallery of doc.querySelectorAll('[data-post-gallery]')) if (!gallery.querySelector('img[src]:not([src=""])')) issues.push('Adicione ao menos uma imagem em cada galeria ou bloco de slides.')
   return [...new Set(issues)]
 }

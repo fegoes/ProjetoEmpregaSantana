@@ -129,6 +129,8 @@ interface PageBuilderProps {
 
 /** Lista de seções da página: modelos para começar, ordem, duplicar, apagar e edição de cada uma. */
 export function PageBuilder({ sections, onChange }: PageBuilderProps) {
+  const scrollTimer=React.useRef<number|undefined>(undefined)
+  React.useEffect(()=>()=>window.clearTimeout(scrollTimer.current),[])
   const [openIds, setOpenIds] = React.useState<Set<string>>(() => new Set())
   const [picking, setPicking] = React.useState(sections.length === 0)
 
@@ -150,7 +152,8 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
     onChange(next)
     setOpenIds(new Set([section.id]))
     setPicking(false)
-    window.setTimeout(() => {
+    window.clearTimeout(scrollTimer.current)
+    scrollTimer.current=window.setTimeout(() => {
       document.getElementById(`secao-${section.id}`)?.scrollIntoView({
         block: 'start',
         behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
