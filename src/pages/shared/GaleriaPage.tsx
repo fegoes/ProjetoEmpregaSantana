@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { ExpandableImage } from '@/components/ImageLightbox'
 import { ImageSourcePicker } from '@/components/ImageSourcePicker'
 import { useState } from 'react'
@@ -30,7 +31,7 @@ export default function GaleriaPage() {
       <ExpandableImage images={gallery.data.images.map(item => item.url)} initialIndex={index} src={image.url} alt={`Imagem ${index + 1} da sua galeria pessoal`} className="aspect-video w-full rounded-lg bg-muted object-contain" />
       <figcaption className="truncate text-xs text-muted-foreground" title={image.name}>{image.name.replace(/^[a-f0-9-]{36}--/, '')}</figcaption>
       <Button variant="outline" disabled={busy} onClick={async () => {
-        if (!window.confirm('Remover o original da galeria? As fotos já usadas em publicações continuarão disponíveis.')) return
+        if (!(await confirmAction('Remover o original da galeria? As fotos já usadas em publicações continuarão disponíveis.'))) return
         setBusy(true); setError('')
         try { const { error } = await supabase.storage.from(GALLERY_BUCKET).remove([image.path]); if (error) throw error; if (gallery.data.images.length === 1 && page > 0) setPage(page - 1); await refresh() } catch { setError('Não foi possível remover a imagem. Tente novamente.') } finally { setBusy(false) }
       }}>Remover da galeria</Button>

@@ -1,3 +1,5 @@
+import { FieldDialog } from '@/components/forms/FieldDialog'
+import { FormSection } from '@/components/forms/FormSection'
 import * as React from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 import { supabase } from '@/lib/supabase'
@@ -6,7 +8,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { PhoneInput } from '@/components/fields/MaskedInputs'
 import { maskPhone } from '@/lib/masks'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
 
 export default function PerfilContaPage() {
   const { profile, refreshProfile, updatePassword } = useAuth()
@@ -54,11 +56,7 @@ export default function PerfilContaPage() {
 
   return (
     <div className="mx-auto flex max-w-md flex-col gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Configurações de conta</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Configurações de conta" defaultOpen><div >
           <form onSubmit={handleSave} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="fullName">Nome completo</Label>
@@ -73,14 +71,9 @@ export default function PerfilContaPage() {
             </Button>
             {saved && <p className="text-sm text-muted-foreground">Alterações salvas.</p>}
           </form>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Alterar senha</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FieldDialog label="Alterar senha" kind="settings" busy={passwordSaving}><div >
           <form onSubmit={handlePasswordChange} className="flex flex-col gap-4">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="newPassword">Nova senha</Label>
@@ -110,8 +103,7 @@ export default function PerfilContaPage() {
             </Button>
             {passwordSaved && <p className="text-sm text-muted-foreground">Senha alterada.</p>}
           </form>
-        </CardContent>
-      </Card>
+        </div></FieldDialog>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import * as React from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { Tags } from 'lucide-react'
@@ -184,8 +185,8 @@ function CategoryManager({ scope }: { scope: CategoryScope }) {
     onError: fail('Não foi possível apagar. Se ela estiver em uso, oculte em vez de apagar.'),
   })
 
-  const handleDelete = (category: Category) => {
-    if (!window.confirm(`Apagar "${category.label}"? Essa ação não pode ser desfeita.`)) return
+  const handleDelete = async (category: Category) => {
+    if (!(await confirmAction(`Apagar "${category.label}"? Essa ação não pode ser desfeita.`))) return
     remove.mutate(category)
   }
 

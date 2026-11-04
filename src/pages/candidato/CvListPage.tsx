@@ -1,3 +1,8 @@
+import { useState } from 'react'
+import { AdminModal } from '@/components/admin/AdminModal'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { confirmAction } from '@/lib/confirmAction'
 import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { Link, useNavigate } from 'react-router-dom'
 import { FileText } from 'lucide-react'
@@ -9,6 +14,8 @@ import { Button } from '@/components/ui/button'
 
 export default function CvListPage() {
   const { user } = useAuth()
+  const [creating,setCreating]=useState(false)
+  const [newTitle,setNewTitle]=useState('')
   const navigate = useNavigate()
   const { data: cvs, isLoading } = useCvVariants(user?.id)
   const { data: categories } = useCategories()
@@ -20,15 +27,15 @@ export default function CvListPage() {
     if (!user) return
     const cv = await saveCv.mutateAsync({
       candidato_id: user.id,
-      title: `Currículo ${(cvs?.length ?? 0) + 1}`,
+      title: newTitle.trim() || `Currículo ${(cvs?.length ?? 0) + 1}`,
       is_default: (cvs?.length ?? 0) === 0,
     })
     navigate(`/candidato/cv/${cv.id}`)
   }
 
-  const handleDelete = (id: string, title: string) => {
+  const handleDelete = async (id: string, title: string) => {
     if (!user) return
-    if (!window.confirm(`Excluir o currículo "${title}"? Essa ação não pode ser desfeita.`)) return
+    if (!(await confirmAction(`Excluir o currículo "${title}"? Essa ação não pode ser desfeita.`))) return
     deleteCv.mutate({ id, candidatoId: user.id })
   }
 
@@ -39,19 +46,22 @@ export default function CvListPage() {
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight">Meus currículos</h1>
           <p className="mt-1 text-sm text-muted-foreground">
-            Tenha um currículo para cada tipo de vaga e escolha qual enviar na hora de se candidatar.
+            Escolha ou crie um currículo.
           </p>
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline">
             <Link to="/candidato/candidaturas">Minhas candidaturas</Link>
           </Button>
-          <Button onClick={handleCreate} disabled={saveCv.isPending}>
+          <Button onClick={()=>{setNewTitle(`Currículo ${(cvs?.length ?? 0) + 1}`);saveCv.reset();setCreating(true)}} disabled={saveCv.isPending}>
             {saveCv.isPending ? 'Criando…' : 'Novo currículo'}
           </Button>
         </div>
       </div>
 
+      <AdminModal open={creating} busy={saveCv.isPending} onClose={()=>setCreating(false)} title="Novo currículo" description="Dê um nome para identificar este currículo.">
+       <form className="space-y-4" onSubmit={event=>{event.preventDefault();void handleCreate().catch(()=>{})}}><Label htmlFor="new-cv-title">Nome do currículo</Label><Input id="new-cv-title" required maxLength={120} value={newTitle} onChange={event=>setNewTitle(event.target.value)} />{saveCv.isError&&<p role="alert" className="text-sm text-destructive">Não foi possível criar. Tente novamente.</p>}<Button type="submit" disabled={saveCv.isPending}>{saveCv.isPending?'Criando…':'Criar currículo'}</Button></form>
+      </AdminModal>
       {isLoading && <p className="text-sm text-muted-foreground">Carregando…</p>}
 
       {cvs && cvs.length > 0 && (
@@ -90,7 +100,7 @@ export default function CvListPage() {
           title="Você ainda não tem currículo"
           description="Monte o primeiro em poucos minutos. Ele fica salvo para você usar em várias vagas."
           action={
-            <Button onClick={handleCreate} disabled={saveCv.isPending}>
+            <Button onClick={()=>{setNewTitle(`Currículo ${(cvs?.length ?? 0) + 1}`);saveCv.reset();setCreating(true)}} disabled={saveCv.isPending}>
               Criar meu primeiro currículo
             </Button>
           }

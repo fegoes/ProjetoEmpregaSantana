@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { CnpjInput } from '@/components/fields/MaskedInputs'
 import { isValidCnpj } from '@/lib/masks'
 import { CategorySelect } from '@/components/CategorySelect'
@@ -19,7 +20,7 @@ import { CityField } from '@/components/fields/CityField'
 import { FormError } from '@/components/auth/FormError'
 import { addressLineFromCep } from '@/lib/cep'
 import { DEFAULT_UF } from '@/lib/masks'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+
 
 function VisibilityToggle({
   checked,
@@ -146,12 +147,7 @@ export default function EmpresaPerfilPage() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Identidade</CardTitle>
-          <CardDescription>Como sua empresa aparece nas vagas e no diretório</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+      <FormSection title="Identidade" defaultOpen description={<>Como sua empresa aparece nas vagas e no diretório</>}><div className="flex flex-col gap-4">
           <ImageUploadField
             disabled={saving}
             onUploadingChange={uploading}
@@ -182,15 +178,9 @@ export default function EmpresaPerfilPage() {
             <Label>Sobre a empresa</Label>
             <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="empresa" />
           </div>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Endereço</CardTitle>
-          <CardDescription>Onde sua empresa está localizada</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+      <FormSection title="Endereço" description={<>Onde sua empresa está localizada</>}><div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
             <Label htmlFor="zipCode">CEP</Label>
             <CepField
@@ -219,40 +209,23 @@ export default function EmpresaPerfilPage() {
             <CityField id="empresaCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
           </div>
           <VisibilityToggle checked={addressVisible} onChange={setAddressVisible} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Missão, visão e valores</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+      <FormSection title="Missão, visão e valores"><div className="flex flex-col gap-2">
           <RichTextEditor value={missionHtml} onChange={setMissionHtml} placeholder="O que guia sua empresa…" />
           <VisibilityToggle checked={missionVisible} onChange={setMissionVisible} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Organograma</CardTitle>
-          <CardDescription>Descreva a estrutura da empresa em texto</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+      <FormSection title="Organograma" description={<>Descreva a estrutura da empresa em texto</>}><div className="flex flex-col gap-2">
           <RichTextEditor
             value={orgChartHtml}
             onChange={setOrgChartHtml}
             placeholder="Ex.: Diretoria > Gerências > Equipes…"
           />
           <VisibilityToggle checked={orgChartVisible} onChange={setOrgChartVisible} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Fotos internas</CardTitle>
-          <CardDescription>Mostre o dia a dia e o ambiente de trabalho</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+      <FormSection title="Fotos internas" description={<>Mostre o dia a dia e o ambiente de trabalho</>}><div className="flex flex-col gap-2">
           <fieldset disabled={saving}><PhotoGalleryField onUploadingChange={uploading}
             label=""
             photos={interiorPhotos}
@@ -260,22 +233,16 @@ export default function EmpresaPerfilPage() {
             onChange={setInteriorPhotos}
           />
           </fieldset><VisibilityToggle checked={interiorPhotosVisible} onChange={setInteriorPhotosVisible} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Número de funcionários</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-2">
+      <FormSection title="Número de funcionários"><div className="flex flex-col gap-2">
           <Input
             value={employeeCount}
             onChange={(e) => setEmployeeCount(e.target.value)}
             placeholder="Ex.: 50-100 funcionários"
           />
           <VisibilityToggle checked={employeeCountVisible} onChange={setEmployeeCountVisible} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
       {error && <FormError>{error}</FormError>}
       <div className="flex items-center gap-3">

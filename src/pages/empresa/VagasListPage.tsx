@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { Link } from 'react-router-dom'
 import { useEmpresa } from '@/contexts/EmpresaContext'
 import { useEmpresaVagas, useDeleteVaga } from '@/hooks/useEmpresaVagas'
@@ -10,8 +11,8 @@ export default function EmpresaVagasListPage() {
   const { data: vagas, isLoading, isError, refetch } = useEmpresaVagas(empresa?.id)
   const deleteVaga = useDeleteVaga()
 
-  const handleDelete = (id: string, title: string) => {
-    if (!window.confirm(`Excluir a vaga "${title}"? As candidaturas recebidas também serão apagadas. Essa ação não pode ser desfeita.`)) return
+  const handleDelete = async (id: string, title: string) => {
+    if (!(await confirmAction(`Excluir a vaga "${title}"? As candidaturas recebidas também serão apagadas. Essa ação não pode ser desfeita.`))) return
     deleteVaga.mutate({ id, empresaId: empresa?.id })
   }
 

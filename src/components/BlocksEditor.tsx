@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import * as React from 'react'
 import { ArrowDown, ArrowUp, ChevronDown, Plus, Trash2 } from 'lucide-react'
 import { RichTextEditor } from '@/components/RichTextEditor'
@@ -63,7 +64,7 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
     setOpenIds((current) => {
       const next = new Set(current)
       if (next.has(id)) next.delete(id)
-      else next.add(id)
+      else return new Set([id])
       return next
     })
 
@@ -75,8 +76,8 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
     commit(list)
   }
 
-  const remove = (block: DescriptionBlock) => {
-    if (htmlText(block.html) && !window.confirm(`Apagar o bloco "${block.title || 'sem título'}"? O texto dele será perdido.`)) {
+  const remove = async (block: DescriptionBlock) => {
+    if (!(await confirmAction(`Apagar o bloco "${block.title || 'sem título'}"? O texto dele será perdido.`))) {
       return
     }
     commit(blocksRef.current.filter((b) => b.id !== block.id))
@@ -129,7 +130,7 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
                 <div id={`block-body-${block.id}`} className="flex flex-col gap-3 pt-2 pb-1 sm:pl-12">
                   <RichTextEditor value={block.html} onChange={(html) => update(block.id, { html })} placeholder="Escreva aqui…" />
                   {empty && (
-                    <p className="text-sm text-muted-foreground">Bloco sem texto: ele não aparece para quem lê.</p>
+                    <p className="text-sm text-muted-foreground">Sem texto.</p>
                   )}
                   <div className="flex flex-wrap items-center justify-end gap-1">
                     <Button type="button" variant="ghost" size="sm" disabled={index === 0} onClick={() => move(index, -1)}>
@@ -160,7 +161,7 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
           <Plus /> Novo bloco
         </Button>
         {suggestions.length > 0 && (
-          <div role="group" aria-label="Sugestões de bloco" className="flex flex-wrap gap-2">
+          <details><summary className="cursor-pointer text-xs text-muted-foreground">Sugestões</summary><div role="group" aria-label="Sugestões de bloco" className="mt-2 flex flex-wrap gap-2">
             {suggestions.map((title) => (
               <button
                 key={title}
@@ -171,7 +172,7 @@ export function BlocksEditor({ value, onChange, kind }: BlocksEditorProps) {
                 + {title}
               </button>
             ))}
-          </div>
+          </div></details>
         )}
       </div>
     </div>

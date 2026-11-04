@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { ImageUploadField } from '@/components/ImageUploadField'
 import { uploadEmpresaLogo } from '@/lib/storage'
 import { safeInternalPath } from '@/lib/utils'
@@ -81,6 +82,7 @@ export default function EmpresaOnboardingPage() {
             <Label htmlFor="nomeFantasia">Nome da empresa</Label>
             <Input id="nomeFantasia" required value={nomeFantasia} onChange={(e) => setNomeFantasia(e.target.value)} />
           </div>
+          <FormSection title="Dados da empresa">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="cnpj">CNPJ</Label>
             <CnpjInput id="cnpj" value={cnpj} onChange={setCnpj} />
@@ -91,6 +93,7 @@ export default function EmpresaOnboardingPage() {
             <Label htmlFor="sector">Segmento</Label>
             <SegmentSelect id="sector" value={sector} onChange={setSector} />
           </div>
+          </FormSection>
           <ImageUploadField disabled={loading} label="Logo da empresa" purpose="logo" currentUrl={logo} onUpload={file=>uploadEmpresaLogo(file,companyId)} onUploaded={setLogo} onRemove={()=>setLogo(null)} onUploadingChange={uploading} />
           {error && <FormError>{error}</FormError>}
           <Button type="submit" variant="cta" disabled={loading||uploads>0}>

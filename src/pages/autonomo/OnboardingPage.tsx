@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { safeInternalPath } from '@/lib/utils'
 import * as React from 'react'
@@ -88,7 +89,7 @@ export default function AutonomoOnboardingPage() {
             <Label htmlFor="category">Categoria</Label>
             <CategorySelect id="category" kind="autonomo" value={category} onChange={setCategory} />
           </div>
-          <div className="flex flex-col gap-1.5">
+          <FormSection title="Valores e cobrança"><div className="flex flex-col gap-1.5">
             <Label htmlFor="pricingModel">Como você cobra?</Label>
             <NativeSelect
               id="pricingModel"
@@ -117,7 +118,7 @@ export default function AutonomoOnboardingPage() {
               />
             </div>
           )}
-          <div className="flex flex-col gap-1.5">
+          </FormSection><div className="flex flex-col gap-1.5">
             <Label htmlFor="serviceCity">Onde você atende?</Label>
             <CityField id="serviceCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
           </div>

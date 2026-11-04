@@ -1,10 +1,12 @@
 import { useState } from 'react'
-import { Button } from './ui/button'
 import { PostSectionsEditor } from './PostSectionsEditor'
 import { PostBlockListEditor } from './PostBlockListEditor'
-import { newPostSection, parsePostSections, serializePostSections } from '@/lib/postSections'
+import { RichTextEditor } from './RichTextEditor'
+import { parsePostSections } from '@/lib/postSections'
+/** Novas postagens usam texto contínuo; estruturas antigas mantêm seu editor sem conversão. */
 export function PostBlocksEditor(props: {value:string;onChange:(html:string)=>void;disabled?:boolean;onUploadingChange?:(busy:boolean)=>void}) {
-  const [sectionMode,setSectionMode]=useState(()=>!props.value.trim() || Boolean(parsePostSections(props.value)))
-  if(sectionMode)return <PostSectionsEditor {...props} />
-  return <div className="space-y-4"><Button type="button" variant="outline" disabled={props.disabled} onClick={()=>{props.onChange(serializePostSections([newPostSection(props.value)]));setSectionMode(true)}}>Organizar este post em seções</Button><PostBlockListEditor {...props} /></div>
+ const [mode] = useState(() => parsePostSections(props.value) ? 'sections' : props.value.includes('data-post-block') ? 'blocks' : 'text')
+ if(mode === 'sections')return <PostSectionsEditor {...props} />
+ if(mode === 'blocks')return <PostBlockListEditor {...props} />
+ return <RichTextEditor {...props} inline allowImages allowPostMedia ariaLabel="Conteúdo da postagem" placeholder="Escreva sua postagem…" />
 }

@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { Link } from 'react-router-dom'
 import * as React from 'react'
 import { BriefcaseBusiness } from 'lucide-react'
@@ -38,8 +39,8 @@ export default function AdminVagasPage() {
   )
   const { shown, remaining, more } = usePaged(visiveis, 30, `${filtro}|${busca}`)
 
-  const mudar = (v: AdminVaga, changes: { status?: AdminVaga['status']; is_featured?: boolean }, ok: string, confirmacao?: string) => {
-    if (confirmacao && !window.confirm(confirmacao)) return
+  const mudar = async (v: AdminVaga, changes: { status?: AdminVaga['status']; is_featured?: boolean }, ok: string, confirmacao?: string) => {
+    if (confirmacao && !(await confirmAction(confirmacao))) return
     setAviso(null)
     atualizar.mutate(
       { id: v.id, changes },
@@ -47,8 +48,8 @@ export default function AdminVagasPage() {
     )
   }
 
-  const apagar = (v: AdminVaga) => {
-    if (!window.confirm(`Excluir a vaga "${v.title}"? As ${plural(v.candidaturas, 'candidatura', 'candidaturas')} recebida(s) também serão apagadas. Não dá para desfazer.`)) return
+  const apagar = async (v: AdminVaga) => {
+    if (!(await confirmAction(`Excluir a vaga "${v.title}"? As ${plural(v.candidaturas, 'candidatura', 'candidaturas')} recebida(s) também serão apagadas. Não dá para desfazer.`))) return
     setAviso(null)
     excluir.mutate(v.id, {
       onSuccess: () => setAviso({ tipo: 'ok', texto: 'Vaga excluída.' }),

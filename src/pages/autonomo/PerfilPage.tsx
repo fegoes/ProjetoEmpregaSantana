@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import { RecordTypeSelect } from '@/components/RecordTypeSelect'
 import * as React from 'react'
@@ -127,7 +128,7 @@ export default function AutonomoPerfilPage() {
           onChange={setPortfolioUrls}
           hint="Aparecem como carrossel no seu card e no perfil público."
         /></fieldset>
-        <div className="flex flex-col gap-1.5">
+        <FormSection title="Valores e cobrança"><div className="flex flex-col gap-1.5">
           <Label htmlFor="pricingModel">Cobrança</Label>
           <NativeSelect
             id="pricingModel"
@@ -156,7 +157,7 @@ export default function AutonomoPerfilPage() {
             />
           </div>
         )}
-        <div className="flex flex-col gap-1.5">
+        </FormSection><div className="flex flex-col gap-1.5">
           <Label htmlFor="serviceCity">Onde você atende?</Label>
           <CityField id="serviceCity" city={city} uf={uf} onChange={(v) => { setCity(v.city); setUf(v.uf) }} />
         </div>

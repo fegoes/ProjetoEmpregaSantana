@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { ArrowDown, ArrowUp, Plus, RotateCcw, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -67,7 +68,7 @@ export function EtapasEditor({ value, onChange }: EtapasEditorProps) {
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor={`etapa-desc-${index}`} className="text-xs text-muted-foreground">
-                    O que acontece nesta etapa (a pessoa lê)
+                    Descrição da etapa
                   </Label>
                   <Input
                     id={`etapa-desc-${index}`}
@@ -89,7 +90,7 @@ export function EtapasEditor({ value, onChange }: EtapasEditorProps) {
                       variant="ghost"
                       size="sm"
                       className="text-destructive-ink"
-                      onClick={() => onChange(value.filter((_, i) => i !== index))}
+                      onClick={async () => {if(await confirmAction('Apagar esta etapa da seleção?'))onChange(value.filter((_, i) => i !== index))}}
                     >
                       <Trash2 /> Apagar etapa
                     </Button>
@@ -105,7 +106,7 @@ export function EtapasEditor({ value, onChange }: EtapasEditorProps) {
         <Button type="button" variant="outline" size="sm" disabled={value.length >= ETAPAS_MAX} onClick={add}>
           <Plus /> Adicionar etapa
         </Button>
-        <Button type="button" variant="ghost" size="sm" onClick={() => onChange(MODELO_PADRAO.map((e) => ({ ...e })))}>
+        <Button type="button" variant="ghost" size="sm" onClick={async () => {if(await confirmAction('Restaurar as etapas padrão? As etapas atuais serão substituídas.'))onChange(MODELO_PADRAO.map((e) => ({ ...e })))}}>
           <RotateCcw /> Voltar ao padrão
         </Button>
       </div>

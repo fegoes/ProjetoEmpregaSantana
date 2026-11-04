@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { ProfilePhotoField } from '@/components/ProfilePhotoField'
 import * as React from 'react'
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
@@ -16,7 +17,7 @@ import { PhoneInput } from '@/components/fields/MaskedInputs'
 import { CepField } from '@/components/fields/CepField'
 import { addressLineFromCep } from '@/lib/cep'
 import { maskPhone } from '@/lib/masks'
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
+
 import { cn, safeInternalPath } from '@/lib/utils'
 
 export default function CvEditPage() {
@@ -82,12 +83,7 @@ export default function CvEditPage() {
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-6">
-      <Card>
-        <CardHeader>
-          <CardTitle>Editar currículo</CardTitle>
-          <CardDescription>{profile?.full_name}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+      <FormSection title="Editar currículo" defaultOpen description={<>{profile?.full_name}</>}><div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="title">Nome deste currículo</Label>
             <Input id="title" value={title} onChange={(e) => setTitle(e.target.value)} />
@@ -96,14 +92,9 @@ export default function CvEditPage() {
             <input type="checkbox" checked={isDefault} onChange={(e) => setIsDefault(e.target.checked)} />
             Definir como currículo padrão
           </label>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Contatos</CardTitle>
-        </CardHeader>
-        <CardContent className="grid gap-4 sm:grid-cols-2">
+      <FormSection title="Contatos" defaultOpen><div className="grid gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="contactEmail">E-mail</Label>
             <Input
@@ -117,14 +108,9 @@ export default function CvEditPage() {
             <Label htmlFor="contactPhone">Telefone</Label>
             <PhoneInput id="contactPhone" value={contactPhone} onChange={setContactPhone} />
           </div>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Endereço</CardTitle>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
+      <FormSection title="Endereço"><div className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5 sm:max-w-[50%]">
             <Label htmlFor="cep">CEP (preenche o endereço)</Label>
             <CepField
@@ -144,15 +130,9 @@ export default function CvEditPage() {
               placeholder="Rua, número, bairro, cidade/UF"
             />
           </div>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Áreas de interesse</CardTitle>
-          <CardDescription>Em que tipo de vaga você quer trabalhar? Escolha quantas quiser.</CardDescription>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Áreas de interesse" description={<>Em que tipo de vaga você quer trabalhar? Escolha quantas quiser.</>}><div >
         <ProfilePhotoField />
           <div role="group" aria-label="Áreas de interesse" className="flex flex-wrap gap-2">
             {activeFor(categories, 'vaga').map((category) => {
@@ -179,41 +159,21 @@ export default function CvEditPage() {
               )
             })}
           </div>
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Resumo</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Resumo"><div >
           <RichTextEditor value={summaryHtml} onChange={setSummaryHtml} placeholder="Fale sobre sua experiência…" />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Experiência profissional</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Experiência profissional"><div >
           <ExperienceEditor value={experiences} onChange={setExperiences} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Formação acadêmica</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Formação acadêmica"><div >
           <EducationEditor value={education} onChange={setEducation} />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Habilidades</CardTitle>
-        </CardHeader>
-        <CardContent>
+      <FormSection title="Habilidades"><div >
           <Label htmlFor="skills" className="sr-only">
             Habilidades
           </Label>
@@ -223,8 +183,7 @@ export default function CvEditPage() {
             onChange={(e) => setSkills(e.target.value)}
             placeholder="Separadas por vírgula"
           />
-        </CardContent>
-      </Card>
+        </div></FormSection>
 
       {voltar && (
         <p className="text-sm text-muted-foreground">Depois de salvar, você volta para a vaga e termina a candidatura.</p>

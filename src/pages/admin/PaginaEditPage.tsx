@@ -1,5 +1,6 @@
+import { confirmAction } from '@/lib/confirmAction'
 import * as React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useNavigate, Link, useParams } from 'react-router-dom'
 import { ArrowLeft, ExternalLink, FileQuestion } from 'lucide-react'
 import { useAuth } from '@/contexts/AuthContext'
 import {
@@ -45,6 +46,7 @@ function saveErrorMessage(error: unknown): string {
 }
 
 function PageEditor({ pagina }: { pagina: Pagina }) {
+  const navigate = useNavigate()
   const { user } = useAuth()
   const save = useSavePagina()
   const { data: todas } = useAllPaginasInstitucionais()
@@ -117,8 +119,8 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
     setMessage(null)
   }
 
-  const resetHome = () => {
-    if (window.confirm('Voltar ao desenho padrão do site? As seções montadas aqui deixam de aparecer (ao salvar).')) setLayout(null)
+  const resetHome = async () => {
+    if ((await confirmAction('Voltar ao desenho padrão do site? As seções montadas aqui deixam de aparecer (ao salvar).'))) setLayout(null)
   }
 
   return (
@@ -127,8 +129,10 @@ function PageEditor({ pagina }: { pagina: Pagina }) {
         <div className="flex flex-col gap-3">
           <Link
             to="/admin/paginas"
-            onClick={(e) => {
-              if (dirty && !window.confirm('Há alterações sem salvar. Sair mesmo assim?')) e.preventDefault()
+            onClick={async (e) => {
+              if (!dirty) return
+              e.preventDefault()
+              if (await confirmAction('Há alterações sem salvar. Sair mesmo assim?')) navigate('/admin/paginas')
             }}
             className="inline-flex min-h-11 w-fit items-center gap-1.5 text-sm font-medium text-primary hover:underline md:min-h-9"
           >

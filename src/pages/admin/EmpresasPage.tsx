@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { ResponsiveImage } from '@/components/ResponsiveImage'
 import * as React from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
@@ -45,8 +46,8 @@ export default function AdminEmpresasPage() {
   )
   const { shown, remaining, more } = usePaged(visiveis, 30, `${filtro}|${busca}`)
 
-  const mudar = (e: AdminEmpresa, changes: { status?: AdminEmpresa['status']; is_verified?: boolean }, ok: string, confirmacao?: string) => {
-    if (confirmacao && !window.confirm(confirmacao)) return
+  const mudar = async (e: AdminEmpresa, changes: { status?: AdminEmpresa['status']; is_verified?: boolean }, ok: string, confirmacao?: string) => {
+    if (confirmacao && !(await confirmAction(confirmacao))) return
     setAviso(null)
     atualizar.mutate(
       { id: e.id, changes },
@@ -54,11 +55,11 @@ export default function AdminEmpresasPage() {
     )
   }
 
-  const apagar = (e: AdminEmpresa) => {
+  const apagar = async (e: AdminEmpresa) => {
     if (
-      !window.confirm(
+      !(await confirmAction(
         `Excluir "${e.nome_fantasia}" para sempre? As ${plural(e.vagas, 'vaga', 'vagas')} dela, as candidaturas recebidas e a equipe serão apagadas junto. Não dá para desfazer.`,
-      )
+      ))
     )
       return
     setAviso(null)

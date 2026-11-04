@@ -23,7 +23,7 @@ export async function uploadPrivateImage(file: File) {
   const filename = file.name.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9._-]/g, '-').slice(-80) || 'imagem'
   const path = `${owner}/${crypto.randomUUID()}--${filename}.${file.type === 'image/png' ? 'png' : 'jpg'}`
   const { error } = await supabase.storage.from(GALLERY_BUCKET).upload(path, file)
-  if (error) throw new Error('Não foi possível guardar a imagem na sua galeria. Confira a conexão e o armazenamento privado (migration 0039).')
+  if (error) throw new Error('Não foi possível guardar a imagem na sua galeria. Tente novamente.')
   remembered.set(file, { owner, path })
   return path
 }

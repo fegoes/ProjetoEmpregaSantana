@@ -1,3 +1,4 @@
+import { ConfirmationHost } from '@/components/ConfirmationHost'
 import { RouteSeoDefaults } from '@/components/RouteSeoDefaults'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
@@ -32,6 +33,7 @@ if (!supabaseConfigurado) {
               <RouteSeoDefaults />
               <AppearanceSync />
               <App />
+              <ConfirmationHost />
             </AuthProvider>
           </BrowserRouter>
         </QueryClientProvider>

@@ -69,7 +69,6 @@ export default function CadastroPage() {
   return (
     <AuthLayout
       title="Criar conta"
-      description="Leva menos de um minuto. Depois você pode adicionar outros perfis."
       footer={
         <>
           Já tem conta?{' '}
@@ -80,7 +79,7 @@ export default function CadastroPage() {
       }
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-5">
-        <fieldset className="flex flex-col gap-2">
+        <fieldset className="grid grid-cols-3 gap-2">
           <legend className="mb-2 text-sm font-medium">Como você vai usar o EmpregaSantana?</legend>
           {ROLE_OPTIONS.map((option) => {
             const Icon = option.icon
@@ -88,8 +87,9 @@ export default function CadastroPage() {
             return (
               <label
                 key={option.role}
+                title={option.description}
                 className={cn(
-                  'flex min-h-16 cursor-pointer items-center gap-3 rounded-xl border bg-card px-4 py-3 transition-colors has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50',
+                  'flex min-h-24 cursor-pointer flex-col items-center justify-center gap-2 rounded-lg border bg-card px-2 py-3 text-center text-xs transition-colors has-[:focus-visible]:ring-[3px] has-[:focus-visible]:ring-ring/50',
                   active ? 'border-primary ring-1 ring-primary' : 'hover:border-primary/40',
                 )}
               >
@@ -103,13 +103,14 @@ export default function CadastroPage() {
                 />
                 <Icon className={cn('size-5 shrink-0', active ? 'text-primary' : 'text-muted-foreground')} />
                 <span className="min-w-0">
-                  <span className="block font-semibold">{option.label}</span>
-                  <span className="block text-sm text-muted-foreground">{option.description}</span>
+                  <span className="block font-medium">{option.label}</span>
+                  <span className="sr-only">{option.description}</span>
                 </span>
               </label>
             )
           })}
         </fieldset>
+        <p className="-mt-3 text-xs text-muted-foreground" aria-live="polite">{ROLE_OPTIONS.find(option => option.role === role)?.description}</p>
 
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="fullName">{role === 'empresa_owner' ? 'Seu nome (responsável)' : 'Nome completo'}</Label>

@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { InsertDropZone, VisualInsertItem } from './VisualInserter'
 import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
@@ -235,9 +236,8 @@ export function SectionEditor({ section, onChange, variant = 'section' }: Sectio
     if (item) addBlock(item.type, index)
   }
 
-  const removeBlock = (block: Block) => {
-    const filled = block.type !== 'feed' && block.type !== 'search' && blockSummary(block).trim().length > 0
-    if (filled && !window.confirm(`Apagar o bloco "${blockLabel(block.type)}"? Não dá para desfazer.`)) return
+  const removeBlock = async (block: Block) => {
+    if (!(await confirmAction(`Apagar o bloco "${blockLabel(block.type)}"? Não dá para desfazer.`))) return
     setBlocks(section.blocks.filter((b) => b.id !== block.id))
   }
 

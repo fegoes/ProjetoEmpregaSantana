@@ -1,3 +1,5 @@
+import { confirmAction } from '@/lib/confirmAction'
+import { FieldDialog } from './forms/FieldDialog'
 import { ExpandableImage } from './ImageLightbox'
 import { ImageSourcePicker } from './ImageSourcePicker'
 import { useImageVariant } from '@/hooks/useImageVariant'
@@ -33,7 +35,6 @@ function SingleImageUploadField({
   onUpload,
   onUploaded,
   shape = 'square',
-  hint,
   purpose,
   onRemove,
 }: ImageUploadFieldProps) {
@@ -83,11 +84,11 @@ function SingleImageUploadField({
         </div>
         <div className="flex flex-col gap-1.5">
           {preview && onRemove && (
-            <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading || disabled} onClick={onRemove}>
+            <Button type="button" variant="ghost" size="sm" className="text-destructive-ink" disabled={uploading || disabled} onClick={async()=>{if(await confirmAction('Remover esta imagem?'))onRemove?.()}}>
               Remover imagem
             </Button>
           )}
-          {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+
         </div>
 
       </div>
@@ -97,14 +98,21 @@ function SingleImageUploadField({
   )
 }
 
-export function ImageUploadField(props: ImageUploadFieldProps) {
+function ImageUploadFieldContent(props: ImageUploadFieldProps) {
  const variant=useImageVariant(props.currentUrl)
  const [variantError,setVariantError]=React.useState('')
  return <fieldset className="min-w-0 space-y-5"><legend className="mb-2 font-semibold">{props.label}</legend>
-  <SingleImageUploadField {...props} label={`${props.label} — Desktop`} />
-  <SingleImageUploadField {...props} disabled={props.disabled||!props.currentUrl} label={`${props.label} — Móvel (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
-  {!props.currentUrl&&<p className="text-sm text-muted-foreground">Envie a imagem desktop para habilitar o envio móvel.</p>}
+  <SingleImageUploadField {...props} label={`${props.label} — Computador`} />
+  <SingleImageUploadField {...props} disabled={props.disabled||!props.currentUrl} label={`${props.label} — Celular (opcional)`} currentUrl={variant.data} onUpload={async file=>{const url=await props.onUpload(file);await variant.save(url);return url}} onUploaded={()=>{}} onRemove={variant.data?()=>{void variant.save(null).catch(e=>setVariantError(e.message));}:undefined} />
+  {!props.currentUrl&&<p className="text-sm text-muted-foreground">Adicione a imagem para computador primeiro.</p>}
   {variantError&&<p role="alert" className="text-destructive">{variantError}</p>}
-  <p className="text-sm text-muted-foreground">Em telas menores que 640 px, a versão móvel é usada quando disponível; nas demais, a desktop. Sem versão móvel, a desktop é mantida.</p>
+
  </fieldset>
+}
+
+export function ImageUploadField(props: ImageUploadFieldProps) {
+ const [uploads, setUploads] = React.useState(0)
+ return <FieldDialog label={props.label} kind="image" summary={props.currentUrl ? 'Imagem adicionada' : 'Opcional'} busy={uploads > 0} disabled={props.disabled}>
+  <ImageUploadFieldContent {...props} onUploadingChange={busy => { setUploads(count => Math.max(0, count + (busy ? 1 : -1))); props.onUploadingChange?.(busy) }} />
+ </FieldDialog>
 }

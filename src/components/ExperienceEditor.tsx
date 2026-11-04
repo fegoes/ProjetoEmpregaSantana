@@ -1,10 +1,12 @@
+import { useState } from 'react'
+import { FieldDialog } from './forms/FieldDialog'
+import { confirmAction } from '@/lib/confirmAction'
 import { Plus, Trash2 } from 'lucide-react'
 import type { CvExperience } from '@/types/database'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { FieldHint } from '@/components/FieldHint'
 
 interface ExperienceEditorProps {
   value: CvExperience[]
@@ -24,16 +26,17 @@ function emptyExperience(): CvExperience {
 }
 
 export function ExperienceEditor({ value, onChange }: ExperienceEditorProps) {
+  const [created, setCreated] = useState<string | null>(null)
   const update = (id: string, patch: Partial<CvExperience>) => {
     onChange(value.map((exp) => (exp.id === id ? { ...exp, ...patch } : exp)))
   }
-  const remove = (id: string) => onChange(value.filter((exp) => exp.id !== id))
-  const add = () => onChange([...value, emptyExperience()])
+  const remove = async (id: string) => { if(await confirmAction('Remover esta experiência do currículo?')) onChange(value.filter((exp) => exp.id !== id)) }
+  const add = () => { const item=emptyExperience();setCreated(item.id);onChange([...value,item]) }
 
   return (
     <div className="flex flex-col gap-4">
       {value.map((exp, index) => (
-        <div key={exp.id} className="flex flex-col gap-3 rounded-xl border p-4">
+        <FieldDialog key={exp.id} kind="work" defaultOpen={created===exp.id} label={exp.role || `Experiência ${index + 1}`} summary={exp.company || 'Completar informações'}><div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <p className="text-sm font-medium text-muted-foreground">Experiência {index + 1}</p>
             <button
@@ -47,32 +50,32 @@ export function ExperienceEditor({ value, onChange }: ExperienceEditorProps) {
           </div>
           <div className="grid gap-3 sm:grid-cols-2">
             <div className="flex flex-col gap-1.5">
-              <Label>Cargo</Label>
-              <Input
+              <Label htmlFor={`exp-field-1-${exp.id}`}>Cargo</Label>
+              <Input id={`exp-field-1-${exp.id}`}
                 placeholder="Ex.: Auxiliar de produção"
                 value={exp.role}
                 onChange={(e) => update(exp.id, { role: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Empresa</Label>
-              <Input
+              <Label htmlFor={`exp-field-2-${exp.id}`}>Empresa</Label>
+              <Input id={`exp-field-2-${exp.id}`}
                 placeholder="Ex.: Laticínio Vale Verde"
                 value={exp.company}
                 onChange={(e) => update(exp.id, { company: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Início</Label>
-              <Input
+              <Label htmlFor={`exp-field-3-${exp.id}`}>Início</Label>
+              <Input id={`exp-field-3-${exp.id}`}
                 placeholder="Ex.: Jan 2022"
                 value={exp.startDate}
                 onChange={(e) => update(exp.id, { startDate: e.target.value })}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <Label>Fim</Label>
-              <Input
+              <Label htmlFor={`exp-field-4-${exp.id}`}>Fim</Label>
+              <Input id={`exp-field-4-${exp.id}`}
                 placeholder="Ex.: Dez 2023"
                 value={exp.endDate}
                 disabled={exp.current}
@@ -90,19 +93,15 @@ export function ExperienceEditor({ value, onChange }: ExperienceEditorProps) {
           </label>
           <div className="flex flex-col gap-1.5">
             <Label htmlFor={`exp-desc-${exp.id}`}>O que você fazia nesse trabalho?</Label>
-            <FieldHint>
-              Liste 2 ou 3 atividades do dia a dia, e o que você entregava de resultado. É a parte
-              que a empresa mais lê.
-            </FieldHint>
             <Textarea
               id={`exp-desc-${exp.id}`}
               rows={4}
-              placeholder={'Ex.: Operava a linha de envase e conferia a pesagem.\nOrganizava o estoque e o controle de validade.\nTreinei dois colegas novos no setor.'}
+              placeholder="Principais atividades"
               value={exp.description}
               onChange={(e) => update(exp.id, { description: e.target.value })}
             />
           </div>
-        </div>
+        </div></FieldDialog>
       ))}
       <Button type="button" variant="outline" size="sm" onClick={add} className="w-fit gap-1.5">
         <Plus className="size-4" /> Adicionar experiência

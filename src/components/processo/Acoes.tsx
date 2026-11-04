@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import * as React from 'react'
 import { CheckCircle2, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -11,8 +12,8 @@ import { etapaAtual, type Etapa, type Processo } from '@/lib/hiring'
 function useExecutar(onOk: () => void) {
   const acao = useAcaoProcesso()
   const [erro, setErro] = React.useState<string | null>(null)
-  const executar = (a: AcaoProcesso, confirmacao?: string) => {
-    if (confirmacao && !window.confirm(confirmacao)) return
+  const executar = async (a: AcaoProcesso, confirmacao?: string) => {
+    if (confirmacao && !(await confirmAction(confirmacao))) return
     setErro(null)
     acao.mutate(a, {
       onSuccess: onOk,

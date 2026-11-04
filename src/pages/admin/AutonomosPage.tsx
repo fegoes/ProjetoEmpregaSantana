@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { Link } from 'react-router-dom'
 import * as React from 'react'
 import { Wrench } from 'lucide-react'
@@ -39,8 +40,8 @@ export default function AdminAutonomosPage() {
   )
   const { shown, remaining, more } = usePaged(visiveis, 30, `${filtro}|${busca}`)
 
-  const mudar = (a: AdminAutonomo, changes: { status?: AdminAutonomo['status']; is_featured?: boolean }, ok: string, confirmacao?: string) => {
-    if (confirmacao && !window.confirm(confirmacao)) return
+  const mudar = async (a: AdminAutonomo, changes: { status?: AdminAutonomo['status']; is_featured?: boolean }, ok: string, confirmacao?: string) => {
+    if (confirmacao && !(await confirmAction(confirmacao))) return
     setAviso(null)
     atualizar.mutate(
       { id: a.id, changes },
@@ -48,8 +49,8 @@ export default function AdminAutonomosPage() {
     )
   }
 
-  const apagar = (a: AdminAutonomo) => {
-    if (!window.confirm(`Excluir o perfil de autônomo de ${nomeDe(a)}? Ele sai do site. A conta da pessoa continua e ela pode criar o perfil de novo. Não dá para desfazer.`)) return
+  const apagar = async (a: AdminAutonomo) => {
+    if (!(await confirmAction(`Excluir o perfil de autônomo de ${nomeDe(a)}? Ele sai do site. A conta da pessoa continua e ela pode criar o perfil de novo. Não dá para desfazer.`))) return
     setAviso(null)
     excluir.mutate(a.id, {
       onSuccess: () => setAviso({ tipo: 'ok', texto: 'Perfil de autônomo excluído.' }),

@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { InsertDropZone, VisualInsertItem } from './VisualInserter'
 import { Sortable } from '@/components/admin/Sortable'
 import * as React from 'react'
@@ -91,8 +92,8 @@ function SlidesEditor({ section, onChange }: { section: SlidesSection; onChange:
                 setOpenIds(new Set([copy.id]))
               }}
               canDuplicate={section.slides.length < MAX_SLIDES}
-              onRemove={() => {
-                if (window.confirm(`Apagar o slide ${index + 1}? Não dá para desfazer.`)) {
+              onRemove={async () => {
+                if ((await confirmAction(`Apagar o slide ${index + 1}? Não dá para desfazer.`))) {
                   setSlides(section.slides.filter((s) => s.id !== slide.id))
                 }
               }}
@@ -162,9 +163,8 @@ export function PageBuilder({ sections, onChange }: PageBuilderProps) {
     if (template) add(template.build, index)
   }
 
-  const remove = (section: Section) => {
-    const filled = section.type === 'slides' || section.blocks.length > 0
-    if (filled && !window.confirm('Apagar esta seção com todo o conteúdo? Não dá para desfazer.')) return
+  const remove = async (section: Section) => {
+    if (!(await confirmAction('Apagar esta seção com todo o conteúdo? Não dá para desfazer.'))) return
     onChange(sections.filter((s) => s.id !== section.id))
   }
 

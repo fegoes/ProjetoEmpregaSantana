@@ -1,3 +1,4 @@
+import { confirmAction } from '@/lib/confirmAction'
 import { AdminModal } from '@/components/admin/AdminModal'
 import * as React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -113,7 +114,7 @@ export default function AdminPaginasPage() {
   const [modalBusy,setModalBusy]=React.useState(false)
 
   const handleDelete = async (id: string, title: string) => {
-    if (!window.confirm(`Apagar a página "${title}"? Ela sai do ar e não dá para desfazer.`)) return
+    if (!(await confirmAction(`Apagar a página "${title}"? Ela sai do ar e não dá para desfazer.`))) return
     await remove.mutateAsync(id)
   }
 

@@ -1,3 +1,4 @@
+import { FormSection } from '@/components/forms/FormSection'
 import { useRecordTypes } from '@/hooks/useRecordTypes'
 import * as React from 'react'
 import { Link, Navigate, useNavigate, useParams } from 'react-router-dom'
@@ -174,12 +175,10 @@ export default function VagaFormPage() {
 
         <div className="flex flex-col gap-1.5">
           <Label>Descrição da vaga</Label>
-          <p className="text-sm text-muted-foreground">
-            Separe em blocos (Sobre a vaga, Requisitos, Benefícios…). Quem lê abre e fecha cada um.
-          </p>
           <BlocksEditor value={descriptionHtml} onChange={setDescriptionHtml} kind="vaga" />
         </div>
 
+        <FormSection title="Contratação e remuneração">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="employmentType">Tipo de contratação</Label>
@@ -235,11 +234,13 @@ export default function VagaFormPage() {
           </label>
         )}
 
+        </FormSection>
         <div className="flex flex-col gap-1.5">
           <Label htmlFor="category">Categoria</Label>
           <CategorySelect id="category" kind="vaga" value={category} onChange={setCategory} />
         </div>
 
+        <FormSection title="Localização e modalidade" defaultOpen>
         <div className="flex flex-col gap-3">
           <div className="flex flex-col gap-1.5">
             <Label htmlFor="modalidade">Modalidade</Label>
@@ -267,12 +268,9 @@ export default function VagaFormPage() {
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
-          <h2 className="font-display text-base font-bold">Etapas da seleção</h2>
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            É o caminho que cada candidato acompanha depois de se candidatar. Você dá feedback, recebe documentos e conversa em cada etapa. Quem já
-            se candidatou continua com as etapas que tinha.
-          </p>
+        </FormSection>
+        <FormSection title="Etapas da seleção"><div className="flex flex-col gap-2">
+          <p className="text-xs text-muted-foreground">Defina as etapas da seleção.</p>
           <EtapasEditor
             value={etapas}
             onChange={(next) => {
@@ -282,7 +280,8 @@ export default function VagaFormPage() {
           />
         </div>
 
-        <fieldset disabled={saveVaga.isPending}><PhotoGalleryField label="Fotos da vaga (opcional)" photos={photoUrls} onUpload={file=>uploadVagaGalleryPhoto(file,id??mediaId)} onChange={setPhotoUrls} onUploadingChange={uploading} hint="Você pode adicionar fotos antes de salvar. Elas aparecem no carrossel da vaga e na listagem." /></fieldset>
+        </FormSection>
+        <fieldset disabled={saveVaga.isPending}><PhotoGalleryField label="Fotos da vaga (opcional)" photos={photoUrls} onUpload={file=>uploadVagaGalleryPhoto(file,id??mediaId)} onChange={setPhotoUrls} onUploadingChange={uploading} /></fieldset>
 
         {error && <FormError>{error}</FormError>}
 

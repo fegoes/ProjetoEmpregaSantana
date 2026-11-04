@@ -10,10 +10,10 @@ export function useImageVariant(url?: string | null) {
    return data?.mobile_url??null
  }})
  return {...query,data:draft&&url&&draft.store.variants.has(url)?draft.store.variants.get(url):query.data,save:async(mobile:string|null)=>{
-  if(!url)throw new Error('Envie a imagem desktop primeiro.')
+  if(!url)throw new Error('Adicione a imagem para computador primeiro.')
   if(draft){draft.store.setVariant(url,mobile);draft.changed();return}
   const {error}=mobile?await supabase.from('image_variants').upsert({desktop_url:url,mobile_url:mobile}):await supabase.from('image_variants').delete().eq('desktop_url',url)
-  if(error)throw new Error('Não foi possível salvar a versão móvel. Confira a conexão e a migration 0040.')
+  if(error)throw new Error('Não foi possível salvar a imagem para celular. Tente novamente.')
   client.setQueryData(['image-variant',url],mobile)
  }}
 }
